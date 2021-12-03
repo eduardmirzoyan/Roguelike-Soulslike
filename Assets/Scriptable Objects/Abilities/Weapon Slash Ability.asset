@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5bf7e398b7cb34eb59be9552fb80d3, type: 3}
+  m_Name: Weapon Slash Ability
+  m_EditorClassIdentifier: 
+  name: Slash
+  chargeUpTime: 0.66
+  activeTime: 0.1
+  cooldownTime: 5
+  staminaCost: 25
+  sprite: {fileID: -3061971124352811578, guid: f736099925445bd45a8295c8aa71a480, type: 3}
+  abilityLevel: 0
+  requiresWeapon: 1
+  activeWhileHeld: 0
+  damage:
+    origin: {x: 0, y: 0, z: 0}
+    damageValue: 6
+    pushForce: 0
+    stunDuration: 0
+    source: 0
+    effect: {fileID: 0}
+    color: {r: 1, g: 1, b: 1, a: 1}
+  slashProjectilePrefab: {fileID: 5171661407799104432, guid: cea9079deb84b93449a8cc24fb28dcb8, type: 3}

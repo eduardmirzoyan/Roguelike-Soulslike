@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  - Fighter
+  - Loot
+  - Chest
+  - Platform
+  - Spikes
+  - Shrine
+  - Shield
+  - Enemy
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Player
+  - Water
+  - UI
+  - Weapons
+  - Enemies
+  - Ground
+  - Abilities
+  - Loot
+  - Interactables
+  - Traps
+  - Only Ground
+  - Platform
+  - Projectile
+  - Destructable
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 4109565415
+    locked: 0
+  - name: Walls
+    uniqueID: 2335283215
+    locked: 0
+  - name: Ground
+    uniqueID: 353157367
+    locked: 0
+  - name: Interactables
+    uniqueID: 3039900079
+    locked: 0
+  - name: Enemies
+    uniqueID: 2215293113
+    locked: 0
+  - name: Player
+    uniqueID: 370772261
+    locked: 0
+  - name: Weapons
+    uniqueID: 2010365255
+    locked: 0
+  - name: Abilities
+    uniqueID: 3354964735
+    locked: 0
+  - name: UI
+    uniqueID: 2914593139
+    locked: 0

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8131c8918e829e429394d9735620f80, type: 3}
+  m_Name: SB Active Skill
+  m_EditorClassIdentifier: 
+  name: Shield Bash
+  description: Use your trusty shield to slam enemies, sending them flying.
+  prerequisite: {fileID: 0}
+  icon: {fileID: 2818364792325388446, guid: 621f62ba456f8e34892c9288a5e03742, type: 3}
+  ability: {fileID: 11400000, guid: 2b5d5c6e96370354bbbe1448faba569d, type: 2}
