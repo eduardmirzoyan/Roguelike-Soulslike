@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf00ed0afc0fec4e9880bdbb1ba0e5a, type: 3}
+  m_Name: SB Upgrade 1 Skill
+  m_EditorClassIdentifier: 
+  name: Stunning Slam
+  description: Your shield now stuns non-boss enemies for 1 second(s).
+  prerequisite: {fileID: 11400000, guid: 23269eb0d99b6e0499351d4ac63cff0a, type: 2}
+  icon: {fileID: 2818364792325388446, guid: 621f62ba456f8e34892c9288a5e03742, type: 3}
+  upgrade: {fileID: 11400000, guid: d0efcba324b129f48a4e0b548b9a2eb0, type: 2}

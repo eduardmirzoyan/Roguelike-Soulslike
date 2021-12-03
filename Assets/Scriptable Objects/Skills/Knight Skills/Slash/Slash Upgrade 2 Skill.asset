@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf00ed0afc0fec4e9880bdbb1ba0e5a, type: 3}
+  m_Name: Slash Upgrade 2 Skill
+  m_EditorClassIdentifier: 
+  name: Deep Cut
+  description: Your slashes cut deep and cause bleeding
+  prerequisite: {fileID: 11400000, guid: fd50c70595861254dbb7829f9fb31af6, type: 2}
+  icon: {fileID: -3061971124352811578, guid: f736099925445bd45a8295c8aa71a480, type: 3}
+  upgrade: {fileID: 11400000, guid: c82cb43df161bb0408ea01d4a5e721ee, type: 2}

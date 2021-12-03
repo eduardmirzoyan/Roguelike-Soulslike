@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8131c8918e829e429394d9735620f80, type: 3}
+  m_Name: Block Active Skill
+  m_EditorClassIdentifier: 
+  name: Block
+  description: block attacks lol
+  prerequisite: {fileID: 0}
+  icon: {fileID: 165035601938022485, guid: 2ca0ae809293f77439df1c791a2e562c, type: 3}
+  ability: {fileID: 11400000, guid: 8e85b12a325f1294690363640b71789f, type: 2}

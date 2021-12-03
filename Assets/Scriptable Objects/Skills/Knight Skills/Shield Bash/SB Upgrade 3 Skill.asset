@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf00ed0afc0fec4e9880bdbb1ba0e5a, type: 3}
+  m_Name: SB Upgrade 3 Skill
+  m_EditorClassIdentifier: 
+  name: A good defense is a great offense
+  description: Your shield swing has become strong enough to reflect projectiles
+    back to their owners.
+  prerequisite: {fileID: 11400000, guid: 58b6acebd65179748812229f8bed68d5, type: 2}
+  icon: {fileID: 2818364792325388446, guid: 621f62ba456f8e34892c9288a5e03742, type: 3}
+  upgrade: {fileID: 11400000, guid: 7a80bd60df81d194d93ef260fc4be42f, type: 2}

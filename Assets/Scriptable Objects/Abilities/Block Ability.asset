@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd15632359c7394eb99c15816fc0445, type: 3}
+  m_Name: Block Ability
+  m_EditorClassIdentifier: 
+  name: Block
+  chargeUpTime: 0
+  activeTime: 0.2
+  cooldownTime: 0.5
+  staminaCost: 0
+  sprite: {fileID: 165035601938022485, guid: 2ca0ae809293f77439df1c791a2e562c, type: 3}
+  abilityLevel: 0
+  requiresWeapon: 0
+  activeWhileHeld: 1
+  shield: {fileID: 7333237082917640985, guid: 2df7021f900b3ca47810902fc7706fe7, type: 3}
+  isActive: 0
+  player: {fileID: 0}
+  drainAmount: 5

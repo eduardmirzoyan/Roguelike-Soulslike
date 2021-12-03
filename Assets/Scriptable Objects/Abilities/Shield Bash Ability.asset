@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baa663b64bc1fc341b01e407d2a783a7, type: 3}
+  m_Name: Shield Bash Ability
+  m_EditorClassIdentifier: 
+  name: Shield Bash
+  chargeUpTime: 0.42
+  activeTime: 0.33
+  cooldownTime: 6
+  staminaCost: 20
+  sprite: {fileID: 2818364792325388446, guid: 621f62ba456f8e34892c9288a5e03742, type: 3}
+  abilityLevel: 0
+  requiresWeapon: 0
+  activeWhileHeld: 0
+  shieldBashPrefab: {fileID: 476606897938945930, guid: 20088e83334828849ad2571886aee022, type: 3}
+  damage:
+    origin: {x: 0, y: 0, z: 0}
+    damageValue: 1
+    pushForce: 15
+    stunDuration: 0
+    source: 0
+    effect: {fileID: 0}
+    color: {r: 1, g: 1, b: 1, a: 1}

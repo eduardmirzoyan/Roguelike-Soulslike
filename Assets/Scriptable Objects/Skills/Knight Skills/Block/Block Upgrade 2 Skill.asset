@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf00ed0afc0fec4e9880bdbb1ba0e5a, type: 3}
+  m_Name: Block Upgrade 2 Skill
+  m_EditorClassIdentifier: 
+  name: Quick Recovery
+  description: Perfectly blocking attacks resets the cooldown of reblocking.
+  prerequisite: {fileID: 11400000, guid: 180691953ac367643946fcf95eeb3719, type: 2}
+  icon: {fileID: 165035601938022485, guid: 2ca0ae809293f77439df1c791a2e562c, type: 3}
+  upgrade: {fileID: 11400000, guid: a6ffb5a9b94a93b45927909614793fe4, type: 2}
