@@ -9,11 +9,11 @@ public class BashUpgradeOne : Upgrade
     public override void upgradeBeforeChargeUp(GameObject parent, Ability ability)
     {
         // Clears all effects
-        ((ShieldBashAbility)ability).damage.effects.Clear();
-        var stun = CreateInstance<StunEffect>();
+        ((ShieldBashAbility)ability).bashingShield.enabledStun = true;
+        
 
         // Adds a stun
-        stun.Duration = 1f;
-        ((ShieldBashAbility)ability).damage.effects.Add(stun);
+        /*stun.Duration = 1f;
+        ((ShieldBashAbility)ability).shieldBashDamage.effects.Add(stun);*/
     }
 }

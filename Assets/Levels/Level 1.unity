@@ -2339,26 +2339,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355799310}
   m_CullTransparentMesh: 1
---- !u!1 &359258918 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3996419839580739552, guid: 55e1024ec49f8714480df13781bdea09, type: 3}
-  m_PrefabInstance: {fileID: 1906157731}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &359258933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 359258918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b55476bd0928b0f4cb5a8c05688533f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentPoise: 10
-  basePoise: 10
-  staggerEffect: {fileID: 0}
 --- !u!224 &360782372 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7086676555321199672, guid: c65d13c0ca8fa2e4cb04bb0cf652b688, type: 3}
@@ -17103,6 +17083,7 @@ GameObject:
   - component: {fileID: 1535761017}
   - component: {fileID: 1535761015}
   - component: {fileID: 1535761014}
+  - component: {fileID: 1535761039}
   - component: {fileID: 1535761019}
   - component: {fileID: 1535761023}
   - component: {fileID: 1535761032}
@@ -17125,12 +17106,11 @@ GameObject:
   - component: {fileID: 1535761036}
   - component: {fileID: 1535761037}
   - component: {fileID: 1535761038}
-  - component: {fileID: 1535761039}
   - component: {fileID: 1535761040}
   - component: {fileID: 1535761041}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Fighter
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17195,7 +17175,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1535761011}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.46, y: 29.34, z: 0}
+  m_LocalPosition: {x: 40.54, y: 24.34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1017664567}
@@ -17485,7 +17465,10 @@ MonoBehaviour:
   knockbackImmune: 0
   staggerImmune: 0
   mv: {fileID: 0}
-  state: 0
+  knockbackSpeed: 0
+  knockbackDuration: 0
+  stunDuration: 0
+  startTime: 0
 --- !u!114 &1535761027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18503,7 +18486,10 @@ MonoBehaviour:
   knockbackImmune: 0
   staggerImmune: 0
   mv: {fileID: 0}
-  state: 0
+  knockbackSpeed: 0
+  knockbackDuration: 0
+  stunDuration: 0
+  startTime: 0
 --- !u!114 &1583725410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131483,7 +131469,7 @@ GameObject:
   - component: {fileID: 1746060192}
   m_Layer: 0
   m_Name: Enemies
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132028,10 +132014,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1746060192}
     m_Modifications:
-    - target: {fileID: 2106683284, guid: 55e1024ec49f8714480df13781bdea09, type: 3}
-      propertyPath: aggroRange
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 1282979371012448612, guid: 55e1024ec49f8714480df13781bdea09, type: 3}
       propertyPath: obstacleLayer.m_Bits
       value: 264
@@ -132039,10 +132021,6 @@ PrefabInstance:
     - target: {fileID: 3996419839580739552, guid: 55e1024ec49f8714480df13781bdea09, type: 3}
       propertyPath: m_Name
       value: Goblin
-      objectReference: {fileID: 0}
-    - target: {fileID: 3996419839580739552, guid: 55e1024ec49f8714480df13781bdea09, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 3996419839580739557, guid: 55e1024ec49f8714480df13781bdea09, type: 3}
       propertyPath: m_RootOrder

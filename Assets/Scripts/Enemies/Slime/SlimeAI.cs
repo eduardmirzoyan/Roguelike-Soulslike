@@ -55,8 +55,7 @@ public class SlimeAI : EnemyAI
         switch (state)
         {
             case EnemyState.knockedback:
-                if (displacable.isFree())
-                    state = EnemyState.aggro;
+                
                 break;
             case EnemyState.idle:
                 handleMovementAnimations();
@@ -100,10 +99,6 @@ public class SlimeAI : EnemyAI
                 break;
             case EnemyState.aggro:
                 handleMovementAnimations();
-
-                // Chase player type-beat
-                if (!displacable.isFree())
-                    state = EnemyState.knockedback;
 
                 if (lineOfSight.distanceFromTarget() > aggroRange)
                     aggroTimer -= Time.deltaTime;

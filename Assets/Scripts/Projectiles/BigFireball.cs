@@ -9,7 +9,8 @@ public class BigFireball : Fireball
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         var damageable = collision.GetComponent<Damageable>();
-        if (collision.gameObject != this.gameObject && damageable != null && collision.tag != GetComponent<Projectile>().creator.tag)
+        Debug.Log(collision.tag);
+        if (damageable != null && collision.tag != GetComponent<Projectile>().creator.tag)
         {
             damageable.takeDamage(fireballDamage);
         }

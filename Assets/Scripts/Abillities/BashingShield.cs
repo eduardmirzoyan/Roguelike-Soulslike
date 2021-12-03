@@ -5,18 +5,26 @@ using UnityEngine;
 
 public class BashingShield : MonoBehaviour
 {
-    [SerializeField] private Damage bashDamage;
-
     [SerializeField] private GameObject sparkle; // Visual effect for reflecting
 
+    private Damage bashDamage;
     public bool enabledProjectileReflection;
+    public bool enabledStun;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var damageable = collision.GetComponent<Damageable>();
+        var displace = collision.GetComponent<Displacable>();
         if (damageable != null && collision.tag != transform.parent.gameObject.tag)
         {
             damageable.takeDamage(bashDamage);
+            if(displace != null)
+            {
+                if (!enabledStun)
+                    displace.triggerKnockback(15, 0.15f, transform.position);
+                else
+                    displace.triggerStun(1f);
+            }
         }
 
         // If projectile reflection is enabled
@@ -26,30 +34,14 @@ public class BashingShield : MonoBehaviour
             var projectile = collision.GetComponent<Projectile>();
             if (projectile != null)
             {
-                /*// If the projectile has a collider, change it to target enemies now
-                var collider = collision.GetComponent<NewCollider>();
-                if (collider != null)
-                {
-                    //Debug.Log(LayerMask.NameToLayer("Enemies"));
-                    collider.setNewLayer(128); // 128 is the layer associated with enemies in binary
-                    collider.enableHit();
-                }*/
-
                 Debug.Log("reversed!");
                 // Reverse the direction of the projectile
                 projectile.reverseVelocity();
-                projectile.setCreator(gameObject);
-                // CHANGE THIS!
-
-                /*// And reset the player immunity frames
-                var playerDamageable = GetComponentInParent<Damageable>();
-
-                // Transfer knockback into player
-                if (playerDamageable != null)
-                {
-                    playerDamageable.resetImmunityFrames();
-                }*/
+                projectile.setCreator(transform.parent.gameObject);
+                enabledProjectileReflection = false;
             }
         }
     }
+
+    public void setDamage(Damage damage) => bashDamage = damage;
 }

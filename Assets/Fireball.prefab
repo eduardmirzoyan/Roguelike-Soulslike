@@ -4870,6 +4870,7 @@ MonoBehaviour:
   gainVelocityOverTime: 1
   velocityGainRate: 0.25
   percentVelocityGain: 1.5
+  creator: {fileID: 0}
 --- !u!114 &8938152532573267874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4931,8 +4932,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2010365255
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

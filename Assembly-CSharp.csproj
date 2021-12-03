@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{BDF830DD-8282-6C91-80D7-BD28E39FB839}</ProjectGuid>
+    <ProjectGuid>{96798890-B6F7-E8BC-5AAE-C396814E1B2F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\General Use\Damageable.cs" />
     <Compile Include="Assets\Scripts\Player\PassiveSkill.cs" />
     <Compile Include="Assets\Scripts\Player\CombatHandler.cs" />
+    <Compile Include="Assets\Enchantment.cs" />
     <Compile Include="Assets\Scripts\Player\Stamina.cs" />
     <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\SlashUpgradeOne.cs" />
     <Compile Include="Assets\Scripts\Enemies\PathfindingAI.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Assets\Scripts\Status Effects\BaseEffect.cs" />
     <Compile Include="Assets\Scripts\Player\ComplexMovement.cs" />
     <Compile Include="Assets\Scripts\Status Effects\KnockbackEffect.cs" />
+    <Compile Include="Assets\DamageAuraEnchantment.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\StatusUI.cs" />
     <Compile Include="Assets\Scripts\Status Effects\EmpowerEffect.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\Healthbar.cs" />
@@ -209,8 +211,6 @@
     <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\BashUpgradeThree.cs" />
     <Compile Include="Assets\Scripts\Status Effects\TimedStunEffect.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\ExperienceBar.cs" />
-    <Compile Include="Assets\Enchantment.cs" />
-    <Compile Include="Assets\DamageAuraEnchantment.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\QuickOutline\Resources\Shaders\OutlineMask.shader" />
@@ -910,15 +910,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="PackageToolsEditor.csproj">
-      <Project>{E07CDC9D-BB1F-E8F6-2E17-9E631B54EBDF}</Project>
+      <Project>{CB571553-0948-B448-5D99-5388A36595D5}</Project>
       <Name>PackageToolsEditor</Name>
     </ProjectReference>
     <ProjectReference Include="AstarPathfindingProject.csproj">
-      <Project>{66DD8152-CAC0-5CCC-F31E-FE41E97B5040}</Project>
+      <Project>{24C5D7FF-4CAD-133D-A8C2-50F0FE9F84FA}</Project>
       <Name>AstarPathfindingProject</Name>
     </ProjectReference>
     <ProjectReference Include="AstarPathfindingProjectEditor.csproj">
-      <Project>{A0437E6E-6CC5-082A-E3FA-D68A1C7A384B}</Project>
+      <Project>{6CB19335-EE1A-0A8C-8265-BE82FDE64BB2}</Project>
       <Name>AstarPathfindingProjectEditor</Name>
     </ProjectReference>
   </ItemGroup>

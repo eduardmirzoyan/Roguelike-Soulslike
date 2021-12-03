@@ -177,9 +177,10 @@ GameObject:
   - component: {fileID: 8025920383290353545}
   - component: {fileID: 213937614}
   - component: {fileID: 1995298288}
+  - component: {fileID: 359258933}
   m_Layer: 7
   m_Name: Goblin
-  m_TagString: Fighter
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -369,7 +370,7 @@ MonoBehaviour:
   player: {fileID: 0}
   target: {fileID: 0}
   lineOfSight: {fileID: 0}
-  aggroRange: 5
+  aggroRange: 10
   aggroDropTimeLimit: 3
   jumpEnabled: 1
   roamEnabled: 1
@@ -397,6 +398,7 @@ MonoBehaviour:
   idleAnimation: Idle
   walkAnimation: Walk
   deadAnimation: Dead
+  staggerAnimation: Stagger
 --- !u!114 &396186816173659718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,8 +480,10 @@ MonoBehaviour:
   knockbackImmune: 0
   staggerImmune: 0
   mv: {fileID: 0}
-  animator: {fileID: 0}
-  state: 0
+  knockbackSpeed: 0
+  knockbackDuration: 0
+  stunDuration: 0
+  startTime: 0
 --- !u!114 &-8413317443809888856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +551,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.48059464, y: 0.67977905}
   m_EdgeRadius: 0
+--- !u!114 &359258933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3996419839580739552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b55476bd0928b0f4cb5a8c05688533f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPoise: 10
+  basePoise: 10
+  staggerEffect: {fileID: 0}
 --- !u!1 &3996419839722686469
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,15 +6,20 @@ using UnityEngine;
 public class ShieldBashAbility : Ability
 {
     [SerializeField] private GameObject shieldBashPrefab;
+    [SerializeField] public BashingShield bashingShield;
 
-    [SerializeField] public Damage damage;
+    [SerializeField] private string shieldBashAnimation;
+    [SerializeField] public Damage shieldBashDamage;
 
     public override void perfromBeforeChargeUp(GameObject parent)
     {
-        base.perfromBeforeChargeUp(parent);
-
         var shield = Instantiate(shieldBashPrefab, parent.transform.position, Quaternion.identity, parent.transform);
-        //shield.GetComponent<DamageDealer>().setDamage(damage);
+        bashingShield = shield.GetComponent<BashingShield>();
+        bashingShield.setDamage(shieldBashDamage);
+
+        parent.GetComponent<AnimationHandler>().changeAnimationState(shieldBashAnimation); // Play animation
+
+        base.perfromBeforeChargeUp(parent);
     }
 
     // Move forward during shield bash

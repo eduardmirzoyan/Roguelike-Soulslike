@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 476606897938945932}
   - component: {fileID: 7886332500316493472}
   - component: {fileID: 4932320220512908559}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Shield Bash
   m_TagString: Player
   m_Icon: {fileID: 0}

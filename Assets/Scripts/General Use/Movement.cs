@@ -204,14 +204,10 @@ public class Movement : MonoBehaviour
         body.velocity = new Vector2(xVel, jumpPower);
     }
 
-    public Vector2 getPosition() => body.position;
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireCube(groundCheck.transform.position, groundCheckBoxSize);
         Gizmos.DrawWireSphere(wallCheck.transform.position, wallcheckRadius);
         //Gizmos.DrawWireCube(dropCheck.transform.position, dropCheckBoxSize);
     }
-
-    public void setImmobile(bool newState) => isImmobile = newState;
 }

@@ -15,58 +15,20 @@ public class Displacable : MonoBehaviour
     [SerializeField] private bool staggerImmune;
 
     [SerializeField] private Movement mv;
-    
-    private float knockbackDecay = 0.05f;
-    public float knockbackSpeed { get; private set; }
+
+    [SerializeField] private float knockbackSpeed;
+
+    [SerializeField] private float knockbackDuration;
+
+    [SerializeField] private float stunDuration;
+
     private float knockbackDirection;
-
-    public float knockbackDuration { get; private set; }
-
-    private float stunDuration;
-
-    public bool stunRequest { get; private set; }
-    public bool knockbackRequest { get; private set; }
-    public bool isStaggered { get; private set; }
-
     public bool isDisplaced { get; private set; }
-    private float startTime;
-    public enum DisplacedState
-    {
-        Free,
-        Stunned,
-        Knockedback,
-        Staggered
-    }
-    public DisplacedState state;
+    [SerializeField] private float startTime;
 
     private void Start()
     {
         mv = GetComponent<Movement>();
-    }
-
-    public IEnumerator perfromKnockback()
-    {
-        knockbackRequest = false;
-        while (Mathf.Abs(knockbackSpeed) > 2f)
-        {
-            knockbackSpeed = Mathf.Lerp(knockbackSpeed, 0, knockbackDecay);
-            mv.dashWithVelocity(knockbackSpeed, knockbackDirection);   
-            yield return null;
-        }
-        knockbackSpeed = 0;
-        mv.Stop();
-    }
-
-    public IEnumerator performStun()
-    {
-        stunRequest = false;
-        yield return new WaitForSeconds(knockbackDuration);
-        knockbackDuration = 0;
-    }
-
-    public bool isFree()
-    {
-        return state == DisplacedState.Free;
     }
 
     public void triggerStagger(Vector3 origin)
@@ -84,51 +46,26 @@ public class Displacable : MonoBehaviour
         // Store constant knockback speed
         knockbackSpeed = 5;
         knockbackDirection = horizontalPushDirection;
-        knockbackRequest = true;
+        //knockbackRequest = true;
     }
 
-    public void triggerKnockback(float pushForce, Vector3 origin)
-    {
-        if (knockbackImmune)
-        {
-            Debug.Log(name + " is immune to being knockback.");
-            return;
-        }
-
-        float normalizedXPush = (transform.position - origin).normalized.x;
-        int horizontalPushDirection = ((normalizedXPush > 0.1f) ? 1 : (normalizedXPush < -0.1f) ? -1 : 0);
-
-        // Store knockback speed
-        knockbackSpeed = pushForce;
-        knockbackDirection = horizontalPushDirection;
-        knockbackRequest = true;
-    }
-
-    public void triggerStun(float duration)
-    {
-        if (stunImmune)
-        {
-            Debug.Log(name + " is immune to being stunned.");
-            return;
-        }
-
-        // Store duration
-        knockbackDuration = duration;
-        stunRequest = true;
-    }
+    //*************************************************************************
 
     // Assume knockback
-    public void triggerDisplace(float pushForce, float duration)
+    public void triggerKnockback(float pushForce, float duration, Vector3 origin)
     {
+        Debug.Log("knock");
         startTime = 0f;
         knockbackSpeed += pushForce;
         knockbackDuration = duration;
+        knockbackDirection = getDirectionFromPoint(origin);
         isDisplaced = true;
     }
 
     // Assume stun
-    public void triggerSStun(float duration)
+    public void triggerStun(float duration)
     {
+        Debug.Log("stun");
         stunDuration += duration;
         isDisplaced = true;
         GameManager.instance.stunAnimation(transform, duration);
@@ -140,8 +77,10 @@ public class Displacable : MonoBehaviour
         //var startTime = 0f;
         if (startTime <= knockbackDuration || stunDuration > 0)
         {
-            knockbackSpeed = Mathf.Lerp(knockbackSpeed, 0, startTime / knockbackDuration);
-            startTime += Time.deltaTime; // New logic?
+            if(knockbackSpeed > 0.1f)
+                knockbackSpeed = Mathf.Lerp(knockbackSpeed, 0, startTime / knockbackDuration);
+
+            startTime += Time.deltaTime;
 
             if(stunDuration > 0)
                 stunDuration -= Time.deltaTime; // Reduce stun
@@ -149,7 +88,7 @@ public class Displacable : MonoBehaviour
             //Debug.Log("Speed: " + knockbackSpeed + " Dur: " + knockbackDuration);
             //Debug.Log("Stun Dur: " + stunDuration);
 
-            mv.dashWithVelocity(knockbackSpeed, 1);
+            mv.dashWithVelocity(knockbackSpeed, knockbackDirection);
         }
         else
         {
