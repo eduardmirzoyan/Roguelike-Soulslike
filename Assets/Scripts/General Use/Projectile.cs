@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float velocityGainRate;
     [SerializeField] private float percentVelocityGain;
 
-    [SerializeField] public GameObject creator { get; private set; }
+    [SerializeField] public GameObject creator;
 
     private float gainTimer;
 

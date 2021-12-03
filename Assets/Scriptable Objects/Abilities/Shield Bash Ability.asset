@@ -22,11 +22,15 @@ MonoBehaviour:
   requiresWeapon: 0
   activeWhileHeld: 0
   shieldBashPrefab: {fileID: 476606897938945930, guid: 20088e83334828849ad2571886aee022, type: 3}
-  damage:
-    origin: {x: 0, y: 0, z: 0}
-    damageValue: 1
-    pushForce: 15
-    stunDuration: 0
+  bashingShield: {fileID: 0}
+  shieldBashAnimation: 
+  shieldBashDamage:
+    damageAmount: 3
     source: 0
-    effect: {fileID: 0}
-    color: {r: 1, g: 1, b: 1, a: 1}
+    origin: {x: 0, y: 0, z: 0}
+    isTrue: 0
+    isAvoidable: 1
+    triggersIFrames: 1
+    effects: []
+    buildupEffects: []
+    color: {r: 0, g: 0, b: 0, a: 0}

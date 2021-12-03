@@ -273,7 +273,7 @@ public class Player : MonoBehaviour
                 // TODO
                 animationHandler.changeAnimationState(idleAnimation);
 
-                handleDisplacementRequest();
+                //handleDisplacementRequest();
 
                 displace.performDisplacement();
 

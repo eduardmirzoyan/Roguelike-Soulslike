@@ -21,7 +21,7 @@ public class TimedKnockbackEffect : TimedEffect
 
         if (displacable != null)
         {
-            displacable.triggerKnockback(pushForce, origin);
+            //displacable.triggerKnockbackKK(pushForce, origin);
         }
         else
         {
@@ -32,9 +32,9 @@ public class TimedKnockbackEffect : TimedEffect
     protected override void onTick()
     {
         // Keep reseting duration until the entity is no longer displacing
-        Duration = 1f;
+        /*Duration = 1f;
         if (displacable.knockbackSpeed == 0)
-            Duration = 0;
+            Duration = 0;*/
     }
 
     public override void End()

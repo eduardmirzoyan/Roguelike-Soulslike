@@ -58,9 +58,6 @@ public class FireMageAI : EnemyAI
         {
             case EnemyState.knockedback:
 
-                if (displacable.isFree())
-                    state = EnemyState.aggro;
-
                 break;
             case EnemyState.idle:
                 handleMovementAnimations();

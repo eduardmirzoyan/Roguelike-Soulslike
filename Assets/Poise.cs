@@ -45,7 +45,7 @@ public class Poise : MonoBehaviour
             // Trigger stagger
             var displace = GetComponent<Displacable>();
             if (displace != null)
-                displace.triggerDisplace(15 * displace.getDirectionFromPoint(origin), 0.25f);
+                displace.triggerKnockback(15, 0.25f, origin);
         }
     }
 

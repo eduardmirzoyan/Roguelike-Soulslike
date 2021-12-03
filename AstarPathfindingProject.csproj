@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{66DD8152-CAC0-5CCC-F31E-FE41E97B5040}</ProjectGuid>
+    <ProjectGuid>{24C5D7FF-4CAD-133D-A8C2-50F0FE9F84FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>AstarPathfindingProject</AssemblyName>

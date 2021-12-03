@@ -55,7 +55,7 @@ public class GoblinAI : EnemyAI
 
                 displacable.performDisplacement();
 
-                handleDisplacement();
+                //handleDisplacement();
 
                 if (!displacable.isDisplaced)
                     state = EnemyState.aggro;
@@ -63,8 +63,6 @@ public class GoblinAI : EnemyAI
                 break;
             case EnemyState.idle:
                 handleMovementAnimation();
-
-                handleDisplacement();
 
                 if (lineOfSight.distanceFromTarget() < aggroRange && lineOfSight.canSeeTarget()) // TODO: add aggro if player is too close
                 {
@@ -98,7 +96,7 @@ public class GoblinAI : EnemyAI
                         idleTimer = idleCooldown;
                     }
                 }
-                
+                handleDisplacement();
                 break;
             case EnemyState.aggro:
                 handleMovementAnimation();
@@ -191,7 +189,6 @@ public class GoblinAI : EnemyAI
                 handleDisplacement();
                 break;
             case EnemyState.recovering: // Enemy recovery time after attacking
-                handleDisplacement();
                 if (recoveryTimer > 0)
                 {
                     mv.Stop();
@@ -222,6 +219,7 @@ public class GoblinAI : EnemyAI
     {
         if (displacable.isDisplaced)
         {
+            resetCombatValues();
             state = EnemyState.knockedback;
         }
     }

@@ -52,20 +52,20 @@ public class GhostKnightAI : EnemyAI
             Die();
         }
 
-        if (!displacable.isFree())
+        /*if (!displacable.isFree())
         {
             state = EnemyState.knockedback;
-        }
+        }*/
 
         switch (state)
         {
             case EnemyState.knockedback:
                 shield.lowerShield();
-                if (displacable.isFree())
+                /*if (displacable.isFree())
                 {
                     shield.raiseShield();
                     state = EnemyState.aggro;
-                }
+                }*/
                 break;
             case EnemyState.idle:
                 animationHandler.changeAnimationState(idleAnimation);
