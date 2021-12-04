@@ -1064,7 +1064,7 @@ PrefabInstance:
     - target: {fileID: 8328910403653533859, guid: 66f3cd2f0caf40b4abb72fdaaf077c54, type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 11400000, guid: 5afe78351655d4049935cc9901e18a9a, type: 2}
+      objectReference: {fileID: 11400000, guid: adf1c9f1fb4e3ab4fbe0505d31789fc4, type: 2}
     - target: {fileID: 8328910403653533860, guid: 66f3cd2f0caf40b4abb72fdaaf077c54, type: 3}
       propertyPath: m_Name
       value: Loot item (11)
@@ -2056,7 +2056,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0029715896, y: 0.027915541}
@@ -17083,7 +17083,6 @@ GameObject:
   - component: {fileID: 1535761017}
   - component: {fileID: 1535761015}
   - component: {fileID: 1535761014}
-  - component: {fileID: 1535761039}
   - component: {fileID: 1535761019}
   - component: {fileID: 1535761023}
   - component: {fileID: 1535761032}
@@ -17200,7 +17199,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.65700746
+  m_Mass: 0.631328
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 2.5
@@ -17679,32 +17678,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
---- !u!61 &1535761039
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1535761011}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.040706635, y: -0.04070568}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
-    newSize: {x: 1.5, y: 1.5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.7876587, y: 0.9301243}
-  m_EdgeRadius: 0
 --- !u!114 &1535761040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132028,11 +132001,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3996419839580739557, guid: 55e1024ec49f8714480df13781bdea09, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.43
+      value: 2.28
       objectReference: {fileID: 0}
     - target: {fileID: 3996419839580739557, guid: 55e1024ec49f8714480df13781bdea09, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 27.96
+      value: 27.92
       objectReference: {fileID: 0}
     - target: {fileID: 3996419839580739557, guid: 55e1024ec49f8714480df13781bdea09, type: 3}
       propertyPath: m_LocalPosition.z
@@ -132066,7 +132039,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1995298288, guid: 55e1024ec49f8714480df13781bdea09, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 55e1024ec49f8714480df13781bdea09, type: 3}
 --- !u!1 &1917165398
 GameObject:

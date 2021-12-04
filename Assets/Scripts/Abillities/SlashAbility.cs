@@ -7,12 +7,15 @@ public class SlashAbility : Ability
 {
     [SerializeField] public Damage damage;
     [SerializeField] private GameObject slashProjectilePrefab;
+    private int numberOfPeirces = 0;
+    private Weapon weapon;
 
     public override void perfromBeforeChargeUp(GameObject parent)
     {
-        //parent.GetComponent<Animator>().SetTrigger("heavy attack");
-        //parent.GetComponentInChildren<Weapon>().heavyAttackAnimation();
-        chargeUpTime = parent.GetComponentInChildren<Weapon>().heavyActiveTime + parent.GetComponentInChildren<Weapon>().heavyWindupTime;
+        weapon = parent.GetComponentInChildren<Weapon>();
+        weapon.GetComponent<Animator>().Play(weapon.weaponSpecialAttackAnimation);
+        parent.GetComponent<AnimationHandler>().changeAnimationState(weapon.weaponSpecialAttackAnimation);
+        chargeUpTime = weapon.heavyActiveTime + weapon.heavyWindupTime;
 
         base.perfromBeforeChargeUp(parent);
     }
@@ -20,8 +23,15 @@ public class SlashAbility : Ability
     public override void performAfterChargeUp(GameObject parent)
     {
         var slash = Instantiate(slashProjectilePrefab, parent.transform.position, parent.transform.rotation);
-        //slash.GetComponent<DamageDealer>().setDamage(damage);
-
+        slash.GetComponent<Slash>().numberOfPeirces = numberOfPeirces;
         base.performAfterChargeUp(parent);
     }
+
+    public override void performAfterActive(GameObject parent)
+    {
+        weapon.GetComponent<Animator>().Play(weapon.weaponIdleAnimation);
+        base.performAfterActive(parent);
+    }
+
+    public void increaseNumberPerices() => numberOfPeirces = 1;
 }

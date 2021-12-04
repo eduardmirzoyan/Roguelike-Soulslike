@@ -141,7 +141,7 @@ MonoBehaviour:
   weaponIdleAnimation: Sword Idle
   weaponLightAttackAnimation: Sword Light
   weaponHeavyAttackAnimation: Sword Heavy
-  tempEffect: {fileID: 11400000, guid: ebe014f59bf75604b92a5fbefbbd90a6, type: 2}
+  weaponSpecialAttackAnimation: Sword Special
 --- !u!114 &7663163235708087016
 MonoBehaviour:
   m_ObjectHideFlags: 0

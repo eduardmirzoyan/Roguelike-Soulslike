@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3184617754924566447}
   - component: {fileID: 3184617754924566440}
   - component: {fileID: 3184617754924566441}
-  - component: {fileID: 8946361038039379394}
   - component: {fileID: -3862820843993216567}
   m_Layer: 6
   m_Name: Axe
@@ -163,34 +162,12 @@ MonoBehaviour:
   animator: {fileID: 3184617754924566440}
   spriteRend: {fileID: 3184617754924566446}
   owner: {fileID: 11400000, guid: adf1c9f1fb4e3ab4fbe0505d31789fc4, type: 2}
-  damageDealer: {fileID: 0}
   wielderMovement: {fileID: 0}
   maxCombo: 0
   weaponIdleAnimation: Axe Idle
   weaponLightAttackAnimation: Axe Light
   weaponHeavyAttackAnimation: Axe Heavy
---- !u!114 &8946361038039379394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3184617754924566443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ccb80842871b8e46907df09e74ac6cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage:
-    damageAmount: 0
-    source: 0
-    origin: {x: 0, y: 0, z: 0}
-    isTrue: 0
-    isAvoidable: 0
-    triggersIFrames: 0
-    effects: []
-    buildupEffects: []
-    color: {r: 0, g: 0, b: 0, a: 0}
+  weaponSpecialAttackAnimation: Axe Special
 --- !u!114 &-3862820843993216567
 MonoBehaviour:
   m_ObjectHideFlags: 0

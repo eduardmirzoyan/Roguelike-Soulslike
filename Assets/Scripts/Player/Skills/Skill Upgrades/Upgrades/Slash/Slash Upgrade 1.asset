@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4631d6142e46286489ea5931c3434df9, type: 3}
   m_Name: Slash Upgrade 1
   m_EditorClassIdentifier: 
+  numberOfPeircesToAdd: 1
