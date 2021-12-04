@@ -95,7 +95,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 476606897938945930}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -179,15 +179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d54c51a256cae4c83d3e2c53717c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bashDamage:
-    damageAmount: 3
-    source: 0
-    origin: {x: 0, y: 0, z: 0}
-    isTrue: 0
-    isAvoidable: 1
-    triggersIFrames: 1
-    effects: []
-    buildupEffects: []
-    color: {r: 0, g: 0, b: 0, a: 0}
   sparkle: {fileID: 700751785864016377, guid: 1243f3617f5dd1b4097d85932e68b228, type: 3}
   enabledProjectileReflection: 0
+  enabledStun: 0

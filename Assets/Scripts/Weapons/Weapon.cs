@@ -58,6 +58,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] public string weaponIdleAnimation;
     [SerializeField] public string weaponLightAttackAnimation;
     [SerializeField] public string weaponHeavyAttackAnimation;
+    [SerializeField] public string weaponSpecialAttackAnimation;
 
     // Assuming instaniation means equippment
     protected void Start()
@@ -183,6 +184,11 @@ public abstract class Weapon : MonoBehaviour
         attackMoveSpeed = heavyAttackMoveSpeed;
 
         state = WeapnState.WindingUp; // Begin attack process
+    }
+
+    public virtual void specialAttack()
+    {
+        animator.Play(weaponSpecialAttackAnimation);
     }
 
     public bool isActive() => state == WeapnState.Active || state == WeapnState.WindingUp;

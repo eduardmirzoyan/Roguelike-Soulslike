@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf00ed0afc0fec4e9880bdbb1ba0e5a, type: 3}
   m_Name: Slash Upgrade 1 Skill
   m_EditorClassIdentifier: 
-  name: Quick attack
-  description: Your technique has improved. You can now create a wind slash with
-    only a light attack.
+  name: Peircing Slash
+  description: Your wind slash will perice one enemy
   prerequisite: {fileID: 11400000, guid: d1a9dd234ec72b743b49c3595c54c1d6, type: 2}
   icon: {fileID: -3061971124352811578, guid: f736099925445bd45a8295c8aa71a480, type: 3}
   upgrade: {fileID: 11400000, guid: 930315b807fd97c4fa6a646f4ec6c21a, type: 2}

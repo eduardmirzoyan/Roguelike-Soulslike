@@ -6,7 +6,7 @@ using UnityEngine;
 public class Slash : MonoBehaviour
 {
     [SerializeField] private Damage slashDamage;
-    [SerializeField] private int numberOfPeirces;
+    [SerializeField] public int numberOfPeirces;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

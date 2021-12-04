@@ -13,11 +13,11 @@ public class ShieldBashAbility : Ability
 
     public override void perfromBeforeChargeUp(GameObject parent)
     {
+        parent.GetComponent<AnimationHandler>().changeAnimationState(shieldBashAnimation); // Play animation
+
         var shield = Instantiate(shieldBashPrefab, parent.transform.position, Quaternion.identity, parent.transform);
         bashingShield = shield.GetComponent<BashingShield>();
         bashingShield.setDamage(shieldBashDamage);
-
-        parent.GetComponent<AnimationHandler>().changeAnimationState(shieldBashAnimation); // Play animation
 
         base.perfromBeforeChargeUp(parent);
     }

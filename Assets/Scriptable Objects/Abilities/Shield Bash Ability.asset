@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Shield Bash Ability
   m_EditorClassIdentifier: 
   name: Shield Bash
-  chargeUpTime: 0.42
-  activeTime: 0.33
+  chargeUpTime: 0.43
+  activeTime: 0.15
   cooldownTime: 6
   staminaCost: 20
   sprite: {fileID: 2818364792325388446, guid: 621f62ba456f8e34892c9288a5e03742, type: 3}
@@ -23,7 +23,7 @@ MonoBehaviour:
   activeWhileHeld: 0
   shieldBashPrefab: {fileID: 476606897938945930, guid: 20088e83334828849ad2571886aee022, type: 3}
   bashingShield: {fileID: 0}
-  shieldBashAnimation: 
+  shieldBashAnimation: Shield Bash
   shieldBashDamage:
     damageAmount: 3
     source: 0

@@ -11,7 +11,6 @@ public class SlashUpgradeTwo : Upgrade
     // Give the sword a bleed effect
     public override void upgradeAfterChargeUp(GameObject parent, Ability ability)
     {
-        //((SlashAbility)ability).damage.effect = bleedEffect;
-        // FIX THIS
+        ((SlashAbility)ability).damage.effects.Add(bleedEffect);
     }
 }
