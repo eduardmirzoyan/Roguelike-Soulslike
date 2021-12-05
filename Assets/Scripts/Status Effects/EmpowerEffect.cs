@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Status Effects/Empower")]
 public class EmpowerEffect : BaseEffect
 {
     public float damageDealtMultiplier;

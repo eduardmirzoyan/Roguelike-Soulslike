@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Status Effects/Speed")]
 public class SpeedEffect : BaseEffect
 {
     public float percentSpeedBoost;

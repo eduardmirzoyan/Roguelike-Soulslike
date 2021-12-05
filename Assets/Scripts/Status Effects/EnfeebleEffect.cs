@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Status Effects/Enfeeble")]
 public class EnfeebleEffect : BaseEffect
 {
     public float damageDealtMultiplier;
