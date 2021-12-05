@@ -15,6 +15,7 @@ using UnityEngine;
 [RequireComponent(typeof(Keybindings))]
 [RequireComponent(typeof(EquipmentHandler))]
 [RequireComponent(typeof(CombatHandler))]
+[RequireComponent(typeof(FamiliarHandler))]
 public class Player : MonoBehaviour
 {
     [Header("Composition")]
@@ -26,13 +27,12 @@ public class Player : MonoBehaviour
     [SerializeField] private CombatStats stats;
     [SerializeField] private Inventory inventory;
     [SerializeField] private Stamina stamina;
-    [SerializeField] public Keybindings keybindings { get; private set; }
-    [SerializeField] private EquipmentHandler equipment;
-    [SerializeField] public CombatHandler combatHandler { get; private set; }
-
+    [SerializeField] private EquipmentHandler equipmentHandler;
     [SerializeField] private InputBuffer inputBuffer;
-
     [SerializeField] private Menu menu;
+    [SerializeField] public Keybindings keybindings { get; private set; }
+    [SerializeField] public CombatHandler combatHandler { get; private set; }
+    [SerializeField] public FamiliarHandler familiarHandler { get; private set; }
 
     [Header("Flask")]
     [SerializeField] protected Flask flask;
@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
     [SerializeField] private BossHealthBarUI bossHealthBar;
 
     [SerializeField] private Enchantment enchantment;
+    [SerializeField] private GameObject tempFam;
 
     public float regenTimer;
 
@@ -87,9 +88,10 @@ public class Player : MonoBehaviour
         stamina = GetComponent<Stamina>();
         inventory = GetComponentInChildren<Inventory>();
         keybindings = GetComponent<Keybindings>();
-        equipment = GetComponent<EquipmentHandler>();
+        equipmentHandler = GetComponent<EquipmentHandler>();
         combatHandler = GetComponent<CombatHandler>();
         inputBuffer = GetComponent<InputBuffer>();
+        familiarHandler = GetComponent<FamiliarHandler>();
 
         // Gets flask
         flask = GetComponentInChildren<Flask>();
@@ -174,7 +176,7 @@ public class Player : MonoBehaviour
             case PlayerState.crouchWalking:
                 animationHandler.changeAnimationState(crouchWalkAnimation);
 
-                mv.crouchWalk(inputBuffer.moveDirection);
+                mv.crouchWalk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
 
                 pickUpNearbyItems();
 
@@ -191,7 +193,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.airborne:
                 // Allow air control
-                mv.Walk(inputBuffer.moveDirection);
+                mv.Walk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
 
                 // Check if the player is falling or rising
                 if (mv.checkFalling())
@@ -214,7 +216,7 @@ public class Player : MonoBehaviour
                 animationHandler.changeAnimationState(wallslideAnimation);
 
                 mv.wallSlide();
-                mv.Walk(inputBuffer.moveDirection);
+                mv.Walk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
 
                 handleDisplacementRequest();
 
@@ -300,11 +302,9 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            // Going to be used for testing...
-            //GetComponent<EffectableObject>().addEffect(tempEffect.InitializeEffect(gameObject));
-            //displace.triggerDisplace(15, 0.25f);
+            //familiarHandler.spawnFamiliar(tempFam);
             var ench = GetComponent<EnchantableEntity>();
-            if(ench != null)
+            if (ench != null)
             {
                 //var enchant = new DamageAuraEnchantment();
                 ench.addEnchantment(enchantment);
@@ -313,9 +313,6 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
-            // Going to be used for testing...
-            //GetComponent<EffectableObject>().addEffect(temp2Effect.InitializeEffect(gameObject));
-            //displace.triggerSStun(2f); // A stun!
             var ench = GetComponent<EnchantableEntity>();
             if (ench != null)
             {
@@ -346,7 +343,7 @@ public class Player : MonoBehaviour
 
     private void handleMovementRequest()
     {
-        mv.Walk(inputBuffer.moveDirection);
+        mv.Walk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
     }
 
     private void handleJumpRequest()
@@ -371,12 +368,12 @@ public class Player : MonoBehaviour
             return;
 
         // Get input from buffer and do the attack
-        if (equipment.weapon != null && inputBuffer.lightAttackRequest)
+        if (equipmentHandler.weapon != null && inputBuffer.lightAttackRequest)
         {
             combatHandler.attemptToLightAttack();
             state = PlayerState.attacking;
         } 
-        else if (equipment.weapon != null && inputBuffer.heavyAttackRequest)
+        else if (equipmentHandler.weapon != null && inputBuffer.heavyAttackRequest)
         {
             combatHandler.attemptToHeavyAttack();
             state = PlayerState.attacking;
@@ -395,7 +392,7 @@ public class Player : MonoBehaviour
 
     private void handleComboRequest()
     {
-        if (equipment.weapon != null && inputBuffer.lightAttackRequest)
+        if (equipmentHandler.weapon != null && inputBuffer.lightAttackRequest)
             combatHandler.attemptToLightAttack();
     }
 

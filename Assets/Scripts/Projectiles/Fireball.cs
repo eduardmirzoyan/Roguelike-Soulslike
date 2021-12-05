@@ -10,7 +10,7 @@ public class Fireball : MonoBehaviour
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         var damageable = collision.GetComponent<Damageable>();
-        if (collision.gameObject != this.gameObject && damageable != null && collision.tag != GetComponent<Projectile>().creator.tag)
+        if (damageable != null && collision.tag != GetComponent<Projectile>().creator.tag)
         {
             damageable.takeDamage(fireballDamage);
             Destroy(gameObject);

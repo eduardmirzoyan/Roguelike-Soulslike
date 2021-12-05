@@ -7,7 +7,6 @@ public class Movement : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] protected Rigidbody2D body;
-    [SerializeField] protected Animator animator;
 
     [Header("Movement")]
     [SerializeField] protected float movespeed = 10;
@@ -30,8 +29,6 @@ public class Movement : MonoBehaviour
 
     [Header("Custom Settings")]
     [SerializeField] protected bool isImmobile = false;
-    [SerializeField] protected bool enableRunningAnimations = false;
-    [SerializeField] protected bool enableFallingRisingAnimations = false;
    
     // Helper variables
     protected bool isFacingRight = true;
@@ -39,7 +36,6 @@ public class Movement : MonoBehaviour
     protected void Start()
     {
         body = GetComponent<Rigidbody2D>(); // Gets body physics handler
-        animator = GetComponent<Animator>();
         speedConstant = 0.02f * 35;
     }
 
@@ -51,18 +47,6 @@ public class Movement : MonoBehaviour
             externalSpeedBonuses = 1 + stats.movespeedMultiplier;
         else
             externalSpeedBonuses = 1;
-
-        if (enableRunningAnimations)
-        {
-            animator.SetBool("run", Mathf.Abs(body.velocity.x) > 0.1f); // set run to the answer of the logical check
-        }
-        if (enableFallingRisingAnimations)
-        {
-            if (checkFalling())
-                animator.SetTrigger("falling");
-            if (checkRising())
-                animator.SetTrigger("rising");
-        }
     }
 
     public void Walk(float direction) // From 0 to 1
@@ -204,10 +188,10 @@ public class Movement : MonoBehaviour
         body.velocity = new Vector2(xVel, jumpPower);
     }
 
-    private void OnDrawGizmosSelected()
+/*    private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireCube(groundCheck.transform.position, groundCheckBoxSize);
         Gizmos.DrawWireSphere(wallCheck.transform.position, wallcheckRadius);
         //Gizmos.DrawWireCube(dropCheck.transform.position, dropCheckBoxSize);
-    }
+    }*/
 }

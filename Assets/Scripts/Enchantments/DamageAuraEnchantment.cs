@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Enchantments/Damage Aura")]
 public class DamageAuraEnchantment : Enchantment
 {
     [SerializeField] private GameObject particlesPrefab;

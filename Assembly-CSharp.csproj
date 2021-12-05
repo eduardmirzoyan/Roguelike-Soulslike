@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Status Effects\PoisonEffect.cs" />
     <Compile Include="Assets\QuickOutline\Scripts\Outline.cs" />
-    <Compile Include="Assets\EffectZone.cs" />
+    <Compile Include="Assets\Scripts\Build Up Effects\EffectZone.cs" />
     <Compile Include="Assets\Scripts\Weapons\Axe.cs" />
     <Compile Include="Assets\Scripts\Other\CutoutMaskUI.cs" />
     <Compile Include="Assets\Scripts\Enemies\Slime\SlimeAI.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="Assets\Scripts\General Use\Damageable.cs" />
     <Compile Include="Assets\Scripts\Player\PassiveSkill.cs" />
     <Compile Include="Assets\Scripts\Player\CombatHandler.cs" />
-    <Compile Include="Assets\Enchantment.cs" />
+    <Compile Include="Assets\Scripts\Enchantments\Enchantment.cs" />
     <Compile Include="Assets\Scripts\Player\Stamina.cs" />
     <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\SlashUpgradeOne.cs" />
     <Compile Include="Assets\Scripts\Enemies\PathfindingAI.cs" />
@@ -86,7 +86,7 @@
     <Compile Include="Assets\Scripts\Enemies\Bat\BatAI.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyShield.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\StaminaBar.cs" />
-    <Compile Include="Assets\AnimationHandler.cs" />
+    <Compile Include="Assets\Scripts\General Use\AnimationHandler.cs" />
     <Compile Include="Assets\Scripts\Enemies\Bosses\Mushroom Boss\Shockwave.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyBaseState.cs" />
     <Compile Include="Assets\Scripts\Status Effects\TimedSpeedEffect.cs" />
@@ -94,27 +94,27 @@
     <Compile Include="Assets\Scripts\Abillities\BashingShield.cs" />
     <Compile Include="Assets\Scripts\Abillities\Ability.cs" />
     <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\SlashUpgradeTwo.cs" />
-    <Compile Include="Assets\LineOfSight.cs" />
+    <Compile Include="Assets\Scripts\General Use\LineOfSight.cs" />
     <Compile Include="Assets\Scripts\Item\ArmorItem.cs" />
     <Compile Include="Assets\Scripts\General Use\Damage.cs" />
     <Compile Include="Assets\Scripts\Environment\Shrine.cs" />
     <Compile Include="Assets\Scripts\Door.cs" />
-    <Compile Include="Assets\ItemSpawnManager.cs" />
+    <Compile Include="Assets\Scripts\Other\ItemSpawnManager.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\Status Effects\FreezeEffect.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Fireball.cs" />
-    <Compile Include="Assets\FallDamage.cs" />
+    <Compile Include="Assets\Scripts\General Use\FallDamage.cs" />
     <Compile Include="Assets\Scripts\Abillities\Shield.cs" />
     <Compile Include="Assets\Scripts\Player\InputBuffer.cs" />
     <Compile Include="Assets\Scripts\Player\Upgrade.cs" />
     <Compile Include="Assets\Scripts\Item\DefaultItem.cs" />
     <Compile Include="Assets\Scripts\Item\WorldItem.cs" />
-    <Compile Include="Assets\EnchantableEntity.cs" />
+    <Compile Include="Assets\Scripts\Enchantments\EnchantableEntity.cs" />
     <Compile Include="Assets\Scripts\Other\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Status Effects\StunEffect.cs" />
-    <Compile Include="Assets\Enchantments.cs" />
+    <Compile Include="Assets\Scripts\Enchantments\AbilityMovespeedEnchantment.cs" />
     <Compile Include="Assets\Scripts\Status Effects\BleedEffect.cs" />
-    <Compile Include="Assets\BuildupEffect.cs" />
+    <Compile Include="Assets\Scripts\Build Up Effects\BuildupEffect.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\Build Up\EffectBuildupUI.cs" />
     <Compile Include="Assets\Scripts\General Use\Collidable.cs" />
     <Compile Include="Assets\Scripts\General Use\DamageParticles.cs" />
@@ -125,7 +125,7 @@
     <Compile Include="Assets\Scripts\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Abillities\ShieldBashAbility.cs" />
     <Compile Include="Assets\Scripts\Abillities\BlockAbility.cs" />
-    <Compile Include="Assets\EffectBuildupHandler.cs" />
+    <Compile Include="Assets\Scripts\Build Up Effects\EffectBuildupHandler.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\Build Up\EffectBar.cs" />
     <Compile Include="Assets\Scripts\Environment\PlatformHandler.cs" />
     <Compile Include="Assets\Scripts\General Use\HitPause.cs" />
@@ -147,11 +147,11 @@
     <Compile Include="Assets\Scripts\Status Effects\TimedPoisonEffect.cs" />
     <Compile Include="Assets\Scripts\Environment\SpikeHandler.cs" />
     <Compile Include="Assets\Scripts\General Use\DamageFlash.cs" />
-    <Compile Include="Assets\Poise.cs" />
+    <Compile Include="Assets\Scripts\General Use\Poise.cs" />
     <Compile Include="Assets\Scripts\Status Effects\BaseEffect.cs" />
     <Compile Include="Assets\Scripts\Player\ComplexMovement.cs" />
     <Compile Include="Assets\Scripts\Status Effects\KnockbackEffect.cs" />
-    <Compile Include="Assets\DamageAuraEnchantment.cs" />
+    <Compile Include="Assets\Scripts\Enchantments\DamageAuraEnchantment.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\StatusUI.cs" />
     <Compile Include="Assets\Scripts\Status Effects\EmpowerEffect.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\Healthbar.cs" />
@@ -211,6 +211,13 @@
     <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\BashUpgradeThree.cs" />
     <Compile Include="Assets\Scripts\Status Effects\TimedStunEffect.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\ExperienceBar.cs" />
+    <Compile Include="Assets\Familiar.cs" />
+    <Compile Include="Assets\CloseAttackFamiliar.cs" />
+    <Compile Include="Assets\Scripts\Projectiles\MagicBolt.cs" />
+    <Compile Include="Assets\FamiliarHandler.cs" />
+    <Compile Include="Assets\Scripts\Enchantments\FeatherFallEnchantment.cs" />
+    <Compile Include="Assets\Scripts\Enchantments\BurnImmunityEnchantment.cs" />
+    <Compile Include="Assets\Scripts\Enchantments\DebuffDamageReductionEnchantment.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\QuickOutline\Resources\Shaders\OutlineMask.shader" />

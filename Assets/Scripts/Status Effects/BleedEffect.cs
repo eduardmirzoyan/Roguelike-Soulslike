@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Status Effects/Bleed")]
 public class BleedEffect : BaseEffect
 {
     public int tickDamage;
