@@ -369,6 +369,8 @@
 "Assets/Scripts/Enchantments/EnchantableEntity.cs"
 "Assets/Scripts/Enchantments/Enchantment.cs"
 "Assets/Scripts/Enchantments/FeatherFallEnchantment.cs"
+"Assets/Scripts/Enchantments/LongFamiliarEnchantment.cs"
+"Assets/Scripts/Enchantments/ShortFamilarEnchantment.cs"
 "Assets/Scripts/Enemies/Bat/BatAI.cs"
 "Assets/Scripts/Enemies/Bosses/BossAI.cs"
 "Assets/Scripts/Enemies/Bosses/Mushroom Boss/Boulder.cs"

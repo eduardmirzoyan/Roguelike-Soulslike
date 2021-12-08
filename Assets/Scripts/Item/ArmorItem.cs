@@ -13,6 +13,8 @@ public class ArmorItem : Item
     public EquipmentSlot equipSlot;
     public ArmorType armorType;
 
+    public Enchantment enchantment;
+
     public int defenseValue;
     public int bonusStamina;
 

@@ -21,5 +21,12 @@ MonoBehaviour:
   name: Golden Gloves
   equipSlot: 3
   armorType: 1
+  enchantment: {fileID: 11400000, guid: 72af192da9911d647a239138393e424e, type: 2}
   defenseValue: 2
   bonusStamina: 10
+  poisonResistance: 0
+  burnResistance: 0
+  freezeResistance: 0
+  curseResistance: 0
+  dodgeChance: 0
+  damageTakenMultiplier: 0

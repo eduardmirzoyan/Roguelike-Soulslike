@@ -29,21 +29,18 @@ public class EnchantableEntity : MonoBehaviour
             GameManager.instance.CreatePopup("New enchantment added.", transform.position);
         }
         else
-        {
             Debug.Log("you already have this enchantment.");
-        }
     }
 
-    public void removeEnchantment(Enchantment enchantment)
+    public void removeEnchantment(Enchantment enchantmentToRemove)
     {
-        foreach (var enchant in enchantments)
+        foreach (var enchantment in enchantments)
         {
             // If you have the requested enchantment, uninsitalize it, remove it then break the loop
-            if (enchant.GetType() == enchantment.GetType())
+            if (enchantment.GetType() == enchantmentToRemove.GetType())
             {
-                enchant.unintialize();
-                enchantments.Remove(enchant);
-                Debug.Log("Enchantment removed");
+                enchantment.unintialize();
+                enchantments.Remove(enchantment);
                 break;
             }
         }

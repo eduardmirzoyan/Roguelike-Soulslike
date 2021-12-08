@@ -21,5 +21,12 @@ MonoBehaviour:
   name: Golden Helmet
   equipSlot: 0
   armorType: 1
+  enchantment: {fileID: 11400000, guid: c2731a30ffcbd1240acb06a4cb9a18fe, type: 2}
   defenseValue: 1
   bonusStamina: 10
+  poisonResistance: 0
+  burnResistance: 0
+  freezeResistance: 0
+  curseResistance: 0
+  dodgeChance: 0
+  damageTakenMultiplier: 0

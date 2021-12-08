@@ -21,6 +21,12 @@ MonoBehaviour:
   name: Golden Chestplate
   equipSlot: 1
   armorType: 1
+  enchantment: {fileID: 11400000, guid: 505e160bc8849704cbe5660803f88dee, type: 2}
   defenseValue: 4
   bonusStamina: 10
+  poisonResistance: 0
+  burnResistance: 0
+  freezeResistance: 0
+  curseResistance: 0
+  dodgeChance: 0
   damageTakenMultiplier: 0.1
