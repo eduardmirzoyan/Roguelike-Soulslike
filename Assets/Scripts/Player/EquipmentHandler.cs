@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CombatStats))]
+[RequireComponent(typeof(EnchantableEntity))]
 [RequireComponent(typeof(Stamina))]
 public class EquipmentHandler : MonoBehaviour
 {
     [SerializeField] private CombatStats stats;
     [SerializeField] private Inventory inventory;
     [SerializeField] private Stamina stamina;
+    [SerializeField] private EnchantableEntity enchantableEntity;
 
     [Header("Weapon Information")]
     [SerializeField] public WeaponItem equippedWeaponItem;
@@ -28,6 +30,7 @@ public class EquipmentHandler : MonoBehaviour
         stats = GetComponent<CombatStats>();
         stamina = GetComponent<Stamina>();
         inventory = GetComponentInChildren<Inventory>();
+        enchantableEntity = GetComponent<EnchantableEntity>();
 
         // Intialize the amount of armor slots
         int numSlots = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
@@ -87,7 +90,8 @@ public class EquipmentHandler : MonoBehaviour
 
         stamina.maxStamina += newArmor.bonusStamina;
 
-        //poiseThreshold += newArmor.defenseValue;
+        // Add the armor's enchantment
+        enchantableEntity.addEnchantment(newArmor.enchantment);
     }
 
     public void unEquipArmor(int slot)
@@ -100,6 +104,9 @@ public class EquipmentHandler : MonoBehaviour
         stamina.maxStamina -= equippedArmor[slot].bonusStamina;
         if (stamina.currentStamina > stamina.maxStamina)
             stamina.currentStamina = stamina.maxStamina;
+
+        // Remove the armor's enchantment
+        enchantableEntity.removeEnchantment(equippedArmor[slot].enchantment);
 
         // Remove armor item from equip slot
         inventory.unEquipSelectedItem();

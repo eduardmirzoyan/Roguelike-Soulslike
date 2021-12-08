@@ -50,4 +50,11 @@ public abstract class Familiar : MonoBehaviour
     public void setOwner(GameObject newOwner) => owner = newOwner;
 
     public void setPosition(int newPos) => position = newPos;
+
+    public int getPosition() => position;
+
+    public void Despawn()
+    {
+        Destroy(gameObject);
+    }
 }

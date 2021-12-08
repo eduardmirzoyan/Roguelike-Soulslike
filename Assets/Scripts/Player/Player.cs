@@ -16,6 +16,7 @@ using UnityEngine;
 [RequireComponent(typeof(EquipmentHandler))]
 [RequireComponent(typeof(CombatHandler))]
 [RequireComponent(typeof(FamiliarHandler))]
+[RequireComponent(typeof(EnchantableEntity))]
 public class Player : MonoBehaviour
 {
     [Header("Composition")]
@@ -303,21 +304,22 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             //familiarHandler.spawnFamiliar(tempFam);
-            var ench = GetComponent<EnchantableEntity>();
+            /*var ench = GetComponent<EnchantableEntity>();
             if (ench != null)
             {
                 //var enchant = new DamageAuraEnchantment();
                 ench.addEnchantment(enchantment);
-            }
+            }*/
 
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
-            var ench = GetComponent<EnchantableEntity>();
+            //familiarHandler.despawnFamiliar(tempFam);
+            /*var ench = GetComponent<EnchantableEntity>();
             if (ench != null)
             {
                 ench.removeEnchantment(enchantment);
-            }
+            }*/
 
         }
         if (playerIsFree())
