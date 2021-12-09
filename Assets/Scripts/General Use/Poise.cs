@@ -40,7 +40,7 @@ public class Poise : MonoBehaviour
         timer = 30f; // Reset timer
         if (currentPoise <= 0)
         {
-            currentPoise = basePoise;
+            currentPoise = basePoise * 3;
 
             // Trigger stagger
             var displace = GetComponent<Displacable>();

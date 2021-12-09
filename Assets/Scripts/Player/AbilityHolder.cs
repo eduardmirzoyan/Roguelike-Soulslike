@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// MOVE TOGGLING ABILITY INTO ABILITY ITSELF
 public class AbilityHolder : MonoBehaviour
 {
     [Header("Ability Details")]
@@ -46,6 +47,7 @@ public class AbilityHolder : MonoBehaviour
                 case AbilityState.Active:
                     if (abilityActiveTime > 0)
                     {
+                        // Remove this and have the ability manually change the active time
                         if(!ability.activeWhileHeld)
                             abilityActiveTime -= Time.deltaTime;
 

@@ -33,6 +33,7 @@ public class FireMageAI : EnemyAI
     [SerializeField] private string risingAnimation = "Rise";
     [SerializeField] private string fallingAnimation = "Fall";
     [SerializeField] private string deadAnimation = "Dead";
+    [SerializeField] private string staggerAnimation = "Stagger";
 
     // Start is called before the first frame update
     protected override void Start()
@@ -57,6 +58,12 @@ public class FireMageAI : EnemyAI
         switch (state)
         {
             case EnemyState.knockedback:
+                animationHandler.changeAnimationState(staggerAnimation);
+
+                displacable.performDisplacement();
+
+                if (!displacable.isDisplaced)
+                    state = EnemyState.aggro;
 
                 break;
             case EnemyState.idle:
@@ -94,7 +101,7 @@ public class FireMageAI : EnemyAI
                         idleTimer = idleCooldown;
                     }
                 }
-
+                handleDisplacement();
                 break;
             case EnemyState.aggro:
                 handleMovementAnimations();
@@ -150,7 +157,7 @@ public class FireMageAI : EnemyAI
                 {
                     handleForwardMovement(mv.getFacingDirection());
                 }
-
+                handleDisplacement();
                 break;
             case EnemyState.charging: // Enemy charges for attack
                 if (delayTimer > 0)
@@ -179,6 +186,7 @@ public class FireMageAI : EnemyAI
 
                     state = EnemyState.attacking;
                 }
+                handleDisplacement();
                 break;
             case EnemyState.attacking: // Enemy is in the action of attacking
                 if (attackTimer > 0)
@@ -198,6 +206,7 @@ public class FireMageAI : EnemyAI
                     recoveryTimer = currentAttack.attackRecovery; // Set reoovery time
                     state = EnemyState.recovering; // Change enemy state
                 }
+                handleDisplacement();
                 break;
             case EnemyState.recovering: // Enemy recovery time after attacking
                 if (recoveryTimer > 0)
@@ -218,6 +227,7 @@ public class FireMageAI : EnemyAI
                         state = EnemyState.aggro;
                     }
                 }
+                handleDisplacement();
                 break;
             case EnemyState.dead:
                 animationHandler.changeAnimationState(deadAnimation);
@@ -239,6 +249,15 @@ public class FireMageAI : EnemyAI
         {
             mv.Stop();
         }*/
+    }
+
+    private void handleDisplacement()
+    {
+        if (displacable.isDisplaced)
+        {
+            resetCombatValues();
+            state = EnemyState.knockedback;
+        }
     }
 
     protected override void setUpSequenceOfAttacks(List<EnemyAttack> enemyAttacks)

@@ -33,7 +33,7 @@ public class BlockAbility : Ability
 
     public override void performDuringActive(GameObject parent)
     {
-        parent.GetComponent<Movement>().Stop();
+        //parent.GetComponent<Movement>().Stop();
 
         if (staminaDrainTimer > 0)
             staminaDrainTimer -= Time.deltaTime;

@@ -115,6 +115,14 @@ public abstract class EnemyAI : MonoBehaviour
         state = EnemyState.aggro;
     }
 
+    protected void resetCombatValues()
+    {
+        delayTimer = 0;
+        attackTimer = 0;
+        recoveryTimer = 0;
+        currentCooldownTimer = Random.Range(minAttackCooldown, maxAttackCooldown);
+    }
+
     public void halfAttackCooldown() => currentCooldownTimer /= 2;
 
     public bool isIdle() => state == EnemyState.idle;

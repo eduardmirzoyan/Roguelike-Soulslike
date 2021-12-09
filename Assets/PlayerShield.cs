@@ -39,6 +39,9 @@ public class PlayerShield : Shield
         }
         else
             takeStaminaDamage(dmg.damageAmount); // Drain stamina
+
+        // Knock holder back
+        GetComponentInParent<Rigidbody2D>().AddForce(dmg.origin * 4);
     }
 
     private void takeStaminaDamage(int damage)
