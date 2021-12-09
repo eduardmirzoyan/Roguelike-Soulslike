@@ -176,7 +176,6 @@ GameObject:
   - component: {fileID: -8413317443809888856}
   - component: {fileID: 8025920383290353545}
   - component: {fileID: 213937614}
-  - component: {fileID: 1995298288}
   - component: {fileID: 359258933}
   m_Layer: 7
   m_Name: Goblin
@@ -290,7 +289,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.011024475, y: -0.43068886}
+  m_Offset: {x: 0.011024475, y: -0.06668949}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -301,7 +300,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6079941, y: 0.20112228}
+  m_Size: {x: 0.6079941, y: 0.929121}
   m_EdgeRadius: 0
 --- !u!114 &3996419839580739562
 MonoBehaviour:
@@ -412,7 +411,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 0}
-  animator: {fileID: 0}
   movespeed: 5
   jumpPower: 8
   groundLayer:
@@ -430,8 +428,6 @@ MonoBehaviour:
   dropCheckBoxSize: {x: 0.2, y: 2}
   speedConstant: 0
   isImmobile: 0
-  enableRunningAnimations: 0
-  enableFallingRisingAnimations: 0
 --- !u!114 &4795636587157759412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,32 +521,6 @@ MonoBehaviour:
   particlesPrefab: {fileID: 6962195399759583525, guid: ce1b7420697b63448ab79a7f522b4904, type: 3}
   damageParticles: {fileID: 0}
   color: {r: 1, g: 0, b: 0, a: 1}
---- !u!61 &1995298288
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3996419839580739552}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.013666153, y: -0.05467415}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1.0625}
-    newSize: {x: 1, y: 1.0625}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.48059464, y: 0.67977905}
-  m_EdgeRadius: 0
 --- !u!114 &359258933
 MonoBehaviour:
   m_ObjectHideFlags: 0

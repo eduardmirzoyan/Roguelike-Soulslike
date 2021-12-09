@@ -303,13 +303,14 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            //familiarHandler.spawnFamiliar(tempFam);
-            /*var ench = GetComponent<EnchantableEntity>();
-            if (ench != null)
+            /*var body = GetComponent<Rigidbody2D>();
+            if(body != null)
             {
-                //var enchant = new DamageAuraEnchantment();
-                ench.addEnchantment(enchantment);
+                Debug.Log("added force");
+                body.AddForce(Vector2.right * 3, ForceMode2D.Impulse);
             }*/
+            var shield = GetComponentInChildren<PlayerShield>();
+            shield.raiseShield();
 
         }
         if (Input.GetKeyDown(KeyCode.H))
@@ -320,7 +321,8 @@ public class Player : MonoBehaviour
             {
                 ench.removeEnchantment(enchantment);
             }*/
-
+            var shield = GetComponentInChildren<PlayerShield>();
+            shield.lowerShield();
         }
         if (playerIsFree())
         {

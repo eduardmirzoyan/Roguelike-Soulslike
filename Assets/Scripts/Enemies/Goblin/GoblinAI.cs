@@ -55,8 +55,6 @@ public class GoblinAI : EnemyAI
 
                 displacable.performDisplacement();
 
-                //handleDisplacement();
-
                 if (!displacable.isDisplaced)
                     state = EnemyState.aggro;
 
@@ -222,14 +220,6 @@ public class GoblinAI : EnemyAI
             resetCombatValues();
             state = EnemyState.knockedback;
         }
-    }
-
-    private void resetCombatValues()
-    {
-        delayTimer = 0;
-        attackTimer = 0;
-        recoveryTimer = 0;
-        currentCooldownTimer = Random.Range(minAttackCooldown, maxAttackCooldown);
     }
 
     private void handleForwardMovement(float direction)
