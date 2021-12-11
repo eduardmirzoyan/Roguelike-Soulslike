@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\UI Scripts\StaminaBar.cs" />
     <Compile Include="Assets\Scripts\General Use\AnimationHandler.cs" />
     <Compile Include="Assets\Scripts\Enemies\Bosses\Mushroom Boss\Shockwave.cs" />
+    <Compile Include="Assets\Scripts\Enchantments\LongFamiliarEnchantment.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyBaseState.cs" />
     <Compile Include="Assets\Scripts\Status Effects\TimedSpeedEffect.cs" />
     <Compile Include="Assets\Scripts\Item\Item.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Assets\Scripts\Player\InventorySlot.cs" />
     <Compile Include="Assets\Scripts\Projectiles\BigFireball.cs" />
     <Compile Include="Assets\Scripts\Player\WeaponSwingTrail.cs" />
+    <Compile Include="Assets\Scripts\Enchantments\ShortFamilarEnchantment.cs" />
     <Compile Include="Assets\Scripts\General Use\DustTrail.cs" />
     <Compile Include="Assets\Scripts\Other\LootTable.cs" />
     <Compile Include="Assets\Scripts\Enemies\Bosses\Shadow Knight\ShadowKnightAI.cs" />
@@ -218,8 +220,6 @@
     <Compile Include="Assets\Scripts\Status Effects\TimedStunEffect.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\ExperienceBar.cs" />
     <Compile Include="Assets\FamiliarHandler.cs" />
-    <Compile Include="Assets\Scripts\Enchantments\LongFamiliarEnchantment.cs" />
-    <Compile Include="Assets\Scripts\Enchantments\ShortFamilarEnchantment.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\QuickOutline\Resources\Shaders\OutlineMask.shader" />
