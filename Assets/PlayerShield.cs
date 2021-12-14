@@ -15,7 +15,7 @@ public class PlayerShield : Shield
 
     [SerializeField] private int baseBlockDrain;
 
-    [SerializeField] private float blockTime;
+    [SerializeField] public float blockTime { get; private set; }
 
     private void Awake()
     {
@@ -29,14 +29,7 @@ public class PlayerShield : Shield
             perfectBlockTimer -= Time.deltaTime;
 
         if(blockTime > 0)
-        {
-            GetComponentInParent<Movement>().dashWithVelocity(10, 1); // Fix this logic
             blockTime -= Time.deltaTime;
-        }
-        else
-        {
-            GetComponentInParent<Movement>().dashWithVelocity(10, inputBuffer.moveDirection);
-        }
     }
 
     public override void blockDamage(Damage dmg)

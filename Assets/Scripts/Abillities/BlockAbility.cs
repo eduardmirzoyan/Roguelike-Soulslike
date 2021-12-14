@@ -7,16 +7,17 @@ public class BlockAbility : Ability
 {
     [SerializeField] private GameObject shield;
     [SerializeField] private bool isActive;
-    [SerializeField] private Player player;
+    [SerializeField] private Stamina stamina;
 
     [SerializeField] private int drainAmount = 5;
     private float staminaDrainTimer;
+    private PlayerShield playerShield;
 
     public override void instantiate(GameObject parent)
     {
         // Create the shield object as a child of the player
-        Instantiate(shield, new Vector3(parent.transform.position.x, parent.transform.position.y - 0.1f, parent.transform.position.z), Quaternion.identity, parent.transform);
-        player = parent.GetComponent<Player>();
+        playerShield = Instantiate(shield, new Vector3(parent.transform.position.x, parent.transform.position.y - 0.1f, parent.transform.position.z), Quaternion.identity, parent.transform).GetComponent<PlayerShield>();
+        stamina = parent.GetComponent<Stamina>();
 
         base.instantiate(parent);
     }
@@ -33,13 +34,18 @@ public class BlockAbility : Ability
 
     public override void performDuringActive(GameObject parent)
     {
-        //parent.GetComponent<Movement>().Stop();
+        parent.GetComponent<CombatHandler>().getUtilityAbilityHolder().refreshActiveTime();
+
+        if (playerShield.blockTime <= 0 && Input.GetKeyUp(KeyCode.D))
+        {
+            parent.GetComponent<CombatHandler>().getUtilityAbilityHolder().finishActiveTime();
+        }
 
         if (staminaDrainTimer > 0)
             staminaDrainTimer -= Time.deltaTime;
         else
         {
-            player.GetComponent<Stamina>().drainStamina(drainAmount);
+            stamina.drainStamina(drainAmount);
             staminaDrainTimer = 1f;
         }
 

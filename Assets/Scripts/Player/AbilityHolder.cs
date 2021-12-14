@@ -47,9 +47,7 @@ public class AbilityHolder : MonoBehaviour
                 case AbilityState.Active:
                     if (abilityActiveTime > 0)
                     {
-                        // Remove this and have the ability manually change the active time
-                        if(!ability.activeWhileHeld)
-                            abilityActiveTime -= Time.deltaTime;
+                        abilityActiveTime -= Time.deltaTime;
 
                         ability.performDuringActive(gameObject);
                     }
@@ -85,9 +83,6 @@ public class AbilityHolder : MonoBehaviour
         this.ability = ability;
         this.ability.instantiate(gameObject);
 
-        // If the ability is holdable one, then subscribe to utility toggle 
-        if (ability.activeWhileHeld)
-            GameEvents.current.onPlayerUseUtility += releaseAbility;
     }
 
     public Ability getAbility()
@@ -128,12 +123,16 @@ public class AbilityHolder : MonoBehaviour
         abilityCooldownTime -= seconds;
     }
 
-    private void releaseAbility()
+    public void finishActiveTime()
     {
-        if(state == AbilityState.Active)
-        {
+        if(ability != null)
             abilityActiveTime = 0;
-        }
+    }
+
+    public void refreshActiveTime()
+    {
+        if (ability != null)
+            abilityActiveTime = ability.activeTime;
     }
 
     public void cancelAbility()
@@ -153,10 +152,5 @@ public class AbilityHolder : MonoBehaviour
     public float getMaxCooldown()
     {
         return ability.cooldownTime;
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.current.onPlayerUseUtility -= releaseAbility;
     }
 }
