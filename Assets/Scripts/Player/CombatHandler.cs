@@ -62,9 +62,6 @@ public class CombatHandler : MonoBehaviour
                 attacking = false;
                 resetCombatValues();
             }
-
-            if ((utilityAbilityHolder.getAbility()?.activeWhileHeld ?? false) && Input.GetKeyUp(keybindings.utilityAbiltyKey))
-                GameEvents.current.triggerPlayerUseUtility();
         }
     }
 

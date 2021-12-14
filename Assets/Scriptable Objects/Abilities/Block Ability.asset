@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Block
   chargeUpTime: 0
-  activeTime: 0.2
+  activeTime: 0.5
   cooldownTime: 0.5
   staminaCost: 0
   sprite: {fileID: 165035601938022485, guid: 2ca0ae809293f77439df1c791a2e562c, type: 3}
@@ -23,5 +23,5 @@ MonoBehaviour:
   activeWhileHeld: 1
   shield: {fileID: 7333237082917640985, guid: 2df7021f900b3ca47810902fc7706fe7, type: 3}
   isActive: 0
-  player: {fileID: 0}
+  stamina: {fileID: 0}
   drainAmount: 5
