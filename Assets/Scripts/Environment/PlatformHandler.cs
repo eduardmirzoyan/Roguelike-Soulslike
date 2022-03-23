@@ -4,42 +4,39 @@ using UnityEngine;
 
 public class PlatformHandler : MonoBehaviour
 {
-    [SerializeField] private Collider2D playerCollider;
-    [SerializeField] private GameObject platform;
-    [SerializeField] private float phaseDuration;
+    [SerializeField] private Collider2D currentStandingPlatform;
+    private Collider2D entityCollider;
+    private int platformLayer;
 
-    private void FixedUpdate()
+    // Start is called before the first frame update
+    private void Start()
     {
-        if(Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.Space))
-        {
-            if(platform != null)
-            {
-                StartCoroutine(DisableCollision());
-            }
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Platform"))
-        {
-            platform = collision.gameObject;
-        }
+        entityCollider = GetComponent<Collider2D>();
+        platformLayer = LayerMask.NameToLayer("Platform");
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Platform"))
-        {
-            platform = null;
+    public void dropFromPlatform() {
+        if (currentStandingPlatform != null)
+            StartCoroutine(disableCollision(0.35f));
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.layer == platformLayer) {
+            currentStandingPlatform = collision.collider;
+        }
+        
+    }
+
+    private void OnCollisionExit2D(Collision2D collision) {
+        if (collision.gameObject.layer == platformLayer) {
+            currentStandingPlatform = null;
         }
     }
 
-    private IEnumerator DisableCollision()
-    {
-        CompositeCollider2D platfromCollider = platform.GetComponent<CompositeCollider2D>();
-
-        Physics2D.IgnoreCollision(playerCollider, platfromCollider);
-        yield return new WaitForSeconds(phaseDuration);
-        Physics2D.IgnoreCollision(playerCollider, platfromCollider, false);
+    private IEnumerator disableCollision(float time) {
+        var platform = currentStandingPlatform;
+        Physics2D.IgnoreCollision(entityCollider, platform, true);
+        yield return new WaitForSeconds(time);
+        Physics2D.IgnoreCollision(entityCollider, platform, false);
     }
 }

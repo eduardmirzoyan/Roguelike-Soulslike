@@ -8,7 +8,7 @@ public class HealingShrine : Shrine
 
     public override void activate()
     {
-        collider.checkCollisions(refillPlayerFlask);
+        collidiable.checkCollisions(refillPlayerFlask);
     }   
 
     private void refillPlayerFlask(Collider2D coll)

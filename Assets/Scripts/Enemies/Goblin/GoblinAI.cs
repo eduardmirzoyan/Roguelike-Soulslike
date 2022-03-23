@@ -141,10 +141,10 @@ public class GoblinAI : EnemyAI
                     {
                         mv.walkBackwards(-mv.getFacingDirection()); // Move away from player
 
-                        if (mv.backAgainstWall()) // If the enemies back is against a wall do...
-                        {
-                            setUpSequenceOfAttacks(new List<EnemyAttack> { overHeadSlashAttack }); // Attack the player if driven to corner
-                        }
+                        // if (mv.backAgainstWall()) // If the enemies back is against a wall do...
+                        // {
+                        //     setUpSequenceOfAttacks(new List<EnemyAttack> { overHeadSlashAttack }); // Attack the player if driven to corner
+                        // }
                     }
                 }
                 else // Only move towards the player
@@ -230,9 +230,6 @@ public class GoblinAI : EnemyAI
         // Jump if reached a wall and is grounded
         if (jumpEnabled && mv.isGrounded() && mv.onWall())
             mv.Jump();
-
-        if (mv.aboutToDrop())
-            mv.Stop();
     }
 
     private void handleMovementAnimation()

@@ -26,4 +26,8 @@ public class AnimationHandler : MonoBehaviour
         // Reassign current state
         currentState = newState;
     }
+
+    public float getAnimationDuration() {
+        return animator.GetCurrentAnimatorStateInfo(0).length;;
+    }
 }

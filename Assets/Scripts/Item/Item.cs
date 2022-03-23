@@ -23,4 +23,6 @@ public abstract class Item : ScriptableObject
     public string description;
 
     public new string name = "Name";
+
+    public bool isDefault() => this.type == ItemType.Default;
 }

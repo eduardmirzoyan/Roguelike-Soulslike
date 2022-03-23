@@ -6,11 +6,11 @@ using Pathfinding;
 [RequireComponent(typeof(LineOfSight))]
 [RequireComponent(typeof(AnimationHandler))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
 public abstract class EnemyAI : MonoBehaviour
 {
     [Header("Enemy Animation")]
     [SerializeField] protected Rigidbody2D body;
-    [SerializeField] protected Animator animator;
     [SerializeField] protected AnimationHandler animationHandler;
 
     [Header("Enemy Stats")]
@@ -78,7 +78,6 @@ public abstract class EnemyAI : MonoBehaviour
     {
         // Get components
         body = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         lineOfSight = GetComponent<LineOfSight>();
         animationHandler = GetComponent<AnimationHandler>();
 
@@ -86,8 +85,8 @@ public abstract class EnemyAI : MonoBehaviour
         state = EnemyState.idle; // Set starting state
         player = GameObject.Find("Player").GetComponent<Player>(); // Find player
         target = player.transform; // Get player transform
-        lineOfSight.setTarget(target);
-        lineOfSight.setMaxDistance(aggroRange);
+        //lineOfSight.setTarget(target);
+        //lineOfSight.setMaxDistance(aggroRange);
         roamDirection = Random.Range(-1, 2); // Set roaming direction
         roamTimer = roamCooldown;
     }

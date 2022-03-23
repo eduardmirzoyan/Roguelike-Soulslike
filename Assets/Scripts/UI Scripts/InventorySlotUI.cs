@@ -17,25 +17,7 @@ public class InventorySlotUI : MonoBehaviour
     {
         selectBorder.enabled = isSelected; // Enable border if item is selected
 
- /*       if (isSelected)
-        {
-            selectBorder.enabled = true;
-        }
-        else
-        {
-            selectBorder.enabled = false;
-        }*/
-
         equipBorder.enabled = isEquipped; // Enable border if item is equipped
-
-        /*        if (isEquipped)
-                {
-                    equipBorder.enabled = true;
-                }
-                else
-                {
-                    equipBorder.enabled = false;
-                }*/
 
         if(item != null)
         {

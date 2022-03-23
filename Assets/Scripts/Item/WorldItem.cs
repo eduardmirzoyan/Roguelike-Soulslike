@@ -7,16 +7,11 @@ public class WorldItem : MonoBehaviour
 {
     [SerializeField] private Item item;
     [SerializeField] private SpriteRenderer spriteRend;
-    [SerializeField] private ItemContainer itemContainer;
 
     private void Start()
     {
         spriteRend = GetComponent<SpriteRenderer>();
-        spriteRend.sprite = item.sprite;
-        transform.localScale = new Vector3(.15f, .15f, 0);
-
-        if(item.type == ItemType.Weapon)
-            transform.Rotate(0, 0, -45);
+        setItem(item);
     }
 
     public Item GetItem()

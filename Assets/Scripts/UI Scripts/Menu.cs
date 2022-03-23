@@ -14,11 +14,13 @@ public class Menu : MonoBehaviour
     [SerializeField] public MenuWindow window;
     [SerializeField] private Player player;
     [SerializeField] private EquipmentHandler playerEquipment;
-    [SerializeField] private Inventory inventory;
+    [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private SkillTreeUI skillTreeUI;
     [SerializeField] private MenuUI menuUI;
     [SerializeField] private HUD hud;
     [SerializeField] protected WorldItem dropLoot; // REPLACE THIS WITH 'RESOURCE LOADING'
+
+
 
     [Header("Menu Windows")]
     [SerializeField] private GameObject inventoryScreen;
@@ -33,10 +35,10 @@ public class Menu : MonoBehaviour
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
-        inventory = player.GetComponentInChildren<Inventory>();
         playerEquipment = player.GetComponent<EquipmentHandler>();
         skillTreeUI = GameObject.Find("Skill Tree UI").GetComponent<SkillTreeUI>();
         menuUI = GetComponent<MenuUI>();
+        inventoryUI = GameObject.Find("Slot Holder").GetComponent<InventoryUI>();
         hud = GameObject.Find("HUD").GetComponent<HUD>();
         tooltip = GameObject.Find("Tooltip Holder");
         inventoryScreen.SetActive(true);
@@ -93,50 +95,55 @@ public class Menu : MonoBehaviour
         // Inventory selector maneuvering
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            inventory.moveSelectedItem("left");
+            inventoryUI.moveSelectedItem("left");
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            inventory.moveSelectedItem("right");
+            inventoryUI.moveSelectedItem("right");
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            inventory.moveSelectedItem("up");
+            inventoryUI.moveSelectedItem("up");
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            inventory.moveSelectedItem("down");
+            inventoryUI.moveSelectedItem("down");
         }
 
         // Using selected item in inventory
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Item item = inventory.getSelectedItem();
-            if (item == null)
+            Item item = inventoryUI.getSelectedItem();
+
+            // If item at slot is not empty, use the item
+            if (item != null)
             {
-                return; // Do nothing if the selected spot is empty
+                attemptToUseSelectedItem(item, inventoryUI.getSelectedItemIndex());
             }
-            else
-                attemptToUseSelectedItem(item, inventory.getSelectedItemIndex());
+            else 
+            {
+                print("no item to use!");
+            }
         }
 
 
         if (Input.GetKeyDown(KeyCode.R))
         {
+            Item selectedItem = inventoryUI.getSelectedItem();
             // If the selected item is null or equipped, then don't do anything
-            if (inventory.getSelectedItem() == null || inventory.isSelectedItemEquipped())
+            if (selectedItem == null || inventoryUI.isSelectedItemEquipped())
             {
                 return; // Do nothing if the selected spot is empty
             }
             
-            
             // Drop selected item
             var prefab = Instantiate(dropLoot, player.transform.position, Quaternion.identity);
-            prefab.setItem(inventory.getSelectedItem());
+            prefab.setItem(selectedItem);
 
-            inventory.deleteSelectedItem();
+            inventoryUI.deleteSelectedItem();
         }
         inventoryScreen.SetActive(true);
+
         #endregion
     }
 
@@ -269,10 +276,11 @@ public class Menu : MonoBehaviour
                     if(consumable.count <= 0)
                     {
                         // Remove item from inventory
-                        inventory.deleteSelectedItem();
+                        inventoryUI.deleteSelectedItem();
                     }
                 }
 
+                // TODO:
                 // TO BE IMPLEMENTED
                 Debug.Log("Consume!");
                 break;

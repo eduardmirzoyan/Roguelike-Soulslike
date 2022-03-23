@@ -9,9 +9,4 @@ public class DefaultItem : Item
     {
         type = ItemType.Default;
     }
-
-/*    public override void Use()
-    {
-        throw new System.NotImplementedException();
-    }*/
 }

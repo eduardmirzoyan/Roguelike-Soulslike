@@ -20,7 +20,7 @@ public class ComplexMovement : Movement
         if (isImmobile)
             return;
 
-        body.velocity = new Vector2(direction * movespeed * speedConstant * sprintingMultiplier, body.velocity.y); // Actually moves the character
+        body.velocity = new Vector2(direction * movespeed * Time.deltaTime * sprintingMultiplier, body.velocity.y); // Actually moves the character
 
         if (direction > 0.1f && !isFacingRight || direction < -0.1f && isFacingRight)
         {
@@ -34,7 +34,7 @@ public class ComplexMovement : Movement
         if (isImmobile)
             return;
 
-        body.velocity = new Vector2(direction * movespeed * speedConstant * crouchWalkingMultiplier, body.velocity.y); // Actually moves the character
+        body.velocity = new Vector2(direction * movespeed * Time.deltaTime * crouchWalkingMultiplier, body.velocity.y); // Actually moves the character
 
         if (direction > 0.1f && !isFacingRight || direction < -0.1f && isFacingRight)
         {

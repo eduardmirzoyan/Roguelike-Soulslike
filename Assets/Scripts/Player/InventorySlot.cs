@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class InventorySlot
 {
-    //private int count;
     public Item item;
     public bool isSelected;
     public bool isEquipped;
@@ -25,7 +24,6 @@ public class InventorySlot
     public void addItem(Item item)
     {
         this.item = item;
-        //count = 1;
     }
 
     public string itemName()
@@ -54,7 +52,6 @@ public class InventorySlot
     public void clear()
     {
         item = null;
-        //count = 0;
         isEquipped = false;
     }
 }

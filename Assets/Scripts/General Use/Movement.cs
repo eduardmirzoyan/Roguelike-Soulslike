@@ -17,12 +17,9 @@ public class Movement : MonoBehaviour
     [SerializeField] protected LayerMask wallLayer;
     [SerializeField] protected Transform groundCheck;
     [SerializeField] protected Transform wallCheck;
-    [SerializeField] protected Transform backWallCheck;
-    [SerializeField] protected Transform dropCheck; // only for enemies
 
     [SerializeField] protected Vector2 groundCheckBoxSize;
     [SerializeField] protected float wallcheckRadius;
-    [SerializeField] protected Vector2 dropCheckBoxSize;
 
     [SerializeField] public float speedConstant;
     private float externalSpeedBonuses;
@@ -55,7 +52,7 @@ public class Movement : MonoBehaviour
             return;
 
 
-        body.velocity = new Vector2(direction * movespeed * speedConstant * externalSpeedBonuses, body.velocity.y); // Actually moves the character
+        body.velocity = new Vector2(direction * movespeed * Time.deltaTime, body.velocity.y); // Actually moves the character
 
         if (direction > 0.1f && !isFacingRight || direction < -0.1f && isFacingRight)
         {
@@ -104,16 +101,7 @@ public class Movement : MonoBehaviour
         return Physics2D.OverlapCircle(wallCheck.position, wallcheckRadius, wallLayer);
     }
 
-    public bool backAgainstWall()
-    {
-        return Physics2D.OverlapCircle(backWallCheck.position, wallcheckRadius, wallLayer);
-    }
-
-    // Needs rework
-    public bool aboutToDrop()
-    {
-        return !onWall() && !Physics2D.OverlapBox(dropCheck.position, dropCheckBoxSize, 0, groundLayer);
-    }
+    public float getMovespeed() => movespeed;
 
     // Zeros horizontal movement
     public void Stop()
@@ -188,10 +176,9 @@ public class Movement : MonoBehaviour
         body.velocity = new Vector2(xVel, jumpPower);
     }
 
-/*    private void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireCube(groundCheck.transform.position, groundCheckBoxSize);
         Gizmos.DrawWireSphere(wallCheck.transform.position, wallcheckRadius);
-        //Gizmos.DrawWireCube(dropCheck.transform.position, dropCheckBoxSize);
-    }*/
+    }
 }

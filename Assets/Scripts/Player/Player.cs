@@ -10,20 +10,19 @@ using UnityEngine;
 [RequireComponent(typeof(AnimationHandler))]
 [RequireComponent(typeof(Displacable))]
 [RequireComponent(typeof(Damageable))]
-[RequireComponent(typeof(Collidable))]
 [RequireComponent(typeof(CombatStats))]
 [RequireComponent(typeof(Keybindings))]
 [RequireComponent(typeof(EquipmentHandler))]
 [RequireComponent(typeof(CombatHandler))]
 [RequireComponent(typeof(FamiliarHandler))]
 [RequireComponent(typeof(EnchantableEntity))]
+[RequireComponent(typeof(Collider2D))]
 public class Player : MonoBehaviour
 {
     [Header("Composition")]
     [SerializeField] private ComplexMovement mv;
     [SerializeField] private Displacable displace;
     [SerializeField] private Health health;
-    [SerializeField] private Collidable interactionCollider;
     [SerializeField] private AnimationHandler animationHandler;
     [SerializeField] private CombatStats stats;
     [SerializeField] private Inventory inventory;
@@ -50,12 +49,11 @@ public class Player : MonoBehaviour
 
     [Header("Player Skills")]
     [SerializeField] public List<Skill> playerSkills;
+    [Header("Loot Layer Mask")]
+    [SerializeField] private LayerMask lootLayer;
 
     [Header("Temp UI STUFF")]
     [SerializeField] private BossHealthBarUI bossHealthBar;
-
-    [SerializeField] private Enchantment enchantment;
-    [SerializeField] private GameObject tempFam;
 
     public float regenTimer;
 
@@ -84,7 +82,6 @@ public class Player : MonoBehaviour
         animationHandler = GetComponent<AnimationHandler>();
         health = GetComponent<Health>();
         displace = GetComponent<Displacable>();
-        interactionCollider = GetComponent<Collidable>();
         stats = GetComponent<CombatStats>();
         stamina = GetComponent<Stamina>();
         inventory = GetComponentInChildren<Inventory>();
@@ -301,28 +298,14 @@ public class Player : MonoBehaviour
 
     protected void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G))  // used for testing
         {
-            /*var body = GetComponent<Rigidbody2D>();
-            if(body != null)
-            {
-                Debug.Log("added force");
-                body.AddForce(Vector2.right * 3, ForceMode2D.Impulse);
-            }*/
-            var shield = GetComponentInChildren<PlayerShield>();
-            shield.raiseShield();
-
+            print(GetComponent<BoxCollider2D>().bounds.size.x);
+            Debug.DrawRay(transform.position, Vector3.left * GetComponent<BoxCollider2D>().bounds.size.x, Color.red, 1000f);
         }
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.H))  // used for testing
         {
-            //familiarHandler.despawnFamiliar(tempFam);
-            /*var ench = GetComponent<EnchantableEntity>();
-            if (ench != null)
-            {
-                ench.removeEnchantment(enchantment);
-            }*/
-            var shield = GetComponentInChildren<PlayerShield>();
-            shield.lowerShield();
+            // Nothin
         }
         if (playerIsFree())
         {
@@ -440,33 +423,39 @@ public class Player : MonoBehaviour
     }
 
     protected void pickUpNearbyItems()
-    {
-        interactionCollider.checkCollisions(pickUp);
-    }
+    {   
+        var collider2D = GetComponent<Collider2D>();
+        var droppedItems = Physics2D.OverlapBoxAll(collider2D.transform.position, collider2D.bounds.size, 0, lootLayer);
+        if (droppedItems.Length == 0) {
+            return;
+        }
+            
+        foreach (var droppedItem in droppedItems) {
+            var worldItem = droppedItem.GetComponent<WorldItem>();
+            if (worldItem != null)
+            {
+                GameManager.instance.CreatePopup("You picked up " + worldItem.GetItem().name, transform.position);
+                inventory.addItem(worldItem.GetItem());
 
-    protected void pickUp(Collider2D coll)
-    {
-        var worldItem = coll.GetComponent<WorldItem>();
-        if (worldItem != null)
-        {
-            GameManager.instance.CreatePopup("You picked up " + worldItem.GetItem().name, transform.position);
-            inventory.addItem(worldItem.GetItem());
-
-            Destroy(coll.gameObject);
+                Destroy(droppedItem.gameObject);
+            }
         }
     }
 
     protected void interactWithNearbyObjects()
     {
-        interactionCollider.checkCollisions(interactWith);
-    }
-
-    protected void interactWith(Collider2D coll)
-    {
-        var interactable = coll.GetComponent<Interactable>();
-        if (interactable != null)
-        {
-            interactable.interactWith();
+        var collider2D = GetComponent<Collider2D>();
+        var iteractables = Physics2D.OverlapBoxAll(collider2D.transform.position, collider2D.bounds.size, 0, lootLayer);
+        if (iteractables.Length == 0) {
+            return;
+        }
+            
+        foreach (var hit in iteractables) {
+            var interactable = hit.GetComponent<Interactable>();
+            if (interactable != null)
+            {
+                interactable.interactWith();
+            }
         }
     }
 
