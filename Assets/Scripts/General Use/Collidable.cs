@@ -5,7 +5,7 @@ using System;
 
 public class Collidable : MonoBehaviour
 {
-    protected Collider2D collider;
+    protected Collider2D collider2D;
     [SerializeField] private LayerMask layer;
     private ContactFilter2D whatToCheck;
     private Collider2D[] hits = new Collider2D[10]; // We only want up to 10 different collisions at each frame
@@ -14,14 +14,14 @@ public class Collidable : MonoBehaviour
 
     protected void Start()
     {
-        collider = GetComponent<Collider2D>();
+        collider2D = GetComponent<Collider2D>();
         whatToCheck.SetLayerMask(layer);
     }
 
     // Calls on oncollide function on everything it detects
     public void checkCollisions(Action<Collider2D> onCollide)
     {
-        collider.OverlapCollider(whatToCheck, hits);
+        collider2D.OverlapCollider(whatToCheck, hits);
         for (int i = 0; i < hits.Length; i++)
         {
             if (hits[i] == null) // If you hit nothing, then do nothing
@@ -42,7 +42,7 @@ public class Collidable : MonoBehaviour
         if (hasCollided)
             return;
 
-        collider.OverlapCollider(whatToCheck, hits);
+        collider2D.OverlapCollider(whatToCheck, hits);
         for (int i = 0; i < hits.Length; i++)
         {
             if (hits[i] == null) // If you hit nothing, then do nothing

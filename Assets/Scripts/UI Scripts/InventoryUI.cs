@@ -7,13 +7,14 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] protected Inventory inventory;
 
     public Transform itemsParent;
-    protected InventorySlotUI[] slots;
+    protected InventorySlotUI[] inventorySlots;
     private int selectedItem;
+
 
     // Start is called before the first frame update
     private void Start()
     {
-        slots = itemsParent.GetComponentsInChildren<InventorySlotUI>();
+        inventorySlots = itemsParent.GetComponentsInChildren<InventorySlotUI>();
         selectedItem = 0;
     }
 
@@ -25,44 +26,95 @@ public class InventoryUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        selectedItem = inventory.selectedSlot;
-        for(int i = 0; i < slots.Length; i++)
+        for(int i = 0; i < inventorySlots.Length; i++)
         {
-            if(i < inventory.currentSize)
+            if(i < inventory.getCurrentSize())
             {
-                if(inventory.items[i].getItem() != null) // If the invetory has an item at location i
+                if(inventory.getItem(i) != null) // If the invetory has an item at location i
                 {
-                    slots[i].addItem(inventory.items[i].getItem()); // Add that item to UI
-                    slots[i].isEquipped = inventory.items[i].isEquipped;
+                    inventorySlots[i].addItem(inventory.getItem(i)); // Add that item to UI
+                    //inventorySlots[i].isEquipped = inventory.items[i].isEquipped;
                 }
                 else
-                    slots[i].ClearSlot();
+                    inventorySlots[i].ClearSlot();
             }
             else
             {
-                slots[i].ClearSlot();
+                inventorySlots[i].ClearSlot();
             }
-            slots[i].isSelected = inventory.items[i].isSelected;
+            //inventorySlots[i].isSelected = inventory.items[i].isSelected;
 
-            //Check if selected
-            if (i == selectedItem)
-            {
-                slots[i].isSelected = true;
-            }
-            else
-            {
-                slots[i].isSelected = false;
-            }
+            // Handle checking slected item
+            inventorySlots[i].isSelected = i == selectedItem;
+        }
+    }
+
+    public void moveSelectedItem(string direction)
+    {
+        switch (direction) 
+        {
+            case "left":
+                if (selectedItem % 5 == 0)
+                    break;
+                inventorySlots[selectedItem].isSelected = false;
+                selectedItem -= 1;
+                inventorySlots[selectedItem].isSelected = true;
+                break;
+            case "right":
+                if ((selectedItem + 1) % 5 == 0)
+                    break;
+                inventorySlots[selectedItem].isSelected = false;
+                selectedItem += 1;
+                inventorySlots[selectedItem].isSelected = true;
+                break;
+            case "up":
+                if (selectedItem - 5 < 0)
+                    break;
+                inventorySlots[selectedItem].isSelected = false;
+                selectedItem -= 5;
+                inventorySlots[selectedItem].isSelected = true;
+                break;
+            case "down":
+                if (selectedItem + 5 > 24)
+                    break;
+                inventorySlots[selectedItem].isSelected = false;
+                selectedItem += 5;
+                inventorySlots[selectedItem].isSelected = true;
+                break;
         }
     }
 
     public Transform getSelectedSlotPosition()
     {
-        return slots[selectedItem].transform;
+        return inventorySlots[selectedItem].transform;
     }
 
     public Item getSelectedItem()
     {
-        return inventory.getSelectedItem();
+        return inventory.getItem(selectedItem);
+    }
+
+    public void deleteSelectedItem()
+    {
+        inventory.deleteItem(selectedItem);
+    }
+
+    public int getSelectedItemIndex()
+    {
+        return selectedItem;
+    }
+
+    public void equipSelectedItem(bool state) // Toggle
+    {
+        inventorySlots[selectedItem].isEquipped = state;
+    }
+
+    public bool isSelectedItemEquipped() {
+        return inventorySlots[selectedItem].isEquipped;
+    }
+
+    public void equipItemAtIndex(int index, bool state)
+    {
+        inventorySlots[index].isEquipped = state;
     }
 }

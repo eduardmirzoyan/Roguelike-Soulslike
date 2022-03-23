@@ -1,117 +1,86 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Inventory : MonoBehaviour
 {
-    public List<InventorySlot> items;
+    public List<Item> items;
     [SerializeField] protected int maxSize;
-    public int currentSize;
-    [SerializeField] public int selectedSlot;
 
     protected void Start()
     {
-        items = new List<InventorySlot>(maxSize);
-        for (int i = 0; i < maxSize; i++)
-        {
-            items.Add(new InventorySlot());
-        }
-        currentSize = 0;
-
-        selectedSlot = 0;
-        items[selectedSlot].isSelected = true;
+        setMax(maxSize);
     }
 
     public void addItem(Item itemToAdd)
     {
+        // If invetory is full, then send warning and do nothing
+        // if (items.Count >= maxSize) {
+        //     print("Inventory at max size!");
+        //     return;
+        // }
+
+        // See if item exists in inventory and if it is stackable, then increment it
         for (int i = 0; i < maxSize; i++)
         {
-            if(itemToAdd.isStackable && !items[i].isEmpty() && items[i].itemName() == itemToAdd.name)
-            {
-                items[i].increaseCount(itemToAdd.count);
-                return;
-            }
-            if (items[i].isEmpty())
-            {
-                items[i].addItem(Instantiate(itemToAdd)); // Add a copy of the scriptable object
-                currentSize++;
+            if (items[i] != null && items[i].name == itemToAdd.name && itemToAdd.isStackable) {
+                items[i].count += itemToAdd.count;
                 return;
             }
         }
+
+        for (int i = 0; i < maxSize; i++)
+        {
+            if (items[i] == null) {
+                print("added");
+                items[i] = itemToAdd;
+                return;
+            }
+        }
+
+        // Else...
+        print("Inventory at max size!");
+
+        // else, add the item as a new item at the end of the invetory
+        //items.Add(Instantiate(itemToAdd));
+    }
+
+    public void setMax(int newMax) {
+        maxSize = newMax;
+        items = new List<Item>(newMax);
+        for (int i = 0; i < maxSize; i++)
+        {
+            items.Add(null);
+        }
+    }
+
+    public void deleteItem(int index) {
+        items.RemoveAt(index);
+    }
+
+    public Item getItem(int index) {
+        return items[index];
     }
 
     public void clearItems()
     {
-        items = new List<InventorySlot>(maxSize);
+        items = new List<Item>(maxSize);
     }
 
-    public void moveSelectedItem(string direction)
-    {
-        switch (direction) 
-        {
-            case "left":
-                if (selectedSlot % 5 == 0)
-                    break;
-                items[selectedSlot].isSelected = false;
-                selectedSlot -= 1;
-                items[selectedSlot].isSelected = true;
-                break;
-            case "right":
-                if ((selectedSlot + 1) % 5 == 0)
-                    break;
-                items[selectedSlot].isSelected = false;
-                selectedSlot += 1;
-                items[selectedSlot].isSelected = true;
-                break;
-            case "up":
-                if (selectedSlot - 5 < 0)
-                    break;
-                items[selectedSlot].isSelected = false;
-                selectedSlot -= 5;
-                items[selectedSlot].isSelected = true;
-                break;
-            case "down":
-                if (selectedSlot + 5 > 24)
-                    break;
-                items[selectedSlot].isSelected = false;
-                selectedSlot += 5;
-                items[selectedSlot].isSelected = true;
-                break;
-        }
+    public int getCurrentSize() {
+        return items.Count;
     }
 
-    public void deleteSelectedItem()
-    {
-        items[selectedSlot].clear();
+    public int getMaxSize() {
+        return maxSize;
     }
 
-    public Item getSelectedItem()
-    {
-        return items[selectedSlot].getItem();
+    public bool isFull() {
+        return items.All<Item>(item => (item != null));
     }
 
-    public int getSelectedItemIndex()
-    {
-        return selectedSlot;
-    }
-
-    public void equipSelectedItem() // Toggle
-    {
-        items[selectedSlot].isEquipped = true; // Toggles the state of item being equipped
-    }
-
-    public void unEquipSelectedItem()
-    {
-        items[selectedSlot].isEquipped = false;
-    }
-
-    public void unEquipItemAtIndex(int index2)
-    {
-        items[index2].isEquipped = false;
-    }
-
-    public bool isSelectedItemEquipped()
-    {
-        return items[selectedSlot].isEquipped;
+    public bool isEmpty() {
+        return items.All<Item>(item => (item == null));
     }
 }

@@ -10,7 +10,6 @@ public class EffectBuildupHandler : MonoBehaviour
 
     // Pairs of element type and percent build up as an int
     [SerializeField] private Dictionary<StatusType, BuildupEffect> activeEffectBuildups = new Dictionary<StatusType, BuildupEffect>();
-    //[SerializeField] private List<BuildupEffect> buildupEffects = new List<BuildupEffect>();
     private bool isPaused;
 
     private void FixedUpdate()

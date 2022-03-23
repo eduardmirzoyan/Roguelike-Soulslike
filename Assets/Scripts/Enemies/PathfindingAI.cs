@@ -40,10 +40,7 @@ public class PathfindingAI : MonoBehaviour
     {
         if (enablePathfinding && TargetInDistance() && seeker.IsDone())
         {
-            seeker.StartPath(transform.position, target.position, OnPathComplete); //body.position
-
-            // Get the best direction for the enemy to move
-            //bestRoute = bestDirection;
+            seeker.StartPath(transform.position, target.position, OnPathComplete);
         }
     }
 
@@ -87,40 +84,3 @@ public class PathfindingAI : MonoBehaviour
 
     public Vector2 getBestDirection() => bestDirection;
 }
-
-#region OLD CODE
-/*    protected virtual void UpdatePath()
-    {
-        if (followEnabled && TargetInDistance() && seeker.IsDone())
-        {
-            seeker.StartPath(body.position, target.position, OnPathComplete); //body.position
-
-            // Get the best direction for the enemy to move
-            bestRoute = direction;
-        }
-    }
-
-    protected virtual void PathFollow()
-    {
-        if (path == null)
-        {
-            return;
-        }
-
-        // Reached end of path
-        if (currentWaypoint >= path.vectorPath.Count)
-        {
-            return;
-        }
-
-        // Go through all possible directions for enemy to move
-        direction = ((Vector2)path.vectorPath[currentWaypoint] - body.position).normalized; //body.position
-
-        // Get Next Waypoint
-        float distance = Vector2.Distance(body.position, path.vectorPath[currentWaypoint]); // body.position
-        if (distance < nextWaypointDistance)
-        {
-            currentWaypoint++;
-        }
-  }*/
-#endregion

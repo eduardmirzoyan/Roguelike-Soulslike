@@ -8,7 +8,7 @@ using UnityEngine;
 public class EquipmentHandler : MonoBehaviour
 {
     [SerializeField] private CombatStats stats;
-    [SerializeField] private Inventory inventory;
+    [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private Stamina stamina;
     [SerializeField] private EnchantableEntity enchantableEntity;
 
@@ -29,7 +29,7 @@ public class EquipmentHandler : MonoBehaviour
         // Get references
         stats = GetComponent<CombatStats>();
         stamina = GetComponent<Stamina>();
-        inventory = GetComponentInChildren<Inventory>();
+        //inventoryUI = GetComponentInChildren<InventoryUI>();
         enchantableEntity = GetComponent<EnchantableEntity>();
 
         // Intialize the amount of armor slots
@@ -40,11 +40,11 @@ public class EquipmentHandler : MonoBehaviour
 
     public void equipWeapon(WeaponItem newWeapon) // Always equip selected item tho
     {   // Attempt to equip weapon
-        inventory.equipSelectedItem(); // Set slot in inventory to equipped state
+        inventoryUI.equipSelectedItem(true); // Set slot in inventory to equipped state
         equippedWeaponItem = newWeapon;
 
         // Set new weapon indexes
-        equippedWeaponIndex = inventory.getSelectedItemIndex();
+        equippedWeaponIndex = inventoryUI.getSelectedItemIndex();
 
         // Creates the prefab for the weapon
         equippedWeaponPrefab = Instantiate(newWeapon.prefab, transform.position, Quaternion.identity);
@@ -60,7 +60,8 @@ public class EquipmentHandler : MonoBehaviour
     // Assumes that player is always unequipping his weapon even if its not a equipped weapon index
     public void unEquipWeapon(int index) // Should unequip at index rather than selected item
     {
-        inventory.unEquipItemAtIndex(index);
+        // Unequip weapon
+        inventoryUI.equipItemAtIndex(index, false);
 
         equippedWeaponItem = null;
         equippedWeaponIndex = -1;
@@ -79,11 +80,10 @@ public class EquipmentHandler : MonoBehaviour
     {
         int slotIndex = (int)newArmor.equipSlot; // Gets equipment index slot by casting the enum to its numerical value
         equippedArmor[slotIndex] = newArmor;
-        equippedArmorIndexes[slotIndex] = inventory.getSelectedItemIndex(); // Gets the location of the equipped armor piece
-        inventory.equipSelectedItem();
+        equippedArmorIndexes[slotIndex] = inventoryUI.getSelectedItemIndex(); // Gets the location of the equipped armor piece
+        inventoryUI.equipSelectedItem(true); // Equip item
 
         // Add new armor's stats to player
-
         stats.defense += newArmor.defenseValue;
         stats.bonusStamina += newArmor.bonusStamina;
         stats.damageTakenMultiplier += newArmor.damageTakenMultiplier;
@@ -101,6 +101,7 @@ public class EquipmentHandler : MonoBehaviour
         stats.bonusStamina -= equippedArmor[slot].bonusStamina;
         stats.damageTakenMultiplier -= equippedArmor[slot].damageTakenMultiplier;
 
+        // Remove max stamina effects
         stamina.maxStamina -= equippedArmor[slot].bonusStamina;
         if (stamina.currentStamina > stamina.maxStamina)
             stamina.currentStamina = stamina.maxStamina;
@@ -109,7 +110,7 @@ public class EquipmentHandler : MonoBehaviour
         enchantableEntity.removeEnchantment(equippedArmor[slot].enchantment);
 
         // Remove armor item from equip slot
-        inventory.unEquipSelectedItem();
+        inventoryUI.equipSelectedItem(false);
         equippedArmor[slot] = null;
         equippedArmorIndexes[slot] = -1;
     }

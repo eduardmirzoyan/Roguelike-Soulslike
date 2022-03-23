@@ -30,7 +30,8 @@ public class TooltipUI : MonoBehaviour
             case MenuWindow.Inventory:
                 // First check if player is hovering over an actual item (and not empty slot)
                 selectedItem = inventoryUI.getSelectedItem();
-                if (selectedItem != null) // If so...
+                // If so...
+                if (selectedItem != null) 
                 {
                     transform.position = inventoryUI.getSelectedSlotPosition().position; // Find the slot that the player is hovering
                     itemName.text = selectedItem.name; // Set tooltip values to the items values

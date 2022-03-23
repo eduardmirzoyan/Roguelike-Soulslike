@@ -6,12 +6,12 @@ using UnityEngine;
 [RequireComponent(typeof(Interactable))]
 public abstract class Shrine : MonoBehaviour
 {
-    [SerializeField] protected Collidable collider;
+    [SerializeField] protected Collidable collidiable;
     [SerializeField] protected Interactable interactable;
 
     protected virtual void Start() 
     { 
-        collider = GetComponent<Collidable>();
+        collidiable = GetComponent<Collidable>();
         interactable = GetComponent<Interactable>();
     }
 
