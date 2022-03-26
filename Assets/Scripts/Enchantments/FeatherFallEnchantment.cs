@@ -19,7 +19,7 @@ public class FeatherFallEnchantment : Enchantment
         {
             body.gravityScale = 1.5f;
             if (fallDamage != null)
-                fallDamage.enabled = false;
+                fallDamage.enableFallDamage = false;
         }
     }
 
@@ -30,7 +30,7 @@ public class FeatherFallEnchantment : Enchantment
         {
             body.gravityScale = 2.5f;
             if (fallDamage != null)
-                fallDamage.enabled = true;
+                fallDamage.enableFallDamage = true;
         }
         base.unintialize();
     }
