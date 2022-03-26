@@ -25,7 +25,7 @@ public class SpikeHandler : MonoBehaviour
         {
             if(GetComponent<Damageable>() != null)
             {
-                spikeDamage.origin = transform.position;
+                spikeDamage.origin = transform;
                 GetComponent<Damageable>().takeDamage(spikeDamage);
             }
         }

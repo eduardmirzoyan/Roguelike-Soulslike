@@ -8,23 +8,28 @@ using UnityEngine;
 [RequireComponent(typeof(EquipmentHandler))]
 public class CombatHandler : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private Movement mv;
     [SerializeField] private EquipmentHandler equipment;
     [SerializeField] private Stamina stamina;
     [SerializeField] private Animator animator;
     [SerializeField] private Keybindings keybindings;
-
     [SerializeField] public AbilityHolder signatureAbilityHolder;
     [SerializeField] public AbilityHolder utilityAbilityHolder;
-
     [SerializeField] public List<Ability> allPlayerAbilities;
-
-    [SerializeField] private Ability temp;
     [SerializeField] private ActiveSkill tempSkill;
-
-    [SerializeField] private string lightAttackAnimation;
-
     [SerializeField] private AnimationHandler animationHandler;
+
+    [Header("Weapons")]
+    [SerializeField] private Weapon mainHandWeapon;
+    [SerializeField] private Weapon offHandWeapon;
+
+    [Header("Rolling")]
+    [SerializeField] private string rollAnimation;
+    [SerializeField] private float rollDuration = 0.5f;
+    [SerializeField] private float rollSpeed = 350f;
+    private float rollTimer;
+    private float rollDirection;
 
     public bool attacking { get; private set; }
 
@@ -35,7 +40,6 @@ public class CombatHandler : MonoBehaviour
         stamina = GetComponent<Stamina>();
         equipment = GetComponent<EquipmentHandler>();
         keybindings = GetComponent<Keybindings>();
-
         animationHandler = GetComponent<AnimationHandler>();
     }
 
@@ -53,70 +57,58 @@ public class CombatHandler : MonoBehaviour
         GameEvents.current.triggerPlayerEquippedUtility(utilityAbilityHolder);
     }
 
-    private void Update()
-    {
-        if (attacking)
-        {
-            if ((equipment.weapon?.isReady() ?? true) && !signatureAbilityHolder.isInUse() && !utilityAbilityHolder.isInUse())
-            {
-                attacking = false;
-                resetCombatValues();
-            }
+    public Weapon getMainHandWeapon() {
+        return mainHandWeapon;
+    }
+
+    public Weapon getOffHandWeapon() {
+        return offHandWeapon;
+    }
+
+    public void setMainHandWeapon(Weapon weapon) {
+        mainHandWeapon = weapon;
+    }
+
+    public void setOffHandWeapon(Weapon weapon) {
+        offHandWeapon = weapon;
+    }
+
+    public void mainHandAttack() {
+        if (mainHandWeapon != null && mainHandWeapon.canAttack()) {
+            mainHandWeapon.attack();
+
+            // Get animation for player from the weapon
+            animationHandler.changeAnimationState(mainHandWeapon.getAnimationName());
+
+            GameEvents.current.togglePlayerLightAttack(true);
+            GameEvents.current.triggerActionStart();
         }
     }
 
-    public void attemptToLightAttack()
-    {
-        if (equipment.weapon.isReady() || equipment.weapon.isRecovering())
-        {
-            if (equipment.weapon.atMaxCombo())
-                return;
-            if (stamina.drainStamina(equipment.weapon.lightStaminaCost)) // Attempts to drain players stamina for attack, if player has enough, initiates attack, else not
-            {
-                // Stop the player from moving
-                mv.Stop();
+    public void offhandAttack() {
+        if (offHandWeapon != null && offHandWeapon.canAttack()) {
+            offHandWeapon.attack();
 
-                // Animate the weapon itself
-                equipment.weapon.lightAttack();
+            // Animation is based on the current combo you are on
+            animationHandler.changeAnimationState(offHandWeapon.getAnimationName());
 
-                // Get animation for player from the weapon
-                // Animation is based on the current combo you are on
-                animationHandler.changeAnimationState("");
-                animator.Play(equipment.weapon.weaponLightAttackAnimation + " " + equipment.weapon.currentCombo);
-
-                GameEvents.current.togglePlayerLightAttack(true);
-                GameEvents.current.triggerActionStart();
-                attacking = true;
-            }
-            else
-                GameManager.instance.CreatePopup("Not enough stamina.", transform.position);
-        }     
+            GameEvents.current.togglePlayerLightAttack(true);
+            GameEvents.current.triggerActionStart();
+        }
     }
 
-    public void attemptToHeavyAttack()
-    {
-        if (equipment.weapon.isReady()) /// HERE
-        {
-            if (stamina.drainStamina(equipment.weapon.heavyStaminaCost)) // Attempts to drain players stamina for attack, if player has enough, initiates attack, else not
-            {
-                mv.Stop();
-
-                // Animate the weapon itself
-                equipment.weapon.heavyAttack();
-
-                // Get animation for player from the weapon
-                // Animation is based on the current combo you are on
-                animationHandler.changeAnimationState("");
-                animator.Play(equipment.weapon.weaponHeavyAttackAnimation);
-                
-
-                GameEvents.current.togglePlayerHeavyAttack(true);
-                GameEvents.current.triggerActionStart();
-                attacking = true;
-            }
-            else
-                GameManager.instance.CreatePopup("Not enough stamina.", transform.position);
+    public bool mainCanCombo() {
+        if (offHandWeapon == null || offHandWeapon.isReady()) {
+            return true;
         }
+        return false;
+    }
+
+    public bool offCanCombo() {
+        if (mainHandWeapon == null || mainHandWeapon.isReady()) {
+            return true;
+        }
+        return false;
     }
 
     public void attemptToUseSignatureAbility()
@@ -179,10 +171,10 @@ public class CombatHandler : MonoBehaviour
 
     public void cancelCurrentAttack()
     {
-        if(equipment.weapon != null && !equipment.weapon.isReady())
-        {
-            equipment.weapon.stopCurrentAttack();
-        }
+        // if(equipment.weapon != null && !equipment.weapon.isReady())
+        // {
+        //     equipment.weapon.stopCurrentAttack();
+        // }
 
         if (!signatureAbilityHolder.isReady())
         {
@@ -202,10 +194,43 @@ public class CombatHandler : MonoBehaviour
     }
 
     public AbilityHolder getSignatureAbilityHolder() => signatureAbilityHolder;
+
     public AbilityHolder getUtilityAbilityHolder() => utilityAbilityHolder;
+
     private void resetCombatValues()
     {
         GameEvents.current.togglePlayerLightAttack(false);
         GameEvents.current.togglePlayerHeavyAttack(false);
+    }
+    
+    public bool isDoneAttacking() {
+        // Either mainhand weapon is not equipped or in ready state
+        if (mainHandWeapon == null || mainHandWeapon.isReady()) {
+            // Either offhand weapon is not equipped or in ready state
+            if (offHandWeapon == null || offHandWeapon.isReady()) {
+                // Only then are you done attacking
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    // Rolling values
+    public void startRoll(float direction) {
+        rollTimer = rollDuration;
+        rollDirection = direction;
+    }
+
+    public void roll() {
+        animationHandler.changeAnimationState(rollAnimation);
+        mv.WalkAtSpeed(rollDirection, rollSpeed);
+        if (rollTimer > 0) {
+            rollTimer -= Time.deltaTime;
+        }
+    }
+
+    public bool isDoneRolling() {
+        return rollTimer <= 0;
     }
 }

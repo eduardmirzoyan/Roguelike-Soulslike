@@ -43,7 +43,10 @@ public class LineOfSight : MonoBehaviour
             return hit.collider.name == target.name;
     }
 
-    public Transform canSeeATarget() {
+    public LayerMask getLayerMask() => targetLayer;
+
+    public Collider2D[] getAllEnemiesInSight() {
+        // Get all enemies within range
         var hits = Physics2D.OverlapCircleAll(transform.position, maxDistance, targetLayer);
 
         // If nothing is within range, then return null
@@ -51,26 +54,26 @@ public class LineOfSight : MonoBehaviour
             return null;
         }
 
-        Transform result = null;
-        float shortestDistance = Mathf.Infinity;
+        List<Collider2D> result = new List<Collider2D>();
+
+        // Get movement
         var mv = GetComponent<Movement>();
-
-        // Find the closest target that is also in line of sight
+        // Make sure that you can see every enemy
         foreach (var collider in hits) {
-            float distance = Vector3.Distance(transform.position, collider.transform.position);
+            float distance = Vector2.Distance(transform.position, collider.transform.position);
             Vector2 directionBetween = (collider.transform.position - transform.position).normalized;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionBetween, maxDistance, obstacleLayer);
 
-            if (hit && distance < shortestDistance 
-                && ((directionBetween.x < -0.1f && mv.getFacingDirection() < 0) 
+            // Raycast towards each enemy
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionBetween, distance, obstacleLayer);
+
+            // If the raycast doesn't hit an obstacle and the character is facing the correct way, then keep the
+            if (!hit && ((directionBetween.x < -0.1f && mv.getFacingDirection() < 0) 
                 || (directionBetween.x > 0.1f && mv.getFacingDirection() > 0))) {
-
-                shortestDistance = distance;
-                result = collider.transform;
+                result.Add(collider); // Add to result
             }
         }
 
-        return result;
+        return result.ToArray();
     }
 
 

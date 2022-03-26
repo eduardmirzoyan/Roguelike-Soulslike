@@ -11,9 +11,9 @@ public class DamageDealer : MonoBehaviour
     public void setDamage(Damage dmg)
     {
         damage = dmg;
-        damage.origin = transform.position;
+        damage.origin = transform;
         if(transform.parent != null)
-            damage.origin = transform.parent.position; // Set position to the parent's position if possible
+            damage.origin = transform.parent; // Set position to the parent's position if possible
     }
 
     public void dealDamageTo(Damageable entity)

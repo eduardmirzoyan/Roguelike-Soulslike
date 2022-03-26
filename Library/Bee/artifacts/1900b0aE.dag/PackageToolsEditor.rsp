@@ -108,7 +108,7 @@
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
--r:"Assets/AstarPathfindingProject/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll"
+-r:"Assets/Astar/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Managed/UnityEditor.Graphs.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
 -r:"C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Managed/UnityEngine/UnityEditor.DeviceSimulatorModule.dll"
@@ -313,9 +313,9 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/AstarPathfindingProject/PackageTools/Editor/EditorBase.cs"
-"Assets/AstarPathfindingProject/PackageTools/Editor/EditorGUIx.cs"
-"Assets/AstarPathfindingProject/PackageTools/Editor/EnumFlagDrawer.cs"
+"Assets/Astar/PackageTools/Editor/EditorBase.cs"
+"Assets/Astar/PackageTools/Editor/EditorGUIx.cs"
+"Assets/Astar/PackageTools/Editor/EnumFlagDrawer.cs"
 -langversion:8.0
 
 /deterministic

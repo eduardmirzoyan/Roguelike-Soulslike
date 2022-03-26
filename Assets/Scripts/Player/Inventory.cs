@@ -33,7 +33,6 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < maxSize; i++)
         {
             if (items[i] == null) {
-                print("added");
                 items[i] = itemToAdd;
                 return;
             }

@@ -2,18 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collidable))]
-[RequireComponent(typeof(Interactable))]
+[RequireComponent(typeof(Collider2D))]
 public abstract class Shrine : MonoBehaviour
 {
-    [SerializeField] protected Collidable collidiable;
-    [SerializeField] protected Interactable interactable;
-
-    protected virtual void Start() 
-    { 
-        collidiable = GetComponent<Collidable>();
-        interactable = GetComponent<Interactable>();
-    }
-
-    public abstract void activate();
+    public abstract void activate(Player player);
 }

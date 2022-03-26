@@ -8,28 +8,17 @@ public class PathfindUser : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private PathfindingMap pathfinderAI;
     [SerializeField] private Movement mv; 
-
     [SerializeField] private float minTargetDistance;
-
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundCheckWidth;
-    [SerializeField] private float waypointSize;
     [SerializeField] private LayerMask groundMask;
-
     [SerializeField] private float padding;
-    [SerializeField] private float movespeed;
-    [SerializeField] private float jumpHeight;
-
-    [SerializeField] private Queue<Vector3> currentPath;
+    private Queue<Vector3> currentPath;
     [SerializeField] private Vector3 currentTarget;
 
     // Relationship between jumpheight and y velocity is y = 1.67x + 3
     [SerializeField] private Dictionary<int, float> jumpHeightToVelocityPairs;
-    private bool isFacingLeft = true;
-    [SerializeField] private Animator animator;
+    [SerializeField] private AnimationHandler animationHandler;
     [SerializeField] private PlatformHandler platformHandler;
-
-    [SerializeField] private bool manualControl;
+    [SerializeField] private Vector3[] viewableQueue;
 
     private bool isJump;
     private bool isDrop;
@@ -39,7 +28,7 @@ public class PathfindUser : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        animationHandler = GetComponent<AnimationHandler>();
         platformHandler = GetComponent<PlatformHandler>();
         mv = GetComponent<Movement>();
         currentPath = new Queue<Vector3>();
@@ -54,69 +43,30 @@ public class PathfindUser : MonoBehaviour
         jumpHeightToVelocityPairs.Add(5, 11.25f);
     }
 
-    private void move(float direction) {
-        mv.Walk(direction);
-    }
-
     private void jump() {
         if (mv.isGrounded()) {
             if (Mathf.Abs(currentTarget.x) <= 1) {
                 rb.velocity = new Vector2(rb.velocity.x, jumpHeightToVelocityPairs[(int)currentTarget.z]);
             }
             else {
-                Vector2 optimal = pathfinderAI.getOptimalIntialVelocity(currentTarget.x, currentTarget.y, movespeed * Time.deltaTime, Physics2D.gravity.y);
+                Vector2 optimal = pathfinderAI.getOptimalIntialVelocity(currentTarget.x, currentTarget.y, mv.getMovespeed() * Time.deltaTime, Physics2D.gravity.y);
                 rb.velocity = new Vector2(rb.velocity.x, optimal.y);
             }
         }
     }
 
-    // Update is called once per frame
-    // private void Update()
-    // {
-    //     if (!manualControl) {
-    //         if (Input.GetKeyDown(KeyCode.Mouse0) && isGrounded()) {
-    //             Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //             var hit = Physics2D.Raycast(mousePosition, Vector2.down, 1000, groundMask);
-    //             if (hit) {
-    //                 // Shift point down
-    //                 hit.point = hit.point - Vector2.up * 0.3f;
-    //                 travelTo(hit.point);
-    //             }
-    //         }
-    //     }
-    //     else {
-    //         // Used to test jumping height
-    //         if (!Input.GetKey(KeyCode.S) && Input.GetKeyDown(KeyCode.Space) && isGrounded()) {
-    //             isJump = true;
-    //         }
-    //     }
-    // }
-
-    private void FixedUpdate() {
-        // if (!manualControl && currentPath != null) {
-        //     moveToLocation();
-        // }
-        // else {
-        //     if (Input.GetKey(KeyCode.A)) {
-        //         move(-1);
-        //     }
-        //     else if (Input.GetKey(KeyCode.D)) {
-        //         move(1);
-        //     }
-        //     else {
-        //         move(0);
-        //     }
-
-        //     if (isJump) {
-        //         rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
-        //         isJump = false;
-        //     }
-        // }
-        
-
-    }
-
     public void setPathTo(Vector3 location) {
+        
+        // if(!isPointValid(transform.position)) {
+        //     print("start not valid: " + transform.position);
+        //     return;
+        // }
+
+        if (!isPointValid(location)) {
+            print("not valid location");
+            return;
+        }
+
         // Raycast downward to ground
         var startHit = Physics2D.Raycast(transform.position, Vector2.down, 1000f, groundMask);
         var endHit = Physics2D.Raycast(location, Vector2.down, 1000f, groundMask);
@@ -126,16 +76,38 @@ public class PathfindUser : MonoBehaviour
             startHit.point += Vector2.up * 0.5f;
             endHit.point += Vector2.up * 0.5f;
 
-            Debug.DrawLine(transform.position, startHit.point, Color.red, 100f);
-            Debug.DrawLine(location, endHit.point, Color.red, 100f);
-
             currentPath = pathfinderAI.findPath(startHit.point, endHit.point);
             if (currentPath.Count == 0) {
                 print("No path to location: " + location);
-                return;
             }
             nextTarget();
         }
+    }
+
+    public bool isPointValid(Vector3 location) {
+        // Raycast downward to ground
+        var endHit = Physics2D.Raycast(location, Vector2.down, 1000f, groundMask);
+
+        // If ground has been found
+        if (endHit) {
+            // Should be 0.5f off the ground
+            endHit.point += Vector2.up * 0.5f;
+
+            // Make sure there is no wall within half a cell to the left or right
+            var leftEndSideCheck = Physics2D.Raycast(endHit.point, Vector2.left, 0.5f, groundMask);
+            var rightEndSideCheck = Physics2D.Raycast(endHit.point, Vector2.right, 0.5f, groundMask);
+
+            if (isPointInsideMap(endHit.point) || leftEndSideCheck || rightEndSideCheck) {
+                return false;
+            }
+
+            return true;
+        }
+        return false;
+    }
+
+    public bool isPointInsideMap(Vector3 point) {
+        return pathfinderAI.isPointInsideMap(point);
     }
 
     private void nextTarget() {
@@ -143,9 +115,9 @@ public class PathfindUser : MonoBehaviour
             currentTarget = Vector3Int.back;
             return;
         }
+        viewableQueue = currentPath.ToArray();
 
-        // Get center of the cell instead of the bottom left corner
-        currentTarget = pathfinderAI.getCellCenter(currentPath.Dequeue());
+        currentTarget = currentPath.Dequeue();
 
         // If currentTarget.z > 0, it indicates a jump
         if (currentTarget.z > 0 && !isJump) {
@@ -159,16 +131,20 @@ public class PathfindUser : MonoBehaviour
 
     public void moveToLocation() {
         // Check if currentTarget is set and you are not jumping
-        if (currentTarget.z != -1  && !isJump && !isDrop) {
+        if (currentTarget != Vector3.back  && !isJump && !isDrop) {
             // Check if the location that you need to go to is to the left or right of your current position
             if (currentTarget.x - padding > transform.position.x) {
-                move(1);
+                if (mv.isGrounded())
+                    animationHandler.changeAnimationState("Walk");
+                mv.Walk(1);
             }
             else if(currentTarget.x + padding < transform.position.x) {
-                move(-1);
+                if (mv.isGrounded())
+                    animationHandler.changeAnimationState("Walk");
+                mv.Walk(-1);
             }
             else {
-                move(0);
+                mv.Walk(0);
             }
 
             if (Vector2.Distance(transform.position, currentTarget) < minTargetDistance && mv.isGrounded()) {
@@ -176,38 +152,15 @@ public class PathfindUser : MonoBehaviour
             }
         }
         else {
-            move(0);
+            mv.Walk(0);
         }
 
         if (isJump) {
-            var bound = GetComponent<Collider2D>().bounds;
-            // Make sure the block above you is open, so you can jump
-            var hit = Physics2D.BoxCast(bound.center, bound.size, 0, Vector2.up, .5f, groundMask);
-            if (false) {
-                // If you do hit a wall, then move in the opposite direction until an open spot is found
-                if (Mathf.Sign(currentTarget.x) >= 0) {
-                    move(-1);
-                }
-                else {
-                    move(1);
-                }
-                // Make sure you do a standing jump instead of a running one
-                properjump = true;
-            }
-            else {
-                jump();
-                if(properjump) {
-                    if (rb.velocity.y < 5.5f) {
-                        properjump = false;
-                    }
-                }
-                else {
-                    nextTarget();
-                    // Check for recalibration if you don't make the jump
-                    //StartCoroutine(recalibrateIn(5f));
-                    isJump = false;
-                }
-            }
+            jump();
+            nextTarget();
+            // Check for recalibration if you don't make the jump
+            //StartCoroutine(recalibrateIn(5f));
+            isJump = false;
         }
 
         if (isDrop) {
@@ -215,8 +168,6 @@ public class PathfindUser : MonoBehaviour
             isDrop = false;
         }
     }
-
-    private bool isGrounded() => Physics2D.OverlapBox(groundCheck.position, new Vector2(groundCheckWidth, 0.2f), 0, groundMask) && Mathf.Abs(rb.velocity.y) <= 0.05f;
     
     // Checks to see if after a second, if the target has not changed, then generate new path to the end point
     private IEnumerator recalibrateIn(float waitTime) {
@@ -241,14 +192,16 @@ public class PathfindUser : MonoBehaviour
         currentTarget = Vector3.back;
         mv.Walk(0);
     }
-    public bool isDonePathing() => currentPath.Count == 0;
+    public bool isDonePathing() => currentTarget == Vector3Int.back;
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     { 
         Gizmos.color = Color.red;
         var col = GetComponent<Collider2D>();
         if (currentTarget.z >= 0) {
-            Gizmos.DrawSphere(currentTarget, waypointSize);
+            Gizmos.DrawSphere(currentTarget, minTargetDistance);
+            Gizmos.color = Color.white;
+            Gizmos.DrawSphere(currentTarget, 0.1f);
         }
     }
 }

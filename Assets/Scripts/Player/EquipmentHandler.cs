@@ -7,22 +7,21 @@ using UnityEngine;
 [RequireComponent(typeof(Stamina))]
 public class EquipmentHandler : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private CombatStats stats;
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private Stamina stamina;
     [SerializeField] private EnchantableEntity enchantableEntity;
+    [SerializeField] private CombatHandler combatHandler;
 
     [Header("Weapon Information")]
-    [SerializeField] public WeaponItem equippedWeaponItem;
-    [SerializeField] public Weapon weapon;
-    private GameObject equippedWeaponPrefab;
-    public int equippedWeaponIndex; // Set to -1 if nothing is equipped 
+    [SerializeField] public WeaponItem[] equippedWeaponItem;
+    public int[] equippedWeaponIndexes; // Set to -1 if nothing is equipped 
 
     [Header("Armor Information")]
     [SerializeField] public ArmorItem[] equippedArmor; // Holds equipment type items
     public int[] equippedArmorIndexes; // Holds the indexes of the equipped items in respect to the position in the player's inventory
     // ^^^ Set to -1 if nothing is equipped at that slot
-
 
     private void Start()
     {
@@ -31,49 +30,85 @@ public class EquipmentHandler : MonoBehaviour
         stamina = GetComponent<Stamina>();
         //inventoryUI = GetComponentInChildren<InventoryUI>();
         enchantableEntity = GetComponent<EnchantableEntity>();
+        combatHandler = GetComponent<CombatHandler>();
+
+        // Intialize weapon slots
+        equippedWeaponItem = new WeaponItem[2];
+        equippedWeaponIndexes = new int[2];
+        for (int i = 0; i < equippedWeaponIndexes.Length; i++) {
+            equippedWeaponIndexes[i] = -1;
+        }
 
         // Intialize the amount of armor slots
         int numSlots = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
         equippedArmor = new ArmorItem[numSlots];
         equippedArmorIndexes = new int[numSlots]; // Set to -1 if nothing is equipped at that slot
+        for (int i = 0; i < equippedArmorIndexes.Length; i++) {
+            equippedArmorIndexes[i] = -1;
+        }
     }
 
-    public void equipWeapon(WeaponItem newWeapon) // Always equip selected item tho
-    {   // Attempt to equip weapon
+    public void equipWeapon(WeaponItem weaponItem, bool onMainHand) // Always equip selected item tho
+    {   
+        // Equip weapon
         inventoryUI.equipSelectedItem(true); // Set slot in inventory to equipped state
-        equippedWeaponItem = newWeapon;
 
-        // Set new weapon indexes
-        equippedWeaponIndex = inventoryUI.getSelectedItemIndex();
-
-        // Creates the prefab for the weapon
-        equippedWeaponPrefab = Instantiate(newWeapon.prefab, transform.position, Quaternion.identity);
+        // Instaniate the the weapon and set as child
+        GameObject equippedWeaponPrefab = Instantiate(weaponItem.prefab, transform.position, Quaternion.identity);
         equippedWeaponPrefab.transform.parent = gameObject.transform; // Sets the prefab to a child of 
 
-        // Get reference to equipped weapon
-        weapon = GetComponentInChildren<Weapon>();
+        // Set the owner of the weapon to the weaponitem
+        equippedWeaponPrefab.GetComponent<Weapon>().setOwner(weaponItem);
 
-        // Send event trigger
-        GameEvents.current.triggerPlayerEquippedWeapon(equippedWeaponPrefab.GetComponent<Weapon>());
+        // Equip on correct hand
+        if (onMainHand) {
+            // Store reference to weapon item
+            equippedWeaponItem[0] = weaponItem;
+            // Set new weapon indexes
+            equippedWeaponIndexes[0] = inventoryUI.getSelectedItemIndex();
+            // Set mainhand reference
+            combatHandler.setMainHandWeapon(equippedWeaponPrefab.GetComponent<Weapon>());
+        }
+        else {
+            // Store reference to weapon item
+            equippedWeaponItem[1] = weaponItem;
+            // Set new weapon indexes
+            equippedWeaponIndexes[1] = inventoryUI.getSelectedItemIndex();
+            // Set offhand reference
+            combatHandler.setOffHandWeapon(equippedWeaponPrefab.GetComponent<Weapon>());
+
+            equippedWeaponPrefab.transform.position -= new Vector3(0.25f, 0, 0);
+        }
     }
 
     // Assumes that player is always unequipping his weapon even if its not a equipped weapon index
-    public void unEquipWeapon(int index) // Should unequip at index rather than selected item
+    public void unEquipWeapon(int index, bool onMainHand) // Should unequip at index rather than selected item
     {
-        // Unequip weapon
+        // Unequip weapon at index
         inventoryUI.equipItemAtIndex(index, false);
 
-        equippedWeaponItem = null;
-        equippedWeaponIndex = -1;
+        if (onMainHand) {
+            // Set mainhand weapon item values to null
+            equippedWeaponItem[0] = null;
+            equippedWeaponIndexes[0] = -1;
 
-        // Remove reference
-        weapon = null;
+            // Destroy weapon gameobject
+            Destroy(combatHandler.getMainHandWeapon().gameObject);
 
-        Destroy(GameObject.Find(equippedWeaponPrefab.name));
-        equippedWeaponPrefab = null;
+            // Set mainhand to null
+            combatHandler.setMainHandWeapon(null);
+        }
+        else {
+            // Set offhand weapon item values to null
+            equippedWeaponItem[1] = null;
+            equippedWeaponIndexes[1] = -1;
 
-        // Send event trigger
-        GameEvents.current.triggerPlayerEquippedWeapon(null);
+            // Destroy weapon gameobject
+            Destroy(combatHandler.getOffHandWeapon().gameObject);
+
+            // Set offhand to null
+            combatHandler.setOffHandWeapon(null);
+        }
     }
 
     public void equipArmor(ArmorItem newArmor)
@@ -115,8 +150,11 @@ public class EquipmentHandler : MonoBehaviour
         equippedArmorIndexes[slot] = -1;
     }
 
-    public WeaponItem getEquippedWeaponItem()
-    {
-        return equippedWeaponItem;
+    public WeaponItem getMainHandWeaponItem() {
+        return equippedWeaponItem[0];
+    }
+
+    public WeaponItem getOffHandWeaponItem() {
+        return equippedWeaponItem[1];
     }
 }

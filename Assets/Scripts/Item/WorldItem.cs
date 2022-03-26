@@ -26,6 +26,8 @@ public class WorldItem : MonoBehaviour
         transform.localScale = new Vector3(.15f, .15f, 0);
 
         if (item.type == ItemType.Weapon)
-            transform.Rotate(0, 0, -45);
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, -45));
+        else 
+            transform.rotation = Quaternion.identity;            
     }
 }

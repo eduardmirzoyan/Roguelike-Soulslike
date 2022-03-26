@@ -53,6 +53,8 @@ public class Damageable : MonoBehaviour
                 if(rand <= stats.percentDodgeChance)
                 {
                     // Dodge ATTACK!
+                    GameManager.instance.CreatePopup("DODGED", transform.position, Color.cyan);
+                    return;
                 }
             }
 
@@ -61,7 +63,7 @@ public class Damageable : MonoBehaviour
             if (shield != null && shield.isActive) // If the damageable has a shield and is enabled and the attack is not perilous...
             {
                 // Need to fix this?
-                if (shield.checkIfShieldShouldBlock(damage.origin))
+                if (shield.checkIfShieldShouldBlock(damage.origin.position))
                 {
                     shield.blockDamage(damage);
                     immunityTimer = immunityDuration;
@@ -82,9 +84,9 @@ public class Damageable : MonoBehaviour
             GameManager.instance.CreatePopup(damage.damageAmount.ToString(), transform.position, damage.color);
 
         // Reduce poise if applicible
-        var poise = GetComponent<Poise>();
-        if (poise != null)
-            poise.damagePoise(5, damage.origin);
+        // var poise = GetComponent<Poise>();
+        // if (poise != null)
+        //     poise.damagePoise(5, damage.origin.position);
 
         // Damage particles if possible
         var damageParticles = GetComponent<DamageParticles>();
@@ -122,6 +124,9 @@ public class Damageable : MonoBehaviour
         var enemy = GetComponent<EnemyAI>();
         if (enemy != null)
         {
+            // Signal that the enemy was attacked
+            enemy.isAttacked(damage.origin);
+
             // Trigger onhit event
             GameEvents.current.triggerOnHit();
 

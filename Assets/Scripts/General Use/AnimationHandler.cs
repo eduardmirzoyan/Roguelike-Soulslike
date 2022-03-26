@@ -28,6 +28,6 @@ public class AnimationHandler : MonoBehaviour
     }
 
     public float getAnimationDuration() {
-        return animator.GetCurrentAnimatorStateInfo(0).length;;
+        return animator.GetCurrentAnimatorStateInfo(0).length;
     }
 }

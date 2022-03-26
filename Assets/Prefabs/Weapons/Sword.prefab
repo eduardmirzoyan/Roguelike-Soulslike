@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9157344496376886353}
-  - component: {fileID: 1187901017}
   - component: {fileID: 9157344496376886356}
-  - component: {fileID: 9157344496376886354}
-  - component: {fileID: 7663163235708087016}
   - component: {fileID: 9201320373876329302}
+  - component: {fileID: 1187901017}
+  - component: {fileID: 9157344496376886354}
+  - component: {fileID: 8006824362132755115}
   m_Layer: 6
   m_Name: Sword
   m_TagString: Untagged
@@ -35,25 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1187901017
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9157344496376886352}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f00adf49746f1874cb5d241e7300baf7, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &9157344496376886356
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -106,64 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9157344496376886354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9157344496376886352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe6533815c83725409f2264a8c400efb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  lightStunTime: 0
-  lightWindupTime: 0.33
-  lightActiveTime: 0.1
-  lightRecoveryTime: 0.3
-  lightStaminaCost: 10
-  lightAttackMoveSpeed: 1.5
-  heavyStunTime: 0
-  heavyWindupTime: 0.5
-  heavyActiveTime: 0.1
-  heavyRecoveryTime: 0.2
-  heavyStaminaCost: 25
-  heavyAttackMoveSpeed: 1
-  screenShakeOnFinish: 0
-  state: 0
-  animator: {fileID: 1187901017}
-  spriteRend: {fileID: 9157344496376886356}
-  owner: {fileID: 11400000, guid: 5afe78351655d4049935cc9901e18a9a, type: 2}
-  wielderMovement: {fileID: 0}
-  maxCombo: 2
-  weaponIdleAnimation: Sword Idle
-  weaponLightAttackAnimation: Sword Light
-  weaponHeavyAttackAnimation: Sword Heavy
-  weaponSpecialAttackAnimation: Sword Special
---- !u!114 &7663163235708087016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9157344496376886352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ccb80842871b8e46907df09e74ac6cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage:
-    damageAmount: 0
-    source: 0
-    origin: {x: 0, y: 0, z: 0}
-    isTrue: 0
-    isAvoidable: 0
-    triggersIFrames: 0
-    effects: []
-    buildupEffects: []
-    color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!60 &9201320373876329302
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -194,3 +117,59 @@ PolygonCollider2D:
       - {x: 2.5309248, y: 1.450272}
       - {x: 2.603323, y: 2.5479145}
       - {x: 1.4146465, y: 2.450272}
+--- !u!95 &1187901017
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9157344496376886352}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f00adf49746f1874cb5d241e7300baf7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &9157344496376886354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9157344496376886352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6533815c83725409f2264a8c400efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  windupDuration: 0.2
+  activeDuration: 0.1
+  recoveryDuration: 0.2
+  attackMoveSpeed: 1
+  maxCombo: 2
+  weaponIdleAnimation: Sword Idle
+  weaponLightAttackAnimation: Sword Light
+  animationHandler: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  owner: {fileID: 11400000, guid: 5afe78351655d4049935cc9901e18a9a, type: 2}
+  wielderMovement: {fileID: 0}
+--- !u!114 &8006824362132755115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9157344496376886352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e30fb07126fe2f245abfe9c399ed79d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}

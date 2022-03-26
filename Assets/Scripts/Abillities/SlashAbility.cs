@@ -12,10 +12,10 @@ public class SlashAbility : Ability
 
     public override void perfromBeforeChargeUp(GameObject parent)
     {
-        weapon = parent.GetComponentInChildren<Weapon>();
-        weapon.GetComponent<Animator>().Play(weapon.weaponSpecialAttackAnimation);
-        parent.GetComponent<AnimationHandler>().changeAnimationState(weapon.weaponSpecialAttackAnimation);
-        chargeUpTime = weapon.heavyActiveTime + weapon.heavyWindupTime;
+        //weapon = parent.GetComponentInChildren<Weapon>();
+        //weapon.GetComponent<Animator>().Play(weapon.weaponSpecialAttackAnimation);
+        //parent.GetComponent<AnimationHandler>().changeAnimationState(weapon.weaponSpecialAttackAnimation);
+        //chargeUpTime = weapon.heavyActiveTime + weapon.heavyWindupTime;
 
         base.perfromBeforeChargeUp(parent);
     }
@@ -29,7 +29,7 @@ public class SlashAbility : Ability
 
     public override void performAfterActive(GameObject parent)
     {
-        weapon.GetComponent<Animator>().Play(weapon.weaponIdleAnimation);
+        //weapon.GetComponent<Animator>().Play(weapon.weaponIdleAnimation);
         base.performAfterActive(parent);
     }
 

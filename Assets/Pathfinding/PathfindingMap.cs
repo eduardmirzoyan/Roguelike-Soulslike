@@ -99,6 +99,10 @@ public class PathfindingMap : MonoBehaviour
         }
     }
 
+    public bool isPointInsideMap(Vector3 point) {
+        return groundTilemap.HasTile(groundTilemap.WorldToCell(point)) || platformTilemap.HasTile(platformTilemap.WorldToCell(point));
+    }
+
     private void createMap() {
         // Create all used grid locations
         generateUsedGridLocations();
@@ -303,14 +307,16 @@ public class PathfindingMap : MonoBehaviour
     }
 
     public Queue<Vector3> findPath(Vector3 start, Vector3 end) {
+        // Assumes end is a valid end point
+
         // Calibrate the end point so it is not inside the floor
-        //end = groundTilemap.WorldToCell(end) + Vector3Int.up;
+        // end = groundTilemap.WorldToCell(end) + Vector3Int.up;
 
         var startPointID = getClosestPointID(groundTilemap.WorldToCell(start));
         var endPointID = getClosestPointID(groundTilemap.WorldToCell(end));
         
         if (startPointID == endPointID) {
-            var queue =new Queue<Vector3>();
+            var queue = new Queue<Vector3>();
             queue.Enqueue(end);
             return queue;
         }
@@ -343,7 +349,7 @@ public class PathfindingMap : MonoBehaviour
                 }
 
                 // The jump vector will be indicated with a z-component > 0, where x and y are the deltaX and deltaY that the pathfinder needs to travel across
-                actions.Enqueue(new Vector3(location.x - previousLocation.x - (cellSizeX / 2), location.y - previousLocation.y - (cellSizeY / 2), miniumJumpHeight));
+                actions.Enqueue(new Vector3(location.x - previousLocation.x, location.y - previousLocation.y, miniumJumpHeight));
             }
             else if (previousLocation.z >= 0 && platformTilemap.HasTile(location - Vector3Int.up) && previousLocation.y < location.y && previousLocation.y + (cellSizeY * jumpHeight) >= location.y && location.x == previousLocation.x) {
                 
@@ -356,7 +362,7 @@ public class PathfindingMap : MonoBehaviour
                 }
 
                 // The jump vector will be indicated with a z-component > 0, where x and y are the deltaX and deltaY that the pathfinder needs to travel across
-                actions.Enqueue(new Vector3(location.x - previousLocation.x - (cellSizeX / 2), location.y - previousLocation.y - (cellSizeY / 2), miniumJumpHeight));
+                actions.Enqueue(new Vector3(location.x - previousLocation.x, location.y - previousLocation.y, miniumJumpHeight));
             }
 
             // Checks for drop-down
@@ -368,18 +374,18 @@ public class PathfindingMap : MonoBehaviour
             if (i == 0 && pathArray.Length > 1) {
                 var nextLocation = graph[pathArray[1]].Item;
                 if (Vector3.Distance(start, nextLocation) > Vector3.Distance(location, nextLocation)) {
-                    actions.Enqueue(location);
+                    actions.Enqueue(getCellCenter(location));
                 }
             }
             else if (i == pathArray.Length - 1 && pathArray.Length > 1) {
                 // pointID is pointing to last node
                 var secondToLastLocation = graph[pathArray[pathArray.Length - 2]].Item;
                 if (Vector3.Distance(end, secondToLastLocation) < Vector3.Distance(location, end) || location.y != secondToLastLocation.y) {
-                    actions.Enqueue(location);
+                    actions.Enqueue(getCellCenter(location));
                 }
             }
             else {
-                actions.Enqueue(location);
+                actions.Enqueue(getCellCenter(location));
             }
         }
         
