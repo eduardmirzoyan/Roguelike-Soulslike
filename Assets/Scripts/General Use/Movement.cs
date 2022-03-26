@@ -71,7 +71,7 @@ public class Movement : MonoBehaviour
         if (isImmobile)
             return;
 
-        body.velocity = new Vector2(direction * movespeed * speedConstant * externalSpeedBonuses, body.velocity.y); // Actually moves the character
+        body.velocity = new Vector2(direction * movespeed * Time.deltaTime, body.velocity.y); // Actually moves the character
 
         if (direction > 0.1f && !isFacingRight || direction < -0.1f && isFacingRight)
         {

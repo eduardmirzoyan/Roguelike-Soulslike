@@ -20,11 +20,9 @@ public abstract class EnemyAI : MonoBehaviour
     [Header("Pathfinding")]
     [SerializeField] public Player player;
     [SerializeField] protected Transform target;
-
     [SerializeField] protected LineOfSight lineOfSight;
     [SerializeField] protected float aggroRange;
     [SerializeField] protected float aggroDropTimeLimit;
-
     [SerializeField] protected bool jumpEnabled = true;
     [SerializeField] protected bool roamEnabled = true;
     
@@ -55,10 +53,6 @@ public abstract class EnemyAI : MonoBehaviour
     protected float attackTimer;
     protected float recoveryTimer;
 
-    [Header("Enemy State Values")]
-    protected float stunTimer;
-    protected bool isJumping;
-
     // Make Knockback it's own state
     protected enum EnemyState
     {
@@ -71,8 +65,9 @@ public abstract class EnemyAI : MonoBehaviour
         knockedback,
         dead
     }
-
+    [Header("Enemy State")]
     [SerializeField] protected EnemyState state;
+    [SerializeField] protected Transform attacker;
 
     protected virtual void Start()
     {
@@ -122,11 +117,11 @@ public abstract class EnemyAI : MonoBehaviour
         currentCooldownTimer = Random.Range(minAttackCooldown, maxAttackCooldown);
     }
 
-    public void halfAttackCooldown() => currentCooldownTimer /= 2;
+    public virtual void isAttacked(Transform transform) {
+        attacker = transform;
+    }
 
     public bool isIdle() => state == EnemyState.idle;
 
-    public bool isFree() => state == EnemyState.aggro || state == EnemyState.idle;
-
-    public bool isRecovering() => state == EnemyState.recovering;
+    public Transform getTarget() => target;
 }

@@ -144,30 +144,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8472395537b91408232960f28c172e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  lightStunTime: 0
-  lightWindupTime: 0.5
-  lightActiveTime: 0.15
-  lightRecoveryTime: 0.4
-  lightStaminaCost: 35
-  lightAttackMoveSpeed: 0.75
-  heavyStunTime: 0
-  heavyWindupTime: 0.75
-  heavyActiveTime: 0.15
-  heavyRecoveryTime: 0.42
-  heavyStaminaCost: 50
-  heavyAttackMoveSpeed: 0.25
-  screenShakeOnFinish: 0
   state: 0
-  animator: {fileID: 3184617754924566440}
-  spriteRend: {fileID: 3184617754924566446}
-  owner: {fileID: 11400000, guid: adf1c9f1fb4e3ab4fbe0505d31789fc4, type: 2}
-  wielderMovement: {fileID: 0}
+  windupDuration: 0
+  activeDuration: 0
+  recoveryDuration: 0
+  attackMoveSpeed: 0
   maxCombo: 0
   weaponIdleAnimation: Axe Idle
   weaponLightAttackAnimation: Axe Light
-  weaponHeavyAttackAnimation: Axe Heavy
-  weaponSpecialAttackAnimation: Axe Special
+  animationHandler: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  owner: {fileID: 11400000, guid: adf1c9f1fb4e3ab4fbe0505d31789fc4, type: 2}
+  wielderMovement: {fileID: 0}
 --- !u!114 &-3862820843993216567
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,13 +19,12 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Player : MonoBehaviour
 {
-    [Header("Composition")]
+    [Header("Components")]
     [SerializeField] private ComplexMovement mv;
     [SerializeField] private Displacable displace;
     [SerializeField] private Health health;
     [SerializeField] private AnimationHandler animationHandler;
     [SerializeField] private CombatStats stats;
-    [SerializeField] private Inventory inventory;
     [SerializeField] private Stamina stamina;
     [SerializeField] private EquipmentHandler equipmentHandler;
     [SerializeField] private InputBuffer inputBuffer;
@@ -34,10 +33,11 @@ public class Player : MonoBehaviour
     [SerializeField] public CombatHandler combatHandler { get; private set; }
     [SerializeField] public FamiliarHandler familiarHandler { get; private set; }
 
-    [Header("Flask")]
+    [Header("Items")]
+    [SerializeField] private Inventory inventory;
     [SerializeField] protected Flask flask;
 
-    [Header("Animation Names")]
+    [Header("Animation")]
     [SerializeField] private string idleAnimation;
     [SerializeField] private string walkAnimation;
     [SerializeField] private string crouchAnimation;
@@ -49,13 +49,12 @@ public class Player : MonoBehaviour
 
     [Header("Player Skills")]
     [SerializeField] public List<Skill> playerSkills;
-    [Header("Loot Layer Mask")]
-    [SerializeField] private LayerMask lootLayer;
 
     [Header("Temp UI STUFF")]
     [SerializeField] private BossHealthBarUI bossHealthBar;
 
     public float regenTimer;
+    private bool isJump;
 
     public enum PlayerState
     {
@@ -66,6 +65,7 @@ public class Player : MonoBehaviour
         airborne,
         wallsliding,
         walljumping,
+        rolling,
         attacking,
         interacting,
         inMenu,
@@ -118,10 +118,7 @@ public class Player : MonoBehaviour
 
                 handleJumpRequest();
 
-                // Conditions to change state
                 handlePlayerAttackRequest();
-
-                handleDisplacementRequest();
 
                 if (inputBuffer.moveDirection != 0)
                     state = PlayerState.walking;
@@ -242,15 +239,24 @@ public class Player : MonoBehaviour
                     animationHandler.changeAnimationState(risingAnimation);
 
                 break;
+            case PlayerState.rolling:
+                
+                combatHandler.roll();
+                
+                if (combatHandler.isDoneRolling()) {
+                    stats.percentDodgeChance -= 100;
+                    state = PlayerState.idle;
+                }
+
+            break;
             case PlayerState.attacking:
                 // Let the respective attack handle the player movement during the attack
 
                 handleComboRequest();
 
-                handleDisplacementRequest();
-
-                if (!combatHandler.attacking)
+                if (combatHandler.isDoneAttacking())
                     state = PlayerState.idle;
+                
                 break;
             case PlayerState.interacting:
                 // TODO
@@ -272,8 +278,6 @@ public class Player : MonoBehaviour
             case PlayerState.knockedback:
                 // TODO
                 animationHandler.changeAnimationState(idleAnimation);
-
-                //handleDisplacementRequest();
 
                 displace.performDisplacement();
 
@@ -300,15 +304,19 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G))  // used for testing
         {
-            print(GetComponent<BoxCollider2D>().bounds.size.x);
-            Debug.DrawRay(transform.position, Vector3.left * GetComponent<BoxCollider2D>().bounds.size.x, Color.red, 1000f);
-        }
-        if (Input.GetKeyDown(KeyCode.H))  // used for testing
-        {
             // Nothin
+        }
+        if (Input.GetKeyDown(keybindings.rollKey))  // used for testing
+        {
+            handleRollRequest();
+            state = PlayerState.rolling;
         }
         if (playerIsFree())
         {
+            // Handle input
+            if (mv.isGrounded() && inputBuffer.jumpRequest)
+                isJump = true;
+            
             // Temp sprinting function
             if (inputBuffer.sprintRequest)
                 stats.movespeedMultiplier = 1f;
@@ -335,17 +343,25 @@ public class Player : MonoBehaviour
 
     private void handleJumpRequest()
     {
-        if (inputBuffer.jumpRequest && mv.isGrounded())
+        if (isJump && mv.isGrounded()) {
             mv.Jump();
+            isJump = false;
+        }
     }
 
     private void handleDisplacementRequest()
     {
-        if (displace.isDisplaced)
-        {
-            interuptCurrentAction();
-            state = PlayerState.knockedback;
-        }
+        // TODO:
+    }
+
+    private void handleRollRequest() {
+        if (inputBuffer.moveDirection > 0)
+            combatHandler.startRoll(1);
+        else if (inputBuffer.moveDirection < 0)
+            combatHandler.startRoll(-1);
+        else 
+            combatHandler.startRoll(mv.getFacingDirection());
+        stats.percentDodgeChance += 100;
     }
 
     private void handlePlayerAttackRequest()
@@ -354,20 +370,20 @@ public class Player : MonoBehaviour
         if (!mv.isGrounded())
             return;
 
-        // Get input from buffer and do the attack
-        if (equipmentHandler.weapon != null && inputBuffer.lightAttackRequest)
+        if (inputBuffer.mainHandAttackRequest)
         {
-            combatHandler.attemptToLightAttack();
-            state = PlayerState.attacking;
-        } 
-        else if (equipmentHandler.weapon != null && inputBuffer.heavyAttackRequest)
-        {
-            combatHandler.attemptToHeavyAttack();
+            combatHandler.mainHandAttack();
+            inputBuffer.resetAttackRequests();
             state = PlayerState.attacking;
         }
-        else if (inputBuffer.signatureAbilityRequest)
+        else if (inputBuffer.heavyAttackRequest)
         {
-            combatHandler.attemptToUseSignatureAbility();
+            // No more heavy attack :(
+        }
+        else if (inputBuffer.offHandAttackRequest)
+        {
+            combatHandler.offhandAttack();
+            inputBuffer.resetAttackRequests();
             state = PlayerState.attacking;
         }
         else if (inputBuffer.utilityAbilityRequest)
@@ -379,8 +395,16 @@ public class Player : MonoBehaviour
 
     private void handleComboRequest()
     {
-        if (equipmentHandler.weapon != null && inputBuffer.lightAttackRequest)
-            combatHandler.attemptToLightAttack();
+        if (combatHandler.mainCanCombo() && inputBuffer.mainHandAttackRequest)
+        {
+            combatHandler.mainHandAttack();
+            inputBuffer.resetAttackRequests();
+        }
+        else if (combatHandler.offCanCombo() && inputBuffer.offHandAttackRequest)
+        {
+            combatHandler.offhandAttack();
+            inputBuffer.resetAttackRequests();
+        }
     }
 
     private void handleMenuRequest()
@@ -425,7 +449,7 @@ public class Player : MonoBehaviour
     protected void pickUpNearbyItems()
     {   
         var collider2D = GetComponent<Collider2D>();
-        var droppedItems = Physics2D.OverlapBoxAll(collider2D.transform.position, collider2D.bounds.size, 0, lootLayer);
+        var droppedItems = Physics2D.OverlapBoxAll(collider2D.transform.position, collider2D.bounds.size, 0, 1 << LayerMask.NameToLayer("Loot"));
         if (droppedItems.Length == 0) {
             return;
         }
@@ -445,16 +469,22 @@ public class Player : MonoBehaviour
     protected void interactWithNearbyObjects()
     {
         var collider2D = GetComponent<Collider2D>();
-        var iteractables = Physics2D.OverlapBoxAll(collider2D.transform.position, collider2D.bounds.size, 0, lootLayer);
+        var iteractables = Physics2D.OverlapBoxAll(collider2D.transform.position, collider2D.bounds.size, 0, 1 << LayerMask.NameToLayer("Interactables"));
         if (iteractables.Length == 0) {
             return;
         }
             
         foreach (var hit in iteractables) {
-            var interactable = hit.GetComponent<Interactable>();
-            if (interactable != null)
-            {
-                interactable.interactWith();
+            if (hit.TryGetComponent(out Shrine shrine)) {
+                shrine.activate(this);
+            }
+
+            if (hit.TryGetComponent(out Chest chest)) {
+                chest.open();
+            }
+            
+            if (hit.TryGetComponent(out Door door)) {
+                door.open();
             }
         }
     }

@@ -15,7 +15,7 @@ public struct Damage
 {
     public int damageAmount;
     public DamageSource source;
-    public Vector3 origin;
+    public Transform origin;
     public bool isTrue;
     public bool isAvoidable;
     public bool triggersIFrames;

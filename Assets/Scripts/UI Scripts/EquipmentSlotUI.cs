@@ -80,9 +80,9 @@ public class EquipmentSlotUI : MonoBehaviour
                 }
                 break;
             case DisplayEquipment.Weapon:
-                if(playerEquipment.getEquippedWeaponItem() != null)
+                if(playerEquipment.getMainHandWeaponItem() != null)
                 {
-                    icon.sprite = playerEquipment.getEquippedWeaponItem().sprite;
+                    icon.sprite = playerEquipment.getMainHandWeaponItem().sprite;
                 }
                 else
                 {

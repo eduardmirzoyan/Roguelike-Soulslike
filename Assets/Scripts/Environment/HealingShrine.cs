@@ -5,16 +5,10 @@ using UnityEngine;
 
 public class HealingShrine : Shrine
 {
-
-    public override void activate()
+    public override void activate(Player player)
     {
-        collidiable.checkCollisions(refillPlayerFlask);
-    }   
-
-    private void refillPlayerFlask(Collider2D coll)
-    {
-        var playerFlask = coll.GetComponentInChildren<Flask>();
-        if (playerFlask != null)
-            playerFlask.refill();
-    }
+        if (player.TryGetComponent(out Flask flask)) {
+            flask.refill();
+        }
+    } 
 }

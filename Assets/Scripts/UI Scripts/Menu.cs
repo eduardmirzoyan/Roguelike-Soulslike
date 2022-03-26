@@ -223,26 +223,83 @@ public class Menu : MonoBehaviour
         switch (item.type) // If the chosen item is an equipable, then attempt to equip it, if it is a useable then use it
         {
             case ItemType.Weapon:
-                // Equipping weapon logic
-                if (playerEquipment.getEquippedWeaponItem() != null)
-                {
-                    // If the selected weapon is the same one that is already equipped, then unequip that weapon
-                    if (itemIndex == playerEquipment.equippedWeaponIndex)
-                    {
-                        playerEquipment.unEquipWeapon(playerEquipment.equippedWeaponIndex);
+                // Check if item already equipped in main hand
+                if (itemIndex == playerEquipment.equippedWeaponIndexes[0]) { // If this item is already equipped in mainhand
+                    // Unequip from mainhand
+                    playerEquipment.unEquipWeapon(itemIndex, true);
+                    
+                    // Attempt to equip to offhand
+                    if (playerEquipment.getOffHandWeaponItem() == null) {
+                        playerEquipment.equipWeapon((WeaponItem)item, false);
                     }
-                    else
-                    {
-                        // Do nothing
-                        playerEquipment.unEquipWeapon(playerEquipment.equippedWeaponIndex);
-                        playerEquipment.equipWeapon((WeaponItem)item);
-                    }
+                    
+                    // Finish
+                    return;
                 }
-                else
-                {
-                    playerEquipment.equipWeapon((WeaponItem)item);
 
+                // Check if item already equipped in main hand
+                if (itemIndex == playerEquipment.equippedWeaponIndexes[1]) { // If this item is already equipped in offhand
+                    // Unequip from offhand
+                    playerEquipment.unEquipWeapon(itemIndex, false);
+                    
+                    // Finish
+                    return;
                 }
+
+                // Now we can try to equip as a new item
+
+                // If main-hand is free
+                if (playerEquipment.getMainHandWeaponItem() == null) {
+                    // If weapon item is one-handed
+                    if (!((WeaponItem)item).twoHanded) {
+                        // if off-hand is open || off-hand is 1handed
+                        if (playerEquipment.getOffHandWeaponItem() == null || !playerEquipment.getOffHandWeaponItem().twoHanded) {
+                            // Equip normally
+                            playerEquipment.equipWeapon((WeaponItem)item, true);
+                            return;
+                        }
+                    }
+                }
+                
+                // Now we check if off-hand is free
+                if (playerEquipment.getOffHandWeaponItem() == null) {
+                    // If weapon item is one-handed
+                    if (!((WeaponItem)item).twoHanded) {
+                        // if main-hand is open || main-hand is 1handed
+                        if (playerEquipment.getMainHandWeaponItem() == null || !playerEquipment.getMainHandWeaponItem().twoHanded) {
+                            // Equip normally
+                            playerEquipment.equipWeapon((WeaponItem)item, false);
+                            return;
+                        }
+                    }
+                }
+                
+                // Don't do shit now
+
+                // If main slot is open
+                    // if one-handed
+                        // if off-hand is open || off-hand is 1handed
+                            // equip normally
+                        // else 
+                            // don't equip
+                    // if two handed
+                        // if off-hand is open
+                            // equip normally
+                        // else 
+                            // don't equip
+                
+                // else check offhand is open
+                    // if one-handed
+                        // if main-hand is open || main-hand is 1handed
+                            // equip normally
+                        // else 
+                            // don't equip
+                    // if two handed
+                        // if main-hand is open
+                            // equip normally
+                        // else 
+                            // don't equip
+
                 break;
             case ItemType.Armor:
                 // Equipping armor logic

@@ -5,25 +5,25 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Interactable : MonoBehaviour
 {
-    private bool hasBeenInteractedWith;
+    // private bool hasBeenInteractedWith;
 
-    public void interactWith()
-    {
-        var chest = GetComponent<Chest>();
-        if(!hasBeenInteractedWith && chest != null)
-        {
-            chest.open();
-            hasBeenInteractedWith = true;
-        }
+    // public void interactWith()
+    // {
+    //     var chest = GetComponent<Chest>();
+    //     if(!hasBeenInteractedWith && chest != null)
+    //     {
+    //         chest.open();
+    //         hasBeenInteractedWith = true;
+    //     }
 
-        var shrine = GetComponent<Shrine>();
-        if(shrine != null)
-        {
-            shrine.activate();
-        }
+    //     var shrine = GetComponent<Shrine>();
+    //     if(shrine != null)
+    //     {
+    //         shrine.activate();
+    //     }
 
-        var door = GetComponent<Door>();
-        if (door != null)
-            door.open();
-    }
+    //     var door = GetComponent<Door>();
+    //     if (door != null)
+    //         door.open();
+    // }
 }

@@ -46,7 +46,6 @@ public class Displacable : MonoBehaviour
         // Store constant knockback speed
         knockbackSpeed = 5;
         knockbackDirection = horizontalPushDirection;
-        //knockbackRequest = true;
     }
 
     //*************************************************************************

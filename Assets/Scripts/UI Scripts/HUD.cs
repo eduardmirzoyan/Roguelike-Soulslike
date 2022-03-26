@@ -17,14 +17,6 @@ public class HUD : MonoBehaviour
     private void Update()
     {
         animator.SetBool("isRaised", isActive);
-/*        if (player.isInMenu)
-        {
-             animator.SetBool("isRaised", true);
-        }
-        else
-        {
-            animator.SetBool("isRaised", false);
-        }*/
     }
     public void show()
     {
