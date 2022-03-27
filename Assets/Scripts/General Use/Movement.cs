@@ -18,14 +18,14 @@ public class Movement : MonoBehaviour
     [SerializeField] protected Transform groundCheck;
     [SerializeField] protected Transform wallCheck;
 
+    [Header("Settings")]
     [SerializeField] protected Vector2 groundCheckBoxSize;
     [SerializeField] protected float wallcheckRadius;
-
-    [SerializeField] public float speedConstant;
     private float externalSpeedBonuses;
 
     [Header("Custom Settings")]
     [SerializeField] protected bool isImmobile = false;
+    [SerializeField] protected bool flying;
    
     // Helper variables
     protected bool isFacingRight = true;
@@ -33,9 +33,7 @@ public class Movement : MonoBehaviour
     protected void Start()
     {
         body = GetComponent<Rigidbody2D>(); // Gets body physics handler
-        speedConstant = 0.02f * 35;
     }
-
 
     protected virtual void Update()
     {
@@ -64,8 +62,6 @@ public class Movement : MonoBehaviour
         }
     }
 
-
-    // Temp walk
     public void WalkAtSpeed(float direction, float movespeed) // From 0 to 1
     {
         if (isImmobile)
@@ -109,13 +105,12 @@ public class Movement : MonoBehaviour
         body.velocity = new Vector2(0, body.velocity.y);
     }
 
-    // Rework? NAH
     public void walkBackwards(float direction)
     {
         if (isImmobile)
             return;
 
-        body.velocity = new Vector2(direction * (movespeed / 2) * speedConstant , body.velocity.y); // Actually moves the character
+        body.velocity = new Vector2(direction * (movespeed / 2) * Time.deltaTime , body.velocity.y); // Actually moves the character
 
         if (direction > 0.1f && isFacingRight || direction < -0.1f && !isFacingRight)
         {
@@ -158,17 +153,7 @@ public class Movement : MonoBehaviour
 
     public void dash(float dashSpeed, float direction)
     {
-        body.MovePosition(new Vector2(body.position.x + 0.01f * direction * speedConstant * dashSpeed, body.position.y));
-    }
-
-    public void dashWithVelocity(float dashSpeed, float direction)
-    {
-        body.velocity = new Vector2(direction * speedConstant * dashSpeed, body.velocity.y);
-    }
-
-    public void angledDash(float dashSpeed, float direction)
-    {
-        body.velocity = new Vector2(direction * speedConstant * dashSpeed, dashSpeed / 4);
+        body.MovePosition(new Vector2(body.position.x + 0.01f * direction * Time.deltaTime * dashSpeed, body.position.y));
     }
 
     public void jumpReposition(float xVel)
@@ -178,7 +163,9 @@ public class Movement : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireCube(groundCheck.transform.position, groundCheckBoxSize);
-        Gizmos.DrawWireSphere(wallCheck.transform.position, wallcheckRadius);
+        if (!flying) {
+            Gizmos.DrawWireCube(groundCheck.transform.position, groundCheckBoxSize);
+            Gizmos.DrawWireSphere(wallCheck.transform.position, wallcheckRadius);
+        }
     }
 }

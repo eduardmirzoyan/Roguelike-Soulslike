@@ -5,7 +5,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProject", "AstarPathfindingProject.csproj", "{ffd7c524-ad4c-3d13-a8c2-50f0fe9f84fa}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponents", "NavMeshComponents.csproj", "{58c3f693-a436-63ae-f4e3-976099bef33c}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProjectEditor", "AstarPathfindingProjectEditor.csproj", "{3593b16c-1aee-8c0a-8265-be82fde64bb2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponentsEditor", "NavMeshComponentsEditor.csproj", "{be23ad00-0fff-1acc-efee-9155c3a5b8ca}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageToolsEditor", "PackageToolsEditor.csproj", "{531557cb-4809-48b4-5d99-5388a36595d5}"
 EndProject
@@ -18,8 +22,12 @@ Global
 		{90887996-f7b6-bce8-5aae-c396814e1b2f}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ffd7c524-ad4c-3d13-a8c2-50f0fe9f84fa}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ffd7c524-ad4c-3d13-a8c2-50f0fe9f84fa}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58c3f693-a436-63ae-f4e3-976099bef33c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58c3f693-a436-63ae-f4e3-976099bef33c}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3593b16c-1aee-8c0a-8265-be82fde64bb2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3593b16c-1aee-8c0a-8265-be82fde64bb2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{be23ad00-0fff-1acc-efee-9155c3a5b8ca}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{be23ad00-0fff-1acc-efee-9155c3a5b8ca}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{531557cb-4809-48b4-5d99-5388a36595d5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{531557cb-4809-48b4-5d99-5388a36595d5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection

@@ -87,7 +87,7 @@ public class Displacable : MonoBehaviour
             //Debug.Log("Speed: " + knockbackSpeed + " Dur: " + knockbackDuration);
             //Debug.Log("Stun Dur: " + stunDuration);
 
-            mv.dashWithVelocity(knockbackSpeed, knockbackDirection);
+            //mv.dashWithVelocity(knockbackSpeed, knockbackDirection);
         }
         else
         {

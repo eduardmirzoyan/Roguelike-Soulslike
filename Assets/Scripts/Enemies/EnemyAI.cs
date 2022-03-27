@@ -11,6 +11,7 @@ public abstract class EnemyAI : MonoBehaviour
 {
     [Header("Enemy Animation")]
     [SerializeField] protected Rigidbody2D body;
+    [SerializeField] protected Movement mv;
     [SerializeField] protected AnimationHandler animationHandler;
 
     [Header("Enemy Stats")]
@@ -75,6 +76,7 @@ public abstract class EnemyAI : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         lineOfSight = GetComponent<LineOfSight>();
         animationHandler = GetComponent<AnimationHandler>();
+        mv = GetComponent<Movement>();
 
         // Set starting information
         state = EnemyState.idle; // Set starting state
@@ -124,4 +126,9 @@ public abstract class EnemyAI : MonoBehaviour
     public bool isIdle() => state == EnemyState.idle;
 
     public Transform getTarget() => target;
+
+    protected void faceTarget()
+    {
+        mv.setFacingDirection(target.transform.position.x - transform.position.x);
+    }
 }

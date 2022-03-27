@@ -10,7 +10,7 @@ public class FallDamage : MonoBehaviour
     [SerializeField] private float fallHeight;
 
     [Header("Adjustable Settings")]
-    [SerializeField] public bool enabled;
+    [SerializeField] public bool enableFallDamage;
     [SerializeField] private float maxDropDistance;
     [SerializeField] private Damage fallDamage;
 
@@ -22,7 +22,7 @@ public class FallDamage : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (enabled)
+        if (enableFallDamage)
         {
             if (!mv.isGrounded())
             {

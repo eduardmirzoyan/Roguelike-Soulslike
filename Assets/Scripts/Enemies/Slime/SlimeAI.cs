@@ -230,7 +230,7 @@ public class SlimeAI : EnemyAI
 
     private void slimeAttack()
     {
-        mv.angledDash(dashSpeed, mv.getFacingDirection());
+        //mv.angledDash(dashSpeed, mv.getFacingDirection());
     }
 
     public override void Die()
