@@ -1153,7 +1153,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 126518634}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.98, y: 24.45, z: 0}
+  m_LocalPosition: {x: 52.34, y: 28.93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4054,7 +4054,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &504058189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11226,6 +11226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 750703563}
   - component: {fileID: 750703562}
+  - component: {fileID: 750703565}
   - component: {fileID: 750703561}
   - component: {fileID: 750703564}
   - component: {fileID: 750703560}
@@ -11249,7 +11250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  goldCap: 0
+  goldCap: 20
   storedGold: 0
   used: 0
   idleAnimation: Idle
@@ -11268,7 +11269,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.012161255, y: -1.1428471}
+  m_Offset: {x: 0.012161255, y: -0.9174681}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -11279,7 +11280,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.981781, y: 0.7143059}
+  m_Size: {x: 0.981781, y: 1.1650639}
   m_EdgeRadius: 0
 --- !u!212 &750703562
 SpriteRenderer:
@@ -11341,7 +11342,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750703559}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 56.33, y: 29.59, z: 0}
+  m_LocalPosition: {x: 56.61, y: 29.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -11366,6 +11367,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &750703565
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750703559}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: 4f558a14246786a49a2d10b97a205cd3, type: 2}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &755262866
 GameObject:
   m_ObjectHideFlags: 0
@@ -17160,6 +17182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 0}
+  mv: {fileID: 0}
   animationHandler: {fileID: 0}
   xpValue: 100
   goldValue: 10
@@ -17185,7 +17208,6 @@ MonoBehaviour:
   health: {fileID: 0}
   inventory: {fileID: 0}
   maxInventorySize: 1
-  mv: {fileID: 0}
   wanderRadius: 2
   wanderRate: 1
   itemMask:
@@ -17317,11 +17339,10 @@ MonoBehaviour:
     m_Bits: 256
   groundCheck: {fileID: 2047021563}
   wallCheck: {fileID: 248508630}
-  flying: 0
   groundCheckBoxSize: {x: 0.45, y: 0.1}
   wallcheckRadius: 0.2
-  speedConstant: 0
   isImmobile: 0
+  flying: 0
 --- !u!114 &1311444583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18774,11 +18795,10 @@ MonoBehaviour:
     m_Bits: 256
   groundCheck: {fileID: 295382412}
   wallCheck: {fileID: 1954511895}
-  flying: 0
   groundCheckBoxSize: {x: 0.55, y: 0.05}
   wallcheckRadius: 0.2
-  speedConstant: 0
   isImmobile: 0
+  flying: 0
   wallSlidingSpeed: 1
   xWallForce: 1
   yWallForce: 1
@@ -19762,6 +19782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 0}
+  mv: {fileID: 0}
   animationHandler: {fileID: 0}
   xpValue: 100
   goldValue: 10
@@ -19897,11 +19918,10 @@ MonoBehaviour:
     m_Bits: 256
   groundCheck: {fileID: 274096929}
   wallCheck: {fileID: 1733122471}
-  flying: 0
   groundCheckBoxSize: {x: 0.55, y: 0.05}
   wallcheckRadius: 0.2
-  speedConstant: 0
   isImmobile: 0
+  flying: 0
 --- !u!50 &1583725413
 Rigidbody2D:
   serializedVersion: 4
@@ -130926,11 +130946,10 @@ MonoBehaviour:
     m_Bits: 256
   groundCheck: {fileID: 1688785125}
   wallCheck: {fileID: 566804968}
-  flying: 0
   groundCheckBoxSize: {x: 0.45, y: 0.1}
   wallcheckRadius: 0.2
-  speedConstant: 0
   isImmobile: 0
+  flying: 0
 --- !u!114 &1796061153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130983,6 +131002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 0}
+  mv: {fileID: 0}
   animationHandler: {fileID: 0}
   xpValue: 100
   goldValue: 10
@@ -131008,7 +131028,6 @@ MonoBehaviour:
   health: {fileID: 0}
   inventory: {fileID: 0}
   maxInventorySize: 1
-  mv: {fileID: 0}
   wanderRadius: 2
   wanderRate: 1
   itemMask:
@@ -131755,6 +131774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 0}
+  mv: {fileID: 0}
   animationHandler: {fileID: 0}
   xpValue: 0
   goldValue: 0
@@ -131776,7 +131796,6 @@ MonoBehaviour:
   state: 0
   attacker: {fileID: 0}
   agent: {fileID: 0}
-  mv: {fileID: 0}
   health: {fileID: 0}
   collider2d: {fileID: 0}
   platformCollider: {fileID: 0}
@@ -131786,6 +131805,9 @@ MonoBehaviour:
   currentShrineIndex: 0
   interactingCircle: {fileID: 436410619}
   interactionDuration: 1
+  interactionOffset: 0.25
+  rallyRadius: 0
+  rallyDuration: 0
   impState: 0
 --- !u!114 &1870501550
 MonoBehaviour:
@@ -131835,7 +131857,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -131880,11 +131902,10 @@ MonoBehaviour:
     m_Bits: 0
   groundCheck: {fileID: 0}
   wallCheck: {fileID: 0}
-  flying: 1
   groundCheckBoxSize: {x: 0, y: 0}
   wallcheckRadius: 0
-  speedConstant: 0
   isImmobile: 0
+  flying: 1
 --- !u!1 &1887380941
 GameObject:
   m_ObjectHideFlags: 0
@@ -131983,7 +132004,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1897336321
 MonoBehaviour:
   m_ObjectHideFlags: 0
