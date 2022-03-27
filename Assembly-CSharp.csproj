@@ -125,6 +125,7 @@
      <Compile Include="Assets\Scripts\Environment\PlatformHandler.cs" />
      <Compile Include="Assets\Scripts\General Use\HitPause.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\MenuUI.cs" />
+     <Compile Include="Assets\Scripts\Environment\GoldShrine.cs" />
      <Compile Include="Assets\Scripts\Enemies\Fire Mage\FireMageAI.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\Menu.cs" />
      <Compile Include="Assets\Scripts\Enemies\Goblin\GoblinAI.cs" />
@@ -132,7 +133,6 @@
      <Compile Include="Assets\Scripts\General Use\Displacable.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Mushroom Boss\MushroomGolemAI.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyHitbox.cs" />
-     <Compile Include="Assets\Scripts\General Use\NewCollider.cs" />
      <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\SlashUpgradeThree.cs" />
      <Compile Include="Assets\Scripts\CloseAttackFamiliar.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\Graph\Simple\EdgeTemp.cs" />
@@ -215,7 +215,6 @@
      <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\BashUpgradeOne.cs" />
      <Compile Include="Assets\Scripts\Consumables\ChickenConsumable.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\InventorySlotUI.cs" />
-     <Compile Include="Assets\Scripts\General Use\Interactable.cs" />
      <Compile Include="Assets\Scripts\Environment\Chest.cs" />
      <Compile Include="Assets\Scripts\Enchantments\BurnImmunityEnchantment.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\ShortestPath\SortedSetExtensions.cs" />
@@ -223,8 +222,9 @@
      <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\BashUpgradeThree.cs" />
      <Compile Include="Assets\Scripts\Status Effects\TimedStunEffect.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\ExperienceBar.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Imp\ImpAI.cs" />
      <Compile Include="Assets\Scripts\FamiliarHandler.cs" />
-     <Compile Include="Assets\Scripts\Environment\GoldShrine.cs" />
+     <Compile Include="Assets\Scripts\Environment\FalseShrine.cs" />
      <None Include="Assets\Shader\Sprite-Grayscale.shader" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -926,9 +926,17 @@
       <Project>{ffd7c524-ad4c-3d13-a8c2-50f0fe9f84fa}</Project>
       <Name>AstarPathfindingProject</Name>
     </ProjectReference>
+    <ProjectReference Include="NavMeshComponentsEditor.csproj">
+      <Project>{be23ad00-0fff-1acc-efee-9155c3a5b8ca}</Project>
+      <Name>NavMeshComponentsEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="AstarPathfindingProjectEditor.csproj">
       <Project>{3593b16c-1aee-8c0a-8265-be82fde64bb2}</Project>
       <Name>AstarPathfindingProjectEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponents.csproj">
+      <Project>{58c3f693-a436-63ae-f4e3-976099bef33c}</Project>
+      <Name>NavMeshComponents</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

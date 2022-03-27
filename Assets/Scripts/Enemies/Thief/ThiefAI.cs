@@ -16,7 +16,6 @@ public class ThiefAI : EnemyAI
     [SerializeField] private Health health;
     [SerializeField] private Inventory inventory;
     [SerializeField] private int maxInventorySize = 1;
-    [SerializeField] private Movement mv;
     [SerializeField] private float wanderRadius = 2f;
     [SerializeField] private float wanderRate = 1f;
 
@@ -61,14 +60,13 @@ public class ThiefAI : EnemyAI
         inventory.setMax(maxInventorySize);
 
         boxCollider2D = GetComponent<BoxCollider2D>();
-        mv = GetComponent<Movement>();
         health = GetComponent<Health>();
         pathfindUser = GetComponent<PathfindUser>();
 
         lootingCircle.fillAmount = 0;
-
+        
+         // The thief spawns with no item and is aggressive
         thiefState = ThiefState.Idle;
-        // The thief spawns with no item and is aggressive
     }
 
     private void Update() {
@@ -80,26 +78,6 @@ public class ThiefAI : EnemyAI
     // Update is called once per frame
     private void FixedUpdate()
     {
-        // Psudeo code:
-
-        /*
-        On spawn: Wander until it finds an item in range or another thief with an item.
-        Or until the player comes into range
-
-            If item find, then pathfind to item/entity
-
-            Upon reaching
-                If it is an item, begin to loot (takes about 1 second)
-                If it is a thief, attack
-
-            After item is looted, show bag icon and empower thief attacks
-                Taking an item heals 50%, and increase attack speed/ damage by 25%
-            
-            Thief without an item is aggro (Attacks player on sight)
-            Thief with an item is neutral (Attacks upon being hit)
-
-        */
-        
         switch(thiefState) {
             case ThiefState.Idle:
                 //animationHandler.changeAnimationState("Idle");
@@ -113,7 +91,6 @@ public class ThiefAI : EnemyAI
                     searchForEnemies();
 
                     if (target != null) {
-                        print("found something!");
                         thiefState = ThiefState.Searching;
                         return;
                     }
@@ -165,10 +142,10 @@ public class ThiefAI : EnemyAI
                     return;
                 }
 
-                if (body.velocity.y > 0.1f) {
+                if (mv.checkRising()) {
                     animationHandler.changeAnimationState("Rise");
                 }
-                else if (body.velocity.y < -0.1f) {
+                else if (mv.checkFalling()) {
                     animationHandler.changeAnimationState("Fall");
                 }
                 
@@ -294,11 +271,6 @@ public class ThiefAI : EnemyAI
         animationHandler.changeAnimationState("Attack");
         mv.Walk(0);
         attackDuration = animationHandler.getAnimationDuration();
-    }
-
-    protected void faceTarget()
-    {
-        mv.setFacingDirection(target.transform.position.x - transform.position.x);
     }
 
     private void searchForItem() {

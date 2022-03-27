@@ -50,7 +50,7 @@ public class ComplexMovement : Movement
 
     public void wallJump()
     {
-        body.velocity = new Vector2(xWallForce * movespeed * speedConstant* -getFacingDirection(), yWallForce * jumpPower);
+        body.velocity = new Vector2(xWallForce * movespeed * Time.deltaTime * -getFacingDirection(), yWallForce * jumpPower);
         setFacingDirection(-getFacingDirection());
     }
 

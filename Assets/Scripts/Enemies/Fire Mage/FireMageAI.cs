@@ -193,7 +193,7 @@ public class FireMageAI : EnemyAI
                 {
                     // Simulate knockback
                     if (currentAttack.attackName == "Cast Big Fireball")
-                        mv.dashWithVelocity(3, -mv.getFacingDirection());
+                        mv.dash(3, -mv.getFacingDirection());
 
                     // Reduced movespeed during attack in the direction of the attack
                     attackTimer -= Time.deltaTime;
