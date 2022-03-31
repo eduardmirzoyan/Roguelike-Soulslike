@@ -8,9 +8,9 @@ public class EnemyShield : Shield
     {
         GameManager.instance.CreatePopup("Enemy BLOCK!", transform.position);
 
-        var damageable = GetComponentInParent<Damageable>();
-        if (damageable != null)
-            damageable.resetImmunityFrames();
+        // var damageable = GetComponentInParent<Damageable>();
+        // if (damageable != null)
+        //     damageable.resetImmunityFrames();
 
     }
 }

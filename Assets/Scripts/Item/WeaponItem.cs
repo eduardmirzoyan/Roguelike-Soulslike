@@ -9,20 +9,13 @@ public enum WeaponType
     Spear
 }
 
-public enum HandSlot 
-{
-    Mainhand,
-    Offhand,
-    Both
-}
-
 [CreateAssetMenu]
 public class WeaponItem : Item
 {
-    public int lightDamage;
-    public int heavyDamage;
+    public int damage;
     public WeaponType weaponType;
     public bool twoHanded;
+    public MeleeEchantment enchantment;
 
     public void Awake()
     {

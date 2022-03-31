@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class SpikeHandler : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField] private Rigidbody2D body;
     [SerializeField] protected Transform spikeCheck;
-    [SerializeField] protected float checkRadius;
     [SerializeField] protected LayerMask spikeLayer;
     [SerializeField] protected Vector2 bounds;
 
+    [Header("Settings")]
     [SerializeField] private int damage;
-    [SerializeField] private Rigidbody2D body;
-
-    [SerializeField] private Damage spikeDamage;
+    [SerializeField] private bool isImmune;
+    
 
     private void Start()
     {
@@ -21,18 +22,33 @@ public class SpikeHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (touchingSpikes())
+        // If immune, don't do anything
+        if (isImmune)
+            return;
+
+        if (touchingSpikes() && TryGetComponent(out Damageable damageable))
         {
-            if(GetComponent<Damageable>() != null)
-            {
-                spikeDamage.origin = transform;
-                GetComponent<Damageable>().takeDamage(spikeDamage);
-            }
+            Damage dmg = new Damage {
+                damageAmount = damage,
+                source = DamageSource.fromEnvironment,
+                origin = transform
+                
+            };
+            damageable.takeDamage(dmg);
         }
+    }
+
+    public void setImmune(bool state) {
+        isImmune = state;
     }
 
     private bool touchingSpikes()
     {
         return Physics2D.OverlapBox(spikeCheck.position, bounds, 0, spikeLayer) && body.velocity.y < -0.05f;
+    }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(spikeCheck.position, bounds);
     }
 }

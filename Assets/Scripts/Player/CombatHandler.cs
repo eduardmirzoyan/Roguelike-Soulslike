@@ -24,13 +24,6 @@ public class CombatHandler : MonoBehaviour
     [SerializeField] private Weapon mainHandWeapon;
     [SerializeField] private Weapon offHandWeapon;
 
-    [Header("Rolling")]
-    [SerializeField] private string rollAnimation;
-    [SerializeField] private float rollDuration = 0.5f;
-    [SerializeField] private float rollSpeed = 350f;
-    private float rollTimer;
-    private float rollDirection;
-
     public bool attacking { get; private set; }
 
     private void Awake()
@@ -53,8 +46,6 @@ public class CombatHandler : MonoBehaviour
 
         allPlayerAbilities.Add(abilityCopy);
         GetComponent<Player>().playerSkills.Add(tempSkill);
-
-        GameEvents.current.triggerPlayerEquippedUtility(utilityAbilityHolder);
     }
 
     public Weapon getMainHandWeapon() {
@@ -79,9 +70,6 @@ public class CombatHandler : MonoBehaviour
 
             // Get animation for player from the weapon
             animationHandler.changeAnimationState(mainHandWeapon.getAnimationName());
-
-            GameEvents.current.togglePlayerLightAttack(true);
-            GameEvents.current.triggerActionStart();
         }
     }
 
@@ -91,9 +79,6 @@ public class CombatHandler : MonoBehaviour
 
             // Animation is based on the current combo you are on
             animationHandler.changeAnimationState(offHandWeapon.getAnimationName());
-
-            GameEvents.current.togglePlayerLightAttack(true);
-            GameEvents.current.triggerActionStart();
         }
     }
 
@@ -126,12 +111,10 @@ public class CombatHandler : MonoBehaviour
                 {
                     // if all pass, then use the ability and change the player's state
                     mv.Stop();
-                    GameEvents.current.triggerActionStart();
                     signatureAbilityHolder.useAbility();
                     attacking = true;
 
                     // Trigger event
-                    GameEvents.current.triggerPlayerUseSignature();
                 }
             }
             else
@@ -154,14 +137,10 @@ public class CombatHandler : MonoBehaviour
                 {
                     // if all pass, then use the ability and change the player's state
                     mv.Stop();
-                    GameEvents.current.triggerActionStart();
                     utilityAbilityHolder.useAbility();
 
                     //state = PlayerState.locked;
                     attacking = true;
-
-                    // Trigger event
-                    GameEvents.current.triggerPlayerUseUtility();
                 }
             }
             else
@@ -190,18 +169,11 @@ public class CombatHandler : MonoBehaviour
     public void equipSignatureAbility(Ability ability)
     {
         signatureAbilityHolder.changeAbility(ability);
-        GameEvents.current.triggerPlayerEquippedSignature(signatureAbilityHolder);
     }
 
     public AbilityHolder getSignatureAbilityHolder() => signatureAbilityHolder;
 
     public AbilityHolder getUtilityAbilityHolder() => utilityAbilityHolder;
-
-    private void resetCombatValues()
-    {
-        GameEvents.current.togglePlayerLightAttack(false);
-        GameEvents.current.togglePlayerHeavyAttack(false);
-    }
     
     public bool isDoneAttacking() {
         // Either mainhand weapon is not equipped or in ready state
@@ -216,21 +188,5 @@ public class CombatHandler : MonoBehaviour
         return false;
     }
 
-    // Rolling values
-    public void startRoll(float direction) {
-        rollTimer = rollDuration;
-        rollDirection = direction;
-    }
-
-    public void roll() {
-        animationHandler.changeAnimationState(rollAnimation);
-        mv.WalkAtSpeed(rollDirection, rollSpeed);
-        if (rollTimer > 0) {
-            rollTimer -= Time.deltaTime;
-        }
-    }
-
-    public bool isDoneRolling() {
-        return rollTimer <= 0;
-    }
+    
 }

@@ -41,7 +41,6 @@ public class Axe : Weapon
                 {
                     currentCombo += 1;
                     wielderMovement.Stop();
-                    GameEvents.current.triggerActionFinish(); // Trigger that the weapon has finished attacking
                     state = WeaponState.Recovering; 
                 }
                 break;

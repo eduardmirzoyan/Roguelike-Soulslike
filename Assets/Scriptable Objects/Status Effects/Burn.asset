@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92a953978e0ab7e4f96c0306e275a423, type: 3}
   m_Name: Burn
   m_EditorClassIdentifier: 
-  Duration: 2
+  Duration: 30
+  IsDurationReset: 1
   IsDurationStacked: 0
-  IsEffectStacked: 1
-  tickRate: 1
+  IsEffectStacked: 0
+  tickRate: 0.5
   icon: {fileID: -1070304041610068177, guid: 7cabf2d15a1c4e342ba0b77966b5de03, type: 3}
   flavorText: You are on fire, not in a good way...
   tickDamage: 2

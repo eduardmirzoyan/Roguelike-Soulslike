@@ -21,6 +21,7 @@ public abstract class Weapon : MonoBehaviour
     protected int currentCombo; // Keeps track of the combo that this weapon is on
 
     [Header("Weapon Values")]
+    [SerializeField] protected List<BaseEffect> weaponEffects;
     [SerializeField] protected WeaponState state; // current state of the weapon
     [SerializeField] protected float windupDuration;
     [SerializeField] protected float activeDuration;
@@ -37,6 +38,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] protected WeaponItem owner; // The reference to the weaponitem that created this object
     [SerializeField] protected Movement wielderMovement;
+    
 
     // Assuming instaniation means equippment
     protected void Start()
@@ -53,38 +55,41 @@ public abstract class Weapon : MonoBehaviour
         state = WeaponState.Ready;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.TryGetComponent(out Damageable damageable) &&  collision.gameObject != this.gameObject)
         {
             Damage dmg = new Damage
             {
+                damageAmount = damage,
                 source = DamageSource.fromPlayer,
-                damageAmount = (int)(damage * (1 + GetComponentInParent<CombatStats>()?.damageDealtMultiplier)),
-                origin = transform.parent,
-                isTrue = false,
-                isAvoidable = true,
-                triggersIFrames = true,
+                origin = transform,
+                effects = weaponEffects
             };
             damageable.takeDamage(dmg);
         }
     }
 
-    public void stopCurrentAttack()
-    {
-        animationHandler.changeAnimationState(weaponIdleAnimation);
-        state = WeaponState.Ready;
-    }
-
     public void attack()
     {
         animationHandler.changeAnimationState(weaponLightAttackAnimation + " " + currentCombo);
-        damage = owner.lightDamage;
+        damage = owner.damage;
         windupTimer = windupDuration;
         activeTimer = activeDuration;
         recoveryTimer = recoveryDuration;
 
         state = WeaponState.WindingUp; // Begin attack process
+    }
+
+    public void addEffect(BaseEffect effect) {
+        if (weaponEffects == null) {
+            weaponEffects = new List<BaseEffect>();
+        }
+        weaponEffects.Add(effect);
+    }
+
+    public void removeEffect(BaseEffect effect) {
+        weaponEffects.Remove(effect);
     }
 
     public void setOwner(WeaponItem weaponItem) {

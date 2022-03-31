@@ -53,16 +53,14 @@ public class ItemSpawnManager : MonoBehaviour
                         weaponItem.prefab = swordPrefab;
                         weaponItem.sprite = swordSprites[Random.Range(0, swordSprites.Length)];
                         weaponItem.name = "Randomized Sword";
-                        weaponItem.lightDamage = 4;
-                        weaponItem.heavyDamage = (int)(weaponItem.lightDamage * 1.5f);
+                        weaponItem.damage = 4;
                         break;
 
                     case WeaponType.Axe:
                         weaponItem.prefab = axePrefab;
                         weaponItem.sprite = axeSprites[Random.Range(0, axeSprites.Length)];
                         weaponItem.name = "Randomized Axe";
-                        weaponItem.lightDamage = 9;
-                        weaponItem.heavyDamage = (int)(weaponItem.lightDamage * 1.5f);
+                        weaponItem.damage = 9;
                         break;
                 }
 

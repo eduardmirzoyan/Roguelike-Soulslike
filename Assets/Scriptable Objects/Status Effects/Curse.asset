@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dfdd844a39aa4342b4db294601ce727, type: 3}
   m_Name: Curse
   m_EditorClassIdentifier: 
-  Duration: 1
+  Duration: 5
+  IsDurationReset: 1
   IsDurationStacked: 0
-  IsEffectStacked: 0
+  IsEffectStacked: 1
   tickRate: 1
   icon: {fileID: 21300000, guid: 257ece91ef9162e42bc05040e0bfad08, type: 3}
   flavorText: RIP
+  triggerAmount: 5

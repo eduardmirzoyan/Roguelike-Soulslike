@@ -5,13 +5,10 @@ using UnityEngine;
 public class LineOfSight : MonoBehaviour
 {
     [SerializeField] private Transform target;
-    
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private LayerMask obstacleLayer;
-
     [SerializeField] private float maxDistance;
-
-    [SerializeField] private float currentDistance;
+    private float currentDistance;
 
     public void setTarget(Transform target) => this.target = target;
 
@@ -43,7 +40,9 @@ public class LineOfSight : MonoBehaviour
             return hit.collider.name == target.name;
     }
 
-    public LayerMask getLayerMask() => targetLayer;
+    public bool canSeePoint(Vector2 point) {
+        return !Physics2D.Linecast(transform.position, point, obstacleLayer);
+    }
 
     public Collider2D[] getAllEnemiesInSight() {
         // Get all enemies within range

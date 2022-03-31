@@ -12,19 +12,10 @@ public class ArmorItem : Item
 {
     public EquipmentSlot equipSlot;
     public ArmorType armorType;
-
     public Enchantment enchantment;
 
     public int defenseValue;
     public int bonusStamina;
-
-    public int poisonResistance;
-    public int burnResistance;
-    public int freezeResistance;
-    public int curseResistance;
-    public int dodgeChance;
-
-    public float damageTakenMultiplier;
 
     public void Awake()
     {

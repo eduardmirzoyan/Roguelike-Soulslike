@@ -106,34 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: walk_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4646ce323715ddc80800000000000000
-      internalID: -8296385383580801948
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: walk_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 52
         y: 0
-        width: 48
-        height: 48
+        width: 36
+        height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -151,10 +130,10 @@ TextureImporter:
       name: walk_2
       rect:
         serializedVersion: 2
-        x: 96
+        x: 100
         y: 0
-        width: 48
-        height: 48
+        width: 36
+        height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,10 +151,10 @@ TextureImporter:
       name: walk_3
       rect:
         serializedVersion: 2
-        x: 144
+        x: 148
         y: 0
-        width: 48
-        height: 48
+        width: 36
+        height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,9 +172,9 @@ TextureImporter:
       name: gk_idle
       rect:
         serializedVersion: 2
-        x: 0
+        x: 5
         y: 0
-        width: 48
+        width: 36
         height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

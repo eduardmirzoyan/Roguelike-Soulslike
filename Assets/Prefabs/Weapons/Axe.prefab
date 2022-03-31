@@ -145,16 +145,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  windupDuration: 0
-  activeDuration: 0
-  recoveryDuration: 0
-  attackMoveSpeed: 0
-  maxCombo: 0
+  windupDuration: 0.3
+  activeDuration: 0.15
+  recoveryDuration: 0.3
+  attackMoveSpeed: 0.75
+  maxCombo: 1
   weaponIdleAnimation: Axe Idle
   weaponLightAttackAnimation: Axe Light
   animationHandler: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  owner: {fileID: 11400000, guid: adf1c9f1fb4e3ab4fbe0505d31789fc4, type: 2}
+  owner: {fileID: 0}
   wielderMovement: {fileID: 0}
 --- !u!114 &-3862820843993216567
 MonoBehaviour:

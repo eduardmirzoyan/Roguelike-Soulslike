@@ -41,7 +41,6 @@ public class PlayerShield : Shield
         {
             takeBlockStaminaDamage(0); // 0 extra drain 
             Instantiate(sparkle, new Vector2(transform.position.x + 0.33f, transform.position.y + 0.25f), Quaternion.identity);
-            GameEvents.current.triggerOnPerfectBlock(); // Trigger perfect block event for everyone who cares
         }
         else
             takeBlockStaminaDamage(dmg.damageAmount); // Drain stamina
