@@ -2,36 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(LineOfSight))]
 [RequireComponent(typeof(AnimationHandler))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class ThiefAI : EnemyAI
 {
-    [Header("Pathfinding")]
+    [Header("Components")]
     [SerializeField] private PathfindUser pathfindUser;
-
-    [Header("Thief Stats")]
-    [SerializeField] private BoxCollider2D boxCollider2D;
-    [SerializeField] private Health health;
     [SerializeField] private Inventory inventory;
-    [SerializeField] private int maxInventorySize = 1;
-    [SerializeField] private float wanderRadius = 2f;
-    [SerializeField] private float wanderRate = 1f;
 
     [Header("Looting Values")]
-    [SerializeField] private LayerMask itemMask;
+    [SerializeField] private float maxWanderRadius;
+    [SerializeField] private int maxInventorySize = 1;
     [SerializeField] private Image lootingCircle;
     [SerializeField] private Sprite hasLootSprite;
     [SerializeField] private float lootTime = 1f;
     [SerializeField] private float maxItemDetectionRange = 3;
     [SerializeField] protected WorldItem dropLoot; // REPLACE THIS WITH 'RESOURCE LOADING'
 
-    // Private fields
+    [Header("Animation")]
+    [SerializeField] private string idleAnimation = "Idle";
+    [SerializeField] private string walkAnimation = "Walk";
+    [SerializeField] private string deadAnimation = "Dead";
+    [SerializeField] private string attackAnimation = "Attack";
+    [SerializeField] private string riseAnimation = "Rise";
+    [SerializeField] private string fallAnimation = "Fall";
+    [SerializeField] private string lootAnimation = "Loot";
     private float lootTimer;
-    
-    private float attackDuration;
-    [SerializeField] private float wanderTimer;
 
     private enum ThiefState {
         Idle,
@@ -43,24 +42,11 @@ public class ThiefAI : EnemyAI
 
     [SerializeField] private ThiefState thiefState;
 
-    [SerializeField] private Vector3 randomPoint;
-    // Movement States: Idle, Moving, Jumping
-
-    // Emotional States: Passive, Neutral, Aggro
-
-    // Unique states: Searching, Found, Not found
-
-    // Possible actions: Walking, Idle, Attacking, Getting hit, looting item
-
-    // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         inventory = GetComponent<Inventory>();
         inventory.setMax(maxInventorySize);
-
-        boxCollider2D = GetComponent<BoxCollider2D>();
-        health = GetComponent<Health>();
         pathfindUser = GetComponent<PathfindUser>();
 
         lootingCircle.fillAmount = 0;
@@ -80,8 +66,6 @@ public class ThiefAI : EnemyAI
     {
         switch(thiefState) {
             case ThiefState.Idle:
-                //animationHandler.changeAnimationState("Idle");
-
                 // If thief has no item
                 if (!hasItem()) {
                     //  Search for loot, if found set targetT
@@ -106,16 +90,16 @@ public class ThiefAI : EnemyAI
 
                 // If target is removed during travel, then cancel path
                 if (target == null) {
-                    print("target is gone");
                     pathfindUser.stopTraveling();
                     thiefState = ThiefState.Idle;
                     return;
                 }
                 
-                // Move towards targetT
+                // Move towards target
                 pathfindUser.moveToLocation();
 
                 if (target.TryGetComponent(out WorldItem worldItem)) { // If target is an item...
+
                     searchForEnemies(); // Keep a lookout for enemies
 
                     if (Vector2.Distance(transform.position, target.position) < 
@@ -127,26 +111,25 @@ public class ThiefAI : EnemyAI
                         return;
                     }
                 }
-                else if (target.TryGetComponent(out ThiefAI enemy) || target.TryGetComponent(out Player player)) { // If target is enemy, then check to see if you are in attack range
-                    if (Vector2.Distance(transform.position, target.position) < maxAttackRange) {
+                else if (Vector2.Distance(transform.position, target.position) < attackRange) { // If you are within range...
                         pathfindUser.stopTraveling();
                         // Change to Attack State!
                         thiefState = ThiefState.Attacking;
                         return;
                     }
-                }
                 
-                if (pathfindUser.isDonePathing() || target == null) {
+                if (pathfindUser.isDonePathing()) {
                     target = null;
                     thiefState = ThiefState.Idle;
                     return;
                 }
 
+                // Handle airborne animations
                 if (mv.checkRising()) {
-                    animationHandler.changeAnimationState("Rise");
+                    animationHandler.changeAnimationState(riseAnimation);
                 }
                 else if (mv.checkFalling()) {
-                    animationHandler.changeAnimationState("Fall");
+                    animationHandler.changeAnimationState(fallAnimation);
                 }
                 
                 handleRetaliation();
@@ -155,28 +138,48 @@ public class ThiefAI : EnemyAI
             case ThiefState.Attacking:
                 // Attack State
 
-                // If target is gone (IE dead)
-                if (target == null) {
-                    // Go back to search state
-                    thiefState = ThiefState.Idle;
-                    return;
-                }
-
                 // If you are in the middle of an attack, then let it play
-                if (attackDuration > 0) {
-                    attackDuration -= Time.deltaTime;
+                if (attackTimer > 0) {
+                    attackTimer -= Time.deltaTime;
                     // Playout attack animation
                 }
-                else { // Else chase target until it is in range or too far
+                else { 
+                    // Else chase target until it is in range or too far
+
                     // Always face target
                     faceTarget();
 
+                    // If you get farther than aggro range, remove target
+                    if (Vector2.Distance(transform.position, target.position) > aggroRange) {
+                        target = null;
+                    }
+
+                    // If target is gone (IE dead)
+                    if (target == null) {
+                        // Go back to search state
+                        thiefState = ThiefState.Idle;
+                        return;
+                    }
+
+                    // Cooldown between attacks
+                    if (attackCooldownTimer > 0) {
+                        attackCooldownTimer -= Time.deltaTime;
+                    }
+
                     // If you are in range
-                    if (Vector3.Distance(transform.position, target.position) < maxAttackRange) {
+                    if (Vector3.Distance(transform.position, target.position) < attackRange) {
                         // Attack!
-                        attack();
+                        mv.Walk(0);
+                        animationHandler.changeAnimationState(idleAnimation);
+
+                        // If the cooldown between attacks is over, then start new attack
+                        if (attackCooldownTimer <= 0) {
+                            // Start the attack
+                            attack();
+                        }
                     }
                     else {
+                        animationHandler.changeAnimationState(walkAnimation);
                         handleForwardMovement(mv.getFacingDirection());
                     }
                 }
@@ -188,10 +191,11 @@ public class ThiefAI : EnemyAI
                 faceTarget();
 
                 // Loot animation!
-                animationHandler.changeAnimationState("Loot");
+                animationHandler.changeAnimationState(lootAnimation);
 
                 // Loot timer!
                 if (lootTimer > 0) {
+                    // Fill looting circle based on timer
                     lootingCircle.fillAmount = 1 - lootTimer / lootTime;
                     lootTimer -= Time.deltaTime;
                 }
@@ -205,37 +209,75 @@ public class ThiefAI : EnemyAI
             break;
             case ThiefState.Dead:
                 // Do nothin
-                animationHandler.changeAnimationState("Dead");
+                animationHandler.changeAnimationState(deadAnimation);
+
+                // Drop held item on death
                 var prefab = Instantiate(dropLoot, transform.position, Quaternion.identity);
                 prefab.setItem(inventory.getItem(0));
+
+                // Destroy itself
                 Destroy(gameObject);
-                
+
             break;
         }
+    }
+
+    private Vector2 getRandomPointInRadius(float maxRadius, float minRadius, bool mustSee) {
+        Assert.IsTrue(maxRadius > minRadius);
+
+        var allPossibleCells = pathfindUser.getAllOpenTiles(transform.position, (int)maxRadius);
+
+        while (allPossibleCells.Count > 0) {
+            int randomIndex = Random.Range(0, allPossibleCells.Count);
+            var randomPoint = allPossibleCells[randomIndex];
+
+            if (!mustSee || lineOfSight.canSeePoint(randomPoint)) {
+                // Cast from the random point down to the ground
+                var hit = Physics2D.Raycast(randomPoint, Vector2.down, 100f, 1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Platform"));
+                if (hit) {
+                    // Displace hit location up to make sure it's not inside the ground
+                    hit.point += Vector2.up * 0.3f;
+
+                    var distance = Vector2.Distance(transform.position, hit.point);
+                    // Make sure that the raycast hit is within radius
+                    if (distance <= maxRadius && distance >= minRadius) {
+                        return hit.point;
+                    }
+                }
+            }
+
+            // Else remove that cell, and try another one
+            allPossibleCells.RemoveAt(randomIndex);
+        }
+
+        print("no valid location was found");
+        // Return 0 vector if all else fails
+        return Vector2.zero;
     }
 
     private void wander() {
         // If the thief is not already going somewhere, find a new spot
         if (pathfindUser.isDonePathing()) {
+            // Stop moving
             mv.Walk(0);
-            animationHandler.changeAnimationState("Idle");
+
+            // Change animation
+            animationHandler.changeAnimationState(idleAnimation);
+
             // If you are on cooldown, then skip this frame
             if (wanderTimer > 0 || !mv.isGrounded()) {
                 wanderTimer -= Time.deltaTime;
                 return;
             }
             
-            // Find a random point not inside the ground and can be seen
-            randomPoint = (Vector2)transform.position + Random.insideUnitCircle * wanderRadius;
-            while (!pathfindUser.isPointValid(randomPoint)) {
-                
-                randomPoint = (Vector2)transform.position + Random.insideUnitCircle * wanderRadius;
-            }
+            Vector3 randomPoint = getRandomPointInRadius(wanderRadius + 3, wanderRadius, false);
             
             pathfindUser.setPathTo(randomPoint);
             wanderTimer = wanderRate;
         }
         else {
+            animationHandler.changeAnimationState(walkAnimation);
+
             pathfindUser.moveToLocation();
         }
     }
@@ -246,12 +288,9 @@ public class ThiefAI : EnemyAI
             // And if entity has no target or is going after an item
             if (target == null || target.TryGetComponent(out WorldItem worldItem)) {
                 // If the attacker is a player or thief
-                if (attacker.TryGetComponent(out ThiefAI thiefAI) || attacker.TryGetComponent(out Player player)) {
-                    // Then switch targets to attacker and pathfind
-                    target = attacker;
-                    pathfindUser.setPathTo(target.position);
-                    thiefState = ThiefState.Searching;
-                }
+                target = attacker;
+                pathfindUser.setPathTo(target.position);
+                thiefState = ThiefState.Searching;
             }
             attacker = null;
         }
@@ -259,23 +298,24 @@ public class ThiefAI : EnemyAI
 
     private void handleForwardMovement(float direction)
     {
-        animationHandler.changeAnimationState("Walk");
+        animationHandler.changeAnimationState(walkAnimation);
         mv.Walk(direction); // Move toward the player
 
         // Jump if reached a wall and is grounded
-        if (jumpEnabled && mv.isGrounded() && mv.onWall())
+        if (mv.isGrounded() && mv.onWall())
             mv.Jump();
     }
 
     private void attack() {
-        animationHandler.changeAnimationState("Attack");
+        animationHandler.changeAnimationState(attackAnimation);
         mv.Walk(0);
-        attackDuration = animationHandler.getAnimationDuration();
+        attackTimer = attackDuration;
+        attackCooldownTimer = attackCooldown;
     }
 
     private void searchForItem() {
         // Circle cast and capture all items in radius
-        var hits = Physics2D.OverlapCircleAll(transform.position, maxItemDetectionRange, itemMask);
+        var hits = Physics2D.OverlapCircleAll(transform.position, maxItemDetectionRange, 1 << LayerMask.NameToLayer("Loot"));
         
         // If you hit nothing, then leave
         if (hits.Length == 0)
@@ -306,13 +346,12 @@ public class ThiefAI : EnemyAI
     public bool hasItem() => inventory.isFull();
 
     private void lootItem() {
-        var hit = Physics2D.OverlapBox(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0, itemMask);
+        var hit = Physics2D.OverlapBox(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0, 1 << LayerMask.NameToLayer("Loot"));
         // If an item is found then begin looting process
         if (hit)
         {
             // Add the item to inventory
-            var worldItem = hit.GetComponent<WorldItem>();
-            if (worldItem != null) {
+            if (hit.TryGetComponent(out WorldItem worldItem)) {
                 inventory.addItem(worldItem.GetItem());
                 Destroy(worldItem.gameObject);
                 lootingCircle.sprite = hasLootSprite;
@@ -334,7 +373,6 @@ public class ThiefAI : EnemyAI
             Transform closest = null;
             float shortestDistance = Mathf.Infinity;
 
-            var mv = GetComponent<Movement>();
             foreach (var collider in colliders) {
                 float distance = Vector3.Distance(transform.position, collider.transform.position);
 
@@ -344,9 +382,13 @@ public class ThiefAI : EnemyAI
                         shortestDistance = distance;
                         closest = collider.transform;
                     }
+                    // Only go after the player if they have an item in their inventory
                     else if (collider.TryGetComponent(out Player player)) {
-                        shortestDistance = distance;
-                        closest = collider.transform;
+                        var playerInventory = player.GetComponentInChildren<Inventory>();
+                        if (playerInventory != null && !playerInventory.isEmpty()) {
+                            shortestDistance = distance;
+                            closest = collider.transform;
+                        }
                     }
                 }
             }
@@ -359,21 +401,13 @@ public class ThiefAI : EnemyAI
         }
     }
 
-    private void OnDrawGizmosSelected() {
+    protected override void OnDrawGizmosSelected() {
+        base.OnDrawGizmosSelected();
+
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, maxItemDetectionRange);
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, wanderRadius);
-        
-        if (target != null) {
-            Gizmos.color = Color.green;
-            Gizmos.DrawSphere(target.position, 0.4f);
-        }
-
-        if (randomPoint != null) {
-            Gizmos.color = Color.magenta;
-            Gizmos.DrawSphere(randomPoint, 0.1f);
-        }
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, maxWanderRadius);
     }
 }

@@ -12,7 +12,7 @@ public class SlashUpgradeThree : Upgrade
     public override void upgradeInstaniation(GameObject parent, Ability ability)
     {
         this.parent = parent;
-        GameEvents.current.onHit += reduceCooldownOnHit;
+        //GameEvents.current.onHit += reduceCooldownOnHit;
     }
 
     private void reduceCooldownOnHit()

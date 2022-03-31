@@ -7,22 +7,37 @@ using System.Linq;
 
 public class ImpAI : EnemyAI
 {
+    [Header("Imp Components")]
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Health health;
     [SerializeField] private Collider2D collider2d;
     [SerializeField] private CompositeCollider2D platformCollider;
-    [SerializeField] private int heldGold;
-    [SerializeField] private float goldGenerationRate;
-    [SerializeField] private List<Shrine> shrinesToPatrol;
-    [SerializeField] private int currentShrineIndex;
     [SerializeField] private Image interactingCircle;
+    [SerializeField] private ParticleSystem rallyParticles;
+
+    [Header("Imp Settings")]
+    [SerializeField] private int goldPerGeneration;
+    [SerializeField] private float goldGenerationRate;
     [SerializeField] private float interactionDuration;
     [SerializeField] private float interactionOffset;
-    private float interactionTimer;
-    private bool hasRallied;
     [SerializeField] private float rallyRadius;
     [SerializeField] private float rallyDuration;
+    [SerializeField] private float attackDashSpeed;
+
+    [Header("Debugging")]
+    [SerializeField] private int heldGold;
+    [SerializeField] private List<Shrine> shrinesToPatrol;
+    [SerializeField] private int currentShrineIndex;
+    [SerializeField] private bool hasRallied;
+
+    [Header("Animation")]
+    [SerializeField] private string flyingAnimation;
+    [SerializeField] private string attackAnimation;
+
+    // Private helper variables
+    private float interactionTimer;
     private float rallyTimer;
+    private float goldTimer;
+    private Vector2 attackDirection;
 
     private enum ImpState {
         Idle,
@@ -42,18 +57,21 @@ public class ImpAI : EnemyAI
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
-        health = GetComponent<Health>();
         collider2d = GetComponent<Collider2D>();
+        rallyParticles = GetComponent<ParticleSystem>();
 
         // Don't interact with platforms
         platformCollider = GameObject.Find("Platform").GetComponent<CompositeCollider2D>();
         Physics2D.IgnoreCollision(platformCollider, collider2d);
         
+        goldTimer = goldGenerationRate;
         interactingCircle.fillAmount = 0;
         heldGold = 0;
 
+        // Generate a list of shrines to visit
         generatePatrolPath();
 
+        // Set starting state
         impState = ImpState.Idle;
     }
 
@@ -74,19 +92,55 @@ public class ImpAI : EnemyAI
     }
 
     private void FixedUpdate() {
+
+        // Generate gold over time to give to shrines
+        if (goldTimer > 0) {
+            goldTimer -= Time.deltaTime;
+        }
+        else {
+            heldGold += goldPerGeneration;
+            goldTimer = goldGenerationRate;
+        }
+
         switch(impState) {
             case ImpState.Idle:
-                // If the shrine at this index is not null, then go to it
-                if (shrinesToPatrol[currentShrineIndex] != null) {
+                animationHandler.changeAnimationState(flyingAnimation);
+
+                // Stop moving
+                agent.isStopped = true;
+
+                handleRetaliation();
+                
+                // If any shrines exist, go to them
+                if (shrinesToPatrol.Count > 0) {
+                    agent.isStopped = false;
                     impState = ImpState.Searching;
                 }
 
             break;
             case ImpState.Searching:
+                animationHandler.changeAnimationState(flyingAnimation);
+
+                handleRetaliation();
+                
+                // If the shrine, you are going to is gone, IE destroyed
+                if (shrinesToPatrol[currentShrineIndex] == null) {
+                    // Remove that shrine from patrol route
+                    shrinesToPatrol.RemoveAt(currentShrineIndex);
+                    // Then move to next index
+                    nextShrineIndex();
+                }
+
+                // If there are no shines left, be idle
+                if (shrinesToPatrol.Count <= 0) {
+                    impState = ImpState.Idle;
+                    return;
+                }
+
                 // Move towards target
                 var destination = shrinesToPatrol[currentShrineIndex].transform.position + Vector3.up * interactionOffset;
                 agent.SetDestination(destination);
-                if (Vector2.Distance(transform.position, destination) < minAttackRange) {
+                if (Vector2.Distance(transform.position, destination) < attackRange) {
                     // Begin interacting
                     interactionTimer = interactionDuration;
                     impState = ImpState.Interacting;
@@ -94,6 +148,8 @@ public class ImpAI : EnemyAI
 
             break;
             case ImpState.Interacting:
+                animationHandler.changeAnimationState(flyingAnimation);
+
                 // Fill Circle
                 if (interactionTimer > 0) {
                     interactionTimer -= Time.deltaTime;
@@ -106,36 +162,78 @@ public class ImpAI : EnemyAI
                     // Interact with shrine
                     interactWithNearbyShrine();
 
-                    // Increment to next shrine
-                    currentShrineIndex++;
-                    if (currentShrineIndex >= shrinesToPatrol.Count) {
-                        currentShrineIndex = 0;
-                    }
+                    // Move to next shrine
+                    nextShrineIndex();
 
                     // Change state
                     impState = ImpState.Idle;
                 }
 
+                handleRetaliation();
+
             break;
             case ImpState.Rallying:
+                animationHandler.changeAnimationState(flyingAnimation);
+
+                // Don't move while rallying
+                agent.isStopped = true;
+
                 if (rallyTimer > 0) {
                     rallyTimer -= Time.deltaTime;
                 }
                 else {
                     rally();
-                    impState = ImpState.Attacking;
                 }
             break;
             case ImpState.Attacking:
-
+                // If you are in the middle of an attack
                 if (attackTimer > 0) {
+                    animationHandler.changeAnimationState(attackAnimation);
+
                     attackTimer -= Time.deltaTime;
+                    if (attackTimer < attackDuration / 2) {
+                        body.velocity = attackDirection * attackDashSpeed;
+                    }
                 }
                 else {
-                    if (Vector2.Distance(transform.position, target.position) < minAttackRange) {
-                        attack();
+                    // Reset body velocity
+                    body.velocity = Vector2.zero;
+
+                    // Regular animation
+                    animationHandler.changeAnimationState(flyingAnimation);
+
+                    // Face target
+                    faceTarget();
+
+                    // If you get farther than aggro range, remove target
+                    if (Vector2.Distance(transform.position, target.position) > attackRange) {
+                        target = null;
+                    }
+
+                    // If target is dead, or un-aggro'd then go back to idle
+                    if (target == null) {
+                        impState = ImpState.Idle;
+                        return;
+                    }
+
+                    // Cooldown between attacks
+                    if (attackCooldownTimer > 0) {
+                        attackCooldownTimer -= Time.deltaTime;
+                    }
+
+                    // Check if target is in range for attack
+                    if (Vector2.Distance(transform.position, target.position) < attackRange) {
+                        agent.isStopped = true;
+
+                        // If the cooldown between attacks is over, then start new attack
+                        if (attackCooldownTimer <= 0) {
+                            // Start the attack
+                            attack();
+                        }
                     }
                     else {
+                        // Else keep pathings towards target
+                        agent.isStopped = false;
                         agent.SetDestination(target.position);
                     }
                 }
@@ -143,6 +241,14 @@ public class ImpAI : EnemyAI
             case ImpState.Dead:
             
             break;
+        }
+    }
+
+    private void nextShrineIndex() {
+        // Increment to next shrine
+        currentShrineIndex++;
+        if (currentShrineIndex >= shrinesToPatrol.Count) {
+            currentShrineIndex = 0;
         }
     }
 
@@ -177,38 +283,60 @@ public class ImpAI : EnemyAI
     private void handleRetaliation() {
         // If entity was attacked...
         if (attacker != null) {
+            interactingCircle.fillAmount = 0; // Reset circle
             target = attacker;
             if(!hasRallied) {
+                // Start particle effects
+                rallyParticles.Play();
+
+                // Set timer and change state
                 rallyTimer = rallyDuration;
                 impState = ImpState.Rallying;
             }
             else {
-                impState = ImpState.Attacking;
+                aggroOn(target);
             }
             attacker = null;
         }
     }
 
+    private void attack() {
+        attackTimer = attackDuration;
+        attackCooldownTimer = attackCooldown;
+        attackDirection = (target.position - transform.position).normalized;
+    }
+
     private void rally() {
+        // Stop particle effects
+        rallyParticles.Stop();
+
+        // Check for all nearby Imps and make them aggro on the target
         var hits = Physics2D.OverlapCircleAll(transform.position, rallyRadius, 1 << LayerMask.NameToLayer("Enemies"));
         foreach (var hit in hits) {
             if (hit.TryGetComponent(out ImpAI impAI)) {
-                impAI.isAttacked(attacker);
+                impAI.aggroOn(target);
             }
         }
     }
 
-    public void attack() {
-        animationHandler.changeAnimationState("Attack");
-        attackTimer = animationHandler.getAnimationDuration();
+    public void aggroOn(Transform entity) {
+        print(gameObject.name + " is aggro'd on " + entity.name);
+        interactingCircle.fillAmount = 0; // Reset circle
+        target = entity;
+        impState = ImpState.Attacking;
     }
 
-    private void OnDrawGizmosSelected() {
-        if (shrinesToPatrol != null) {
-            foreach (var shrine in shrinesToPatrol) {
-                Gizmos.color = Color.green;
-                Gizmos.DrawSphere(shrine.transform.position, 0.4f);
-            }
-        }
+    protected override void OnDrawGizmosSelected() {
+        base.OnDrawGizmosSelected();
+
+        // if (shrinesToPatrol != null) {
+        //     foreach (var shrine in shrinesToPatrol) {
+        //         Gizmos.color = Color.green;
+        //         Gizmos.DrawSphere(shrine.transform.position, 0.4f);
+        //     }
+        // }
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, rallyRadius);
     }
 }

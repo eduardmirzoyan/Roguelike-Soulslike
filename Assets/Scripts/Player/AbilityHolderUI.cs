@@ -22,13 +22,13 @@ public class AbilityHolderUI : MonoBehaviour
         image.enabled = false;
         if (toTrack == AbilityToTrack.Signature)
         {
-            GameEvents.current.onPlayerEquippedSignature += updateAbility;
-            GameEvents.current.onPlayerUseSignature += onAbilityUse;
+            //GameEvents.current.onPlayerEquippedSignature += updateAbility;
+            //GameEvents.current.onPlayerUseSignature += onAbilityUse;
         }
         else
         {
-            GameEvents.current.onPlayerEquippedUtility += updateAbility;
-            GameEvents.current.onPlayerUseUtility += onAbilityUse;
+            //GameEvents.current.onPlayerEquippedUtility += updateAbility;
+            //GameEvents.current.onPlayerUseUtility += onAbilityUse;
             abilityHolder = GameObject.Find("Player").GetComponent<CombatHandler>().utilityAbilityHolder;
             //abilityHolder = GameManager.instance.player.combatHandler.utilityAbilityHolder;
         }

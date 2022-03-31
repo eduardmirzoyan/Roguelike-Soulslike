@@ -9,8 +9,6 @@ using UnityEngine;
 public class BossAI : EnemyAI
 {
     [Header("Boss Components")]
-    [SerializeField] protected Health health;
-    [SerializeField] protected Movement mv;
     [SerializeField] protected Displacable displacable;
     [SerializeField] protected Collidable collidable;
     [SerializeField] protected Damageable damageable;
@@ -41,10 +39,8 @@ public class BossAI : EnemyAI
 
         // Get required components
         damageable = GetComponent<Damageable>();
-        mv = GetComponent<Movement>();
         displacable = GetComponent<Displacable>();
         collidable = GetComponent<Collidable>();
-        health = GetComponent<Health>();
     }
 
     public override void Die()
@@ -52,13 +48,7 @@ public class BossAI : EnemyAI
         base.Die();
         animationHandler.changeAnimationState(deadAnimation);
         Destroy(gameObject, 10f); // Despawn boss corpse in 10 seconds
-        state = EnemyState.dead; // Set state to dead
-    }
-
-    public override void onAggro()
-    {
-        facePlayer();
-        player.setBossHealthBar(this);
+        //state = EnemyState.dead; // Set state to dead
     }
 
     protected void facePlayer()

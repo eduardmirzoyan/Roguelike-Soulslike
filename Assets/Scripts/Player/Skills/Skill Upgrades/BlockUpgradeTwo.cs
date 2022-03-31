@@ -10,7 +10,7 @@ public class BlockUpgradeTwo : Upgrade
 
     public override void upgradeInstaniation(GameObject parent, Ability ability)
     {
-        GameEvents.current.onPerfectBlock += resetCooldownOnPerfectBlock;
+        //GameEvents.current.onPerfectBlock += resetCooldownOnPerfectBlock;
         orginalCooldown = ability.cooldownTime;
     }
 
@@ -36,6 +36,6 @@ public class BlockUpgradeTwo : Upgrade
 
     public override void upgradeUninstaniate(GameObject parent, Ability ability)
     {
-        GameEvents.current.onPerfectBlock -= resetCooldownOnPerfectBlock;
+        //GameEvents.current.onPerfectBlock -= resetCooldownOnPerfectBlock;
     }
 }

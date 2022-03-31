@@ -19,18 +19,7 @@ MonoBehaviour:
   count: 1
   description: Can't believe someone found two diamonds and a stick down here...
   name: Minecraft Reference
-  lightDamage: 4
-  lightPushForce: 0
-  lightStunTime: 0
-  lightWindupTime: 0.17
-  lightActiveTime: 0.33
-  lightRecoveryTime: 0.17
-  lightStaminaCost: 10
-  heavyDamage: 7
-  heavyPushForce: 0
-  heavyStunTime: 0
-  heavyWindupTime: 0.33
-  heavyActiveTime: 0.33
-  heavyRecoveryTime: 0.33
-  heavyStaminaCost: 25
+  damage: 10
   weaponType: 0
+  twoHanded: 0
+  enchantment: {fileID: 11400000, guid: f86e3375c925bd8439e95fc299ee9da1, type: 2}

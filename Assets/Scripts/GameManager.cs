@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private GameObject floatingTextPrefab;
     [SerializeField] private ExperienceBar xpBar;
     [SerializeField] private Text goldText;
@@ -13,7 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LootTable consumableLootTable;
     [SerializeField] private GameObject stunnedAnimationObject;
     [SerializeField] private CameraShake mainCamera;
+    [SerializeField] private PathfindingMap pathfindingMap;
 
+     [Header("Materials")]
     [SerializeField] private Material perilousMaterial;
     [SerializeField] private Material defaultMaterial;
 
@@ -43,6 +46,9 @@ public class GameManager : MonoBehaviour
 
         goldText = GameObject.Find("Gold Counter").GetComponent<Text>();
         goldText.text = "$ " + gold;
+
+        // Get pathfinding map for platformer AIs
+        pathfindingMap = GameObject.Find("Pathfinder Map").GetComponent<PathfindingMap>();
 
         SceneManager.sceneLoaded += saveState; // Once a new scene is loaded, game is saved
         DontDestroyOnLoad(gameObject);
@@ -122,21 +128,6 @@ public class GameManager : MonoBehaviour
         prefab.GetComponentInChildren<TextMesh>().color = textColor;    
     }
 
-    public void CreatePopup(string text, string text2, Vector3 position, Color textColor, Color text2Color)
-    {
-        float spawnVariation = 0.4f;
-        Vector3 spawnPosition = position + new Vector3(Random.Range(-spawnVariation, spawnVariation), Random.Range(-spawnVariation, spawnVariation), 0);
-        GameObject prefab = Instantiate(floatingTextPrefab, spawnPosition, Quaternion.identity);
-        prefab.GetComponentInChildren<TextMesh>().text = text;
-        prefab.GetComponentInChildren<TextMesh>().color = textColor;
-
-        spawnPosition = position + new Vector3(Random.Range(-spawnVariation, spawnVariation), Random.Range(-spawnVariation, spawnVariation), 0);
-        GameObject prefab2 = Instantiate(floatingTextPrefab, spawnPosition, Quaternion.identity);
-        prefab2.GetComponentInChildren<TextMesh>().text = text2;
-        prefab2.GetComponentInChildren<TextMesh>().color = text2Color;
-
-    }
-
     public void addExperience(int xp)
     {
         experience += xp;
@@ -153,7 +144,7 @@ public class GameManager : MonoBehaviour
 
     public void addGold(int gold)
     {
-        this.gold = gold;
+        this.gold += gold;
         goldText.text = "$ " + this.gold;
     }
 
@@ -177,8 +168,7 @@ public class GameManager : MonoBehaviour
                 WeaponItem weaponItem = new WeaponItem();
                 weaponItem.weaponType = weaponType;
                 weaponItem.name = "Random Sword";
-                weaponItem.lightDamage = Random.Range(1, 5);
-                weaponItem.heavyDamage = (int)(weaponItem.lightDamage * 0.5f);
+                weaponItem.damage = Random.Range(1, 5);
                 weaponItem.sprite = icon1;
 
                 return weaponItem;
@@ -242,9 +232,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(mainCamera.Shake(duration, magnitude));
     }
 
-    public void verticalShakeCamera(float duration, float magnitude)
-    {
-        mainCamera = GameObject.Find("Main Camera").GetComponent<CameraShake>();
-        StartCoroutine(mainCamera.VerticalShake(duration, magnitude));
+    public PathfindingMap GetPathfindingMap() {
+        return pathfindingMap;
     }
 }

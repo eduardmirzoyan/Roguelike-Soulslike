@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour
         animator.SetTrigger("close scene"); // Set the level change animation
 
         // OPTIMIZE THIS LATER!
-        GameObject.Find("Player").GetComponentInChildren<Player>().setBossHealthBar(null); // Disable boss health bar...
+        GameManager.instance.player.setBossHealthBar(null);
 
         // Give animation time to run
         yield return new WaitForSeconds(transitionTime);

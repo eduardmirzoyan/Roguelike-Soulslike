@@ -27,7 +27,7 @@ TagManager:
   - Loot
   - Interactables
   - Traps
-  - Only Ground
+  - 
   - Platform
   - Projectile
   - Destructable

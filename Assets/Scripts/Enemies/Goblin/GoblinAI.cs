@@ -1,224 +1,160 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Damageable))]
-[RequireComponent(typeof(Displacable))]
 public class GoblinAI : EnemyAI
 {
+    [Header("Goblin Components")]
+    [SerializeField] private PathfindUser pathfindUser;
+
     [Header("Goblin Specific Stats")]
     [SerializeField] private float dashSpeed;
 
-    [Header("Preset attacks")]
-    [SerializeField] protected EnemyAttack dashingStabAttack; // ID 1
-    [SerializeField] protected EnemyAttack overHeadSlashAttack; // ID 2
-    [SerializeField] protected List<EnemyAttack> threePartAttack; // ID 3, 4, 5
-
-    [SerializeField] protected Health health;
-    [SerializeField] protected Movement mv;
-    [SerializeField] protected Displacable displacable;
-    [SerializeField] protected Collidable collidable;
-    [SerializeField] protected Damageable damageable;
-
-    [Header("Goblin Animations")]
+    [Header("Animation")]
     [SerializeField] private string idleAnimation = "Idle";
     [SerializeField] private string walkAnimation = "Walk";
     [SerializeField] private string deadAnimation = "Dead";
     [SerializeField] private string staggerAnimation = "Stagger";
+    [SerializeField] private string attackAnimation = "Attack";
+
+    private Vector2 attackDirection;
+
+    private enum GoblinState {
+        Idle,
+        Searching,
+        Attacking,
+        Dead
+    }
+    [SerializeField] private GoblinState goblinState;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+
         // Get required components
-        damageable = GetComponent<Damageable>();
-        mv = GetComponent<Movement>();
-        displacable = GetComponent<Displacable>();
-        collidable = GetComponent<Collidable>();
-        health = GetComponent<Health>();
+        pathfindUser = GetComponent<PathfindUser>();
+
+        // Set starting state
+        goblinState = GoblinState.Idle;
+    }
+
+    private void Update() {
+        if (health.isEmpty())
+        {
+            goblinState = GoblinState.Dead;
+        }
     }
 
     // Update is called once per frame
     protected void FixedUpdate()
     {
         // If enemy is killed, then set to dead
-        if (health.isEmpty() && state != EnemyState.dead)
-        {
-            Die();
-        }
-        switch (state)
-        {
-            case EnemyState.knockedback:
-                animationHandler.changeAnimationState(staggerAnimation);
+        switch(goblinState) {
+            case GoblinState.Idle:
+                searchForEnemies();
 
-                displacable.performDisplacement();
-
-                if (!displacable.isDisplaced)
-                    state = EnemyState.aggro;
-
-                break;
-            case EnemyState.idle:
-                handleMovementAnimation();
-
-                if (lineOfSight.distanceFromTarget() < aggroRange && lineOfSight.canSeeTarget()) // TODO: add aggro if player is too close
-                {
-                    onAggro();
-                    roamTimer = currentCooldownTimer;
+                // If an enemy has been gound, change states
+                if (target != null) {
+                    goblinState = GoblinState.Searching;
+                    return;
                 }
 
-                if (!roamEnabled) // If roaming is disabled, then end the idle state here
-                {
-                    mv.Stop();
-                    break;
+                wander();
+
+                handleRetaliation();
+
+            break;
+            case GoblinState.Searching:
+                // If target is removed during travel, then cancel path
+                if (target == null) {
+                    pathfindUser.stopTraveling();
+                    goblinState = GoblinState.Idle;
+                    return;
+                }
+                
+                // Move towards target
+                pathfindUser.moveToLocation();
+                
+                if (Vector2.Distance(transform.position, target.position) < attackRange) {
+                    // Stop moving
+                    pathfindUser.stopTraveling();
+
+                    // Change to Attack State!
+                    goblinState = GoblinState.Attacking;
+                    return;
                 }
 
-                if (roamTimer > 0)
-                {
-                    idleTimer = idleCooldown;
-                    roamTimer -= Time.deltaTime;
-                    handleForwardMovement(roamDirection);
+                // If entity has reached the end of the path and has not reacted to target, then go back to being idle
+                if (pathfindUser.isDonePathing()) {
+                    target = null;
+                    goblinState = GoblinState.Idle;
+                    return;
                 }
-                else
-                {   // After roaming, pause for a brief time before deciding next direction
-                    if (idleTimer > 0)
-                    {
-                        mv.Stop();
-                        idleTimer -= Time.deltaTime;
-                    }
-                    else
-                    {
-                        roamTimer = roamCooldown; // Reset roaming time
-                        roamDirection = Random.Range(-1, 2); // Change roaming direction from -1 - 1
-                        idleTimer = idleCooldown;
-                    }
-                }
-                handleDisplacement();
-                break;
-            case EnemyState.aggro:
-                handleMovementAnimation();
 
-                // Chase player type-beat
-                float distanceFromPlayer = lineOfSight.distanceFromTarget();
-
-                facePlayer(); // Face the player while aggro'd on him
-
-                if (distanceFromPlayer > aggroRange)
-                    aggroTimer -= Time.deltaTime;
-        
-                if (aggroTimer <= 0)
-                    state = EnemyState.idle;
-
-                // Increment attack timer, even if goblin is far
-                if (currentCooldownTimer > 0)
-                    currentCooldownTimer -= Time.deltaTime;
-
-                if (distanceFromPlayer < maxAttackRange)
-                {      
-                    if (distanceFromPlayer > minAttackRange) // Sweet spot //!isBlocking && 
-                    {
-                        // Check if ready to attack
-                        if (currentCooldownTimer <= 0)
-                        { // Prepare to attack
-                            if (distanceFromPlayer < (maxAttackRange + minAttackRange) / 2)
-                            {
-                                // 33% chance to do 3 part attack and 66% to do regular slash
-                                if (Random.Range(1, 4) == 1)
-                                    setUpSequenceOfAttacks(new List<EnemyAttack>(threePartAttack));
-                                else
-                                    setUpSequenceOfAttacks(new List<EnemyAttack> { overHeadSlashAttack });
-                            }
-                            else
-                            {
-                                setUpSequenceOfAttacks(new List<EnemyAttack> { dashingStabAttack });
-                            }
-                        }
-
-                        mv.Stop(); // Don't move and wait
-                    }
-                    else if(distanceFromPlayer < minAttackRange) // too close // !isBlocking &&
-                    {
-                        mv.walkBackwards(-mv.getFacingDirection()); // Move away from player
-
-                        // if (mv.backAgainstWall()) // If the enemies back is against a wall do...
-                        // {
-                        //     setUpSequenceOfAttacks(new List<EnemyAttack> { overHeadSlashAttack }); // Attack the player if driven to corner
-                        // }
-                    }
-                }
-                else // Only move towards the player
-                {
-                    handleForwardMovement(mv.getFacingDirection());
-                }
-                handleDisplacement();
-                break;
-            case EnemyState.charging: // Enemy charges for attack
-                if (delayTimer > 0)
-                {
-                    // While charging, don't move or do anything
-                    mv.Stop();
-                    delayTimer -= Time.deltaTime;
-                }
-                else
-                {   // After enemy finishes charging, set required values and do the attack
-                    attackTimer = currentAttack.attackDuration;
+            break;
+            case GoblinState.Attacking:
+                // If you are in the middle of an attack, then let it play
+                if (attackTimer > 0) {
+                    animationHandler.changeAnimationState(attackAnimation);
                     
-                    state = EnemyState.attacking;
-                }
-                handleDisplacement();
-                break;
-            case EnemyState.attacking: // Enemy is in the action of attacking
-                if (attackTimer > 0)
-                {
-                    mv.dash(dashSpeed, mv.getFacingDirection());
-                       
-                    // Reduced movespeed during attack in the direction of the attack
                     attackTimer -= Time.deltaTime;
-                }
-                else
-                { // After attack is finished, reset enemy values and set to aggro
-
-                    currentCooldownTimer = Random.Range(minAttackCooldown, maxAttackCooldown); // Reset cooldown
-
-                    recoveryTimer = currentAttack.attackRecovery; // Set reoovery time
-                    state = EnemyState.recovering; // Change enemy state
-                }
-                handleDisplacement();
-                break;
-            case EnemyState.recovering: // Enemy recovery time after attacking
-                if (recoveryTimer > 0)
-                {
-                    mv.Stop();
-                    recoveryTimer -= Time.deltaTime;
-                } 
-                else
-                {
-                    currentSequenceOfAttacks.RemoveAt(0);
-                    if (currentSequenceOfAttacks.Count > 0)
-                    {
-                        setUpSequenceOfAttacks(currentSequenceOfAttacks);
-                        state = EnemyState.charging;
+                    if (attackTimer < attackDuration / 2) {
+                        body.velocity = attackDirection * dashSpeed;
                     }
-                    else
-                    {
-                        state = EnemyState.aggro;
+
+                }
+                else { // Else chase target until it is in range or too far
+
+                    // Always face target
+                    faceTarget();
+
+                    // If you get farther than aggro range, remove target
+                    if (Vector2.Distance(transform.position, target.position) > aggroRange) {
+                        target = null;
+                    }
+
+                    // If target is gone (IE dead)
+                    if (target == null) {
+                        // Go back to search state
+                        goblinState = GoblinState.Idle;
+                        return;
+                    }
+
+                    // If you have an attack cooldown, then reduce it
+                    if (attackCooldownTimer > 0) {
+                        attackCooldownTimer -= Time.deltaTime;
+                    }
+
+                    // If you are in range
+                    if (Vector3.Distance(transform.position, target.position) < attackRange) {
+                        // Don't move
+                        mv.Walk(0);
+
+                        // Change animation
+                        animationHandler.changeAnimationState(idleAnimation);
+
+                        // Check if cooldown is over
+                        if (attackCooldownTimer <= 0) {
+                            // Start the attack
+                            attack();
+                        }
+                    }
+                    else {
+                        animationHandler.changeAnimationState(walkAnimation);
+                        handleForwardMovement(mv.getFacingDirection());
                     }
                 }
-                handleDisplacement();
-                break;
-            case EnemyState.dead:
+            break;
+            case GoblinState.Dead:
                 animationHandler.changeAnimationState(deadAnimation);
-                break;
-        }
-    }
+                Destroy(gameObject);
 
-    private void handleDisplacement()
-    {
-        if (displacable.isDisplaced)
-        {
-            resetCombatValues();
-            state = EnemyState.knockedback;
+            break;
         }
     }
 
@@ -228,51 +164,118 @@ public class GoblinAI : EnemyAI
         mv.Walk(direction); // Move toward the player
 
         // Jump if reached a wall and is grounded
-        if (jumpEnabled && mv.isGrounded() && mv.onWall())
+        if (mv.isGrounded() && mv.onWall())
             mv.Jump();
     }
 
-    private void handleMovementAnimation()
-    {
-        if (Mathf.Abs(body.velocity.x) > 0.2f)
-            animationHandler.changeAnimationState(walkAnimation);
-        else
-            animationHandler.changeAnimationState(idleAnimation);
+    private void attack() {
+        attackTimer = attackDuration;
+        attackCooldownTimer = attackCooldown;
+        attackDirection = new Vector2(mv.getFacingDirection(), 0);
     }
 
-    protected override void setUpSequenceOfAttacks(List<EnemyAttack> enemyAttacks)
-    {
-        base.setUpSequenceOfAttacks(enemyAttacks);
-        switch (currentAttack.attackName)
-        {
-            case "Dash Stab":
-                dashSpeed = 15;
-                break;
-            case "Overhead Slash":
-                dashSpeed = 8;
-                break;
-            case "Triple Attack 1":
-                dashSpeed = 8;
-                break;
-            case "Triple Attack 2":
-                dashSpeed = 8;
-                break;
-            case "Triple Attack 3":
-                dashSpeed = 10;
-                break;
+    private void searchForEnemies() {
+        // Aggressive, hunts any enemy in sight
+        var colliders = lineOfSight.getAllEnemiesInSight();
+
+        if (colliders.Length != 0) {
+            // Get closest enemy that meats criteria
+
+            Transform closest = null;
+            float shortestDistance = Mathf.Infinity;
+
+            foreach (var collider in colliders) {
+                float distance = Vector3.Distance(transform.position, collider.transform.position);
+
+                if (distance < shortestDistance) {
+                    // If the collider is a player
+                    if (collider.TryGetComponent(out Player player)) {
+                        shortestDistance = distance;
+                        closest = collider.transform;
+                    }
+                }
+            }
+
+            // If a possible enemy is found, then set it as target
+            if (closest != null) {
+                target = closest;
+                pathfindUser.setPathTo(target.position);
+            }
         }
-        animationHandler.changeAnimationState(currentAttack.attackName);
     }
 
-    public override void Die()
-    {
-        base.Die();
-        Destroy(gameObject, 3f);
-        state = EnemyState.dead;
+    private void wander() {
+        // If the thief is not already going somewhere, find a new spot
+        if (pathfindUser.isDonePathing()) {
+            // Stop moving
+            mv.Walk(0);
+
+            // Set correct animation
+            animationHandler.changeAnimationState(idleAnimation);
+
+            // If you are on cooldown, then skip this frame
+            if (wanderTimer > 0 || !mv.isGrounded()) {
+                wanderTimer -= Time.deltaTime;
+                return;
+            }
+            
+            Vector3 randomPoint = getRandomPointInRadius(wanderRadius, 0, true);
+            
+            pathfindUser.setPathTo(randomPoint);
+            wanderTimer = wanderRate;
+        }
+        else {
+            // If you are already on the path
+            animationHandler.changeAnimationState(walkAnimation);
+            pathfindUser.moveToLocation();
+        }
     }
 
-    protected void facePlayer()
-    {
-        mv.setFacingDirection(target.transform.position.x - transform.position.x);
+    private Vector2 getRandomPointInRadius(float maxRadius, float minRadius, bool mustSee) {
+        Assert.IsTrue(maxRadius > minRadius);
+
+        var allPossibleCells = pathfindUser.getAllOpenTiles(transform.position, (int)maxRadius);
+
+        while (allPossibleCells.Count > 0) {
+            int randomIndex = Random.Range(0, allPossibleCells.Count);
+            var randomPoint = allPossibleCells[randomIndex];
+
+            if (!mustSee || lineOfSight.canSeePoint(randomPoint)) {
+                // Cast from the random point down to the ground
+                var hit = Physics2D.Raycast(randomPoint, Vector2.down, 100f, 1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Platform"));
+                if (hit) {
+                    // Displace hit location up to make sure it's not inside the ground
+                    hit.point += Vector2.up * 0.3f;
+
+                    var distance = Vector2.Distance(transform.position, hit.point);
+                    // Make sure that the raycast hit is within radius
+                    if (distance <= maxRadius && distance >= minRadius) {
+                        return hit.point;
+                    }
+                }
+            }
+
+            // Else remove that cell, and try another one
+            allPossibleCells.RemoveAt(randomIndex);
+        }
+
+        print("no valid location was found");
+        // Return 0 vector if all else fails
+        return Vector2.zero;
+    }
+
+    private void handleRetaliation() {
+        // If entity was attacked...
+        if (attacker != null) {
+            // Set target to the attacker
+            target = attacker;
+
+            // Find path to attacker
+            pathfindUser.setPathTo(target.position);
+            goblinState = GoblinState.Searching;
+
+            // Reset attacker
+            attacker = null;
+        }
     }
 }

@@ -17,10 +17,12 @@ using UnityEngine;
 [RequireComponent(typeof(FamiliarHandler))]
 [RequireComponent(typeof(EnchantableEntity))]
 [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Rolling))]
 public class Player : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private ComplexMovement mv;
+    [SerializeField] private PlatformHandler platformHandler;
     [SerializeField] private Displacable displace;
     [SerializeField] private Health health;
     [SerializeField] private AnimationHandler animationHandler;
@@ -32,6 +34,7 @@ public class Player : MonoBehaviour
     [SerializeField] public Keybindings keybindings { get; private set; }
     [SerializeField] public CombatHandler combatHandler { get; private set; }
     [SerializeField] public FamiliarHandler familiarHandler { get; private set; }
+    [SerializeField] private Rolling rolling;
 
     [Header("Items")]
     [SerializeField] private Inventory inventory;
@@ -52,7 +55,8 @@ public class Player : MonoBehaviour
 
     [Header("Temp UI STUFF")]
     [SerializeField] private BossHealthBarUI bossHealthBar;
-
+    [SerializeField] private BaseEffect burnEffect;
+ 
     public float regenTimer;
     private bool isJump;
 
@@ -79,6 +83,7 @@ public class Player : MonoBehaviour
     protected void Start()
     {
         mv = GetComponent<ComplexMovement>();
+        platformHandler = GetComponent<PlatformHandler>();
         animationHandler = GetComponent<AnimationHandler>();
         health = GetComponent<Health>();
         displace = GetComponent<Displacable>();
@@ -90,6 +95,7 @@ public class Player : MonoBehaviour
         combatHandler = GetComponent<CombatHandler>();
         inputBuffer = GetComponent<InputBuffer>();
         familiarHandler = GetComponent<FamiliarHandler>();
+        rolling = GetComponent<Rolling>();
 
         // Gets flask
         flask = GetComponentInChildren<Flask>();
@@ -153,6 +159,8 @@ public class Player : MonoBehaviour
             case PlayerState.crouching:
                 animationHandler.changeAnimationState(crouchAnimation);
 
+                handleDropDownRequst();
+
                 pickUpNearbyItems();
 
                 checkIfStaminaShouldRegen();
@@ -172,6 +180,8 @@ public class Player : MonoBehaviour
                 animationHandler.changeAnimationState(crouchWalkAnimation);
 
                 mv.crouchWalk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
+
+                handleDropDownRequst();
 
                 pickUpNearbyItems();
 
@@ -241,9 +251,9 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.rolling:
                 
-                combatHandler.roll();
+                rolling.roll();
                 
-                if (combatHandler.isDoneRolling()) {
+                if (rolling.isDoneRolling()) {
                     stats.percentDodgeChance -= 100;
                     state = PlayerState.idle;
                 }
@@ -305,6 +315,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))  // used for testing
         {
             // Nothin
+            GetComponent<EffectableEntity>().addEffect(burnEffect.InitializeEffect(gameObject));
         }
         if (Input.GetKeyDown(keybindings.rollKey))  // used for testing
         {
@@ -354,13 +365,19 @@ public class Player : MonoBehaviour
         // TODO:
     }
 
+    private void handleDropDownRequst() {
+        if (inputBuffer.dropDownRequest) {
+            platformHandler.dropFromPlatform();
+        }
+    }
+
     private void handleRollRequest() {
         if (inputBuffer.moveDirection > 0)
-            combatHandler.startRoll(1);
+            rolling.startRoll(1);
         else if (inputBuffer.moveDirection < 0)
-            combatHandler.startRoll(-1);
+            rolling.startRoll(-1);
         else 
-            combatHandler.startRoll(mv.getFacingDirection());
+            rolling.startRoll(mv.getFacingDirection());
         stats.percentDodgeChance += 100;
     }
 
@@ -449,8 +466,10 @@ public class Player : MonoBehaviour
     protected void pickUpNearbyItems()
     {   
         var collider2D = GetComponent<Collider2D>();
-        var droppedItems = Physics2D.OverlapBoxAll(collider2D.transform.position, collider2D.bounds.size, 0, 1 << LayerMask.NameToLayer("Loot"));
+        var droppedItems = Physics2D.OverlapBoxAll((Vector2)collider2D.transform.position + collider2D.offset, collider2D.bounds.size, 
+                            0, 1 << LayerMask.NameToLayer("Loot"));
         if (droppedItems.Length == 0) {
+            print("nothin");
             return;
         }
             
@@ -516,9 +535,6 @@ public class Player : MonoBehaviour
     {
         // If player has weapon in action, stop it
         combatHandler.cancelCurrentAttack();
-
-        // Send event that any action was completed
-        GameEvents.current.triggerActionFinish();
     }
 
     // Skill handling
@@ -597,5 +613,11 @@ public class Player : MonoBehaviour
             bossHealthBar.setBoss(boss);
             bossHealthBar.gameObject.SetActive(true);
         }
+    }
+
+    private void OnDrawGizmosSelected() {
+        var collider2D = GetComponent<Collider2D>();
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube((Vector2)collider2D.transform.position + collider2D.offset, collider2D.bounds.size);
     }
 }

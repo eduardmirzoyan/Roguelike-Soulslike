@@ -408,6 +408,20 @@ public class PathfindingMap : MonoBehaviour
         return vec + new Vector3(cellSizeX / 2, cellSizeY / 2, 0);
     }
 
+    public List<Vector3> getAllOpenCells(Vector3 center, int radius) {
+        List<Vector3> result = new List<Vector3>();
+        var centerCell = groundTilemap.WorldToCell(center);
+        for (int i = -radius; i <= radius; i++) {
+            for (int j = -radius; j <= radius; j++) {
+                var cell = centerCell + new Vector3Int(i, j, 0);
+                if (!groundTilemap.HasTile(cell) && !platformTilemap.HasTile(cell)) {
+                    result.Add(getCellCenter(cell));
+                }
+            }
+        }
+        return result;
+    }
+
     private void drawLine(Vector3Int start, Vector3Int end) {
         Debug.DrawLine(groundTilemap.CellToWorld(start) + Vector3.one * (groundTilemap.cellSize.x / 2), groundTilemap.CellToWorld(end) + Vector3.one * (groundTilemap.cellSize.x / 2), Color.red, 1000f);
     }

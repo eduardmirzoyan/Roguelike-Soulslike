@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71062265f37f58041b8adbcdbfa2e115, type: 3}
   m_Name: Poison
   m_EditorClassIdentifier: 
-  Duration: 9
+  Duration: 5
+  IsDurationReset: 1
   IsDurationStacked: 0
   IsEffectStacked: 0
-  tickRate: 3
+  tickRate: 1
   icon: {fileID: 21300000, guid: e8205440628464947b0822d6aff8ecd1, type: 3}
   flavorText: You have been poisoned...
-  tickDamage: 3
+  tickDamage: 2
   damageColor: {r: 0.040236473, g: 0.64705884, b: 0, a: 1}

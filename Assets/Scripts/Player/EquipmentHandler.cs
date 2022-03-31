@@ -56,9 +56,11 @@ public class EquipmentHandler : MonoBehaviour
         // Instaniate the the weapon and set as child
         GameObject equippedWeaponPrefab = Instantiate(weaponItem.prefab, transform.position, Quaternion.identity);
         equippedWeaponPrefab.transform.parent = gameObject.transform; // Sets the prefab to a child of 
+        // Cache the equipped weapon
+        var equippedWeapon = equippedWeaponPrefab.GetComponent<Weapon>();
 
         // Set the owner of the weapon to the weaponitem
-        equippedWeaponPrefab.GetComponent<Weapon>().setOwner(weaponItem);
+        equippedWeapon.setOwner(weaponItem);
 
         // Equip on correct hand
         if (onMainHand) {
@@ -67,7 +69,7 @@ public class EquipmentHandler : MonoBehaviour
             // Set new weapon indexes
             equippedWeaponIndexes[0] = inventoryUI.getSelectedItemIndex();
             // Set mainhand reference
-            combatHandler.setMainHandWeapon(equippedWeaponPrefab.GetComponent<Weapon>());
+            combatHandler.setMainHandWeapon(equippedWeapon);
         }
         else {
             // Store reference to weapon item
@@ -75,9 +77,15 @@ public class EquipmentHandler : MonoBehaviour
             // Set new weapon indexes
             equippedWeaponIndexes[1] = inventoryUI.getSelectedItemIndex();
             // Set offhand reference
-            combatHandler.setOffHandWeapon(equippedWeaponPrefab.GetComponent<Weapon>());
+            combatHandler.setOffHandWeapon(equippedWeapon);
 
             equippedWeaponPrefab.transform.position -= new Vector3(0.25f, 0, 0);
+        }
+
+        // If the weapon is enchantable, then add the enchantment
+        if (equippedWeapon.TryGetComponent(out EnchantableEntity enchantableEntity)) {
+            print("added weapn enchat");
+            enchantableEntity.addEnchantment(weaponItem.enchantment);
         }
     }
 
@@ -121,11 +129,10 @@ public class EquipmentHandler : MonoBehaviour
         // Add new armor's stats to player
         stats.defense += newArmor.defenseValue;
         stats.bonusStamina += newArmor.bonusStamina;
-        stats.damageTakenMultiplier += newArmor.damageTakenMultiplier;
 
         stamina.maxStamina += newArmor.bonusStamina;
 
-        // Add the armor's enchantment
+        // Add the armor's enchantment to the player
         enchantableEntity.addEnchantment(newArmor.enchantment);
     }
 
@@ -134,7 +141,6 @@ public class EquipmentHandler : MonoBehaviour
         // Remove armor stats
         stats.defense -= equippedArmor[slot].defenseValue;
         stats.bonusStamina -= equippedArmor[slot].bonusStamina;
-        stats.damageTakenMultiplier -= equippedArmor[slot].damageTakenMultiplier;
 
         // Remove max stamina effects
         stamina.maxStamina -= equippedArmor[slot].bonusStamina;

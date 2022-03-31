@@ -14,6 +14,7 @@ public class InputBuffer : MonoBehaviour
     [SerializeField] private int bufferRatio = 2;
 
     public bool jumpRequest { get; private set; }
+    public bool dropDownRequest { get; private set; }
     public bool crouchRequest { get; private set; }
     public float moveDirection { get; private set; }
     public bool menuToggleRequest { get; private set; }
@@ -30,18 +31,12 @@ public class InputBuffer : MonoBehaviour
     private float mainAttackTimer;
     private float offAttackTimer;
     private float jumpInputTimer;
+    private float dropDownTimer;
     private float flaskInputTimer;
 
     private void Awake()
     {
         keybindings = GetComponent<Keybindings>();
-        actionAllowed = true;
-    }
-
-    private void Start()
-    {
-        GameEvents.current.onActionFinish += enableActionAllowed;
-        GameEvents.current.onActionStart += disableActionAllowed;
     }
 
     private void Update()
@@ -60,6 +55,13 @@ public class InputBuffer : MonoBehaviour
         }
         else {
             jumpRequest = false;
+        }
+
+        if (dropDownTimer > 0) {
+            dropDownTimer -= Time.deltaTime;
+        }
+        else {
+            dropDownRequest = false;
         }
 
         if (flaskInputTimer > 0) {
@@ -91,7 +93,11 @@ public class InputBuffer : MonoBehaviour
         moveDirection = Input.GetAxis("Horizontal");
 
         // Check input for jump
-        if (Input.GetKeyDown(keybindings.jumpKey)) {
+        if (Input.GetKey(keybindings.crouchKey) && Input.GetKeyDown(keybindings.jumpKey)) {
+            dropDownRequest = true;
+            dropDownTimer = bufferRatio * Time.deltaTime;
+        }
+        else if (Input.GetKeyDown(keybindings.jumpKey)) { // Check input for jump
             jumpRequest = true;
             jumpInputTimer = bufferRatio * Time.deltaTime;
         }
@@ -106,8 +112,6 @@ public class InputBuffer : MonoBehaviour
             crouchRequest = true;
         else
             crouchRequest = false;
-
-        
 
         // Check input for interacting
         if (Input.GetKeyDown(keybindings.interactKey) || Input.GetKeyDown(keybindings.interactKey2))
@@ -126,10 +130,6 @@ public class InputBuffer : MonoBehaviour
             useFlaskRequest = true;
             flaskInputTimer = bufferRatio * Time.deltaTime;
         }
-
-        // Reset action allowed
-        if (Input.GetKeyDown(KeyCode.H))
-            actionAllowed = false;
 
         // Buffer Attacks and abilities
 
@@ -153,13 +153,6 @@ public class InputBuffer : MonoBehaviour
         {
             inputBuffer.Add(new ActionItem(ActionItem.InputAction.UtilityAttack, Time.time));
         }
-        // else
-        // {
-        //     lightAttackRequest = false;
-        //     heavyAttackRequest = false;
-        //     signatureAbilityRequest = false;
-        //     utilityAbilityRequest = false;
-        // }
     }
 
     public void resetAttackRequests() {
@@ -214,10 +207,6 @@ public class InputBuffer : MonoBehaviour
                 break;
         }
     }
-
-    private void enableActionAllowed() => actionAllowed = true;
-
-    private void disableActionAllowed() => actionAllowed = false;
 }
 public class ActionItem
 {

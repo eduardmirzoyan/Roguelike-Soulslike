@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85409dad02a5941469090d5b8b28c2a3, type: 3}
   m_Name: Bleed
   m_EditorClassIdentifier: 
-  Duration: 2
+  Duration: 3
+  IsDurationReset: 0
   IsDurationStacked: 0
   IsEffectStacked: 1
-  tickRate: 0.33
+  tickRate: 0.5
   icon: {fileID: 21300000, guid: 83fe49bed8a5fac44b2b49b33f637101, type: 3}
   flavorText: You begin to bleed...
   tickDamage: 1

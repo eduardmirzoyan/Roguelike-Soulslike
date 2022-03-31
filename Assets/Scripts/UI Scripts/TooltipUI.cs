@@ -39,14 +39,16 @@ public class TooltipUI : MonoBehaviour
                     {
                         case ItemType.Armor:
                             itemType.text = ((ArmorItem)selectedItem).armorType.ToString() + " " + ((ArmorItem)selectedItem).equipSlot.ToString();
-                            itemDescription.text = "Defense: " + ((ArmorItem)selectedItem).defenseValue
+                            itemDescription.text = 
+                                "Defense: " + ((ArmorItem)selectedItem).defenseValue
                                 + "\nBonus Stamina: " + ((ArmorItem)selectedItem).bonusStamina
                                 + "\nDescription: " + selectedItem.description;
                             break;
                         case ItemType.Weapon:
                             itemType.text = ((WeaponItem)selectedItem).weaponType.ToString();
-                            itemDescription.text = "Light Damage: " + ((WeaponItem)selectedItem).lightDamage
-                                + "\nHeavy Damage: " + ((WeaponItem)selectedItem).heavyDamage
+                            itemDescription.text = 
+                                "" + ((WeaponItem)selectedItem).enchantment.enchantmentName
+                                + "\nDamage: " + ((WeaponItem)selectedItem).damage
                                 + "\nDescription: " + selectedItem.description;
                             break;
                         case ItemType.Consumable:
@@ -57,11 +59,11 @@ public class TooltipUI : MonoBehaviour
                 }
                 else // If not, send the tooltip to Narnia
                 {
-                    transform.position = new Vector3(1000, 1000, 10);
+                    transform.position = new Vector3(1000, 1000, 1000);
                 }
                 break;
             case MenuWindow.Status:
-                transform.position = new Vector3(1000, 1000, 10);
+                transform.position = new Vector3(1000, 1000, 1000);
                 break;
             case MenuWindow.SkillTree:
                 selectedSkill = skillTreeUI.getSelectedSkill();
@@ -74,7 +76,7 @@ public class TooltipUI : MonoBehaviour
                 }
                 else // If not, send the tooltip to Narnia
                 {
-                    transform.position = new Vector3(1000, 1000, 10);
+                    transform.position = new Vector3(1000, 1000, 1000);
                 }
                 break;
         }

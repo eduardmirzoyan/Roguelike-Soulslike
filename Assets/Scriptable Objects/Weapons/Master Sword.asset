@@ -19,18 +19,7 @@ MonoBehaviour:
   count: 1
   description: The main character's name is NOT ZELDA!
   name: Master Sword
-  lightDamage: 5
-  lightPushForce: 0
-  lightStunTime: 0
-  lightWindupTime: 0.17
-  lightActiveTime: 0.33
-  lightRecoveryTime: 0.17
-  lightStaminaCost: 10
-  heavyDamage: 10
-  heavyPushForce: 0
-  heavyStunTime: 0
-  heavyWindupTime: 0.33
-  heavyActiveTime: 0.33
-  heavyRecoveryTime: 0.33
-  heavyStaminaCost: 25
+  damage: 6
   weaponType: 0
+  twoHanded: 0
+  enchantment: {fileID: 11400000, guid: 29a2fc800be240745bd2265b271634a9, type: 2}

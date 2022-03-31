@@ -89,7 +89,7 @@ public class Movement : MonoBehaviour
 
     public bool isGrounded()
     {
-        return Physics2D.OverlapBox(groundCheck.position, groundCheckBoxSize, 0, groundLayer);
+        return Physics2D.OverlapBox(groundCheck.position, groundCheckBoxSize, 0, groundLayer) && body.velocity.y < 0.1f;
     }
 
     public bool onWall()

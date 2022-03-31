@@ -5,259 +5,267 @@ using UnityEngine;
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Damageable))]
-[RequireComponent(typeof(Displacable))]
 public class GhostKnightAI : EnemyAI
 {
-    [SerializeField] protected Health health;
-    [SerializeField] protected Movement mv;
-    [SerializeField] protected Displacable displacable;
-    [SerializeField] protected Collidable collidable;
-    [SerializeField] protected Damageable damageable;
-    [SerializeField] protected EnemyHitbox hitbox;
+    [Header("Ghost Knight Specific Stats")]
+    [SerializeField] private float dashSpeed;
+    private Vector2 attackDirection;
 
-    [SerializeField] protected EnemyShield shield;
+    [Header("Components")]
+    [SerializeField] private PathfindUser pathfindUser;
+    [SerializeField] private CombatStats stats;
+    [SerializeField] private ParticleSystem sleepingParticles;
 
-    [Header("Ghost Knight values")]
-    [SerializeField] private EnemyAttack swordSlash;
-    [SerializeField] private EnemyAttack shieldRam;
-    private float attackDashSpeed;
-
-    [SerializeField] private float ramDistance;
-
-    [Header("Ghost Knight Animations")]
+    [Header("Animation")]
     [SerializeField] private string idleAnimation = "Idle";
     [SerializeField] private string deadAnimation = "Dead";
+    [SerializeField] private string attackAnimation = "Attack";
+    [SerializeField] private string sleepAnimation = "Sleep";
+
+    private enum KnightState {
+        Sleeping,
+        Searching,
+        Attacking,
+        Dead
+    }
+    [SerializeField] private KnightState knightState;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-
         // Get required components
-        damageable = GetComponent<Damageable>();
-        mv = GetComponent<Movement>();
-        displacable = GetComponent<Displacable>();
-        collidable = GetComponent<Collidable>();
-        health = GetComponent<Health>();
-        shield = GetComponentInChildren<EnemyShield>();
-        hitbox = GetComponentInChildren<EnemyHitbox>();
+        pathfindUser = GetComponent<PathfindUser>();
+        stats = GetComponent<CombatStats>();
+        sleepingParticles = GetComponent<ParticleSystem>();
+        pathfindUser = GetComponent<PathfindUser>();
+
+        sleep();
+        // Set starting state
+        knightState = KnightState.Sleeping;
+    }
+
+    private void Update() {
+        if (health.isEmpty()) {
+            Die();
+        }
     }
 
     // Update is called once per frame
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         // If enemy is killed, then set to dead
-        if(health.isEmpty() && state != EnemyState.dead)
-        {
-            Die();
-        }
+        switch(knightState) {
+            case KnightState.Sleeping:
+                animationHandler.changeAnimationState(sleepAnimation);
 
-        /*if (!displacable.isFree())
-        {
-            state = EnemyState.knockedback;
-        }*/
+                // Don't move while sleeping
+                mv.Walk(0);
 
-        switch (state)
-        {
-            case EnemyState.knockedback:
-                shield.lowerShield();
-                /*if (displacable.isFree())
-                {
-                    shield.raiseShield();
-                    state = EnemyState.aggro;
-                }*/
-                break;
-            case EnemyState.idle:
-                animationHandler.changeAnimationState(idleAnimation);
-
-                if (lineOfSight.distanceFromTarget() < aggroRange && lineOfSight.canSeeTarget()) // TODO: add aggro if player is too close
-                {
-                    onAggro();
-                    roamTimer = currentCooldownTimer;
-                }
-
-                if (!roamEnabled) // If roaming is disabled, then end the idle state here
-                {
-                    mv.Stop();
-                    break;
-                }
-
-                if (roamTimer > 0)
-                {
-                    idleTimer = idleCooldown;
-                    roamTimer -= Time.deltaTime;
-                    mv.Walk(roamDirection); // Roam in given direction
-                    if (jumpEnabled && mv.isGrounded() && mv.onWall())
-                    {
-                        mv.Jump();
-                    }
-                }
-                else
-                {   // After roaming, pause for a brief time before deciding next direction
-                    if (idleTimer > 0)
-                    {
-                        mv.Walk(0);
-                        idleTimer -= Time.deltaTime;
-                    }
-                    else
-                    {
-                        roamTimer = roamCooldown; // Reset roaming time
-                        roamDirection = Random.Range(-1, 2); // Change roaming direction from -1 - 1
-                        idleTimer = idleCooldown;
-                    }
-                }
-
-                break;
-            case EnemyState.aggro:
-                animationHandler.changeAnimationState(idleAnimation);
-
-                // Chase player type-beat
-                float distanceFromPlayer = Vector2.Distance(transform.position, target.transform.position);
+                searchForEnemies();
                 
-                facePlayer(); // Face the player while aggro'd on him
+                handleRetaliation();
 
-                // Increment attack timer, even if goblin is far
-                if (currentCooldownTimer > 0)
-                    currentCooldownTimer -= Time.deltaTime;
+                // If an enemy has been found, change states
+                if (target != null) {
+                    pathfindUser.setPathTo(target.position);
+                    awaken();
 
-                if (lineOfSight.distanceFromTarget() > aggroRange)
-                    aggroTimer -= Time.deltaTime;
-
-                if (aggroTimer <= 0)
-                    state = EnemyState.idle;
-
-                if (distanceFromPlayer < maxAttackRange)
-                {
-                    if (distanceFromPlayer > minAttackRange) // Sweet spot
-                    {
-                        // Check if ready to attack
-                        if (currentCooldownTimer <= 0)
-                        { 
-                            // Prepare to attack
-                            setUpSequenceOfAttacks(new List<EnemyAttack> { swordSlash });
-                        }
-
-                        mv.Stop(); // Don't move and wait
-                    }
-                    else if (distanceFromPlayer < minAttackRange) // too close
-                    {
-                        mv.walkBackwards(-mv.getFacingDirection()); // Move away from player
-                    }
-                }
-                else // Only move towards the player
-                {
-                    // Too far
-                    mv.Walk(mv.getFacingDirection()); // Move toward the player
-
-                    // Jump if reached a wall and is grounded
-                    if (jumpEnabled && mv.isGrounded() && mv.onWall())
-                        mv.Jump();
-
-                    if(distanceFromPlayer > ramDistance && currentCooldownTimer <= 0)
-                        if(lineOfSight.canSeeTarget())
-                            setUpSequenceOfAttacks(new List<EnemyAttack> { shieldRam });
+                    knightState = KnightState.Searching;
+                    return;
                 }
 
-                break;
-            case EnemyState.charging: // Enemy charges for attack
-                if (delayTimer > 0)
-                {
-                    delayTimer -= Time.deltaTime;
-                }
-                else
-                {   // After enemy finishes charging, set required values and do the attack
-                    attackTimer = currentAttack.attackDuration;
-                    state = EnemyState.attacking;
-                }
-                break;
-            case EnemyState.attacking: // Enemy is in the action of attacking
-                if (attackTimer > 0)
-                {
-                    if(currentAttack.attackName == "Ram")
-                    {
-                        // If knight collides a while while dashing, then cancel dash and stun
-                        if (mv.onWall())
-                        {
-                            animationHandler.changeAnimationState(idleAnimation);
-                            currentCooldownTimer = Random.Range(minAttackCooldown, maxAttackCooldown);
-                            // Stun HERE
-                            attackTimer = 0;
-                        }
-                    }
+            break;
+            case KnightState.Searching:
+                animationHandler.changeAnimationState(idleAnimation);
 
-                    mv.dash(attackDashSpeed, mv.getFacingDirection());
+                pathfindUser.moveToLocation();
 
-                    // Reduced movespeed during attack in the direction of the attack
+                // If target is removed during travel, then cancel path
+                if (target == null) {
+
+                    pathfindUser.stopTraveling();
+                    knightState = KnightState.Sleeping;
+                    return;
+                }
+                
+                // Move towards target
+                pathfindUser.moveToLocation();
+                
+                if (Vector2.Distance(transform.position, target.position) < attackRange) {
+
+                    // Stop moving
+                    pathfindUser.stopTraveling();
+
+                    // Change to Attack State!
+                    knightState = KnightState.Attacking;
+                    return;
+                }
+
+                // If target goes too far
+                if (Vector2.Distance(target.position, transform.position) > aggroRange) {
+                    target = null;
+                    
+                    sleep();
+
+                    // Go back sleep state
+                    knightState = KnightState.Sleeping;
+                    return;
+                }
+
+                // If entity has reached the end of the path and has not reacted to target, then go back to being idle
+                if (pathfindUser.isDonePathing()) {
+                    target = null;
+                    sleep();
+
+                    knightState = KnightState.Sleeping;
+                    return;
+                }
+
+            break;
+            case KnightState.Attacking:
+
+                // If target is gone (IE dead)
+                if (target == null) {
+                    sleep();
+
+                    // Go back sleep state
+                    knightState = KnightState.Sleeping;
+                    return;
+                }
+                
+                // If target goes too far
+                if (Vector2.Distance(target.position, transform.position) > aggroRange) {
+                    target = null;
+
+                    sleep();
+
+                    // Go back sleep state
+                    knightState = KnightState.Sleeping;
+                    return;
+                }
+
+                // If you are in the middle of an attack, then let it play
+                if (attackTimer > 0) {
+                    animationHandler.changeAnimationState(attackAnimation);
+
                     attackTimer -= Time.deltaTime;
-                }
-                else
-                { // After attack is finished, reset enemy values and set to aggro
-                    currentCooldownTimer = Random.Range(minAttackCooldown, maxAttackCooldown); // Reset cooldown
+                    if (attackTimer < 1f && attackTimer > 0.7f) {
+                        body.velocity = attackDirection * dashSpeed;
+                    }
+                    else {
+                        body.velocity = Vector2.zero;
+                    }
 
-                    recoveryTimer = currentAttack.attackRecovery; // Set reoovery time
-                    state = EnemyState.recovering; // Change enemy state
                 }
-                break;
-            case EnemyState.recovering: // Enemy recovery time after attacking
-                if (recoveryTimer > 0)
-                {
-                    mv.Stop();
-                    recoveryTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    // Turn shield back on
-                    shield.raiseShield();
-                    currentSequenceOfAttacks.RemoveAt(0);
-                    if (currentSequenceOfAttacks.Count > 0)
-                    {
-                        setUpSequenceOfAttacks(currentSequenceOfAttacks);
-                        state = EnemyState.charging;
+                else { // Else chase target until it is in range or too far
+                    animationHandler.changeAnimationState(idleAnimation);
+
+                    // Always face target
+                    faceTarget();
+
+                    // If you have an attack cooldown, then reduce it
+                    if (attackCooldownTimer > 0) {
+                        attackCooldownTimer -= Time.deltaTime;
                     }
-                    else
-                    {
-                        state = EnemyState.aggro;
+
+                    // If you are in range
+                    if (Vector3.Distance(transform.position, target.position) < attackRange) {
+                        // Don't move
+                        mv.Walk(0);
+
+                        // Check if cooldown is over
+                        if (attackCooldownTimer <= 0) {
+                            // Start the attack
+                            attack();
+                        }
+                    }
+                    else {
+                        handleForwardMovement(mv.getFacingDirection());
                     }
                 }
-                break;
-            case EnemyState.dead:
-                // Do nothing so far
+            break;
+            case KnightState.Dead:
                 animationHandler.changeAnimationState(deadAnimation);
-                break;
+
+            break;
         }
     }
 
-    public override void onAggro()
+    private void handleForwardMovement(float direction)
     {
-        base.onAggro();
-        shield.raiseShield();
+        // Too far
+        mv.Walk(direction); // Move toward the player
+
+        // Jump if reached a wall and is grounded
+        if (mv.isGrounded() && mv.onWall())
+            mv.Jump();
     }
 
-    protected void facePlayer()
-    {
-        mv.setFacingDirection(target.transform.position.x - transform.position.x);
+    private void attack() {
+        attackTimer = attackDuration;
+        attackCooldownTimer = attackCooldown;
+        attackDirection = new Vector2(mv.getFacingDirection(), 0);
+    }
+
+    private void searchForEnemies() {
+        // Search to see if any player enters range
+        var colliders = Physics2D.OverlapCircleAll(transform.position, aggroRange, 1 << LayerMask.NameToLayer("Player"));
+
+        if (colliders.Length != 0) {
+            // Get closest enemy that meats criteria
+
+            Transform closest = null;
+            float shortestDistance = Mathf.Infinity;
+
+            foreach (var collider in colliders) {
+                float distance = Vector3.Distance(transform.position, collider.transform.position);
+
+                if (distance < shortestDistance) {
+                    // If the collider is a player
+                    if (collider.TryGetComponent(out Player player)) {
+                        shortestDistance = distance;
+                        closest = collider.transform;
+                    }
+                }
+            }
+
+            // If a possible enemy is found, then set it as target
+            if (closest != null) {
+                target = closest;
+            }
+        }
+    }
+
+    private void awaken() {
+        stats.defense = 0;
+        sleepingParticles.Stop();
+    }
+
+    private void sleep() {
+        stats.defense = 100;
+        sleepingParticles.Play();
+    }
+
+    private void handleRetaliation() {
+        // If entity was attacked...
+        if (attacker != null) {
+            // Set target to the attacker
+            target = attacker;
+
+            // Find path to attacker
+            pathfindUser.setPathTo(target.position);
+            knightState = KnightState.Searching;
+
+            // Reset attacker
+            attacker = null;
+        }
     }
 
     public override void Die()
     {
         base.Die();
-        Destroy(gameObject, 1f);
-        state = EnemyState.dead;
-    }
-
-    protected override void setUpSequenceOfAttacks(List<EnemyAttack> enemyAttacks)
-    {
-        base.setUpSequenceOfAttacks(enemyAttacks);
-        switch (currentAttack.attackName)
-        {
-            case "Slash":
-                attackDashSpeed = 5;
-                break;
-            case "Ram":
-                attackDashSpeed = 15;
-                break;
-        }
-        animationHandler.changeAnimationState(currentAttack.attackName);
-        shield.lowerShield();
+        Destroy(gameObject, 3f);
+        knightState = KnightState.Dead;
     }
 }

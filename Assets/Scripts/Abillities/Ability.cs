@@ -81,9 +81,6 @@ public abstract class Ability : ScriptableObject
     // Called right after ability has finished activating
     public virtual void performAfterActive(GameObject parent)
     {
-        // Send alert that you finished the action
-        GameEvents.current.triggerActionFinish();
-
         // Check for any upgrades
         var currentUpgrade = upgrades.First;
         while (currentUpgrade != null)
