@@ -259,6 +259,15 @@ public class Menu : MonoBehaviour
                             return;
                         }
                     }
+                    // Else if weapon is 2-handed
+                    else {
+                        // If there is no offhand weapon
+                        if (playerEquipment.getOffHandWeaponItem() == null) {
+                            // Equip normally
+                            playerEquipment.equipWeapon((WeaponItem)item, true);
+                            return;
+                        }
+                    }
                 }
                 
                 // Now we check if off-hand is free
@@ -272,8 +281,16 @@ public class Menu : MonoBehaviour
                             return;
                         }
                     }
+                    // Else if weapon is 2-handed
+                    else {
+                        // If there is no mainhand weapon
+                        if (playerEquipment.getMainHandWeaponItem() == null) {
+                            // Equip normally
+                            playerEquipment.equipWeapon((WeaponItem)item, true);
+                            return;
+                        }
+                    }
                 }
-                
                 // Don't do shit now
 
                 // If main slot is open
@@ -299,7 +316,6 @@ public class Menu : MonoBehaviour
                             // equip normally
                         // else 
                             // don't equip
-
                 break;
             case ItemType.Armor:
                 // Equipping armor logic

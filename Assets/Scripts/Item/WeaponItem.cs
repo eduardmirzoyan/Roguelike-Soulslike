@@ -6,7 +6,8 @@ public enum WeaponType
 {
     Sword,
     Axe,
-    Spear
+    SmallShield,
+    LongBow
 }
 
 [CreateAssetMenu]
@@ -15,7 +16,7 @@ public class WeaponItem : Item
     public int damage;
     public WeaponType weaponType;
     public bool twoHanded;
-    public MeleeEchantment enchantment;
+    public Enchantment enchantment;
 
     public void Awake()
     {

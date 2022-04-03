@@ -4,10 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Damageable))]
-[RequireComponent(typeof(Displacable))]
 public class FireMageAI : EnemyAI
 {
-    [SerializeField] protected Displacable displacable;
     [SerializeField] protected Collidable collidable;
     [SerializeField] protected Damageable damageable;
 
@@ -38,7 +36,6 @@ public class FireMageAI : EnemyAI
     {
         // Get required components
         damageable = GetComponent<Damageable>();
-        displacable = GetComponent<Displacable>();
         collidable = GetComponent<Collidable>();
 
         base.Start();

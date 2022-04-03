@@ -21,7 +21,6 @@ public class ImpAI : EnemyAI
     [SerializeField] private float interactionOffset;
     [SerializeField] private float rallyRadius;
     [SerializeField] private float rallyDuration;
-    [SerializeField] private float attackDashSpeed;
 
     [Header("Debugging")]
     [SerializeField] private int heldGold;
@@ -199,22 +198,24 @@ public class ImpAI : EnemyAI
                     // Reset body velocity
                     body.velocity = Vector2.zero;
 
-                    // Regular animation
-                    animationHandler.changeAnimationState(flyingAnimation);
-
-                    // Face target
-                    faceTarget();
-
-                    // If you get farther than aggro range, remove target
-                    if (Vector2.Distance(transform.position, target.position) > attackRange) {
-                        target = null;
-                    }
-
                     // If target is dead, or un-aggro'd then go back to idle
                     if (target == null) {
                         impState = ImpState.Idle;
                         return;
                     }
+
+                    // If you get farther than aggro range, remove target
+                    if (Vector2.Distance(transform.position, target.position) > aggroRange) {
+                        target = null;
+                        impState = ImpState.Idle;
+                        return;
+                    }
+
+                    // Regular animation
+                    animationHandler.changeAnimationState(flyingAnimation);
+
+                    // Face target
+                    faceTarget();
 
                     // Cooldown between attacks
                     if (attackCooldownTimer > 0) {
@@ -286,6 +287,9 @@ public class ImpAI : EnemyAI
             interactingCircle.fillAmount = 0; // Reset circle
             target = attacker;
             if(!hasRallied) {
+                // Set has rallied to true
+                hasRallied = true;
+
                 // Start particle effects
                 rallyParticles.Play();
 
@@ -328,13 +332,6 @@ public class ImpAI : EnemyAI
 
     protected override void OnDrawGizmosSelected() {
         base.OnDrawGizmosSelected();
-
-        // if (shrinesToPatrol != null) {
-        //     foreach (var shrine in shrinesToPatrol) {
-        //         Gizmos.color = Color.green;
-        //         Gizmos.DrawSphere(shrine.transform.position, 0.4f);
-        //     }
-        // }
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, rallyRadius);

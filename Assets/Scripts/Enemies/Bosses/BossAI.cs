@@ -5,11 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Damageable))]
-[RequireComponent(typeof(Displacable))]
 public class BossAI : EnemyAI
 {
     [Header("Boss Components")]
-    [SerializeField] protected Displacable displacable;
     [SerializeField] protected Collidable collidable;
     [SerializeField] protected Damageable damageable;
 
@@ -39,7 +37,6 @@ public class BossAI : EnemyAI
 
         // Get required components
         damageable = GetComponent<Damageable>();
-        displacable = GetComponent<Displacable>();
         collidable = GetComponent<Collidable>();
     }
 

@@ -66,6 +66,9 @@ public class ThiefAI : EnemyAI
     {
         switch(thiefState) {
             case ThiefState.Idle:
+                // Set animations
+                handleAnimation();
+
                 // If thief has no item
                 if (!hasItem()) {
                     //  Search for loot, if found set targetT
@@ -86,7 +89,8 @@ public class ThiefAI : EnemyAI
 
             break;
             case ThiefState.Searching:
-                // Search state
+                // Set animations
+                handleAnimation();
 
                 // If target is removed during travel, then cancel path
                 if (target == null) {
@@ -124,14 +128,6 @@ public class ThiefAI : EnemyAI
                     return;
                 }
 
-                // Handle airborne animations
-                if (mv.checkRising()) {
-                    animationHandler.changeAnimationState(riseAnimation);
-                }
-                else if (mv.checkFalling()) {
-                    animationHandler.changeAnimationState(fallAnimation);
-                }
-                
                 handleRetaliation();
 
             break;
@@ -141,6 +137,9 @@ public class ThiefAI : EnemyAI
                 // If you are in the middle of an attack, then let it play
                 if (attackTimer > 0) {
                     attackTimer -= Time.deltaTime;
+                    if (attackTimer < attackDuration / 2) {
+                        mv.dash(attackDashSpeed, mv.getFacingDirection());
+                    }
                     // Playout attack animation
                 }
                 else { 
@@ -170,6 +169,8 @@ public class ThiefAI : EnemyAI
                     if (Vector3.Distance(transform.position, target.position) < attackRange) {
                         // Attack!
                         mv.Walk(0);
+
+                        // Set animation
                         animationHandler.changeAnimationState(idleAnimation);
 
                         // If the cooldown between attacks is over, then start new attack
@@ -186,6 +187,10 @@ public class ThiefAI : EnemyAI
             break;
             case ThiefState.Looting:
                 // Loot State
+                if (target == null) {
+                    lootingCircle.fillAmount = 0;
+                    thiefState = ThiefState.Idle;
+                }
 
                 // Always face target
                 faceTarget();
@@ -261,9 +266,6 @@ public class ThiefAI : EnemyAI
             // Stop moving
             mv.Walk(0);
 
-            // Change animation
-            animationHandler.changeAnimationState(idleAnimation);
-
             // If you are on cooldown, then skip this frame
             if (wanderTimer > 0 || !mv.isGrounded()) {
                 wanderTimer -= Time.deltaTime;
@@ -276,9 +278,27 @@ public class ThiefAI : EnemyAI
             wanderTimer = wanderRate;
         }
         else {
-            animationHandler.changeAnimationState(walkAnimation);
-
             pathfindUser.moveToLocation();
+        }
+    }
+
+    private void handleAnimation() {
+        // Handle grounded animations
+        if (mv.isGrounded()) {
+            // If moving or not
+            if (Mathf.Abs(body.velocity.x) < 0.1f)
+                animationHandler.changeAnimationState(idleAnimation);
+            else
+                animationHandler.changeAnimationState(walkAnimation);
+        }
+        else {
+            // Handle airborne animations
+            if (mv.checkRising()) {
+                animationHandler.changeAnimationState(riseAnimation);
+            }
+            else if (mv.checkFalling()) {
+                animationHandler.changeAnimationState(fallAnimation);
+            }
         }
     }
 
@@ -298,7 +318,6 @@ public class ThiefAI : EnemyAI
 
     private void handleForwardMovement(float direction)
     {
-        animationHandler.changeAnimationState(walkAnimation);
         mv.Walk(direction); // Move toward the player
 
         // Jump if reached a wall and is grounded
@@ -365,7 +384,7 @@ public class ThiefAI : EnemyAI
 
     private void searchForEnemies() {
         // If thief does not have an item, then he should be aggressive and hunt targets
-        var colliders = lineOfSight.getAllEnemiesInSight();
+        var colliders = lineOfSight.getAllEnemiesInSight(aggroRange);
 
         if (colliders.Length != 0) {
             // Get closest enemy that meats criteria

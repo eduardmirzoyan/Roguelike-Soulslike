@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 9157344496376886352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.14615157, y: 0.14615157, z: 0.14615157}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -97,7 +97,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 9157344496376886352}
   m_Enabled: 0
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 4f558a14246786a49a2d10b97a205cd3, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -105,7 +105,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.42, y: 5.42}
+    oldSize: {x: 0.77428573, y: 0.77428573}
     newSize: {x: 5.42, y: 5.42}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -113,11 +113,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.8429947, y: 0.23138402}
-      - {x: 0.28065017, y: -0.89024174}
-      - {x: 2.5309248, y: 1.450272}
-      - {x: 2.603323, y: 2.5479145}
-      - {x: 1.4146465, y: 2.450272}
+    - - {x: -0.12216841, y: 0.04479061}
+      - {x: 0.041879013, y: -0.11810914}
+      - {x: 0.3631593, y: 0.2021823}
+      - {x: 0.36444634, y: 0.36485454}
+      - {x: 0.20786546, y: 0.36454213}
 --- !u!95 &1187901017
 Animator:
   serializedVersion: 3
@@ -149,14 +149,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6533815c83725409f2264a8c400efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponEffects: []
   state: 0
   windupDuration: 0.2
   activeDuration: 0.1
   recoveryDuration: 0.2
   attackMoveSpeed: 1
   maxCombo: 2
+  cooldown: 0
   weaponIdleAnimation: Sword Idle
-  weaponLightAttackAnimation: Sword Light
+  weaponAttackAnimation: Sword Attack
   animationHandler: {fileID: 0}
   spriteRenderer: {fileID: 0}
   owner: {fileID: 11400000, guid: 5afe78351655d4049935cc9901e18a9a, type: 2}

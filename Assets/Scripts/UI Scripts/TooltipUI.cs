@@ -45,11 +45,13 @@ public class TooltipUI : MonoBehaviour
                                 + "\nDescription: " + selectedItem.description;
                             break;
                         case ItemType.Weapon:
-                            itemType.text = ((WeaponItem)selectedItem).weaponType.ToString();
+                            itemType.text = (((WeaponItem)selectedItem).twoHanded ? "Two Handed" : "One Handed") + " " + ((WeaponItem)selectedItem).weaponType.ToString();
                             itemDescription.text = 
-                                "" + ((WeaponItem)selectedItem).enchantment.enchantmentName
-                                + "\nDamage: " + ((WeaponItem)selectedItem).damage
+                                 "\nDamage: " + ((WeaponItem)selectedItem).damage
                                 + "\nDescription: " + selectedItem.description;
+                            if (((WeaponItem)selectedItem).enchantment != null) {
+                                itemDescription.text += "\n" + ((WeaponItem)selectedItem).enchantment.enchantmentName;
+                            }
                             break;
                         case ItemType.Consumable:
                             itemType.text = ((ConsumableItem)selectedItem).name;

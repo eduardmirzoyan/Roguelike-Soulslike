@@ -7,7 +7,6 @@ using UnityEngine;
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Damageable))]
-[RequireComponent(typeof(Displacable))]
 public class ShadowKnightAI : BossAI
 {
     [Header("Shadow Knight Bow Values")]

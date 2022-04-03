@@ -8,9 +8,7 @@ using System.Linq;
 
 public class PathfindingMap : MonoBehaviour
 {
-    /// <summary>
-    /// Contains the tilemap of the cells of the map
-    /// </summary>
+    /// <summary> Contains the tilemap of the cells of the map </summary>
     [SerializeField] private Tilemap groundTilemap;
     
     /// <summary>
@@ -27,8 +25,6 @@ public class PathfindingMap : MonoBehaviour
     /// Stores way-points as Vector3Int, the points refer to the cell locations above the ground
     /// </summary>
     private Graph<Vector3Int, string> graph;
-
-    public GameObject markerPrefab;
 
     /// <summary>
     /// Maximum distance allowed to drop

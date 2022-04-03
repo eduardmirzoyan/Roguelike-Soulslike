@@ -6,8 +6,8 @@ public class Keybindings : MonoBehaviour
 {
     public KeyCode sprintKey = KeyCode.LeftControl;
     public KeyCode inventoryKey = KeyCode.Tab;
-    public KeyCode primaryAttackKey = KeyCode.A;
-    public KeyCode signatureAbilitKey = KeyCode.S;
+    public KeyCode mainhandAttackKey = KeyCode.A;
+    public KeyCode offhandAttackKey = KeyCode.S;
     public KeyCode utilityAbiltyKey = KeyCode.D;
     public KeyCode interactKey = KeyCode.E;
     public KeyCode flaskKey = KeyCode.F;

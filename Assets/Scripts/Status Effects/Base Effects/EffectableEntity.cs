@@ -38,6 +38,24 @@ public class EffectableEntity : MonoBehaviour
         }
     }
 
+    public bool removeEffect(BaseEffect baseEffect) {
+        if (activeEffects == null)
+            return false;
+
+        // Find an effect with the same type
+        foreach (var effect in activeEffects.Keys.ToList()) {
+            if (effect.GetType() == baseEffect.GetType()) {
+                // Force end the effect
+                activeEffects[effect].End();
+
+                // Then remove it
+                activeEffects.Remove(effect);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Dictionary<BaseEffect, TimedEffect> GetKeyValuePairs()
     {
         return activeEffects;

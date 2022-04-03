@@ -5,8 +5,8 @@ using UnityEngine;
 public class TimedKnockbackEffect : TimedEffect
 {
     private Displacable displacable;
-    private Vector3 origin;
     private float pushForce;
+    private Vector3 origin;
 
     public TimedKnockbackEffect(BaseEffect effect, GameObject parent, Vector3 origin, float pushForce) : base(effect, parent)
     {
@@ -17,28 +17,18 @@ public class TimedKnockbackEffect : TimedEffect
 
     protected override void ApplyEffect()
     {
-        pushForce *= (EffectStacks + 1);
-
-        if (displacable != null)
-        {
-            //displacable.triggerKnockbackKK(pushForce, origin);
-        }
-        else
-        {
-            Duration = 0;
+        if (displacable != null) {
+            displacable.triggerKnockback(pushForce, ((KnockbackEffect)Effect).Duration, origin);
         }
     }
 
     protected override void onTick()
     {
-        // Keep reseting duration until the entity is no longer displacing
-        /*Duration = 1f;
-        if (displacable.knockbackSpeed == 0)
-            Duration = 0;*/
+        // Nothing
     }
 
     public override void End()
     {
-
+        // Nothing
     }
 }

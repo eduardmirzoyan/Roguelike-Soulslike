@@ -11,8 +11,6 @@ public class GoblinAI : EnemyAI
     [Header("Goblin Components")]
     [SerializeField] private PathfindUser pathfindUser;
 
-    [Header("Goblin Specific Stats")]
-    [SerializeField] private float dashSpeed;
 
     [Header("Animation")]
     [SerializeField] private string idleAnimation = "Idle";
@@ -20,8 +18,6 @@ public class GoblinAI : EnemyAI
     [SerializeField] private string deadAnimation = "Dead";
     [SerializeField] private string staggerAnimation = "Stagger";
     [SerializeField] private string attackAnimation = "Attack";
-
-    private Vector2 attackDirection;
 
     private enum GoblinState {
         Idle,
@@ -53,9 +49,14 @@ public class GoblinAI : EnemyAI
     // Update is called once per frame
     protected void FixedUpdate()
     {
-        // If enemy is killed, then set to dead
         switch(goblinState) {
             case GoblinState.Idle:
+                // Set animation based on movement
+                if (Mathf.Abs(body.velocity.x) < 0.1f)
+                    animationHandler.changeAnimationState(idleAnimation);
+                else
+                    animationHandler.changeAnimationState(walkAnimation);
+
                 searchForEnemies();
 
                 // If an enemy has been gound, change states
@@ -70,6 +71,12 @@ public class GoblinAI : EnemyAI
 
             break;
             case GoblinState.Searching:
+                // Set animation based on movement
+                if (Mathf.Abs(body.velocity.x) < 0.1f)
+                    animationHandler.changeAnimationState(idleAnimation);
+                else
+                    animationHandler.changeAnimationState(walkAnimation);
+
                 // If target is removed during travel, then cancel path
                 if (target == null) {
                     pathfindUser.stopTraveling();
@@ -104,7 +111,7 @@ public class GoblinAI : EnemyAI
                     
                     attackTimer -= Time.deltaTime;
                     if (attackTimer < attackDuration / 2) {
-                        body.velocity = attackDirection * dashSpeed;
+                        mv.dash(attackDashSpeed, mv.getFacingDirection());
                     }
 
                 }
@@ -171,12 +178,11 @@ public class GoblinAI : EnemyAI
     private void attack() {
         attackTimer = attackDuration;
         attackCooldownTimer = attackCooldown;
-        attackDirection = new Vector2(mv.getFacingDirection(), 0);
     }
 
     private void searchForEnemies() {
         // Aggressive, hunts any enemy in sight
-        var colliders = lineOfSight.getAllEnemiesInSight();
+        var colliders = lineOfSight.getAllEnemiesInSight(aggroRange);
 
         if (colliders.Length != 0) {
             // Get closest enemy that meats criteria
@@ -209,10 +215,7 @@ public class GoblinAI : EnemyAI
         if (pathfindUser.isDonePathing()) {
             // Stop moving
             mv.Walk(0);
-
-            // Set correct animation
-            animationHandler.changeAnimationState(idleAnimation);
-
+            
             // If you are on cooldown, then skip this frame
             if (wanderTimer > 0 || !mv.isGrounded()) {
                 wanderTimer -= Time.deltaTime;
@@ -226,7 +229,7 @@ public class GoblinAI : EnemyAI
         }
         else {
             // If you are already on the path
-            animationHandler.changeAnimationState(walkAnimation);
+            
             pathfindUser.moveToLocation();
         }
     }

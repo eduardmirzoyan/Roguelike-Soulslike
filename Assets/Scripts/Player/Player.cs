@@ -8,7 +8,6 @@ using UnityEngine;
 [RequireComponent(typeof(Stamina))]
 [RequireComponent(typeof(EffectableEntity))]
 [RequireComponent(typeof(AnimationHandler))]
-[RequireComponent(typeof(Displacable))]
 [RequireComponent(typeof(Damageable))]
 [RequireComponent(typeof(CombatStats))]
 [RequireComponent(typeof(Keybindings))]
@@ -28,12 +27,9 @@ public class Player : MonoBehaviour
     [SerializeField] private AnimationHandler animationHandler;
     [SerializeField] private CombatStats stats;
     [SerializeField] private Stamina stamina;
-    [SerializeField] private EquipmentHandler equipmentHandler;
     [SerializeField] private InputBuffer inputBuffer;
     [SerializeField] private Menu menu;
-    [SerializeField] public Keybindings keybindings { get; private set; }
-    [SerializeField] public CombatHandler combatHandler { get; private set; }
-    [SerializeField] public FamiliarHandler familiarHandler { get; private set; }
+    [SerializeField] private CombatHandler combatHandler;
     [SerializeField] private Rolling rolling;
 
     [Header("Items")]
@@ -48,6 +44,7 @@ public class Player : MonoBehaviour
     [SerializeField] private string risingAnimation;
     [SerializeField] private string fallingAnimation;
     [SerializeField] private string wallslideAnimation;
+    [SerializeField] private string staggerAnimation;
     [SerializeField] private string deadAnimation;
 
     [Header("Player Skills")]
@@ -59,6 +56,7 @@ public class Player : MonoBehaviour
  
     public float regenTimer;
     private bool isJump;
+    [SerializeField] private PlayerState savedState;
 
     public enum PlayerState
     {
@@ -90,11 +88,8 @@ public class Player : MonoBehaviour
         stats = GetComponent<CombatStats>();
         stamina = GetComponent<Stamina>();
         inventory = GetComponentInChildren<Inventory>();
-        keybindings = GetComponent<Keybindings>();
-        equipmentHandler = GetComponent<EquipmentHandler>();
         combatHandler = GetComponent<CombatHandler>();
         inputBuffer = GetComponent<InputBuffer>();
-        familiarHandler = GetComponent<FamiliarHandler>();
         rolling = GetComponent<Rolling>();
 
         // Gets flask
@@ -124,29 +119,28 @@ public class Player : MonoBehaviour
 
                 handleJumpRequest();
 
-                handlePlayerAttackRequest();
-
                 if (inputBuffer.moveDirection != 0)
                     state = PlayerState.walking;
                 if (inputBuffer.crouchRequest)
                     state = PlayerState.crouching;
                 if(!mv.isGrounded())
                     state = PlayerState.airborne;
+                
+                handleRollRequest();
+
+                handlePlayerAttackRequest();
+
+                handleDisplacementRequest();
 
                 break;
             case PlayerState.walking:
                 animationHandler.changeAnimationState(walkAnimation);
 
+                checkIfStaminaShouldRegen();
+
                 handleMovementRequest();
 
                 handleJumpRequest();
-
-                checkIfStaminaShouldRegen();
-
-                // Conditions to change state
-                handlePlayerAttackRequest();
-
-                handleDisplacementRequest();
 
                 if (inputBuffer.moveDirection == 0)
                     state = PlayerState.idle;
@@ -154,18 +148,22 @@ public class Player : MonoBehaviour
                     state = PlayerState.crouchWalking;
                 if (!mv.isGrounded())
                     state = PlayerState.airborne;
-                    
+                
+                handleRollRequest();
+
+                handlePlayerAttackRequest();
+
+                handleDisplacementRequest();
+
                 break;
             case PlayerState.crouching:
                 animationHandler.changeAnimationState(crouchAnimation);
 
+                checkIfStaminaShouldRegen();
+
                 handleDropDownRequst();
 
                 pickUpNearbyItems();
-
-                checkIfStaminaShouldRegen();
-
-                handleDisplacementRequest();
 
                 // Conditions to change state
                 if (inputBuffer.crouchRequest && inputBuffer.moveDirection != 0)
@@ -175,25 +173,31 @@ public class Player : MonoBehaviour
                 if (!mv.isGrounded())
                     state = PlayerState.airborne;
 
+                handleRollRequest();
+
+                handleDisplacementRequest();
+
                 break;
             case PlayerState.crouchWalking:
                 animationHandler.changeAnimationState(crouchWalkAnimation);
 
                 mv.crouchWalk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
 
+                checkIfStaminaShouldRegen();
+
                 handleDropDownRequst();
 
                 pickUpNearbyItems();
-
-                checkIfStaminaShouldRegen();
-
-                handleDisplacementRequest();
 
                 // Conditions to change state
                 if (!(inputBuffer.crouchRequest && inputBuffer.moveDirection != 0))
                     state = PlayerState.crouching;
                 if (!mv.isGrounded())
                     state = PlayerState.airborne;
+
+                handleRollRequest();
+
+                handleDisplacementRequest();
 
                 break;
             case PlayerState.airborne:
@@ -262,11 +266,26 @@ public class Player : MonoBehaviour
             case PlayerState.attacking:
                 // Let the respective attack handle the player movement during the attack
 
-                handleComboRequest();
+                if (!inputBuffer.mainHandAttackRequest) {
+                    // Attempt to release weapon
+                    combatHandler.mainHandRelease(inputBuffer.mainAttackTime);
+                }
 
-                if (combatHandler.isDoneAttacking())
-                    state = PlayerState.idle;
+                if (!inputBuffer.offHandAttackRequest) {
+                    // Attempt to release weapon
+                    combatHandler.offHandRelease(inputBuffer.mainAttackTime);
+                }
                 
+                // For handling combos
+                handlePlayerAttackRequest();
+
+                // If the weapon is done attacking, then return player to idle state
+                if (combatHandler.isDoneAttacking()) {
+                    inputBuffer.resetAttackRequests();
+                    state = PlayerState.idle;
+                    return;
+                }
+
                 break;
             case PlayerState.interacting:
                 // TODO
@@ -286,13 +305,17 @@ public class Player : MonoBehaviour
                 }
                 break;
             case PlayerState.knockedback:
-                // TODO
-                animationHandler.changeAnimationState(idleAnimation);
+                animationHandler.changeAnimationState(staggerAnimation);
+
+                mv.setFacingDirection(-displace.getKnockbackDirection());
+
+                handleDisplacementRequest();
 
                 displace.performDisplacement();
 
-                if (!displace.isDisplaced)
-                    state = PlayerState.idle;
+                if (!displace.isDisplaced()) {
+                    state = (PlayerState)System.Enum.Parse(typeof(PlayerState), displace.loadState());
+                }    
 
                 break;
             case PlayerState.dead:
@@ -315,13 +338,17 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))  // used for testing
         {
             // Nothin
-            GetComponent<EffectableEntity>().addEffect(burnEffect.InitializeEffect(gameObject));
+            displace.triggerKnockback(200, 0.25f, transform.position + Vector3.right);
         }
-        if (Input.GetKeyDown(keybindings.rollKey))  // used for testing
+        if (Input.GetKeyDown(KeyCode.H))  // used for testing
         {
-            handleRollRequest();
-            state = PlayerState.rolling;
+            // Nothin
+            //displace.triggerStun(1f);
+            GetComponent<EffectableEntity>().addEffect(burnEffect.InitializeEffect(gameObject));
+            
         }
+
+
         if (playerIsFree())
         {
             // Handle input
@@ -330,7 +357,7 @@ public class Player : MonoBehaviour
             
             // Temp sprinting function
             if (inputBuffer.sprintRequest)
-                stats.movespeedMultiplier = 1f;
+                stats.movespeedMultiplier = 0.5f;
             else
                 stats.movespeedMultiplier = 0;
 
@@ -362,7 +389,12 @@ public class Player : MonoBehaviour
 
     private void handleDisplacementRequest()
     {
-        // TODO:
+        // If you are displaced
+        if (displace.isDisplaced()) {
+            // Save your current state
+            displace.saveState(state.ToString());
+            state = PlayerState.knockedback;
+        }
     }
 
     private void handleDropDownRequst() {
@@ -372,13 +404,19 @@ public class Player : MonoBehaviour
     }
 
     private void handleRollRequest() {
-        if (inputBuffer.moveDirection > 0)
-            rolling.startRoll(1);
-        else if (inputBuffer.moveDirection < 0)
-            rolling.startRoll(-1);
-        else 
-            rolling.startRoll(mv.getFacingDirection());
-        stats.percentDodgeChance += 100;
+        if (inputBuffer.rollRequest) {
+            if (inputBuffer.moveDirection > 0.2f)
+                rolling.startRoll(1);
+            else if (inputBuffer.moveDirection < -0.2f)
+                rolling.startRoll(-1);
+            else 
+                rolling.startRoll(mv.getFacingDirection());
+
+            // Give 100% dodge chance during roll
+            stats.percentDodgeChance += 100;
+
+            state = PlayerState.rolling;
+        }
     }
 
     private void handlePlayerAttackRequest()
@@ -387,40 +425,13 @@ public class Player : MonoBehaviour
         if (!mv.isGrounded())
             return;
 
-        if (inputBuffer.mainHandAttackRequest)
+        if (inputBuffer.mainHandAttackRequest && combatHandler.mainHandAttack())
         {
-            combatHandler.mainHandAttack();
-            inputBuffer.resetAttackRequests();
             state = PlayerState.attacking;
         }
-        else if (inputBuffer.heavyAttackRequest)
+        else if (inputBuffer.offHandAttackRequest && combatHandler.offhandAttack())
         {
-            // No more heavy attack :(
-        }
-        else if (inputBuffer.offHandAttackRequest)
-        {
-            combatHandler.offhandAttack();
-            inputBuffer.resetAttackRequests();
             state = PlayerState.attacking;
-        }
-        else if (inputBuffer.utilityAbilityRequest)
-        {
-            combatHandler.attemptToUseUtilityAbility();
-            state = PlayerState.attacking;
-        }
-    }
-
-    private void handleComboRequest()
-    {
-        if (combatHandler.mainCanCombo() && inputBuffer.mainHandAttackRequest)
-        {
-            combatHandler.mainHandAttack();
-            inputBuffer.resetAttackRequests();
-        }
-        else if (combatHandler.offCanCombo() && inputBuffer.offHandAttackRequest)
-        {
-            combatHandler.offhandAttack();
-            inputBuffer.resetAttackRequests();
         }
     }
 
@@ -463,13 +474,12 @@ public class Player : MonoBehaviour
         state = PlayerState.airborne;
     }
 
-    protected void pickUpNearbyItems()
+    private void pickUpNearbyItems()
     {   
         var collider2D = GetComponent<Collider2D>();
         var droppedItems = Physics2D.OverlapBoxAll((Vector2)collider2D.transform.position + collider2D.offset, collider2D.bounds.size, 
                             0, 1 << LayerMask.NameToLayer("Loot"));
         if (droppedItems.Length == 0) {
-            print("nothin");
             return;
         }
             
@@ -485,7 +495,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    protected void interactWithNearbyObjects()
+    private void interactWithNearbyObjects()
     {
         var collider2D = GetComponent<Collider2D>();
         var iteractables = Physics2D.OverlapBoxAll(collider2D.transform.position, collider2D.bounds.size, 0, 1 << LayerMask.NameToLayer("Interactables"));
@@ -508,7 +518,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    protected void useFlask()
+    private void useFlask()
     {
         if(health.isFull())
         {
@@ -524,17 +534,10 @@ public class Player : MonoBehaviour
             GameManager.instance.CreatePopup("Your flask is empty.", transform.position);
     }
 
-    public void heal(int amount)
+    private void heal(int amount)
     {
         GameManager.instance.CreatePopup("You have healed " + amount + " HP.", transform.position);
         health.increaseHealth(amount);
-    }
-
-    // Interupts any action that the player is doing
-    public void interuptCurrentAction()
-    {
-        // If player has weapon in action, stop it
-        combatHandler.cancelCurrentAttack();
     }
 
     // Skill handling

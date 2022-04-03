@@ -26,6 +26,7 @@ public abstract class EnemyAI : MonoBehaviour
     [SerializeField] protected float attackRange;
     [SerializeField] protected float attackCooldown;
     [SerializeField] protected float attackDuration;
+    [SerializeField] protected float attackDashSpeed;
 
     [Header("Death Drops")]
     [SerializeField] protected int xpValue = 100;

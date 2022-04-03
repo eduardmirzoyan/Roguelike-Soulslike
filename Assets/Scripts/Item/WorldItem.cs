@@ -10,8 +10,14 @@ public class WorldItem : MonoBehaviour
 
     private void Start()
     {
-        spriteRend = GetComponent<SpriteRenderer>();
         setItem(item);
+        spriteRend = GetComponentInChildren<SpriteRenderer>();
+        spriteRend.sprite = item.sprite;
+        if (item.type == ItemType.Weapon)
+            spriteRend.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -45));
+        else 
+            spriteRend.transform.rotation = Quaternion.identity;   
+        
     }
 
     public Item GetItem()
@@ -21,13 +27,6 @@ public class WorldItem : MonoBehaviour
 
     public void setItem(Item newItem)
     {
-        this.item = newItem;
-        spriteRend.sprite = item.sprite;
-        transform.localScale = new Vector3(.15f, .15f, 0);
-
-        if (item.type == ItemType.Weapon)
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, -45));
-        else 
-            transform.rotation = Quaternion.identity;            
+        item = newItem;         
     }
 }

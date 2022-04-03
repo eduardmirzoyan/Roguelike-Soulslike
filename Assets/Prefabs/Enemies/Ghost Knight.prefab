@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1818457340926283806}
   - component: {fileID: 2871319135814063631}
   - component: {fileID: 4192043643170924988}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,11 +41,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 1897800293967955403}
   m_Enabled: 0
   m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_Material: {fileID: 6200000, guid: 4f558a14246786a49a2d10b97a205cd3, type: 2}
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.375391, y: -0.1876955}
+  m_Offset: {x: 0.375391, y: -0.3837061}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -56,7 +56,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.8908577, y: 0.37434578}
+  m_Size: {x: 2.8908577, y: 0.76636696}
   m_EdgeRadius: 0
 --- !u!114 &4192043643170924988
 MonoBehaviour:
@@ -71,16 +71,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wielder: {fileID: 0}
-  dmg:
-    damageAmount: 10
-    source: 1
-    origin: {fileID: 6841289740653524856}
-    isTrue: 0
-    isAvoidable: 1
-    triggersIFrames: 1
-    effects: []
-    buildupEffects: []
-    color: {r: 0.066497326, g: 0, b: 1, a: 1}
+  damage: 5
+  hitAll: 0
 --- !u!1 &6841289740653524853
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,6 +98,7 @@ GameObject:
   - component: {fileID: 1093893460}
   - component: {fileID: 1093893461}
   - component: {fileID: -8373010377783489169}
+  - component: {fileID: 1718550426}
   m_Layer: 7
   m_Name: Ghost Knight
   m_TagString: Fighter
@@ -4977,14 +4970,14 @@ MonoBehaviour:
   wanderRadius: 0
   wanderRate: 0
   aggroRange: 5
-  attackRange: 2.1
+  attackRange: 2
   attackCooldown: 2
   attackDuration: 1.5
+  attackDashSpeed: 200
   xpValue: 120
   goldValue: 25
   target: {fileID: 0}
   attacker: {fileID: 0}
-  dashSpeed: 7
   pathfindUser: {fileID: 0}
   stats: {fileID: 0}
   sleepingParticles: {fileID: 0}
@@ -5032,8 +5025,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33846741462c5094e98ae34256e583c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 8
-  currentHealth: 8
+  maxHealth: 100
+  currentHealth: 100
 --- !u!114 &6841289740653524862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5046,6 +5039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b323924feebaa469ac23bee33a0c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 0}
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
@@ -5076,14 +5070,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041f330b2cc57f3488297ba45261453f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 256
-  maxDistance: 4
 --- !u!114 &4408043583777253001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5176,25 +5168,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b431ac3d6efd3c746a0f6d587c9164ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 0
-  skillEfficiency: 0
   defense: 0
   bonusStamina: 0
   percentCritChance: 0
   percentDodgeChance: 0
-  percentBlockChance: 0
-  poiseMeter: 0
-  basePoiseThreshold: 0
-  percentBleedResistance: 0
-  percentFireResistance: 0
-  percentPoisonResistance: 0
-  percentFrostResistance: 0
-  percentCurseResistance: 0
   damageDealtMultiplier: 0
   movespeedMultiplier: 0
   damageTakenMultiplier: 0
-  effects: 
-  percentFumbleChance: 0
 --- !u!114 &1093893461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5233,6 +5213,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStandingPlatform: {fileID: 0}
+--- !u!114 &1718550426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841289740653524853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef73a5ebad9de7409d540737f920031, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6841289740735046445
 GameObject:
   m_ObjectHideFlags: 0

@@ -196,9 +196,6 @@ public class PathfindUser : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     { 
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, 0.1f);
-
         Gizmos.color = Color.green;
         if (currentPath != null && currentPath.Count > 0) {
             foreach (var path in currentPath) {

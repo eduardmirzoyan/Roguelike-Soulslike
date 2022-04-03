@@ -18,4 +18,5 @@ public struct Damage
     public Transform origin;
     public List<BaseEffect> effects; // List of effects that came with the damage
     public Color color;
+    public float pushForce;
 }

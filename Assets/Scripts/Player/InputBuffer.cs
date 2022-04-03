@@ -19,20 +19,23 @@ public class InputBuffer : MonoBehaviour
     public float moveDirection { get; private set; }
     public bool menuToggleRequest { get; private set; }
     public bool mainHandAttackRequest { get; private set; }
-    public bool heavyAttackRequest { get; private set; }
+    public bool heavyAttackRequest;
     public bool offHandAttackRequest { get; private set; }
-    public bool utilityAbilityRequest { get; private set; }
+    public bool utilityAbilityRequest;
+    public bool rollRequest { get; private set; }
     public bool interactRequest { get; private set; }
     public bool useFlaskRequest { get; private set; }
 
     // Temp
     public bool sprintRequest { get; private set; }
 
-    private float mainAttackTimer;
-    private float offAttackTimer;
+    private float rollTimer;
     private float jumpInputTimer;
     private float dropDownTimer;
     private float flaskInputTimer;
+
+    public float mainAttackTime;
+    public float offAttackTime;
 
     private void Awake()
     {
@@ -57,6 +60,13 @@ public class InputBuffer : MonoBehaviour
             jumpRequest = false;
         }
 
+        if (rollTimer > 0) {
+            rollTimer -= Time.deltaTime;
+        }
+        else {
+            rollRequest = false;
+        }
+
         if (dropDownTimer > 0) {
             dropDownTimer -= Time.deltaTime;
         }
@@ -69,20 +79,6 @@ public class InputBuffer : MonoBehaviour
         }
         else {
             useFlaskRequest = false;
-        }
-
-        if (mainAttackTimer > 0) {
-            mainAttackTimer -= Time.deltaTime;
-        }
-        else {
-            mainHandAttackRequest = false;
-        }
-
-        if (offAttackTimer > 0) {
-            offAttackTimer -= Time.deltaTime;
-        }
-        else {
-            offHandAttackRequest = false;
         }
     }
 
@@ -132,34 +128,43 @@ public class InputBuffer : MonoBehaviour
         }
 
         // Buffer Attacks and abilities
+        if (Input.GetKeyDown(keybindings.rollKey)) {
+            rollRequest = true;
+            rollTimer = bufferRatio * Time.deltaTime;
+        }
 
-        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(keybindings.primaryAttackKey))
-        {
-            inputBuffer.Add(new ActionItem(ActionItem.InputAction.HeavyAttack, Time.time));
-        }
-        else if (Input.GetKeyDown(keybindings.primaryAttackKey))
-        {
+        // Check for main hand attack
+        if (Input.GetKeyDown(keybindings.mainhandAttackKey)) {
             mainHandAttackRequest = true;
-            mainAttackTimer = bufferRatio * Time.deltaTime;
-            //inputBuffer.Add(new ActionItem(ActionItem.InputAction.LightAttack, Time.time));
+            mainAttackTime = Time.time;
         }
-        else if (Input.GetKeyDown(keybindings.signatureAbilitKey))
-        {
-            //inputBuffer.Add(new ActionItem(ActionItem.InputAction.SignatureAttack, Time.time));
+
+        if (mainHandAttackRequest && Input.GetKeyUp(keybindings.mainhandAttackKey)) {
+            mainHandAttackRequest = false;
+            mainAttackTime = Time.time - mainAttackTime;
+        }
+
+        // Check for off hand attack
+        if (!offHandAttackRequest && Input.GetKeyDown(keybindings.offhandAttackKey)) {
             offHandAttackRequest = true;
-            offAttackTimer = bufferRatio * Time.deltaTime;
+            offAttackTime = Time.time;
         }
-        else if (Input.GetKey(keybindings.utilityAbiltyKey))
-        {
-            inputBuffer.Add(new ActionItem(ActionItem.InputAction.UtilityAttack, Time.time));
+
+        if (offHandAttackRequest && Input.GetKeyUp(keybindings.offhandAttackKey)) {
+            offHandAttackRequest = false;
+            offAttackTime = Time.time - offAttackTime;
         }
+
+        // On press set "attack" to true
+        // ANd set timer to 0
+
+        // On release, set attack to false and timer to time between press
+
     }
 
     public void resetAttackRequests() {
         mainHandAttackRequest = false;
-        heavyAttackRequest = false;
         offHandAttackRequest = false;
-        utilityAbilityRequest = false;
     }
 
     //Call when we want to process the inputBuffer
@@ -194,7 +199,7 @@ public class InputBuffer : MonoBehaviour
         switch (ai.Action)
         {
             case ActionItem.InputAction.LightAttack:
-                mainHandAttackRequest = true;
+                //mainHandAttackRequest = true;
                 break;
             case ActionItem.InputAction.HeavyAttack:
                 heavyAttackRequest = true;

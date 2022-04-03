@@ -6,21 +6,21 @@ using UnityEngine;
 public class PoisonedWeaponEnchantment : MeleeEchantment
 {
     [SerializeField] private PoisonEffect poisonEffect;
-    private Weapon weapon;
+    private MeleeWeapon meleeWeapon;
 
     // Get weapon's gameobject
     public override void intialize(GameObject weaponGameObject)
     {
         base.intialize(weaponGameObject);
 
-        weapon = weaponGameObject.GetComponentInChildren<Weapon>();
-        weapon.addEffect(poisonEffect);
+        meleeWeapon = weaponGameObject.GetComponentInChildren<MeleeWeapon>();
+        meleeWeapon.addEffect(poisonEffect);
     }
 
     public override void unintialize()
     {
-        weapon.addEffect(poisonEffect);
-        weapon = null;
+        meleeWeapon.addEffect(poisonEffect);
+        meleeWeapon = null;
         base.unintialize();
     }
 }

@@ -32,7 +32,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword Light 0
+  m_Name: Sword Attack 0
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -158,7 +158,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword Light 2
+  m_Name: Sword Attack 2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -260,7 +260,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword Light 1
+  m_Name: Sword Attack 1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

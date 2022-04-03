@@ -28,6 +28,7 @@ public abstract class TimedEffect
         {
             onTick();
             Duration -= Effect.tickRate;
+            
             if (Duration <= 0)
             {
                 End();

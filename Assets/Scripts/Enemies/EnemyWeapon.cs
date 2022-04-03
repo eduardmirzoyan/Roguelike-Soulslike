@@ -5,16 +5,26 @@ using UnityEngine;
 [RequireComponent (typeof(Collider2D))]
 public class EnemyWeapon : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private EnemyAI wielder;
-    [SerializeField] private Damage dmg;
+
+    [Header("Settings")]
+    [SerializeField] private int damage = 5;
+    [SerializeField] private bool hitAll;
 
     private void Start() {
         wielder = GetComponentInParent<EnemyAI>();
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.transform == wielder.getTarget()) {
+        if (hitAll || other.transform == wielder.getTarget()) {
             if (other.TryGetComponent(out Damageable damageable)) {
+                Damage dmg = new Damage {
+                    damageAmount = damage,
+                    source = DamageSource.fromEnemy,
+                    origin = transform.parent,
+                    pushForce = 200f
+                };
                 damageable.takeDamage(dmg);
             }
         }
