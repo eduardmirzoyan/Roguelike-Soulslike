@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3184617754924566442}
   - component: {fileID: 3184617754924566446}
-  - component: {fileID: 3184617754924566447}
+  - component: {fileID: 8608231142097099498}
   - component: {fileID: 3184617754924566440}
   - component: {fileID: 3184617754924566441}
   - component: {fileID: -3862820843993216567}
+  - component: {fileID: 57796194466093632}
   m_Layer: 6
   m_Name: Axe
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3184617754924566443}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.75, y: 0.1, z: 0}
-  m_LocalScale: {x: 0.1461516, y: 0.1461516, z: 0.1461516}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -87,8 +88,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &3184617754924566447
-BoxCollider2D:
+--- !u!60 &8608231142097099498
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -96,23 +97,27 @@ BoxCollider2D:
   m_GameObject: {fileID: 3184617754924566443}
   m_Enabled: 0
   m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_Material: {fileID: 6200000, guid: 4f558a14246786a49a2d10b97a205cd3, type: 2}
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.1080782, y: 1.329591}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10.2, y: 10.2}
+    oldSize: {x: 1.275, y: 1.275}
     newSize: {x: 5.1, y: 5.1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 4.302934, y: 4.7184405}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.28095198, y: -0.09863174}
+      - {x: 0.01050061, y: -0.04985717}
+      - {x: 0.08894873, y: 0.51768607}
+      - {x: 0.48778555, y: 0.3861534}
+      - {x: 0.51134133, y: 0.10880217}
 --- !u!95 &3184617754924566440
 Animator:
   serializedVersion: 3
@@ -144,18 +149,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8472395537b91408232960f28c172e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponEffects: []
   state: 0
   windupDuration: 0.3
   activeDuration: 0.15
   recoveryDuration: 0.3
   attackMoveSpeed: 0.75
   maxCombo: 1
+  cooldown: 0
   weaponIdleAnimation: Axe Idle
-  weaponLightAttackAnimation: Axe Light
+  weaponAttackAnimation: Axe Attack
   animationHandler: {fileID: 0}
   spriteRenderer: {fileID: 0}
   owner: {fileID: 0}
   wielderMovement: {fileID: 0}
+  bonusDamagePercentage: 0.5
 --- !u!114 &-3862820843993216567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,3 +177,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trail: {fileID: 472128678514473323, guid: 1871a43ecc758ac49b62c7ff4d94a22c, type: 3}
+--- !u!114 &57796194466093632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3184617754924566443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e30fb07126fe2f245abfe9c399ed79d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}

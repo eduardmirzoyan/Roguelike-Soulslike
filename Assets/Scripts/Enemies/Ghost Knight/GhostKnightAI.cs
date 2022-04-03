@@ -7,10 +7,6 @@ using UnityEngine;
 [RequireComponent(typeof(Damageable))]
 public class GhostKnightAI : EnemyAI
 {
-    [Header("Ghost Knight Specific Stats")]
-    [SerializeField] private float dashSpeed;
-    private Vector2 attackDirection;
-
     [Header("Components")]
     [SerializeField] private PathfindUser pathfindUser;
     [SerializeField] private CombatStats stats;
@@ -151,10 +147,10 @@ public class GhostKnightAI : EnemyAI
 
                     attackTimer -= Time.deltaTime;
                     if (attackTimer < 1f && attackTimer > 0.7f) {
-                        body.velocity = attackDirection * dashSpeed;
+                        mv.dash(attackDashSpeed, mv.getFacingDirection());
                     }
                     else {
-                        body.velocity = Vector2.zero;
+                        mv.Walk(0);
                     }
 
                 }
@@ -205,7 +201,6 @@ public class GhostKnightAI : EnemyAI
     private void attack() {
         attackTimer = attackDuration;
         attackCooldownTimer = attackCooldown;
-        attackDirection = new Vector2(mv.getFacingDirection(), 0);
     }
 
     private void searchForEnemies() {

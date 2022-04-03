@@ -37,22 +37,7 @@ public class EffectBuildupHandler : MonoBehaviour
         var stats = GetComponent<CombatStats>();
         if(stats != null)
         {
-            // Remove this at some point lol
-            switch (buildUpEffect.type)
-            {
-                case StatusType.Burn:
-                    amount = (int)(amount * (1 - stats.percentFireResistance / 100f));
-                    break;
-                case StatusType.Poison:
-                    amount = (int)(amount * (1 - stats.percentPoisonResistance / 100f));
-                    break;
-                case StatusType.Cold:
-                    amount = (int)(amount * (1 - stats.percentFrostResistance / 100f));
-                    break;
-                case StatusType.Curse:
-                    amount = (int)(amount * (1 - stats.percentCurseResistance / 100f));
-                    break;
-            }
+            // ?
         }
 
 

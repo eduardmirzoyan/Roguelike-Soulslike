@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum ItemType
 {
-    Consumable,
     Weapon,
     Armor,
+    Consumable,
     Default
 }
 

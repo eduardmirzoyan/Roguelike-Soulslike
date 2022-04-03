@@ -153,7 +153,8 @@ public class Movement : MonoBehaviour
 
     public void dash(float dashSpeed, float direction)
     {
-        body.MovePosition(new Vector2(body.position.x + 0.01f * direction * Time.deltaTime * dashSpeed, body.position.y));
+        body.velocity = new Vector2(direction * Time.deltaTime * dashSpeed, body.velocity.y);
+        //body.MovePosition(new Vector2(body.position.x + 0.1f * direction * Time.deltaTime * dashSpeed, body.position.y));
     }
 
     public void jumpReposition(float xVel)

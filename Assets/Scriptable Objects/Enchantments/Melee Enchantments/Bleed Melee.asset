@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e21bee1386f30d44b3b17109a43748b, type: 3}
   m_Name: Bleed Melee
   m_EditorClassIdentifier: 
-  enchantmentName: Jagged
+  enchantmentName: Sharpened
   bleedEffect: {fileID: 11400000, guid: 56c3af0ec4a5bf44ebc466dc2227a70a, type: 2}

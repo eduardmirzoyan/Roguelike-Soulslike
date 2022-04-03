@@ -6,63 +6,59 @@ using UnityEngine.UI;
 public class WeaponDisplayUI : MonoBehaviour
 {
     [SerializeField] private Image image;
-    [SerializeField] private Cooldownbar cooldownbar;
-    [SerializeField] private WeaponItem currentWeapon;
-    [SerializeField] private EquipmentHandler playerEquipment;
+    [SerializeField] private Slider slider;
+    [SerializeField] private Weapon currentWeapon;
+    [SerializeField] private CombatHandler combatHandler;
+    [SerializeField] private WeaponItem currentWeaponItem;
+    [SerializeField] private EquipmentHandler equipmentHandler;
     [SerializeField] private bool displayMainHand;
 
     private void Start()
     {
-        playerEquipment = GameObject.Find("Player").GetComponent<EquipmentHandler>();
+        slider = GetComponent<Slider>();
+        slider.value = 0;
+        
+        var player = GameObject.Find("Player");
+        combatHandler = player.GetComponent<CombatHandler>();
+        equipmentHandler = player.GetComponent<EquipmentHandler>();
+
+        // Initalize components
+        currentWeapon = null;
+        currentWeaponItem = null;
         image.enabled = false;
+
+        // Subscribe to weaponchange
+        GameEvents.instance.onWeaponChange += changeWeapon;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        changeWeaponDisplay();
+        // Update cooldown
+        if (currentWeapon != null)
+            slider.value = currentWeapon.getCooldownRatio();
     }
 
-    private void changeWeaponDisplay() {
+    private void changeWeapon(Weapon weapon, bool onMainHand) {
+        // If weapon is equipped on the hand we don't care about then skip
+        if (displayMainHand != onMainHand)
+            return;
+
+        // If the weapon hasn't changed, then skip
+        if (currentWeapon == weapon)
+            return;
         
-        // Check witch weapon to display
-        if (displayMainHand) {
-            // If the weapon hasn't changed, then dip
-            if (currentWeapon == playerEquipment.getMainHandWeaponItem())
-                return;
-            
-            // Set the new weapon
-            currentWeapon = playerEquipment.getMainHandWeaponItem();
-
-            // Change the image based on the new weapon
-            if (currentWeapon == null) {
-                image.enabled = false;
-                cooldownbar.setMaxCooldown(0);
-            }
-            else {
-                image.enabled = true;
-                image.sprite = playerEquipment.getMainHandWeaponItem().sprite;
-            }
-
-        } // Offhand
-        else {
-            // If the weapon hasn't changed, then dip
-            if (currentWeapon == playerEquipment.getOffHandWeaponItem())
-                return;
-            
-            // Set the new weapon
-            currentWeapon = playerEquipment.getOffHandWeaponItem();
-
-            // Change the image based on the new weapon
-            if (currentWeapon == null) {
-                image.enabled = false;
-                cooldownbar.setMaxCooldown(0);
-            }
-            else {
-                image.enabled = true;
-                image.sprite = playerEquipment.getOffHandWeaponItem().sprite;
-            }
-            
+        // Change the image based on the new weapon
+        if (weapon == null) {
+            image.enabled = false;
+            slider.value = 0;
         }
+        else {
+            image.enabled = true;
+            image.sprite = weapon.GetComponent<SpriteRenderer>().sprite;
+        }
+
+        // Set new current weapon
+        currentWeapon = weapon;
     }
 }

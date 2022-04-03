@@ -53,9 +53,9 @@ public class EquipmentHandler : MonoBehaviour
         // Equip weapon
         inventoryUI.equipSelectedItem(true); // Set slot in inventory to equipped state
 
-        // Instaniate the the weapon and set as child
-        GameObject equippedWeaponPrefab = Instantiate(weaponItem.prefab, transform.position, Quaternion.identity);
-        equippedWeaponPrefab.transform.parent = gameObject.transform; // Sets the prefab to a child of 
+        // Instaniate the the weapon as a child of wielder
+        GameObject equippedWeaponPrefab = Instantiate(weaponItem.prefab, transform);
+
         // Cache the equipped weapon
         var equippedWeapon = equippedWeaponPrefab.GetComponent<Weapon>();
 
@@ -84,9 +84,16 @@ public class EquipmentHandler : MonoBehaviour
 
         // If the weapon is enchantable, then add the enchantment
         if (equippedWeapon.TryGetComponent(out EnchantableEntity enchantableEntity)) {
-            print("added weapn enchat");
             enchantableEntity.addEnchantment(weaponItem.enchantment);
         }
+
+        if (isDuelWielding() && TryGetComponent(out CombatStats stats)) {
+            // Reduce damage by 25%
+            stats.damageDealtMultiplier -= 0.25f;
+        }
+
+        // Trigger event
+        GameEvents.instance.triggerWeaponChange(equippedWeapon, onMainHand);
     }
 
     // Assumes that player is always unequipping his weapon even if its not a equipped weapon index
@@ -94,6 +101,12 @@ public class EquipmentHandler : MonoBehaviour
     {
         // Unequip weapon at index
         inventoryUI.equipItemAtIndex(index, false);
+
+        // If you were duel wielding before, then get back your damage
+        if (isDuelWielding() && TryGetComponent(out CombatStats stats)) {
+            // Reduce damage by 25%
+            stats.damageDealtMultiplier += 0.25f;
+        }
 
         if (onMainHand) {
             // Set mainhand weapon item values to null
@@ -117,6 +130,20 @@ public class EquipmentHandler : MonoBehaviour
             // Set offhand to null
             combatHandler.setOffHandWeapon(null);
         }
+
+        // Trigger event
+        GameEvents.instance.triggerWeaponChange(null, onMainHand);
+    }
+
+    private bool isDuelWielding() {
+        // If both equip slots are used
+        if (equippedWeaponItem[0] != null && equippedWeaponItem[1] != null) {
+            // And both weapons are one-handed
+            if (!equippedWeaponItem[0].twoHanded && !equippedWeaponItem[1].twoHanded) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void equipArmor(ArmorItem newArmor)

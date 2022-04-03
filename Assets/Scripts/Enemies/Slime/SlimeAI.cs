@@ -4,202 +4,113 @@ using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
-[RequireComponent(typeof(Damageable))]
-[RequireComponent(typeof(Displacable))]
-[RequireComponent(typeof(Collidable))]
 public class SlimeAI : EnemyAI
 {
-    [SerializeField] protected Displacable displacable;
-    [SerializeField] protected Collidable collidable;
-    [SerializeField] protected Damageable damageable;
-
-    [Header("Slime specific values")]
-    [SerializeField] protected EnemyAttack slimeLaunchAttack;
-    [SerializeField] protected EnemyAttack slimeBounce;
-    [SerializeField] protected float dashSpeed;
-
-    private bool preparedToJump;
+    [Header("Slime Settings")]
+    [SerializeField] protected float prepareDuration;
 
     [Header("Slime Animations")]
     [SerializeField] private string idleAnimation = "Idle";
-    [SerializeField] private string risingAnimation = "Rise";
-    [SerializeField] private string fallingAnimation = "Fall";
+    [SerializeField] private string walkAnimation = "Walk";
+    [SerializeField] private string riseAnimation = "Rise";
+    [SerializeField] private string fallAnimation = "Fall";
     [SerializeField] private string prepareToJumpAnimation = "Prepare";
+
+    private float prepareTimer;
+
+    private enum SlimeState {
+        Idle,
+        Preparing,
+        Dead
+    }
+
+    [SerializeField] private SlimeState slimeState;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        damageable = GetComponent<Damageable>();
-        displacable = GetComponent<Displacable>();
-        collidable = GetComponent<Collidable>();
+        wanderTimer = wanderRate;
+        slimeState = SlimeState.Idle;
     }
+
+    private void Update() {
+        if (health.isEmpty())
+        {
+            slimeState = SlimeState.Dead;
+        }
+    }
+
 
     protected void FixedUpdate()
     {
-        // // If enemy is killed, then set to dead
-        // if (health.isEmpty() && state != EnemyState.dead)
-        // {
-        //     Die();
-        // }
-        // switch (state)
-        // {
-        //     case EnemyState.knockedback:
-                
-        //         break;
-        //     case EnemyState.idle:
-        //         handleMovementAnimations();
+        switch(slimeState) {
+        case SlimeState.Idle:
 
-        //         if (lineOfSight.distanceFromTarget() < aggroRange && lineOfSight.canSeeTarget()) // TODO: add aggro if player is too close
-        //         {
-        //             onAggro();
-        //             roamTimer = currentCooldownTimer;
-        //         }
+            handleAnimation();
 
-        //         // if (!roamEnabled) // If roaming is disabled, then end the idle state here
-        //         // {
-        //         //     mv.Stop();
-        //         //     break;
-        //         // }
+            wander();
 
-        //         if (roamTimer > 0)
-        //         {
-        //             idleTimer = idleCooldown;
-        //             roamTimer -= Time.deltaTime;
-        //             mv.Walk(roamDirection); // Roam in given direction
-        //             if (mv.isGrounded() && mv.onWall())
-        //             {
-        //                 mv.Jump();
-        //             }
-        //         }
-        //         else
-        //         {   // After roaming, pause for a brief time before deciding next direction
-        //             if (idleTimer > 0)
-        //             {
-        //                 mv.Stop();
-        //                 idleTimer -= Time.deltaTime;
-        //             }
-        //             else
-        //             {
-        //                 roamTimer = roamCooldown; // Reset roaming time
-        //                 roamDirection = Random.Range(-1, 2); // Change roaming direction from -1 - 1
-        //                 idleTimer = idleCooldown;
-        //             }
-        //         }
-        //         break;
-        //     case EnemyState.aggro:
-        //         handleMovementAnimations();
-
-        //         if (lineOfSight.distanceFromTarget() > aggroRange)
-        //             aggroTimer -= Time.deltaTime;
-
-        //         if (aggroTimer <= 0)
-        //             state = EnemyState.idle;
-
-        //         if (idleTimer > 0) // While idle, dont move
-        //         {
-        //             if (!mv.isGrounded()) // Some cyote time, jump in the direction of the player
-        //             {
-        //                 mv.Walk(mv.getFacingDirection());
-        //             }
-        //             if (mv.isGrounded()) // Face the player while grounded
-        //             {
-        //                 mv.Stop();
-        //                 facePlayer();
-        //                 if(idleTimer < 1f && !preparedToJump)
-        //                 {
-        //                     animationHandler.changeAnimationState(prepareToJumpAnimation);
-        //                     preparedToJump = true;
-        //                 }
-        //             }
-        //             idleTimer -= Time.deltaTime;
-        //         }
-        //         else
-        //         {   
-        //             bounce(mv.getFacingDirection()); // hop towards the player
-        //             idleTimer = idleCooldown;
-        //             preparedToJump = false;
-        //         }
-
-        //         // Decrement cooldown while enemy is normal aggro
-        //         if (currentCooldownTimer > 0 && mv.isGrounded())
-        //         {
-        //             currentCooldownTimer -= Time.deltaTime;
-        //         }
-        //         else
-        //         {   // Once cooldown is done, check if player is in range for attack
-        //             float distanceFromPlayer = Vector2.Distance(transform.position, target.transform.position);
-        //             if (distanceFromPlayer < maxAttackRange && currentCooldownTimer <= 0) // If player is in range, set state to charging attack
-        //             {
-        //                 mv.Stop();
-        //                 setUpSequenceOfAttacks(new List<EnemyAttack> { slimeLaunchAttack });
-        //             }
-        //         }
-
-        //         break;
-        //     case EnemyState.charging:
-        //         if (delayTimer > 0)
-        //         {
-        //             // While charging, don't move or do anything
-        //             delayTimer -= Time.deltaTime;
-        //         }
-        //         else
-        //         {
-        //             // Transition to attacking while setting values
-        //             slimeAttack();
-        //             attackTimer = currentAttack.attackDuration;
-        //             state = EnemyState.attacking;
-        //         }
-        //         break;
-        //     case EnemyState.attacking:
-        //         handleMovementAnimations();
-
-        //         if (attackTimer > 0)
-        //         {
-        //             // Don't actually do anything during the attack
-        //             if (mv.isGrounded() && currentAttack.attackDuration * 0.9f > attackTimer)
-        //             {
-        //                 mv.Stop();
-        //             } 
-        //             attackTimer -= Time.deltaTime;
-        //         }
-        //         else
-        //         {
-        //             mv.Stop();
-        //             currentCooldownTimer = Random.Range(maxAttackCooldown, minAttackCooldown);
-        //             recoveryTimer = currentAttack.attackRecovery;
-        //             state = EnemyState.recovering;
-        //         }
-        //         break;
-        //     case EnemyState.recovering: // Enemy recovery time after attacking
-        //         handleMovementAnimations();
-
-        //         if (recoveryTimer > 0)
-        //         {
-        //             mv.Stop();
-        //             recoveryTimer -= Time.deltaTime;
-        //         }
-        //         else
-        //         {
-        //             idleTimer = idleCooldown;
-        //             state = EnemyState.aggro;
-        //         }
-        //         break;
-        // }
-        // enableSpikesWhenFalling(); // At any point, if the slime is falling, the enable spikes
+        break;
+        case SlimeState.Preparing:
+            if (prepareTimer > 0) {
+                animationHandler.changeAnimationState(prepareToJumpAnimation);
+                prepareTimer -= Time.deltaTime;
+            }
+            else {
+                bounce(mv.getFacingDirection());
+                wanderTimer = wanderRate;
+                slimeState = SlimeState.Idle;
+            }
+        break;
+        case SlimeState.Dead:
+            Destroy(gameObject);
+        break;
+        }
     }
 
-    private void handleMovementAnimations()
-    {
-        if (!mv.isGrounded())
-        {
-            if (body.velocity.y > 0)
-                animationHandler.changeAnimationState(risingAnimation);
-            else
-                animationHandler.changeAnimationState(fallingAnimation);
+    private void wander() {
+        // Don't move while on the ground
+        if (mv.isGrounded()) {
+            // Don't move
+            mv.Walk(0);
         }
-        else if(!preparedToJump)
-            animationHandler.changeAnimationState(idleAnimation);
+
+        // If you are on cooldown, then skip
+        if (wanderTimer > 0) {
+            wanderTimer -= Time.deltaTime;
+            return;
+        }
+
+        // Randomly choose a direction
+        int randomDirection = Random.Range(0, 2) == 1 ? 1 : -1;
+
+        // Face that direction
+        mv.setFacingDirection(randomDirection);
+
+        // Change states
+        prepareTimer = prepareDuration;
+        slimeState = SlimeState.Preparing;
+    }
+
+    private void handleAnimation() {
+        // Handle grounded animations
+        if (mv.isGrounded()) {
+            // If moving or not
+            if (Mathf.Abs(body.velocity.x) < 0.1f)
+                animationHandler.changeAnimationState(idleAnimation);
+            else
+                animationHandler.changeAnimationState(walkAnimation);
+        }
+        else {
+            // Handle airborne animations
+            if (mv.checkRising()) {
+                animationHandler.changeAnimationState(riseAnimation);
+            }
+            else if (mv.checkFalling()) {
+                animationHandler.changeAnimationState(fallAnimation);
+            }
+        }
     }
 
     private void bounce(float direction)
@@ -210,32 +121,4 @@ public class SlimeAI : EnemyAI
             mv.Jump();
         }
     }
-
-    private void slimeAttack()
-    {
-        //mv.angledDash(dashSpeed, mv.getFacingDirection());
-    }
-
-    public override void Die()
-    {
-        base.Die();
-        Destroy(gameObject);
-    }
-
-    private void enableSpikesWhenFalling()
-    {
-        if (mv.checkFalling())
-        {
-            collidable.checkCollisions(damageEnemies);
-        }
-    }
-
-    // Fix this...
-    private void damageEnemies(Collider2D coll)
-    {
-        // TODO: This
-    }
-
-    protected void facePlayer() => mv.setFacingDirection(target.transform.position.x - transform.position.x);
-
 }

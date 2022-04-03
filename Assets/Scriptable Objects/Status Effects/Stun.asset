@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Stun
   m_EditorClassIdentifier: 
   Duration: 2
-  IsDurationStacked: 0
-  IsEffectStacked: 0
+  IsDurationReset: 0
+  IsDurationStacked: 1
+  IsEffectStacked: 1
   tickRate: 1
   icon: {fileID: 5503387414646797366, guid: f3431b64a116bf248a3f497144e67b13, type: 3}
   flavorText: 

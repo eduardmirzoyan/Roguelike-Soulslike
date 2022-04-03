@@ -17,7 +17,8 @@ public class Chest : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = emptyChest;
 
             GameManager.instance.CreatePopup("You opened this chest.", transform.position);
-            Item itemDrop = ItemSpawnManager.instance.randomizeItem();
+            //Item itemDrop = ItemSpawnManager.instance.randomizeItem();
+            Item itemDrop = LootManager.instance.getRandomItem();
 
             itemHolder.setItem(itemDrop);
             Instantiate(itemHolder, new Vector2(transform.position.x, transform.position.y + 0.5f), Quaternion.identity);

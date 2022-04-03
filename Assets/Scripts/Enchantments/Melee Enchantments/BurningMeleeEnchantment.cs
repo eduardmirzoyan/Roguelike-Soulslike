@@ -6,21 +6,21 @@ using UnityEngine;
 public class BurningMeleeEnchantment : MeleeEchantment
 {
     [SerializeField] private BurnEffect burnEffect;
-    private Weapon weapon;
+    private MeleeWeapon meleeWeapon;
 
     // Get weapon's gameobject
     public override void intialize(GameObject weaponGameObject)
     {
         base.intialize(weaponGameObject);
 
-        weapon = weaponGameObject.GetComponentInChildren<Weapon>();
-        weapon.addEffect(burnEffect);
+        meleeWeapon = weaponGameObject.GetComponentInChildren<MeleeWeapon>();
+        meleeWeapon.addEffect(burnEffect);
     }
 
     public override void unintialize()
     {
-        weapon.addEffect(burnEffect);
-        weapon = null;
+        meleeWeapon.addEffect(burnEffect);
+        meleeWeapon = null;
         base.unintialize();
     }
 }

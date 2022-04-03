@@ -13,19 +13,19 @@ public class BashingShield : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var damageable = collision.GetComponent<Damageable>();
-        var displace = collision.GetComponent<Displacable>();
-        if (damageable != null && collision.tag != transform.parent.gameObject.tag)
-        {
-            damageable.takeDamage(bashDamage);
-            if(displace != null)
-            {
-                if (!enabledStun)
-                    displace.triggerKnockback(15, 0.15f, transform.position);
-                else
-                    displace.triggerStun(1f);
-            }
-        }
+        // var damageable = collision.GetComponent<Damageable>();
+        // var displace = collision.GetComponent<Displacable>();
+        // if (damageable != null && collision.tag != transform.parent.gameObject.tag)
+        // {
+        //     damageable.takeDamage(bashDamage);
+        //     if(displace != null)
+        //     {
+        //         if (!enabledStun)
+        //             displace.triggerKnockback(15, 0.15f, transform.position);
+        //         else
+        //             displace.triggerStun(1f);
+        //     }
+        // }
 
         // If projectile reflection is enabled
         if (enabledProjectileReflection)
@@ -36,7 +36,7 @@ public class BashingShield : MonoBehaviour
             {
                 Debug.Log("reversed!");
                 // Reverse the direction of the projectile
-                projectile.reverseVelocity();
+                // projectile.reverseVelocity();
                 projectile.setCreator(transform.parent.gameObject);
                 enabledProjectileReflection = false;
             }

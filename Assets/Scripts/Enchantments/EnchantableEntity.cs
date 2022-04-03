@@ -26,7 +26,6 @@ public class EnchantableEntity : MonoBehaviour
         {
             enchantments.Add(enchantment);
             enchantment.intialize(gameObject);
-            print("New enchantment " + enchantment.name + " added on: " + gameObject.name);
         }
         else
             Debug.Log("you already have this enchantment.");

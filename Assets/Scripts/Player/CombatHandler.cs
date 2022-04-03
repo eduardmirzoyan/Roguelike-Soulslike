@@ -24,8 +24,6 @@ public class CombatHandler : MonoBehaviour
     [SerializeField] private Weapon mainHandWeapon;
     [SerializeField] private Weapon offHandWeapon;
 
-    public bool attacking { get; private set; }
-
     private void Awake()
     {
         mv = GetComponent<ComplexMovement>();
@@ -64,36 +62,51 @@ public class CombatHandler : MonoBehaviour
         offHandWeapon = weapon;
     }
 
-    public void mainHandAttack() {
-        if (mainHandWeapon != null && mainHandWeapon.canAttack()) {
-            mainHandWeapon.attack();
-
-            // Get animation for player from the weapon
+    // Returns if the attack can happen
+    public bool mainHandAttack() {
+        if (mainHandWeapon != null && mainHandWeapon.canInitiate()) {
+            // Animation is based on the current combo you are on
             animationHandler.changeAnimationState(mainHandWeapon.getAnimationName());
+
+            mainHandWeapon.initiateAttack();
+
+            return true;
         }
+        return false;
     }
 
-    public void offhandAttack() {
-        if (offHandWeapon != null && offHandWeapon.canAttack()) {
-            offHandWeapon.attack();
-
+    // Returns if the attack can happen
+    public bool offhandAttack() {
+        if (offHandWeapon != null && offHandWeapon.canInitiate()) {
             // Animation is based on the current combo you are on
             animationHandler.changeAnimationState(offHandWeapon.getAnimationName());
-        }
-    }
 
-    public bool mainCanCombo() {
-        if (offHandWeapon == null || offHandWeapon.isReady()) {
+            offHandWeapon.initiateAttack();
             return true;
         }
         return false;
     }
 
-    public bool offCanCombo() {
-        if (mainHandWeapon == null || mainHandWeapon.isReady()) {
+    public bool mainHandRelease(float time) {
+        if (mainHandWeapon != null && mainHandWeapon.canRelease()) {
+            // Release weapon
+            mainHandWeapon.releaseAttack(time);
+
             return true;
         }
         return false;
+        
+    }
+
+    public bool offHandRelease(float time) {
+        if (offHandWeapon != null && offHandWeapon.canRelease()) {
+            // Release weapon
+            offHandWeapon.releaseAttack(time);
+
+            return true;
+        }
+        return false;
+        
     }
 
     public void attemptToUseSignatureAbility()
@@ -112,7 +125,7 @@ public class CombatHandler : MonoBehaviour
                     // if all pass, then use the ability and change the player's state
                     mv.Stop();
                     signatureAbilityHolder.useAbility();
-                    attacking = true;
+                    //attacking = true;
 
                     // Trigger event
                 }
@@ -140,29 +153,11 @@ public class CombatHandler : MonoBehaviour
                     utilityAbilityHolder.useAbility();
 
                     //state = PlayerState.locked;
-                    attacking = true;
+                    //attacking = true;
                 }
             }
             else
                 GameManager.instance.CreatePopup("Not enough stamina.", transform.position);
-        }
-    }
-
-    public void cancelCurrentAttack()
-    {
-        // if(equipment.weapon != null && !equipment.weapon.isReady())
-        // {
-        //     equipment.weapon.stopCurrentAttack();
-        // }
-
-        if (!signatureAbilityHolder.isReady())
-        {
-            signatureAbilityHolder.cancelAbility();
-        }
-
-        if (!utilityAbilityHolder.isReady())
-        {
-            utilityAbilityHolder.cancelAbility();
         }
     }
 

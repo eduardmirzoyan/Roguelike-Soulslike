@@ -6,19 +6,18 @@ using UnityEngine;
 public class GoldOnHitMeleeEnchantment : MeleeEchantment
 {
     [SerializeField] private float goldGainRatio;
-    private Weapon weapon;
 
     // Get weapon's gameobject
     public override void intialize(GameObject weaponGameObject)
     {
         base.intialize(weaponGameObject);
 
-        GameEvents.current.onHit += giveGoldOnHit;
+        GameEvents.instance.onHit += giveGoldOnHit;
     }
 
     public override void unintialize()
     {
-        GameEvents.current.onHit -= giveGoldOnHit;
+        GameEvents.instance.onHit -= giveGoldOnHit;
 
         base.unintialize();
     }

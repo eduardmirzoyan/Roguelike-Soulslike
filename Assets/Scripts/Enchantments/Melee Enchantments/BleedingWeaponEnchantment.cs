@@ -6,21 +6,21 @@ using UnityEngine;
 public class BleedingWeaponEnchantment : MeleeEchantment
 {
     [SerializeField] private BleedEffect bleedEffect;
-    private Weapon weapon;
+    private MeleeWeapon meleeWeapon;
 
     // Get weapon's gameobject
     public override void intialize(GameObject weaponGameObject)
     {
         base.intialize(weaponGameObject);
 
-        weapon = weaponGameObject.GetComponentInChildren<Weapon>();
-        weapon.addEffect(bleedEffect);
+        meleeWeapon = weaponGameObject.GetComponentInChildren<MeleeWeapon>();
+        meleeWeapon.addEffect(bleedEffect);
     }
 
     public override void unintialize()
     {
-        weapon.addEffect(bleedEffect);
-        weapon = null;
+        meleeWeapon.addEffect(bleedEffect);
+        meleeWeapon = null;
         base.unintialize();
     }
 }

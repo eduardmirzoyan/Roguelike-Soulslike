@@ -71,7 +71,15 @@ public class Damageable : MonoBehaviour
             // Add every effect in the damage
             foreach (BaseEffect effect in damage.effects)
             {
+                print(effect.name);
                 effectable.addEffect(effect.InitializeEffect(gameObject));
+            }
+        }
+        
+        // Check for knockback
+        if (TryGetComponent(out Displacable displacable)) {
+            if (damage.pushForce > 0) {
+                displacable.triggerKnockback(damage.pushForce, 0.25f, damage.origin.position);
             }
         }
 
@@ -81,7 +89,7 @@ public class Damageable : MonoBehaviour
             // Signal that the enemy was attacked
 
             // If the origin is from a weapon, then flag the weapon's holder
-            if (damage.origin.TryGetComponent<Weapon>(out Weapon weapon)) {
+            if (damage.origin.TryGetComponent<MeleeWeapon>(out MeleeWeapon weapon)) {
                 
                 enemy.isAttacked(damage.origin.parent);
             }
@@ -92,7 +100,7 @@ public class Damageable : MonoBehaviour
         }
 
         // Trigger onhit event
-        GameEvents.current.triggerOnHit(damage.origin.gameObject, gameObject, correctedDamage);
+        GameEvents.instance.triggerOnHit(damage.origin.gameObject, gameObject, correctedDamage);
 
         immunityTimer = immunityDuration;
     }

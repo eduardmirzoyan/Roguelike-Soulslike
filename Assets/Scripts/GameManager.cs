@@ -16,10 +16,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CameraShake mainCamera;
     [SerializeField] private PathfindingMap pathfindingMap;
 
-     [Header("Materials")]
-    [SerializeField] private Material perilousMaterial;
-    [SerializeField] private Material defaultMaterial;
-
     [Header("Temp for TESTING ONLY!")]
     [SerializeField] public Sprite icon1;
     [SerializeField] public Sprite icon2;
@@ -222,9 +218,6 @@ public class GameManager : MonoBehaviour
         
         stun.GetComponent<TimedDestroy>().setDestroyTimer(duration);  
     }
-
-    public Material getPerilousMaterial() => perilousMaterial;
-    public Material getDefaultMaterial() => defaultMaterial;
 
     public void shakeCamera(float duration, float magnitude)
     {
