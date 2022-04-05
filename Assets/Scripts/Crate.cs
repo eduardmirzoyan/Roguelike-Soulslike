@@ -23,7 +23,7 @@ public class Crate : MonoBehaviour
                 if(itemHolder != null)
                 {
                     // Get a random drop
-                    containedItem = GameManager.instance.getConsumableDrop();
+                    containedItem = LootManager.instance.getConsumableDrop();
                     itemHolder.setItem(containedItem); // Add drop to containeer
                     GameManager.instance.CreatePopup("You broke a crate...", transform.position);
                     Instantiate(itemHolder, new Vector2(transform.position.x, transform.position.y + 0.5f), Quaternion.identity);

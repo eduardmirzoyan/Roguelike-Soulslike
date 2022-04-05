@@ -31,6 +31,7 @@ public class ImpAI : EnemyAI
     [Header("Animation")]
     [SerializeField] private string flyingAnimation;
     [SerializeField] private string attackAnimation;
+    [SerializeField] private string deadAnimation;
 
     // Private helper variables
     private float interactionTimer;
@@ -55,6 +56,7 @@ public class ImpAI : EnemyAI
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
         collider2d = GetComponent<Collider2D>();
         rallyParticles = GetComponent<ParticleSystem>();
@@ -83,9 +85,29 @@ public class ImpAI : EnemyAI
         else if (agent.velocity.x < -0.1f) {
             mv.setFacingDirection(-1);
         }
+        
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        
 
         // Check if entity has no health
-        if (health.isEmpty()) {
+        if (impState != ImpState.Dead && health.isEmpty())
+        {
+            // Call it's death method
+            Die();
+
+            // Prevent movement
+            mv.Walk(0);
+
+            // Stop nav agent
+            agent.isStopped = true;
+
+            // Give gravity
+            body.gravityScale = 2.5f;
+
+            // Destroy in 2 seconds
+            Destroy(gameObject, 2f);
+
+            // Change state to dead
             impState = ImpState.Dead;
         }
     }
@@ -240,7 +262,7 @@ public class ImpAI : EnemyAI
                 }
             break;
             case ImpState.Dead:
-            
+                animationHandler.changeAnimationState(deadAnimation);
             break;
         }
     }

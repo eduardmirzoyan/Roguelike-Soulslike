@@ -35,12 +35,21 @@ public class SlimeAI : EnemyAI
     }
 
     private void Update() {
-        if (health.isEmpty())
+        if (slimeState != SlimeState.Dead && health.isEmpty())
         {
+            // Call it's death method
+            Die();
+
+            // Prevent movement
+            mv.Walk(0);
+
+            // Change state to dead
             slimeState = SlimeState.Dead;
+
+            // Destroy instantly
+            Destroy(gameObject);
         }
     }
-
 
     protected void FixedUpdate()
     {
@@ -62,9 +71,6 @@ public class SlimeAI : EnemyAI
                 wanderTimer = wanderRate;
                 slimeState = SlimeState.Idle;
             }
-        break;
-        case SlimeState.Dead:
-            Destroy(gameObject);
         break;
         }
     }

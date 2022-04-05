@@ -11,8 +11,8 @@ public class RangedWeapon : Weapon
 
     [Header("Projectile Settings")]
     [SerializeField] protected float projectileSpeed = 15f;
-    [SerializeField] protected float projectieSizeMult = 1f;
-    [SerializeField] protected float projectieSpeedMult = 1f;
+    [SerializeField] protected float projectileSizeMult = 1f;
+    [SerializeField] protected float projectileSpeedMult = 1f;
     [SerializeField] protected int numberOfPierces = 0;
     [SerializeField] protected int numberOfBounces = 0;
 
@@ -25,10 +25,10 @@ public class RangedWeapon : Weapon
     }
 
     public void increaseProjectileSpeed(float amount) {
-        projectieSpeedMult += amount;
+        projectileSpeedMult += amount;
     }
 
     public void increaseProjectileSize(float amount) {
-        projectieSizeMult += amount;
+        projectileSizeMult += amount;
     }
 }

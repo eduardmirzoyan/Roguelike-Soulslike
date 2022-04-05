@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506e38aa462a61047b85400bf49ead71, type: 3}
   m_Name: Summon Long Range
   m_EditorClassIdentifier: 
+  enchantmentName: Long Range Familiar
   familiarObject: {fileID: 2633709855220330860, guid: e160503da3c5ee64ebb619d833a23e4a, type: 3}

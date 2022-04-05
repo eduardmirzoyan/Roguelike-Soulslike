@@ -7,8 +7,8 @@ public class CombatStats : MonoBehaviour
     [Header("Basic Stats")]
     public int defense;
     public int bonusStamina;
-    public int percentCritChance;
-    public int percentDodgeChance;
+    public float percentCritChance;
+    public float percentDodgeChance;
 
     public float damageDealtMultiplier;
     public float movespeedMultiplier;

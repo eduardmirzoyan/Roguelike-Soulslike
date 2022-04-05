@@ -17,7 +17,6 @@ public class CombatHandler : MonoBehaviour
     [SerializeField] public AbilityHolder signatureAbilityHolder;
     [SerializeField] public AbilityHolder utilityAbilityHolder;
     [SerializeField] public List<Ability> allPlayerAbilities;
-    [SerializeField] private ActiveSkill tempSkill;
     [SerializeField] private AnimationHandler animationHandler;
 
     [Header("Weapons")]
@@ -32,18 +31,6 @@ public class CombatHandler : MonoBehaviour
         equipment = GetComponent<EquipmentHandler>();
         keybindings = GetComponent<Keybindings>();
         animationHandler = GetComponent<AnimationHandler>();
-    }
-
-    private void Start()
-    {
-        // Temp add the block ability to the player
-        var abilityCopy = Instantiate(tempSkill.ability);
-
-        if (utilityAbilityHolder.isEmpty())
-            utilityAbilityHolder.changeAbility(abilityCopy);
-
-        allPlayerAbilities.Add(abilityCopy);
-        GetComponent<Player>().playerSkills.Add(tempSkill);
     }
 
     public Weapon getMainHandWeapon() {

@@ -540,7 +540,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Overhead Slash
+  m_Name: Overhead Swing
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -664,7 +664,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PDash Stab
+  m_Name: Front Stab
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -726,10 +726,10 @@ AnimatorStateMachine:
     m_Position: {x: 280, y: -40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8847725134397971060}
-    m_Position: {x: 700, y: 60, z: 0}
+    m_Position: {x: 730, y: -40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4433382555918827573}
-    m_Position: {x: 700, y: 110, z: 0}
+    m_Position: {x: 730, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3172499391374811423}
     m_Position: {x: 490, y: -40, z: 0}
@@ -738,7 +738,7 @@ AnimatorStateMachine:
     m_Position: {x: 490, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8908081219125411055}
-    m_Position: {x: 700, y: -90, z: 0}
+    m_Position: {x: 60, y: -40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8178074401274468929}
     m_Position: {x: 280, y: 10, z: 0}
@@ -750,7 +750,7 @@ AnimatorStateMachine:
     m_Position: {x: 490, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1855090243840592470}
-    m_Position: {x: 920, y: 110, z: 0}
+    m_Position: {x: 950, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1344969100775648988}
     m_Position: {x: 490, y: 110, z: 0}

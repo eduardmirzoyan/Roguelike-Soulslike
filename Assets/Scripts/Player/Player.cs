@@ -51,7 +51,6 @@ public class Player : MonoBehaviour
     [SerializeField] public List<Skill> playerSkills;
 
     [Header("Temp UI STUFF")]
-    [SerializeField] private BossHealthBarUI bossHealthBar;
     [SerializeField] private BaseEffect burnEffect;
  
     public float regenTimer;
@@ -98,9 +97,6 @@ public class Player : MonoBehaviour
         // Set player's stamina
         stamina = GetComponent<Stamina>();
         regenTimer = stamina.getRegenerationRate(); // Stamina regen timer
-
-        // Disable boss healthbar for now
-        bossHealthBar.gameObject.SetActive(false);
 
         // Set the player's start state
         state = PlayerState.idle;
@@ -258,7 +254,7 @@ public class Player : MonoBehaviour
                 rolling.roll();
                 
                 if (rolling.isDoneRolling()) {
-                    stats.percentDodgeChance -= 100;
+                    stats.percentDodgeChance -= 1f;
                     state = PlayerState.idle;
                 }
 
@@ -413,7 +409,7 @@ public class Player : MonoBehaviour
                 rolling.startRoll(mv.getFacingDirection());
 
             // Give 100% dodge chance during roll
-            stats.percentDodgeChance += 100;
+            stats.percentDodgeChance += 1f;
 
             state = PlayerState.rolling;
         }
@@ -602,19 +598,6 @@ public class Player : MonoBehaviour
                 }
             }
 
-        }
-    }
-
-    public void setBossHealthBar(EnemyAI boss)
-    {
-        if(boss == null)
-        {
-            bossHealthBar.gameObject.SetActive(false);
-        }
-        else
-        {
-            bossHealthBar.setBoss(boss);
-            bossHealthBar.gameObject.SetActive(true);
         }
     }
 

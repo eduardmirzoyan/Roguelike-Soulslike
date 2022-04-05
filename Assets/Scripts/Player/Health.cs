@@ -35,7 +35,7 @@ public class Health : MonoBehaviour
         currentHealth += amount;
     }
 
-    public bool isEmpty() => currentHealth == 0;
+    public bool isEmpty() => currentHealth <= 0;
 
     public bool isFull() => currentHealth >= maxHealth; 
 

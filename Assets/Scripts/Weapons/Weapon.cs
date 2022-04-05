@@ -13,7 +13,6 @@ public enum WeaponState
 [RequireComponent(typeof(AnimationHandler))]
 public abstract class Weapon : MonoBehaviour
 {
-    protected int damage;
     protected float windupTimer;
     protected float activeTimer;
     protected float recoveryTimer;
@@ -38,6 +37,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected AnimationHandler animationHandler;
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] protected WeaponItem owner; // The reference to the weaponitem that created this object
+    [SerializeField] protected CombatStats wielderStats;
     [SerializeField] protected Movement wielderMovement;
     
 
@@ -47,6 +47,7 @@ public abstract class Weapon : MonoBehaviour
         // Set weapon animator
         animationHandler = GetComponent<AnimationHandler>();
         wielderMovement = GetComponentInParent<Movement>();
+        wielderStats = GetComponentInParent<CombatStats>();
 
         // Set weapon sprite
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -59,6 +60,17 @@ public abstract class Weapon : MonoBehaviour
     {
         if(collision.TryGetComponent(out Damageable damageable) &&  collision.gameObject != this.gameObject)
         {
+            var damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
+
+            // Check crit
+            int rand = Random.Range(0, 100);
+            if(rand <= (wielderStats.percentCritChance + owner.critChance) * 100 )
+            {
+                print("crit!");
+                GameManager.instance.CreatePopup("CRIT", transform.parent.position, Color.yellow);
+                damage = (int) (damage * (1 + owner.critDamage));
+            }
+
             Damage dmg = new Damage
             {
                 damageAmount = damage,
@@ -81,15 +93,9 @@ public abstract class Weapon : MonoBehaviour
     public virtual void initiateAttack()
     {
         animationHandler.changeAnimationState(weaponAttackAnimation + " " + currentCombo);
-        damage = owner.damage;
         windupTimer = windupDuration;
         activeTimer = activeDuration;
         recoveryTimer = recoveryDuration;
-
-        // If you have stats, then increase damge
-        if (TryGetComponent(out CombatStats stats)) {
-            damage = (int) (damage * (1 + stats.damageDealtMultiplier));
-        }
 
         state = WeaponState.WindingUp; // Begin attack process
     }
@@ -117,8 +123,11 @@ public abstract class Weapon : MonoBehaviour
 
     public void setOwner(WeaponItem weaponItem) {
         owner = weaponItem;
-        damage = weaponItem.damage;
         spriteRenderer.sprite = weaponItem.sprite;
+    }
+
+    public WeaponItem getOwner() {
+        return owner;
     }
 
     public string getAnimationName() {

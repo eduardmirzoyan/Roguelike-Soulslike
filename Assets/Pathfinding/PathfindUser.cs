@@ -7,10 +7,10 @@ public class PathfindUser : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform target;
     [SerializeField] private PathfindingMap pathfindingMap;
     [SerializeField] private Movement mv;
     [SerializeField] private PlatformHandler platformHandler;
+    [SerializeField] private Transform altTransform;
 
     [Header("Settings")]
     [SerializeField] private LayerMask groundMask;
@@ -37,6 +37,10 @@ public class PathfindUser : MonoBehaviour
         currentPath = new Queue<Vector3>();
         currentTarget = Vector3.back;
         pathfindingMap = GameManager.instance.GetPathfindingMap();
+        // If alt transform is not set, then set it to the connected component's transform
+        if (altTransform == null) {
+            altTransform = transform;
+        }
 
         groundMask = 1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Platform");
 
@@ -63,7 +67,7 @@ public class PathfindUser : MonoBehaviour
 
     public void setPathTo(Vector3 location) {
         // Raycast downward to ground
-        var startHit = Physics2D.Raycast(transform.position, Vector2.down, 1000f, groundMask);
+        var startHit = Physics2D.Raycast(altTransform.position, Vector2.down, 1000f, groundMask);
         var endHit = Physics2D.Raycast(location, Vector2.down, 1000f, groundMask);
 
         // If both hit, then find path
@@ -134,11 +138,11 @@ public class PathfindUser : MonoBehaviour
         // Check if currentTarget is set and you are not jumping
         if (currentTarget != Vector3.back  && !isJump && !isDrop) {
             // Check if the location that you need to go to is to the left or right of your current position
-            if (currentTarget.x - padding > transform.position.x) {
+            if (currentTarget.x - padding > altTransform.position.x) {
                 
                 mv.Walk(1);
             }
-            else if(currentTarget.x + padding < transform.position.x) {
+            else if(currentTarget.x + padding < altTransform.position.x) {
                 
                 mv.Walk(-1);
             }
@@ -146,7 +150,7 @@ public class PathfindUser : MonoBehaviour
                 mv.Walk(0);
             }
 
-            if (Vector2.Distance(transform.position, currentTarget) < minTargetDistance && mv.isGrounded()) {
+            if (Vector2.Distance(altTransform.position, currentTarget) < minTargetDistance && mv.isGrounded()) {
                 nextTarget();
             }
         }

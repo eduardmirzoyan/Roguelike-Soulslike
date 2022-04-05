@@ -37,7 +37,7 @@ public class Damageable : MonoBehaviour
         {
             // RNG test
             int rand = Random.Range(0, 100);
-            if(rand <= stats.percentDodgeChance)
+            if(rand <= stats.percentDodgeChance * 100)
             {
                 // Dodge ATTACK!
                 GameManager.instance.CreatePopup("DODGED", transform.position, Color.cyan);
@@ -53,9 +53,9 @@ public class Damageable : MonoBehaviour
 
         // Visual feedback
         if (damage.color.a == 0) // If the damage does not have a color, then use default color
-            GameManager.instance.CreatePopup(damage.damageAmount.ToString(), transform.position, defaultColor);
+            GameManager.instance.CreatePopup(correctedDamage.ToString(), transform.position, defaultColor);
         else
-            GameManager.instance.CreatePopup(damage.damageAmount.ToString(), transform.position, damage.color);
+            GameManager.instance.CreatePopup(correctedDamage.ToString(), transform.position, damage.color);
 
         // Damage particles if possible
         if (TryGetComponent(out DamageParticles damageParticles))

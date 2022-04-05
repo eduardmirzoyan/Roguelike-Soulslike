@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class LongBow : RangedWeapon
 {
+    [Header("Components")]
+    [SerializeField] private Inventory inventory;
+
     [Header("Settings")]
     [SerializeField] private string shootAnimation;
     [SerializeField] private float aimRotationSpeed;
 
     // Whether or not the bow was released from drawback
     private bool isReleased;
+
+    private void Start() {
+        inventory = GetComponentInParent<Player>().GetComponentInChildren<Inventory>();
+    }
 
     private void FixedUpdate() {
         
@@ -45,11 +52,17 @@ public class LongBow : RangedWeapon
                     var arrow = Instantiate(projectilePrefab, firepoint.position, firepoint.parent.rotation).GetComponent<Arrow>();
 
                     // Get the actual speed of the arrow
-                    var scaledSpeed = (int) (projectileSpeed * cooldownTimer / cooldown);
+                    var scaledSpeed = projectileSpeed * cooldownTimer / cooldown;
+
+                    // Calculate damage
+                    var damage = (int) (owner.damage * cooldownTimer / cooldown);
+
+                    // If you have stats, then increase damge
+                    damage = (int) (damage * (1 + wielderStats.damageDealtMultiplier));
 
                     // Initalize the arrow's values
                     if (arrow != null) {
-                        arrow.initializeArrow(damage, projectieSizeMult, scaledSpeed * projectieSpeedMult, numberOfPierces, numberOfBounces, transform.parent.gameObject);
+                        arrow.initializeArrow(damage, projectileSizeMult, scaledSpeed * projectileSpeedMult, numberOfPierces, numberOfBounces, transform.parent.gameObject);
                     }
                        
                     state = WeaponState.Active; 
@@ -82,6 +95,9 @@ public class LongBow : RangedWeapon
 
     public override void initiateAttack()
     {
+        // Remove 1 arrow from inventory
+        inventory.removeItem(ItemType.Ammo);
+
         // Reset the rotation to its parent's
         transform.rotation = transform.parent.rotation;
                 
@@ -93,9 +109,6 @@ public class LongBow : RangedWeapon
 
     public override void releaseAttack(float time)
     {
-        // Release the bow
-        isReleased = true;
-
         // Saves the time for damage calculations
         cooldownTimer = time;
         if (time > cooldown) {
@@ -103,18 +116,16 @@ public class LongBow : RangedWeapon
         }
 
         // Set damage calculations
-        damage = (int) (owner.damage * cooldownTimer / cooldown);
         activeTimer = activeDuration;
         recoveryTimer = recoveryDuration;
 
-        // If you have stats, then increase damge
-        if (TryGetComponent(out CombatStats stats)) {
-            damage = (int) (damage * (1 + stats.damageDealtMultiplier));
-        }
+        // Release the bow
+        isReleased = true;
     }
 
+    // User must have arrows in inventory
     public override bool canInitiate() {
-        return state == WeaponState.Ready;
+        return state == WeaponState.Ready && inventory.getItemOfType(ItemType.Ammo) != null;
     }
 
     public override bool canRelease()

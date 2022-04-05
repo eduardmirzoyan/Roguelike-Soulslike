@@ -30,36 +30,6 @@ Transform:
   m_Father: {fileID: 8252513414407207718}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1825369098
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1825369099}
-  m_Layer: 7
-  m_Name: High Intention Point
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1825369099
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1825369098}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.68, y: -1.44, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8252513414407207718}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8252513414407207741
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,12 +44,12 @@ GameObject:
   - component: {fileID: 8252513414407207715}
   - component: {fileID: 8252513414407207714}
   - component: {fileID: 8252513414407207716}
-  - component: {fileID: 8252513414407207719}
   - component: {fileID: 6092390457356614901}
   - component: {fileID: 8983115094475380313}
   - component: {fileID: 5097246187031010704}
-  - component: {fileID: 4164596091109823018}
   - component: {fileID: 7620669740257576051}
+  - component: {fileID: 7459072633601142575}
+  - component: {fileID: 7099486156053418503}
   m_Layer: 7
   m_Name: Shadow Knight Boss
   m_TagString: Enemy
@@ -103,7 +73,6 @@ Transform:
   - {fileID: 8252513415131108639}
   - {fileID: 8252513414587752792}
   - {fileID: 1657400761}
-  - {fileID: 1825369099}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -238,80 +207,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 0}
-  animator: {fileID: 0}
+  mv: {fileID: 0}
   animationHandler: {fileID: 0}
+  boxCollider2D: {fileID: 0}
+  health: {fileID: 0}
+  lineOfSight: {fileID: 0}
+  wanderRadius: 0
+  wanderRate: 0
+  aggroRange: 30
+  attackRange: 4.5
+  attackCooldown: 2
+  attackDuration: 0
+  attackDashSpeed: 400
   xpValue: 100
   goldValue: 10
-  player: {fileID: 0}
   target: {fileID: 0}
-  lineOfSight: {fileID: 0}
-  aggroRange: 30
-  aggroDropTimeLimit: 60
-  jumpEnabled: 1
-  roamEnabled: 0
-  maxAttackRange: 5.5
-  minAttackRange: 0
-  roamCooldown: 0.5
-  idleCooldown: 1
-  maxAttackCooldown: 1
-  minAttackCooldown: 1
-  currentCooldownTimer: 0
-  currentSequenceOfAttacks: []
-  state: 0
-  health: {fileID: 0}
-  mv: {fileID: 0}
-  displacable: {fileID: 0}
-  collidable: {fileID: 0}
-  damageable: {fileID: 0}
+  attacker: {fileID: 0}
+  bossHealthBarUI: {fileID: 0}
+  idleAnimation: Idle
+  walkAnimation: Walk
+  risingAnimation: Rise
+  fallingAnimation: Fall
   deadAnimation: Die
   knightBow: {fileID: 8252513414587752795}
   firepoint: {fileID: 8252513414503910242}
   arrowPrefab: {fileID: 2548260273467426745, guid: 014ef2f3bbe98794199996c06900a07e, type: 3}
   turnSpeed: 100
-  overheadSwing: {fileID: 11400000, guid: f579d92bb5124fc4d93370e121a6cd76, type: 2}
-  frontStab: {fileID: 11400000, guid: d646bc2d93257e34ba4e409f8dad36af, type: 2}
-  shootBow: {fileID: 11400000, guid: 2d538633d75558741ba547732d5f22e7, type: 2}
-  summonShdowFlame: {fileID: 11400000, guid: 1c091c8109da8a74e8b594206cbaed70, type: 2}
-  DashStab: {fileID: 0}
-  dashSpeed: 0
-  readyToShoot: 0
+  overheadSwingAnimation: Overhead Swing
+  frontStabAnimation: Front Stab
+  shootBowAnimation: Shoot Bow
+  summonShadowFlameAnimation: Cast Shadow Wave
   flame: {fileID: 2073894473641317745, guid: 47d43c06beac8724b8af9cda8767bd56, type: 3}
   spawnpoint: {fileID: 1657400761}
-  intentionSparkle: {fileID: 3548455265671986204, guid: 034040b14fbc33d42874178cf2bcb38e, type: 3}
-  perilousIntentionPoint: {fileID: 1825369099}
-  repositionTimer: 0
-  idleAnimation: Idle
-  walkAnimation: Walk
-  risingAnimation: Rise
-  fallingAnimation: Fall
---- !u!114 &8252513414407207719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8252513414407207741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: 2147483647
+  bowRange: 10
+  followRange: 6
+  shadowKnightState: 0
 --- !u!114 &6092390457356614901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,8 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 0}
-  animator: {fileID: 0}
-  movespeed: 13
+  movespeed: 300
   jumpPower: 9
   groundLayer:
     serializedVersion: 2
@@ -336,15 +265,10 @@ MonoBehaviour:
     m_Bits: 256
   groundCheck: {fileID: 8252513415144303144}
   wallCheck: {fileID: 8252513414490932042}
-  backWallCheck: {fileID: 0}
-  dropCheck: {fileID: 0}
   groundCheckBoxSize: {x: 1, y: 0.1}
   wallcheckRadius: 0.2
-  dropCheckBoxSize: {x: 0, y: 0}
-  speedConstant: 0
   isImmobile: 0
-  enableRunningAnimations: 0
-  enableFallingRisingAnimations: 0
+  flying: 0
 --- !u!114 &8983115094475380313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,8 +281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33846741462c5094e98ae34256e583c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 125
-  currentHealth: 125
+  maxHealth: 200
+  currentHealth: 200
 --- !u!114 &5097246187031010704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,30 +295,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b323924feebaa469ac23bee33a0c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 0}
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &4164596091109823018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8252513414407207741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83d8e52c4217a724f9062e511974f837, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useAnimations: 0
-  poiseThreshold: 25
-  stunImmune: 1
-  knockbackImmune: 1
-  staggerImmune: 1
-  mv: {fileID: 0}
-  animator: {fileID: 0}
-  state: 0
 --- !u!114 &7620669740257576051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +312,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eef73a5ebad9de7409d540737f920031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7459072633601142575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252513414407207741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041f330b2cc57f3488297ba45261453f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!114 &7099486156053418503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252513414407207741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e30fb07126fe2f245abfe9c399ed79d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &8252513414490932037
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +519,7 @@ GameObject:
   - component: {fileID: 8252513415131108639}
   - component: {fileID: 8252513415131108636}
   - component: {fileID: 8252513415131108637}
-  - component: {fileID: 8252513415131108610}
+  - component: {fileID: 1563669549129372843}
   m_Layer: 6
   m_Name: Knight's Sword
   m_TagString: Untagged
@@ -643,10 +579,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2010365255
-  m_SortingLayer: 7
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -3847680926510243934, guid: de4a387b0346eb44995eb80278117f6b, type: 3}
+  m_SortingLayerID: 370772261
+  m_SortingLayer: 6
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: c74103de5cbfc664eafa18f551a25151, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -666,11 +602,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 8252513415131108638}
   m_Enabled: 0
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 4f558a14246786a49a2d10b97a205cd3, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.49877167, y: -0.08843088}
+  m_Offset: {x: 0.31132126, y: -0.08843088}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -681,9 +617,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.9975433, y: 0.59906864}
+  m_Size: {x: 4.3773575, y: 0.59906864}
   m_EdgeRadius: 0
---- !u!114 &8252513415131108610
+--- !u!114 &1563669549129372843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -692,10 +628,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8252513415131108638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3f47241aac2c9c4d91ef87299142820, type: 3}
+  m_Script: {fileID: 11500000, guid: 04b184491b906c542a6349d0b8bafaf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
+  wielder: {fileID: 0}
+  damage: 10
+  hitAll: 0
 --- !u!1 &8252513415144303147
 GameObject:
   m_ObjectHideFlags: 0

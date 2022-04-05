@@ -15,12 +15,6 @@ public class Inventory : MonoBehaviour
 
     public void addItem(Item itemToAdd)
     {
-        // If invetory is full, then send warning and do nothing
-        // if (items.Count >= maxSize) {
-        //     print("Inventory at max size!");
-        //     return;
-        // }
-
         // See if item exists in inventory and if it is stackable, then increment it
         for (int i = 0; i < maxSize; i++)
         {
@@ -33,16 +27,35 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < maxSize; i++)
         {
             if (items[i] == null) {
+                // Add copy
                 items[i] = itemToAdd;
                 return;
             }
         }
 
-        // Else...
-        print("Inventory at max size!");
+        print("Inventory is full!");
 
-        // else, add the item as a new item at the end of the invetory
-        //items.Add(Instantiate(itemToAdd));
+    }
+
+    public void removeItem(ItemType itemType) {
+        foreach (var item in items) {
+            if (item != null &&  item.type == itemType) {
+                item.count--;
+                if (item.count < 1) {
+                    items.Remove(item);
+                }
+                return;
+            }
+        }
+    }
+
+    public Item getItemOfType(ItemType itemType) {
+        foreach (var item in items) {
+            if (item != null && item.type == itemType) {
+                return item;
+            }
+        }
+        return null;
     }
 
     public void setMax(int newMax) {
@@ -62,17 +75,8 @@ public class Inventory : MonoBehaviour
         return items[index];
     }
 
-    public void clearItems()
-    {
-        items = new List<Item>(maxSize);
-    }
-
     public int getCurrentSize() {
         return items.Count;
-    }
-
-    public int getMaxSize() {
-        return maxSize;
     }
 
     public bool isFull() {

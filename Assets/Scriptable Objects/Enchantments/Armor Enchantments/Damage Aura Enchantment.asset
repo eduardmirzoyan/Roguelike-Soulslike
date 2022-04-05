@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c4996de1c7d494484866182f038c79, type: 3}
   m_Name: Damage Aura Enchantment
   m_EditorClassIdentifier: 
-  enchantmentName: 
+  enchantmentName: Damaging Aura
   particlesPrefab: {fileID: 4951145564583668689, guid: 4bcbacf32e400fc4584f48e88bb52403, type: 3}
   procTime: 3
   auraRadius: 2

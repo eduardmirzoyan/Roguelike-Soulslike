@@ -5,13 +5,18 @@ using UnityEngine;
 public class Shockwave : MonoBehaviour
 {
     [Header("Spawning Settings")]
+    [SerializeField] private Projectile projectile;
     [SerializeField] private GameObject segment;
     [SerializeField] private Transform segmentSpawnPoint; // Spawn point for each segment
     [SerializeField] private float spawnInterval; // Rate at which segments spawn
 
-    [SerializeField] private Damage shockwaveDamage;
+    [SerializeField] private int shockwaveDamage;
 
     private float timer; // Timer to keep track of each segment
+
+    private void Start() {
+        projectile = GetComponent<Projectile>();
+    }
 
     private void FixedUpdate()
     {
@@ -27,10 +32,16 @@ public class Shockwave : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var damageable = collision.GetComponent<Damageable>();
-        if (collision.gameObject != this.gameObject && damageable != null && collision.tag != "Enemy")
-        {
-            damageable.takeDamage(shockwaveDamage);
+        // If arrow hits something dmaageableo other than the creator
+        if (collision.TryGetComponent(out Damageable damageable) && collision.gameObject != projectile.creator) {
+           
+            // Deal damage
+            Damage dmg = new Damage {
+                damageAmount = shockwaveDamage,
+                source = DamageSource.fromEnemy,
+                origin = projectile.creator.transform
+            };
+            damageable.takeDamage(dmg);
         }
     }
 }

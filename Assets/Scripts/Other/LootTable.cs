@@ -23,8 +23,12 @@ public class LootTable : ScriptableObject
 
         foreach(Drop drop in table)
         {
-            if (drop.weight > roll)
-                return drop.item;
+            if (drop.weight > roll) {
+                var copy = Instantiate(drop.item);
+                copy.count = drop.item.count;
+                return copy;
+            }
+                
             roll -= drop.weight;
         }
 

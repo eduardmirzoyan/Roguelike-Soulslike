@@ -17,6 +17,7 @@ public class DamageAuraEnchantment : Enchantment
         base.intialize(gameObject);
         particles = Instantiate(particlesPrefab, entity.transform).GetComponent<ParticleSystem>();
         timer = procTime;
+        particles.Play();
     }
 
     public override void onTick()
@@ -49,6 +50,7 @@ public class DamageAuraEnchantment : Enchantment
 
     public override void unintialize()
     {
+        particles.Stop();
         particles = null;
         Destroy(particlesPrefab);
         base.unintialize();

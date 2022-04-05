@@ -34,9 +34,6 @@ public class LevelManager : MonoBehaviour
         var animator = GameObject.Find("Transition Canvas").GetComponentInChildren<Animator>();
         animator.SetTrigger("close scene"); // Set the level change animation
 
-        // OPTIMIZE THIS LATER!
-        GameManager.instance.player.setBossHealthBar(null);
-
         // Give animation time to run
         yield return new WaitForSeconds(transitionTime);
 

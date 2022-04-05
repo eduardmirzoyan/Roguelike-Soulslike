@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c08a02088f4bb4a88e36bc2877929e, type: 3}
   m_Name: Spike Immunity
   m_EditorClassIdentifier: 
-  enchantmentName: 
+  enchantmentName: Spike Immunity

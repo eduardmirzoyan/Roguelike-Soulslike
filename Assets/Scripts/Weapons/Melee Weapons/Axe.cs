@@ -66,7 +66,7 @@ public class Axe : MeleeWeapon
     {
         if(collision.TryGetComponent(out Damageable damageable) && collision.gameObject != this.gameObject)
         {
-            int adjustedDamage = damage;
+            int damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
             
             // If the hit target is effectable
             if (collision.TryGetComponent(out EffectableEntity effectableEntity)) {
@@ -74,13 +74,22 @@ public class Axe : MeleeWeapon
                 // If "mark" effect was found and sucessfully removed
                 if (effectableEntity.removeEffect(ScriptableObject.CreateInstance<MarkEffect>())) {
                     // Increase damage
-                    adjustedDamage = (int)(adjustedDamage * (1 + bonusDamagePercentage));
+                    damage = (int)(damage * (1 + bonusDamagePercentage));
                 }
+            }
+
+            // Check crit
+            int rand = Random.Range(0, 100);
+            if(rand <= (wielderStats.percentCritChance + owner.critChance) * 100 )
+            {
+                print("crit!");
+                GameManager.instance.CreatePopup("CRIT", transform.parent.position, Color.yellow);
+                damage = (int) (damage * (1 + owner.critDamage));
             }
 
             Damage dmg = new Damage
             {
-                damageAmount = adjustedDamage,
+                damageAmount = damage,
                 source = DamageSource.fromPlayer,
                 origin = transform,
                 effects = weaponEffects
