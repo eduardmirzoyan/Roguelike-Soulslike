@@ -30,36 +30,6 @@ Transform:
   m_Father: {fileID: 2481585268360592168}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2481585268002980064
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2481585268002980065}
-  m_Layer: 7
-  m_Name: dropCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &2481585268002980065
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2481585268002980064}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.74, y: -1.82, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2481585268360592168}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2481585268360592173
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,7 +49,6 @@ GameObject:
   - component: {fileID: 2481585268360592151}
   - component: {fileID: 2481585268360592150}
   - component: {fileID: 2481585268360592169}
-  - component: {fileID: 2481585268360592145}
   - component: {fileID: 2481585268360592158}
   m_Layer: 7
   m_Name: Fire Mage
@@ -101,7 +70,6 @@ Transform:
   m_Children:
   - {fileID: 2481585268777376209}
   - {fileID: 2481585267518628695}
-  - {fileID: 2481585268002980065}
   - {fileID: 2481585268985561898}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -277,6 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b323924feebaa469ac23bee33a0c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 0}
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
@@ -293,16 +262,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d8e52c4217a724f9062e511974f837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useAnimations: 0
-  poiseThreshold: 0
+  mv: {fileID: 0}
   stunImmune: 0
   knockbackImmune: 0
-  staggerImmune: 0
-  mv: {fileID: 0}
   knockbackSpeed: 0
   knockbackDuration: 0
   stunDuration: 0
-  startTime: 0
+  savedState: 
+  knockbackState: 
 --- !u!114 &2481585268360592150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,14 +282,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041f330b2cc57f3488297ba45261453f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 264
-  maxDistance: 0
 --- !u!114 &2481585268360592169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,27 +303,20 @@ MonoBehaviour:
   body: {fileID: 0}
   mv: {fileID: 0}
   animationHandler: {fileID: 0}
+  boxCollider2D: {fileID: 0}
+  health: {fileID: 0}
+  lineOfSight: {fileID: 0}
+  wanderRadius: 0
+  wanderRate: 0
+  aggroRange: 8
+  attackRange: 0
+  attackCooldown: 0
+  attackDuration: 0
+  attackDashSpeed: 0
   xpValue: 100
   goldValue: 10
-  player: {fileID: 0}
   target: {fileID: 0}
-  lineOfSight: {fileID: 0}
-  aggroRange: 8
-  aggroDropTimeLimit: 5
-  jumpEnabled: 1
-  roamEnabled: 1
-  maxAttackRange: 6
-  minAttackRange: 3
-  roamCooldown: 0.5
-  idleCooldown: 3
-  maxAttackCooldown: 3
-  minAttackCooldown: 3
-  currentCooldownTimer: 0
-  currentSequenceOfAttacks: []
-  state: 0
   attacker: {fileID: 0}
-  health: {fileID: 0}
-  displacable: {fileID: 0}
   collidable: {fileID: 0}
   damageable: {fileID: 0}
   castFireball: {fileID: 11400000, guid: 642a2d63d69baa4498a6f913a4a25bfc, type: 2}
@@ -375,21 +333,6 @@ MonoBehaviour:
   fallingAnimation: Fall
   deadAnimation: Dead
   staggerAnimation: Stagger
---- !u!114 &2481585268360592145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2481585268360592173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c32a697b9c83e5b489c252759b7e2466, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particlesPrefab: {fileID: 6962195399759583525, guid: ce1b7420697b63448ab79a7f522b4904, type: 3}
-  damageParticles: {fileID: 0}
-  color: {r: 1, g: 0.023584902, b: 0.023584902, a: 1}
 --- !u!114 &2481585268360592158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,5 +404,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2481585268360592168}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

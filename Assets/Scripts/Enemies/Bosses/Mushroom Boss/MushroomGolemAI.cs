@@ -38,6 +38,23 @@ public class MushroomGolemAI : BossAI
     }
     [SerializeField] private MushroomGolemState mushroomGolemState; 
 
+    private void Update() {
+        if (mushroomGolemState != MushroomGolemState.Dead && health.isEmpty())
+        {
+            // Call it's death method
+            Die();
+
+            // Destroy body in 1 second
+            Destroy(gameObject, 10f);
+
+            // Prevent movement
+            mv.Walk(0);
+
+            // Change state to dead
+            mushroomGolemState = MushroomGolemState.Dead;
+        }
+    }
+
     private void FixedUpdate()
     {
         switch(mushroomGolemState) {
@@ -224,6 +241,7 @@ public class MushroomGolemAI : BossAI
 
             break;
             case MushroomGolemState.Dead:
+                animationHandler.changeAnimationState(deadAnimation);
             break;
         }
     }
@@ -239,8 +257,8 @@ public class MushroomGolemAI : BossAI
     }
 
     private void searchForEnemies() {
-        // Aggressive, hunts any enemy in sight
-        var colliders = lineOfSight.getAllEnemiesInSight(aggroRange);
+        // Finds any enemy within range
+        var colliders = Physics2D.OverlapCircleAll(transform.position, farAttackRange);
 
         if (colliders.Length != 0) {
             // Get closest enemy that meats criteria

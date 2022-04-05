@@ -56,7 +56,7 @@ public class EquipmentHandler : MonoBehaviour
         // Instaniate the the weapon as a child of wielder
         // Cache the equipped weapon
         var equippedWeapon = Instantiate(weaponItem.prefab, transform).GetComponent<Weapon>();
-        print(equippedWeapon);
+        
         // Set the owner of the weapon to the weaponitem
         equippedWeapon.setOwner(weaponItem);
 
@@ -156,7 +156,8 @@ public class EquipmentHandler : MonoBehaviour
         stamina.maxStamina += newArmor.bonusStamina;
 
         // Add the armor's enchantment to the player
-        enchantableEntity.addEnchantment(newArmor.enchantment);
+        if (newArmor.enchantment != null)
+            enchantableEntity.addEnchantment(newArmor.enchantment);
     }
 
     public void unEquipArmor(int slot)
@@ -171,7 +172,8 @@ public class EquipmentHandler : MonoBehaviour
             stamina.currentStamina = stamina.maxStamina;
 
         // Remove the armor's enchantment
-        enchantableEntity.removeEnchantment(equippedArmor[slot].enchantment);
+        if (equippedArmor[slot].enchantment != null)
+            enchantableEntity.removeEnchantment(equippedArmor[slot].enchantment);
 
         // Remove armor item from equip slot
         inventoryUI.equipSelectedItem(false);

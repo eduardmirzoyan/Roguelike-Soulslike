@@ -16,7 +16,7 @@ using UnityEngine;
 [RequireComponent(typeof(FamiliarHandler))]
 [RequireComponent(typeof(EnchantableEntity))]
 [RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(Rolling))]
+[RequireComponent(typeof(RollingHandler))]
 public class Player : MonoBehaviour
 {
     [Header("Components")]
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     [SerializeField] private InputBuffer inputBuffer;
     [SerializeField] private Menu menu;
     [SerializeField] private CombatHandler combatHandler;
-    [SerializeField] private Rolling rolling;
+    [SerializeField] private RollingHandler rollingHandler;
 
     [Header("Items")]
     [SerializeField] private Inventory inventory;
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
         inventory = GetComponentInChildren<Inventory>();
         combatHandler = GetComponent<CombatHandler>();
         inputBuffer = GetComponent<InputBuffer>();
-        rolling = GetComponent<Rolling>();
+        rollingHandler = GetComponent<RollingHandler>();
 
         // Gets flask
         flask = GetComponentInChildren<Flask>();
@@ -251,9 +251,10 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.rolling:
                 
-                rolling.roll();
+                rollingHandler.roll();
                 
-                if (rolling.isDoneRolling()) {
+                if (rollingHandler.isDoneRolling()) {
+                    rollingHandler.startCooldown();
                     stats.percentDodgeChance -= 1f;
                     state = PlayerState.idle;
                 }
@@ -344,6 +345,13 @@ public class Player : MonoBehaviour
             
         }
 
+        if (health.isEmpty() && state != PlayerState.dead) {
+            // Stop
+            mv.Walk(0);
+
+            state = PlayerState.dead;
+        }
+
 
         if (playerIsFree())
         {
@@ -400,13 +408,13 @@ public class Player : MonoBehaviour
     }
 
     private void handleRollRequest() {
-        if (inputBuffer.rollRequest) {
+        if (inputBuffer.rollRequest && rollingHandler.canRoll()) {
             if (inputBuffer.moveDirection > 0.2f)
-                rolling.startRoll(1);
+                rollingHandler.startRoll(1);
             else if (inputBuffer.moveDirection < -0.2f)
-                rolling.startRoll(-1);
+                rollingHandler.startRoll(-1);
             else 
-                rolling.startRoll(mv.getFacingDirection());
+                rollingHandler.startRoll(mv.getFacingDirection());
 
             // Give 100% dodge chance during roll
             stats.percentDodgeChance += 1f;

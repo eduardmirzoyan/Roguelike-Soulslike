@@ -6,24 +6,24 @@ using UnityEngine;
 public class FasterRollingEnchantment : Enchantment
 {
     [SerializeField] private float ratio = 1.5f;
-    private Rolling rolling;
+    private RollingHandler rollingHandler;
 
     public override void intialize(GameObject gameObject)
     {
         base.intialize(gameObject);
-        rolling = entity.GetComponent<Rolling>();
-        if (rolling != null) {
-            rolling.setRollDuration(rolling.getRollDuration() / ratio);
-            rolling.setRollSpeed(rolling.getRollSpeed() * ratio);
+        rollingHandler = entity.GetComponent<RollingHandler>();
+        if (rollingHandler != null) {
+            rollingHandler.setRollDuration(rollingHandler.getRollDuration() / ratio);
+            rollingHandler.setRollSpeed(rollingHandler.getRollSpeed() * ratio);
         }
     }
 
     public override void unintialize()
     {
-        if (rolling != null) {
-            rolling.setRollDuration(rolling.getRollDuration() * ratio);
-            rolling.setRollSpeed(rolling.getRollSpeed() / ratio);
-            rolling = null;
+        if (rollingHandler != null) {
+            rollingHandler.setRollDuration(rollingHandler.getRollDuration() * ratio);
+            rollingHandler.setRollSpeed(rollingHandler.getRollSpeed() / ratio);
+            rollingHandler = null;
         }
         
         base.unintialize();
