@@ -38,6 +38,8 @@ public class EnemyUI : MonoBehaviour
     }
 
     private void enableCanvasOnHit(GameObject attacker, GameObject hit, int damage) {
+        if (hit == null || attacker == null || mv == null)
+            return;
         if (hit.gameObject == mv.gameObject && damage > 0) {
             canvas.enabled = true;
         }

@@ -54,11 +54,9 @@ public class EquipmentHandler : MonoBehaviour
         inventoryUI.equipSelectedItem(true); // Set slot in inventory to equipped state
 
         // Instaniate the the weapon as a child of wielder
-        GameObject equippedWeaponPrefab = Instantiate(weaponItem.prefab, transform);
-
         // Cache the equipped weapon
-        var equippedWeapon = equippedWeaponPrefab.GetComponent<Weapon>();
-
+        var equippedWeapon = Instantiate(weaponItem.prefab, transform).GetComponent<Weapon>();
+        print(equippedWeapon);
         // Set the owner of the weapon to the weaponitem
         equippedWeapon.setOwner(weaponItem);
 
@@ -78,8 +76,6 @@ public class EquipmentHandler : MonoBehaviour
             equippedWeaponIndexes[1] = inventoryUI.getSelectedItemIndex();
             // Set offhand reference
             combatHandler.setOffHandWeapon(equippedWeapon);
-
-            equippedWeaponPrefab.transform.position -= new Vector3(0.25f, 0, 0);
         }
 
         // If the weapon is enchantable, then add the enchantment

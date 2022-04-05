@@ -63,13 +63,28 @@ public class SmallShield : MeleeWeapon
     {
         if(collision.TryGetComponent(out Damageable damageable) &&  collision.gameObject != this.gameObject)
         {
+            var damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
+            var adjustedPush = pushForce;
+
+            // Check crit
+            int rand = Random.Range(0, 100);
+            if(rand <= (wielderStats.percentCritChance + owner.critChance) * 100 )
+            {
+                print("crit!");
+                GameManager.instance.CreatePopup("CRIT", transform.parent.position, Color.yellow);
+                damage = (int) (damage * (1 + owner.critDamage));
+
+                // Crits increase pushforce
+                adjustedPush = (adjustedPush * (1 + owner.critDamage));
+            }
+
             Damage dmg = new Damage
             {
                 damageAmount = damage,
                 source = DamageSource.fromPlayer,
                 origin = transform,
                 effects = weaponEffects,
-                pushForce = pushForce
+                pushForce = adjustedPush
             };
             damageable.takeDamage(dmg);
         }

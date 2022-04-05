@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb750bf0f23a1845ba1f24276513a09, type: 3}
   m_Name: Faster Rolling
   m_EditorClassIdentifier: 
-  enchantmentName: 
+  enchantmentName: Quicker Rolls
   ratio: 1.33

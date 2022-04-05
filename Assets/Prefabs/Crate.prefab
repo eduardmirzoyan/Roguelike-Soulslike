@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b323924feebaa469ac23bee33a0c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 0}
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
@@ -179,25 +180,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b431ac3d6efd3c746a0f6d587c9164ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 0
-  skillEfficiency: 0
   defense: 999
   bonusStamina: 0
   percentCritChance: 0
   percentDodgeChance: 0
-  percentBlockChance: 0
-  poiseMeter: 0
-  basePoiseThreshold: 0
-  percentBleedResistance: 0
-  percentFireResistance: 0
-  percentPoisonResistance: 0
-  percentFrostResistance: 0
-  percentCurseResistance: 0
   damageDealtMultiplier: 0
   movespeedMultiplier: 0
   damageTakenMultiplier: 0
-  effects: 
-  percentFumbleChance: 0
 --- !u!114 &3783911154670913375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemHolder: {fileID: 8328910403653533859, guid: 66f3cd2f0caf40b4abb72fdaaf077c54, type: 3}
-  containedItem: {fileID: 11400000, guid: ffd1d1f9a674bbe4abcaf6b371e0a976, type: 2}
+  containedItem: {fileID: 0}
 --- !u!114 &3783911154670913367
 MonoBehaviour:
   m_ObjectHideFlags: 0

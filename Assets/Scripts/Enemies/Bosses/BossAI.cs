@@ -6,10 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Damageable))]
 public class BossAI : EnemyAI
-{
-    [Header("Boss Components")]
-    [SerializeField] protected Collidable collidable;
-    [SerializeField] protected Damageable damageable;
+{   
+    [SerializeField] protected BossHealthBarUI bossHealthBarUI;
 
     [Header("Boss Animations")]
     [SerializeField] protected string idleAnimation = "Idle";
@@ -18,39 +16,11 @@ public class BossAI : EnemyAI
     [SerializeField] protected string fallingAnimation = "Fall";
     [SerializeField] protected string deadAnimation = "Die";
 
-    // Use this for bosses
-    protected enum BossState
-    {
-        dormant,
-        introducing,
-        aggro,
-        charging,
-        attacking,
-        recovering,
-        repositioning,
-        locked,
-        dead
-    }
-    protected override void Start()
-    {
+    protected override void Start() {
         base.Start();
 
-        // Get required components
-        damageable = GetComponent<Damageable>();
-        collidable = GetComponent<Collidable>();
-    }
-
-    public override void Die()
-    {
-        base.Die();
-        animationHandler.changeAnimationState(deadAnimation);
-        Destroy(gameObject, 10f); // Despawn boss corpse in 10 seconds
-        //state = EnemyState.dead; // Set state to dead
-    }
-
-    protected void facePlayer()
-    {
-        mv.setFacingDirection(target.transform.position.x - transform.position.x);
+        // Set bossUI
+        bossHealthBarUI = GameObject.Find("Boss Health Bar").GetComponent<BossHealthBarUI>();
     }
 
     protected void handleMovementAnimations()
@@ -64,7 +34,7 @@ public class BossAI : EnemyAI
         }
         else
         {
-            if (Mathf.Abs(body.velocity.x) > 0.2f)
+            if (Mathf.Abs(body.velocity.x) > 0.1f)
                 animationHandler.changeAnimationState(walkAnimation);
             else
                 animationHandler.changeAnimationState(idleAnimation);

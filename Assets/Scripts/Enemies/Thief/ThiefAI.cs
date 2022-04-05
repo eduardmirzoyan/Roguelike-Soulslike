@@ -56,7 +56,24 @@ public class ThiefAI : EnemyAI
     }
 
     private void Update() {
-        if (health.isEmpty()) {
+        if (thiefState != ThiefState.Dead && health.isEmpty())
+        {   
+            // Drop held item on death if has one
+            if (!inventory.isEmpty()) {
+                var prefab = Instantiate(dropLoot, transform.position, Quaternion.identity);
+                prefab.setItem(inventory.getItem(0));
+            }
+            
+            // Call it's death method
+            Die();
+
+            // Destroy body in 1 second
+            Destroy(gameObject, 2f);
+
+            // Prevent movement
+            mv.Walk(0);
+
+            // Change state to dead
             thiefState = ThiefState.Dead;
         }
     }
@@ -215,13 +232,6 @@ public class ThiefAI : EnemyAI
             case ThiefState.Dead:
                 // Do nothin
                 animationHandler.changeAnimationState(deadAnimation);
-
-                // Drop held item on death
-                var prefab = Instantiate(dropLoot, transform.position, Quaternion.identity);
-                prefab.setItem(inventory.getItem(0));
-
-                // Destroy itself
-                Destroy(gameObject);
 
             break;
         }

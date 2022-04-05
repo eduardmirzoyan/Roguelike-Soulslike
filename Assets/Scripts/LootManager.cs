@@ -6,15 +6,33 @@ public class LootManager : MonoBehaviour
 {
     public static LootManager instance; // Accessible by every class at any point
 
+    [Header("Melee Weapons")]
     [SerializeField] private List<string> prefixes;
     [SerializeField] private List<Sprite> swordSprites;
     [SerializeField] private List<Sprite> axeSprites;
     [SerializeField] private List<Sprite> shieldSprites;
     [SerializeField] private List<MeleeEchantment> meleeEchantments;
 
+    [Header("Ranged Weapons")]
+    [SerializeField] private List<Sprite> longBowSprites;
+    [SerializeField] private List<RangedEnchantment> rangedEnchantments;
+
+    [Header("Weapon Prefabs")]
     [SerializeField] private GameObject swordPrefab;
     [SerializeField] private GameObject axePrefab;
     [SerializeField] private GameObject smallShieldPrefab;
+    [SerializeField] private GameObject longBowPrefab;
+
+    [Header("Armor")]
+    [SerializeField] private List<Sprite> helmetSprites;
+    [SerializeField] private List<Sprite> chestplateSprites;
+    [SerializeField] private List<Sprite> gloveSprites;
+    [SerializeField] private List<Sprite> bootsSprites;
+    [SerializeField] private List<Sprite> capeSprites;
+    [SerializeField] private List<Enchantment> armorEnchantments;
+
+    [Header("Loot tables")]
+    [SerializeField] private LootTable consumableLootTable;
 
     private void Awake()
     {
@@ -33,41 +51,17 @@ public class LootManager : MonoBehaviour
     {
         // First randomly choose between a weapon or armor
         var itemType = (ItemType)Random.Range(0, 2); // 0 - weapon, 1 - armor
-        itemType = 0; // Hard code 0 for now
 
-        // Then randomly choose weapon type or armor type (light, med, heavy)
+        // Then randomly choose weapon type or armor type
         switch (itemType)
         {
             case ItemType.Weapon:
                 return generateRandomWeapon();
             case ItemType.Armor:
-                var armorSlot = (EquipmentSlot)Random.Range(0, 5);
-                var armorType = (ArmorType)Random.Range(0, 3);
-
-                // Set the sprite
-
-                // Then set the level of the gear based on floor level
-
-                // Create the SO item
-                ArmorItem armorItem = new ArmorItem();
-                armorItem.armorType = armorType;
-                armorItem.equipSlot = armorSlot;
-                armorItem.name = "Random Armor";
-                armorItem.defenseValue = Random.Range(1, 10);
-                armorItem.bonusStamina = Random.Range(0, 3) * 5;
-                // armorItem.sprite = icon2;
-
-                return armorItem;
-
-                //break;
+                return generateRandomArmorPiece();
+            default:
+                return null;
         }
-
-        // If no appropriate item was created, then return null
-        return null;
-
-        // Then decide the core stats of gear based on gear level
-
-        // Finally randomize # of sub stats
     }
 
     private WeaponItem generateRandomWeapon() {
@@ -80,7 +74,7 @@ public class LootManager : MonoBehaviour
             case WeaponType.SmallShield:
                 return generateRandomSmallShield();
             case WeaponType.LongBow:
-                return generateRandomSword();
+                return generateRandomLongBow();
         }
         return null;
     }
@@ -95,6 +89,9 @@ public class LootManager : MonoBehaviour
 
         // Randomize damage stats
         newSword.damage = Random.Range(1, 8); // 1-7
+
+        // Set crit chance
+        newSword.critChance = 0.1f; // 1-7
 
         // Randomize enchantment
         newSword.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
@@ -123,7 +120,7 @@ public class LootManager : MonoBehaviour
         newAxe.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
 
         // Randomize sprite
-        newAxe.sprite = shieldSprites[Random.Range(0, shieldSprites.Count)];
+        newAxe.sprite = axeSprites[Random.Range(0, axeSprites.Count)];
 
         // Randomize name
         newAxe.name = prefixes[Random.Range(0, prefixes.Count)] + " Axe";
@@ -142,11 +139,14 @@ public class LootManager : MonoBehaviour
         // Randomize damage stats
         newSmallShield.damage = Random.Range(1, 2); // 1
 
+        // Set crit chance
+        newSmallShield.critChance = 0.1f; // 1-7
+
         // Randomize enchantment
         newSmallShield.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
 
         // Randomize sprite
-        newSmallShield.sprite = axeSprites[Random.Range(0, axeSprites.Count)];
+        newSmallShield.sprite = shieldSprites[Random.Range(0, shieldSprites.Count)];
 
         // Randomize name
         newSmallShield.name = prefixes[Random.Range(0, prefixes.Count)] + " Shield";
@@ -154,5 +154,155 @@ public class LootManager : MonoBehaviour
         return newSmallShield;
     }
 
-    
+    private WeaponItem generateRandomLongBow() {
+
+        // Create the scriptable object
+        WeaponItem newLongBow = ScriptableObject.CreateInstance<WeaponItem>();
+        newLongBow.weaponType = WeaponType.LongBow;
+        newLongBow.twoHanded = true;
+        newLongBow.prefab = longBowPrefab;
+
+        // Randomize damage stats
+        newLongBow.damage = Random.Range(6, 8);
+
+        // Randomize enchantment
+        newLongBow.enchantment = rangedEnchantments[Random.Range(0, rangedEnchantments.Count)];
+
+        // Randomize sprite
+        newLongBow.sprite = longBowSprites[Random.Range(0, longBowSprites.Count)];
+
+        // Randomize name
+        newLongBow.name = prefixes[Random.Range(0, prefixes.Count)] + " Long Bow";
+
+        return newLongBow;
+    }
+
+    private ArmorItem generateRandomArmorPiece() {
+        
+        var armorType = (EquipmentSlot)Random.Range(0, 5); // 0 - 4
+        switch(armorType) {
+            case EquipmentSlot.Helmet:
+                return generateRandomHelmet();
+            case EquipmentSlot.Chestpiece:
+                return generateRandomChestplate();
+            case EquipmentSlot.Gloves:
+                return generateRandomGlove();
+            case EquipmentSlot.Boots:
+                return generateRandomBoots();
+            case EquipmentSlot.Cape:
+                return generateRandomCape();
+            default:
+                return null;
+        }
+    }
+
+    private ArmorItem generateRandomHelmet() {
+        // Create the scriptable object
+        ArmorItem newArmor = ScriptableObject.CreateInstance<ArmorItem>();
+        newArmor.equipSlot = EquipmentSlot.Helmet;
+        newArmor.armorType = (ArmorType)Random.Range(0, 3); // 0 - 2
+
+        // Randomize armor stats based on armor type
+        newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
+
+        // Randomize enchantment
+        newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+
+        // Randomize sprite
+        newArmor.sprite = helmetSprites[Random.Range(0, helmetSprites.Count)];
+
+        // Randomize name
+        newArmor.name = prefixes[Random.Range(0, prefixes.Count)] + " Helmet";
+
+        return newArmor;
+    }
+
+    private ArmorItem generateRandomChestplate() {
+        // Create the scriptable object
+        ArmorItem newArmor = ScriptableObject.CreateInstance<ArmorItem>();
+        newArmor.equipSlot = EquipmentSlot.Chestpiece;
+        newArmor.armorType = (ArmorType)Random.Range(0, 3); // 0 - 2
+
+        // Randomize armor stats based on armor type
+        newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
+
+        // Randomize enchantment
+        newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+
+        // Randomize sprite
+        newArmor.sprite = chestplateSprites[Random.Range(0, chestplateSprites.Count)];
+
+        // Randomize name
+        newArmor.name = prefixes[Random.Range(0, prefixes.Count)] + " Chestplate";
+        
+        return newArmor;
+    }
+
+    private ArmorItem generateRandomGlove() {
+        // Create the scriptable object
+        ArmorItem newArmor = ScriptableObject.CreateInstance<ArmorItem>();
+        newArmor.equipSlot = EquipmentSlot.Gloves;
+        newArmor.armorType = (ArmorType)Random.Range(0, 3); // 0 - 2
+
+        // Randomize armor stats based on armor type
+        newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
+
+        // Randomize enchantment
+        newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+
+        // Randomize sprite
+        newArmor.sprite = gloveSprites[Random.Range(0, gloveSprites.Count)];
+
+        // Randomize name
+        newArmor.name = prefixes[Random.Range(0, prefixes.Count)] + " Gloves";
+        
+        return newArmor;
+    }
+
+    private ArmorItem generateRandomBoots() {
+        // Create the scriptable object
+        ArmorItem newArmor = ScriptableObject.CreateInstance<ArmorItem>();
+        newArmor.equipSlot = EquipmentSlot.Boots;
+        newArmor.armorType = (ArmorType)Random.Range(0, 3); // 0 - 2
+
+        // Randomize armor stats based on armor type
+        newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
+
+        // Randomize enchantment
+        newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+
+        // Randomize sprite
+        newArmor.sprite = bootsSprites[Random.Range(0, bootsSprites.Count)];
+
+        // Randomize name
+        newArmor.name = prefixes[Random.Range(0, prefixes.Count)] + " Boots";
+        
+        return newArmor;
+    }
+
+    private ArmorItem generateRandomCape() {
+        // Create the scriptable object
+        ArmorItem newArmor = ScriptableObject.CreateInstance<ArmorItem>();
+        newArmor.equipSlot = EquipmentSlot.Cape;
+        newArmor.armorType = (ArmorType)Random.Range(0, 3); // 0 - 2
+
+        // Randomize armor stats based on armor type
+        newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
+
+        // Randomize enchantment
+        newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+
+        // Randomize sprite
+        newArmor.sprite = capeSprites[Random.Range(0, capeSprites.Count)];
+
+        // Randomize name
+        newArmor.name = prefixes[Random.Range(0, prefixes.Count)] + " Cape";
+        
+        return newArmor;
+    }
+
+    public Item getConsumableDrop()
+    {
+        return consumableLootTable.getDrop();
+    }
 }

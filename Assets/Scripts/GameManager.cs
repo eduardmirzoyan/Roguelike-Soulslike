@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject floatingTextPrefab;
     [SerializeField] private ExperienceBar xpBar;
     [SerializeField] private Text goldText;
-    [SerializeField] private LootTable equipmentLootTable;
-    [SerializeField] private LootTable consumableLootTable;
     [SerializeField] private GameObject stunnedAnimationObject;
     [SerializeField] private CameraShake mainCamera;
     [SerializeField] private PathfindingMap pathfindingMap;
@@ -21,7 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Sprite icon2;
 
     public static GameManager instance; // Accessible by every class at any point
-    public Player player;
+    private Player player;
 
     private void Awake()
     {
@@ -76,6 +74,11 @@ public class GameManager : MonoBehaviour
      * 
      * 
      * */
+
+
+    public Player GetPlayer() {
+        return player;
+    }
 
     public void saveState(Scene scene, LoadSceneMode mode)
     {
@@ -198,16 +201,6 @@ public class GameManager : MonoBehaviour
         // Then decide the core stats of gear based on gear level
 
         // Finally randomize # of sub stats
-    }
-
-    public Item getItemDrop()
-    {
-        return equipmentLootTable.getDrop();
-    }
-
-    public Item getConsumableDrop()
-    {
-        return consumableLootTable.getDrop();
     }
 
     // Temp work around before status effects

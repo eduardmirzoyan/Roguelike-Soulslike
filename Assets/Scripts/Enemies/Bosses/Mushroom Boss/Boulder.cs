@@ -4,21 +4,45 @@ using UnityEngine;
 
 public class Boulder : MonoBehaviour
 {
-    [SerializeField] private Damage boulderDamage;
+    [Header("Components")]
+    [SerializeField] private Projectile projectile;
+    [SerializeField] private int boulderDamage;
+    [SerializeField] private float timeTilDestroy;
+    [SerializeField] private float turnspeed;
+
+    protected void Awake()
+    {
+        projectile = GetComponent<Projectile>();
+    }
+
+    private void FixedUpdate() {
+        transform.Rotate(new Vector3(0, 0, turnspeed));
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var damageable = collision.GetComponent<Damageable>();
-        if (collision.gameObject != this.gameObject && damageable != null && collision.tag != "Enemy")
-        {
-            damageable.takeDamage(boulderDamage);
+        // If arrow hits something dmaageableo other than the creator
+        if (collision.TryGetComponent(out Damageable damageable) && collision.gameObject != projectile.creator) {
+           
+            // Deal damage
+            Damage dmg = new Damage {
+                damageAmount = boulderDamage,
+                source = DamageSource.fromEnemy,
+                origin = projectile.creator.transform
+            };
+            damageable.takeDamage(dmg);
         }
 
-        if (collision.tag == "Ground")
-        {
-            GetComponent<Rigidbody2D>().isKinematic = true;
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            GetComponent<Collider2D>().enabled = false; // Disable collider so it doesn't damage anymore
+        // If arrow hit's the ground, then freeze it and destroy it in 1 second
+        if (collision.tag == "Ground") {
+            // Reduce the velocity
+            GetComponent<Rigidbody2D>().velocity /= 6;
+
+            // Disable collider as to not trigger on other entities
+            GetComponent<Collider2D>().enabled = false;
+
+            // Timed destroy
+            Destroy(gameObject, timeTilDestroy);
         }
     }
 }

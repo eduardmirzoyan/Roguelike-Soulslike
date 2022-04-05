@@ -42,8 +42,19 @@ public class GhostKnightAI : EnemyAI
     }
 
     private void Update() {
-        if (health.isEmpty()) {
+        if (knightState != KnightState.Dead && health.isEmpty())
+        {
+            // Call it's death method
             Die();
+
+            // Destroy body in 1 second
+            Destroy(gameObject, 1f);
+
+            // Prevent movement
+            mv.Walk(0);
+
+            // Change state to dead
+            knightState = KnightState.Dead;
         }
     }
 
@@ -74,9 +85,7 @@ public class GhostKnightAI : EnemyAI
             break;
             case KnightState.Searching:
                 animationHandler.changeAnimationState(idleAnimation);
-
-                pathfindUser.moveToLocation();
-
+                
                 // If target is removed during travel, then cancel path
                 if (target == null) {
 
@@ -183,7 +192,6 @@ public class GhostKnightAI : EnemyAI
             break;
             case KnightState.Dead:
                 animationHandler.changeAnimationState(deadAnimation);
-
             break;
         }
     }
@@ -205,7 +213,7 @@ public class GhostKnightAI : EnemyAI
 
     private void searchForEnemies() {
         // Search to see if any player enters range
-        var colliders = Physics2D.OverlapCircleAll(transform.position, aggroRange, 1 << LayerMask.NameToLayer("Player"));
+        var colliders = Physics2D.OverlapCircleAll(transform.position, attackRange, 1 << LayerMask.NameToLayer("Player"));
 
         if (colliders.Length != 0) {
             // Get closest enemy that meats criteria
@@ -245,6 +253,12 @@ public class GhostKnightAI : EnemyAI
     private void handleRetaliation() {
         // If entity was attacked...
         if (attacker != null) {
+            // If the attacker is far, then don't care
+            if (Vector2.Distance(transform.position, attacker.position) > aggroRange) {
+                attacker = null;
+                return;
+            }
+
             // Set target to the attacker
             target = attacker;
 

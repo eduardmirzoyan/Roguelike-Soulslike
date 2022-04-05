@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MushroomGolemAI : BossAI
 {
-    [Header("Mushroom Golem Gameobjects")]
+    [Header("Mushroom Golem Assets")]
     [SerializeField] private GameObject bigShockwave;
     [SerializeField] private GameObject smallShockwave;
     [SerializeField] private GameObject boulder;
@@ -14,254 +14,258 @@ public class MushroomGolemAI : BossAI
     [SerializeField] private Transform boulderSpawnPoint;
 
     [Header("Mushroom Golem Attacks")]
-    [SerializeField] private EnemyAttack bigSmash; // ID 1
-    [SerializeField] private EnemyAttack jumpSmash; // ID 2
-    [SerializeField] private EnemyAttack boulderToss; // ID 3
-
+    [SerializeField] private string bigSmashAnimation;
+    [SerializeField] private string jumpSmashAnimation;
+    [SerializeField] private string boulderTossAnimation;
     [SerializeField] private float farAttackRange;
+    [SerializeField] private float followRange;
 
-    private float repositionTimer;
-
+    [Header("Mushroom Golem Animation")]
     [SerializeField] private string sleepAnimation = "Sleep";
     [SerializeField] private string awakenAnimation = "Awaken";
 
+    private bool awake = false;
+
+    private enum MushroomGolemState {
+        Asleep,
+        Idle,
+        Aggro,
+        BigSmash,
+        JumpSmash,
+        BoulderToss,
+        Reposition,
+        Dead
+    }
+    [SerializeField] private MushroomGolemState mushroomGolemState; 
+
     private void FixedUpdate()
     {
-        // if (health.isEmpty() && state != EnemyState.dead)
-        // {
-        //     Die();
-        // }
-        // switch (state)
-        // {
-        //     case EnemyState.knockedback:
+        switch(mushroomGolemState) {
+            case MushroomGolemState.Asleep:
                 
-        //         break;
-        //     case EnemyState.idle:
-        //         animationHandler.changeAnimationState(sleepAnimation);
+                searchForEnemies();
 
-        //         if (lineOfSight.distanceFromTarget() < maxAttackRange)
-        //         {
-        //             onAggro();
-        //             roamTimer = currentCooldownTimer;
-        //         }
+                // If an enemy is found
+                if (!awake && target != null) {
+                    awake = true;
+                    StartCoroutine(wakeUp(1.5f));
+                }
 
-                
+            break;
+            case MushroomGolemState.Idle:
+                // Handle animations
+                handleMovementAnimations();
 
-        //         if (roamTimer > 0)
-        //         {
-        //             idleTimer = idleCooldown;
-        //             roamTimer -= Time.deltaTime;
-        //             mv.Walk(roamDirection); // Roam in given direction
-        //             if (mv.isGrounded())
-        //             {
-        //                 mv.Jump();
-        //             }
-        //         }
-        //         else
-        //         {   // After roaming, pause for a brief time before deciding next direction
-        //             if (idleTimer > 0)
-        //             {
-        //                 mv.Stop();
-        //                 idleTimer -= Time.deltaTime;
-        //             }
-        //             else
-        //             {
-        //                 roamTimer = roamCooldown; // Reset roaming time
-        //                 roamDirection = Random.Range(-1, 1) >= 0 ? 1 : -1; // Change roaming direction
-        //                 idleTimer = idleCooldown;
-        //             }
-        //         }
-        //         mv.Stop();
-        //         // Prevents movment during idle for now
+                // Just vibe out
+                searchForEnemies();
 
-        //         break;
-        //     case EnemyState.aggro:
-        //         handleMovementAnimations();
+                // If an enemy is found
+                if (target != null) {
+                    // If the target is a player, then show boss health bar
+                    if (target.TryGetComponent(out Player player)) {
+                        bossHealthBarUI.setBoss(this);
+                    }
 
-        //         // Chase player type-beat
-        //         float distanceFromPlayer = Vector2.Distance(transform.position, target.transform.position);
+                    // Reset cooldown
+                    attackCooldownTimer = attackCooldown;
 
-        //         facePlayer(); // Face the player while aggro'd on him
+                    // Change state
+                    mushroomGolemState = MushroomGolemState.Aggro;
+                }
+            break;
+            case MushroomGolemState.Aggro:
+                // Always face target
+                faceTarget();
 
-        //         // Increment attack timer, even if goblin is far
-        //         if (currentCooldownTimer > 0)
-        //             currentCooldownTimer -= Time.deltaTime;
+                // If you get farther than aggro range, remove target
+                if (Vector2.Distance(transform.position, target.position) > aggroRange) {
+                    target = null;
+                }
 
-        //         if (distanceFromPlayer < maxAttackRange)
-        //         {
+                // If target is gone (IE dead)
+                if (target == null) {
+                    // Go back to search state
+                    mushroomGolemState = MushroomGolemState.Idle;
+                    return;
+                }
 
-        //             if (distanceFromPlayer > minAttackRange && mv.isGrounded()) // Sweet spot
-        //             {
-        //                 mv.Stop(); // Don't move and wait
+                // Cache distance
+                var distance = Vector3.Distance(transform.position, target.position);
 
-        //                 // Check if ready to attack
-        //                 if (currentCooldownTimer <= 0)
-        //                 {
-        //                     setUpSequenceOfAttacks(new List<EnemyAttack> { bigSmash });
-        //                 }
-        //             }
-        //             else if (distanceFromPlayer < minAttackRange) // too close
-        //             {
-        //                 mv.walkBackwards(mv.getFacingDirection()); // Move away from player
-        //             }
-        //         }
-        //         else // Only move towards the player
-        //         {
-        //             // Too far
-        //             mv.Walk(mv.getFacingDirection()); // Move toward the player
+                // Face target
+                faceTarget();
 
-        //             // Jump if reached a wall and is grounded
-        //             if ( mv.isGrounded() && mv.onWall()) {
-        //                 mv.Jump();
-        //             }
-                        
-        //             if(currentCooldownTimer <= 0)
-        //             {
-        //                 if (distanceFromPlayer > farAttackRange)
-        //                     setUpSequenceOfAttacks(new List<EnemyAttack> { jumpSmash });
-        //                 else
-        //                 {
-        //                     int choice = Random.Range(0, 3); // Random number from 0 - 2
-        //                     switch (choice)
-        //                     {
-        //                         case 0:
-        //                             setUpSequenceOfAttacks(new List<EnemyAttack> { jumpSmash });
-        //                             break;
-        //                         case 1:
-        //                             setUpSequenceOfAttacks(new List<EnemyAttack> { boulderToss });
-        //                             break;
-        //                         case 2:
-        //                             setUpSequenceOfAttacks(new List<EnemyAttack> { bigSmash });
-        //                             break;
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //         break;
-        //     case EnemyState.repositioning:
-        //         if (repositionTimer > 0)
-        //         {
-        //             mv.Stop();
-        //             repositionTimer -= Time.deltaTime;
-        //         }
-        //         else
-        //             state = EnemyState.aggro;
-        //         break;
-        //     case EnemyState.charging: // Enemy charges for attack
-        //         if (delayTimer > 0)
-        //         {
+                // If you have an attack cooldown, then reduce it
+                if (attackCooldownTimer > 0) {
+                    attackCooldownTimer -= Time.deltaTime;
 
-        //             mv.Stop();
-        //             delayTimer -= Time.deltaTime;
-        //         }
-        //         else
-        //         {   // After enemy finishes charging, set required values and do the attack
-        //             attackTimer = currentAttack.attackDuration;
+                    // Check whether to walk towards target or not
+                    if (distance < followRange) {
+                        animationHandler.changeAnimationState(idleAnimation);
+                        mv.Walk(0);
+                    }
+                    else if (distance > attackRange) {
+                        // Walk towards enemy
+                        animationHandler.changeAnimationState(walkAnimation);
+                        handleForwardMovement(mv.getFacingDirection());
+                    }
+                }
+                else { // Cooldown is over
 
-        //             if(currentAttack.ID == 2)
-        //             {
+                    // Stop moving
+                    animationHandler.changeAnimationState(idleAnimation);
 
-        //                 mv.jumpReposition( (Vector2.Distance(transform.position, target.transform.position) - 4f) * mv.getFacingDirection());
-        //             }
+                    mv.Walk(0);
 
-        //             state = EnemyState.attacking;
-        //         }
-        //         break;
-        //     case EnemyState.attacking: // Enemy is in the action of attacking
-        //         if (attackTimer > 0)
-        //         {
+                    if (distance < attackRange) { // Close range
+                        // Big smash attack
+                        attackTimer = 1.25f;
+                        animationHandler.changeAnimationState(bigSmashAnimation);
+                        StartCoroutine(shakeTimer(0.667f));
+                        mushroomGolemState = MushroomGolemState.BigSmash;
+                    }
+                    else if (distance > attackRange && distance < farAttackRange) { // Mid range
+                        // Toss Boulder attack
+                        attackTimer = 1f;
+                        animationHandler.changeAnimationState(boulderTossAnimation);
+                        mushroomGolemState = MushroomGolemState.BoulderToss;
+                    }
+                    else if (distance > farAttackRange) { // Far range
+                        // Jump smash attack
+                        attackTimer = 0.5f;
+                        animationHandler.changeAnimationState(jumpSmashAnimation);
+                        mushroomGolemState = MushroomGolemState.JumpSmash;
+                    }
+                }                
+            break;
+            case MushroomGolemState.BigSmash:
+                if (attackTimer > 0) {
+                    attackTimer -= Time.deltaTime;
 
-        //             if(currentAttack.attackName == "Jump Smash")
-        //             {
-        //                 handleMovementAnimations();
+                    // Don't move
+                    mv.Walk(0);
+                    
+                }
+                else {
+                    // Should summon shockwave by now
 
-        //                 if(attackTimer > 0.2f)
-        //                     attackTimer -= Time.deltaTime;
+                    // Reset cooldown
+                    attackCooldownTimer = attackCooldown;
 
-        //                 if (mv.isGrounded() && attackTimer < 0.2f)
-        //                     attackTimer = 0;
-                        
-        //             }
-        //             else
-        //                 attackTimer -= Time.deltaTime;
-        //         }
-        //         else
-        //         { // After attack is finished, reset enemy values and set to aggro
-        //             if (currentAttack.attackName == "Forward Smash")
-        //             {
-        //                 GameManager.instance.shakeCamera(0.5f, 0.5f);
+                    animationHandler.changeAnimationState(idleAnimation);
 
-        //                 Instantiate(bigShockwave, frontSpawnPoint.transform.position, frontSpawnPoint.transform.rotation);
-        //             }
-                        
+                    // Change back to attacking state
+                    mushroomGolemState = MushroomGolemState.Aggro;
+                }
+            break;
+            case MushroomGolemState.JumpSmash:
+                if (attackTimer > 0) {
+                    attackTimer -= Time.deltaTime;
 
-        //             if(currentAttack.attackName == "Jump Smash")
-        //             {
-        //                 GameManager.instance.shakeCamera(0.5f, 0.5f);
+                    // Don't move
+                    mv.Walk(0);
 
-        //                 Instantiate(smallShockwave, frontSpawnPoint.transform.position, Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0)));
+                }
+                else {
+                    // Jump towards target
+                    mv.jumpReposition( (Vector2.Distance(transform.position, target.transform.position) - 4f) * mv.getFacingDirection(), 20);
 
-        //                 Instantiate(smallShockwave, rearSpawnPoint.transform.position, Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y - 180, 0)));
-        //             }
+                    // Change back to attacking state
+                    mushroomGolemState = MushroomGolemState.Reposition;
+                }
+            break;
+            case MushroomGolemState.BoulderToss:
+                if (attackTimer > 0) {
+                    attackTimer -= Time.deltaTime;
 
-        //             if(currentAttack.attackName == "Throw Boulder")
-        //             {
-        //                 aimBoulderAtPlayer();
-        //                 Instantiate(boulder, boulderSpawnPoint.transform.position, boulderSpawnPoint.transform.rotation);
-        //             }
-                        
-        //             recoveryTimer = currentAttack.attackRecovery; // Set reoovery time
-        //             state = EnemyState.recovering; // Change enemy state
-        //         }
-        //         break;
-        //     case EnemyState.recovering: // Enemy recovery time after attacking
-        //         if (recoveryTimer > 0)
-        //         {
-        //             mv.Stop();
-        //             recoveryTimer -= Time.deltaTime;
-        //         }
-        //         else
-        //         {
-        //             currentSequenceOfAttacks.RemoveAt(0);
-        //             if (currentSequenceOfAttacks.Count > 0)
-        //             {
-        //                 setUpSequenceOfAttacks(currentSequenceOfAttacks);
-        //                 state = EnemyState.charging;
-        //             }
-        //             else
-        //             {
-        //                 currentCooldownTimer = Random.Range(minAttackCooldown, maxAttackCooldown); // Reset cooldown
-        //                 state = EnemyState.aggro;
-        //             }
-        //         }
-        //         break;
-        //     case EnemyState.dead:
-        //         // Do nothing so far
+                    // Don't move
+                    mv.Walk(0);
 
-        //         break;
-        // }
+                }
+                else {
+                    // Aim a boulder at the player and throw it
+                    aimBoulderAtPlayer();
+                    var projectile = Instantiate(boulder, boulderSpawnPoint.transform.position, boulderSpawnPoint.transform.rotation).GetComponent<Projectile>();
+                    projectile.setCreator(this.gameObject);
+
+                    // Reset cooldown
+                    attackCooldownTimer = attackCooldown;
+
+                    // Change back to attacking state
+                    mushroomGolemState = MushroomGolemState.Aggro;
+                }
+            break;
+            case MushroomGolemState.Reposition:
+                if (!mv.isGrounded()) {
+
+                    // Handle animations
+                    if (mv.checkRising())
+                        animationHandler.changeAnimationState(risingAnimation);
+                    else if (mv.checkFalling())
+                        animationHandler.changeAnimationState(fallingAnimation);
+                }
+                else {
+                    // Shake camera
+                    GameManager.instance.shakeCamera(0.5f, 0.5f);
+
+                    // Create small shockwaves
+                    var obj = Instantiate(smallShockwave, frontSpawnPoint.transform.position, Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0)));
+                    obj.GetComponent<Projectile>().setCreator(gameObject);
+
+                    obj = Instantiate(smallShockwave, rearSpawnPoint.transform.position, Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y - 180, 0)));
+                    obj.GetComponent<Projectile>().setCreator(gameObject);
+
+                    // Reset cooldown
+                    attackCooldownTimer = attackCooldown;
+
+                    // Change back to attacking state
+                    mushroomGolemState = MushroomGolemState.Aggro;
+                }
+
+            break;
+            case MushroomGolemState.Dead:
+            break;
+        }
     }
 
-    // protected override void setUpSequenceOfAttacks(List<EnemyAttack> enemyAttacks)
-    // {
-    //     base.setUpSequenceOfAttacks(enemyAttacks);
-    //     switch (currentAttack.attackName) 
-    //     {
-    //         case "Forward Smash":
-    //             //animator.SetTrigger("smash");
-    //             break;
-    //         case "Jump Smash":
-    //             //animator.SetTrigger("jump smash");
-    //             break;
-    //         case "Throw Boulder":
-    //             //animator.SetTrigger("throw boulder");
-    //             break;
-    //         default:
-    //             throw new System.Exception("Mushroom Golem Tried to use a move it did not know lol");
-    //     };
-    //     facePlayer();
-    //     animationHandler.changeAnimationState(currentAttack.attackName);
-    // }
+    private void handleForwardMovement(float direction)
+    {
+        // Too far
+        mv.Walk(direction); // Move toward the player
+
+        // Jump if reached a wall and is grounded
+        if (mv.isGrounded() && mv.onWall())
+            mv.Jump();
+    }
+
+    private void searchForEnemies() {
+        // Aggressive, hunts any enemy in sight
+        var colliders = lineOfSight.getAllEnemiesInSight(aggroRange);
+
+        if (colliders.Length != 0) {
+            // Get closest enemy that meats criteria
+
+            Transform closest = null;
+            float shortestDistance = Mathf.Infinity;
+
+            foreach (var collider in colliders) {
+                float distance = Vector3.Distance(transform.position, collider.transform.position);
+
+                if (distance < shortestDistance) {
+                    // If the collider is a player
+                    if (collider.TryGetComponent(out Player player)) {
+                        shortestDistance = distance;
+                        closest = collider.transform;
+                    }
+                }
+            }
+
+            // If a possible enemy is found, then set it as target
+            if (closest != null) {
+                target = closest;
+            }
+        }
+    }
 
     private void aimBoulderAtPlayer()
     {
@@ -271,13 +275,43 @@ public class MushroomGolemAI : BossAI
         boulderSpawnPoint.transform.rotation = Quaternion.Euler(Vector3.forward * angle);
     }
 
-    // public override void onAggro()
-    // {
-    //     base.onAggro();
+    private IEnumerator wakeUp(float time) {
+        animationHandler.changeAnimationState(awakenAnimation);
 
-    //     // Start awaken animation
-    //     animationHandler.changeAnimationState(awakenAnimation);
-    //     repositionTimer = 1.5f;
-    //     state = EnemyState.repositioning;
-    // }
+        // Wait for animation to play out
+        yield return new WaitForSeconds(time);
+
+        // If the target is a player, then show boss health bar
+        if (target.TryGetComponent(out Player player)) {
+            bossHealthBarUI.setBoss(this);
+        }
+        
+        // Reset cooldown
+        attackCooldownTimer = attackCooldown;
+
+        // Change state
+        mushroomGolemState = MushroomGolemState.Aggro;
+    }
+
+    private IEnumerator shakeTimer(float time) {
+        // Wait
+        yield return new WaitForSeconds(time);
+
+        // Shake camera
+        GameManager.instance.shakeCamera(0.5f, 0.5f);
+
+        // Summon big shockwave after attack
+        var projectile = Instantiate(bigShockwave, frontSpawnPoint.transform.position, frontSpawnPoint.transform.rotation).GetComponent<Projectile>();
+        projectile.setCreator(gameObject);
+    }
+
+    protected override void OnDrawGizmosSelected() {
+        base.OnDrawGizmosSelected();
+
+        Gizmos.color = Color.gray;
+        Gizmos.DrawWireSphere(transform.position, farAttackRange);
+        
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, followRange);
+    }
 }

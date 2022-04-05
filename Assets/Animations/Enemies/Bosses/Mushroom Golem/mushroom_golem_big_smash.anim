@@ -51,7 +51,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: hitbox
+    path: Enemy Weapon
     classID: 58
     script: {fileID: 0}
   m_PPtrCurves:
@@ -70,7 +70,7 @@ AnimationClip:
       value: {fileID: -4732845381435122447, guid: 1c45d3dbc74b8b9429dc2d6426aa08ba, type: 3}
     - time: 1.05
       value: {fileID: -6112979700035716805, guid: 1c45d3dbc74b8b9429dc2d6426aa08ba, type: 3}
-    - time: 1.25
+    - time: 1.2333333
       value: {fileID: -5968835266570523614, guid: 1c45d3dbc74b8b9429dc2d6426aa08ba, type: 3}
     attribute: m_Sprite
     path: 
@@ -84,7 +84,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 3539115851
+      path: 3903496738
       attribute: 3305885265
       script: {fileID: 0}
       typeID: 58
@@ -111,7 +111,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.2666667
+    m_StopTime: 1.25
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -161,7 +161,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: hitbox
+    path: Enemy Weapon
     classID: 58
     script: {fileID: 0}
   m_EulerEditorCurves: []

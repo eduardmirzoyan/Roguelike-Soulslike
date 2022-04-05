@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
     private float gainTimer;
 
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         body.velocity = transform.right * projectileSpeed;
@@ -63,6 +63,9 @@ public class Projectile : MonoBehaviour
 
         // Set owner
         creator = owner;
+
+        body.velocity = transform.right * projectileSpeed;
+        body.isKinematic = !enableGravity;
     }
 
     public bool bounce() {

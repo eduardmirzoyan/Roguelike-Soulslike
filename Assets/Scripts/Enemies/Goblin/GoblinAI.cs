@@ -40,8 +40,18 @@ public class GoblinAI : EnemyAI
     }
 
     private void Update() {
-        if (health.isEmpty())
+        if (goblinState != GoblinState.Dead && health.isEmpty())
         {
+            // Call it's death method
+            Die();
+
+            // Destroy body in 1 second
+            Destroy(gameObject, 2f);
+
+            // Prevent movement
+            mv.Walk(0);
+
+            // Change state to dead
             goblinState = GoblinState.Dead;
         }
     }
@@ -159,8 +169,6 @@ public class GoblinAI : EnemyAI
             break;
             case GoblinState.Dead:
                 animationHandler.changeAnimationState(deadAnimation);
-                Destroy(gameObject);
-
             break;
         }
     }

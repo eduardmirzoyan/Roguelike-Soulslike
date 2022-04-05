@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4521506508710424471}
   - component: {fileID: 2964423727287292073}
   - component: {fileID: 242689963344495447}
-  - component: {fileID: 8335502023081284130}
   - component: {fileID: 8150527089980861017}
   - component: {fileID: 8496553430867794778}
   m_Layer: 15
@@ -125,19 +124,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &8335502023081284130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2548260273467426745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2184f420b2a27e419f95132a99b37f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  secondsToDestroy: 3
 --- !u!114 &8150527089980861017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,11 +136,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d352b557b18eb18418aaaf6224608031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 15
   body: {fileID: 0}
+  creator: {fileID: 0}
+  projectileSpeed: 25
+  numberOfBounces: 0
+  numberOfPierces: 0
   gainVelocityOverTime: 0
   velocityGainRate: 0
   percentVelocityGain: 0
+  enableGravity: 0
 --- !u!114 &8496553430867794778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,14 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c7efa0c1faa384db3c81f52f4fe677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 242689963344495447}
-  arrowDamage:
-    damageAmount: 7
-    source: 1
-    origin: {x: 0, y: 0, z: 0}
-    isTrue: 0
-    isAvoidable: 1
-    triggersIFrames: 1
-    effects: []
-    buildupEffects: []
-    color: {r: 0, g: 0, b: 0, a: 0}
+  projectile: {fileID: 0}
+  damage: 8
+  timeTilDestroy: 2
