@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Armor Shred Melee
   m_EditorClassIdentifier: 
   enchantmentName: Jagged
+  stacks: 1
+  description: Attacks reduce the enemy's armor.
   armorReductionEffect: {fileID: 11400000, guid: 954904986e039cc489181b9596894e99, type: 2}

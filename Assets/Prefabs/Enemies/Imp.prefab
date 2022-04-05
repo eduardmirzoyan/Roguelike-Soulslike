@@ -541,8 +541,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.2, y: -0.5}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.1, y: 1.1}
+  m_SizeDelta: {x: 0.5, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4598501648405320231
 CanvasRenderer:
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.36862746}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -620,7 +620,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.2, y: -0.5}
+  m_AnchoredPosition: {x: 0.1, y: -0.3}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4598501648436549228
@@ -1267,7 +1267,7 @@ SpriteRenderer:
   m_SortingLayerID: -2079674183
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8793639957104055765, guid: c2e782ce4e7fa6f408ebf683d6a3575b, type: 3}
+  m_Sprite: {fileID: 5352286359449648278, guid: 46d2411be28ef2d4fbd864b396a48cc7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1312,9 +1312,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.1, y: -0.3}
+  m_Offset: {x: 0.099999905, y: -0.32238388}
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.5021281
 --- !u!95 &4598501649160461436
 Animator:
   serializedVersion: 3
@@ -6564,9 +6564,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.07002315}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.37002316
 --- !u!114 &4598501649563450560
 MonoBehaviour:
   m_ObjectHideFlags: 0

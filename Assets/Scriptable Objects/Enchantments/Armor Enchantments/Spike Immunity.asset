@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Spike Immunity
   m_EditorClassIdentifier: 
   enchantmentName: Spike Immunity
+  stacks: 1
+  description: Immunity to spikes. Obviously.

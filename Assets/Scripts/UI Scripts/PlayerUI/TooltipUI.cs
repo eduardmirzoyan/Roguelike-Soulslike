@@ -7,6 +7,7 @@ public class TooltipUI : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private StatusUI statusUI;
     [SerializeField] private SkillTreeUI skillTreeUI;
 
     [Header("Fields")]
@@ -20,9 +21,11 @@ public class TooltipUI : MonoBehaviour
     [SerializeField] private Skill selectedSkill;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         inventoryUI = GameObject.Find("Slot Holder").GetComponent<InventoryUI>();
+        statusUI = GameObject.Find("Status UI").GetComponent<StatusUI>();
+        skillTreeUI = GameObject.Find("Skill Tree UI").GetComponent<SkillTreeUI>();
     }
 
     // Update is called once per frame
@@ -59,7 +62,7 @@ public class TooltipUI : MonoBehaviour
                             itemDescription.text = 
                                 "Defense: " + armorItem.defenseValue
                                 + "\nBonus Stamina: " + armorItem.bonusStamina
-                                + "\nDescription: " + armorItem.description;
+                                + "\n" + armorItem.description;
                             break;
                         case ItemType.Weapon:
                             // Cache weapon
@@ -80,7 +83,7 @@ public class TooltipUI : MonoBehaviour
                             itemDescription.text = 
                                  "\nDamage: " + weaponItem.damage
                                 + "\nCrit Chance: " + weaponItem.critChance * 100 + "%"
-                                + "\nDescription: " + weaponItem.description;
+                                + "\n" + weaponItem.description;
                             break;
                         default:
                             // Set item type to name and modifier to null
@@ -98,7 +101,26 @@ public class TooltipUI : MonoBehaviour
                 }
                 break;
             case MenuWindow.Status:
-                transform.position = new Vector3(1000, 1000, 1000);
+                var selected = statusUI.getSelectedEnchantment();
+                
+                if (selected.Item1 != null) {
+                    // Set position to the gameobject's
+                    transform.position = selected.Item1.position;
+
+                    itemName.text = selected.Item2.enchantmentName;
+                    
+                    if (selected.Item2 is MeleeEchantment || selected.Item2 is RangedEnchantment)
+                        itemType.text = "Weapon Enchantment";
+                    else 
+                        itemType.text = "Armor Enchantment";
+
+                    itemModifer.text = "";
+                    itemDescription.text = selected.Item2.description;
+                }
+                else { // If something isn't selected, then send tooltip to narnia
+                    transform.position = new Vector3(1000, 1000, 1000);
+                }
+                
                 break;
             case MenuWindow.SkillTree:
                 selectedSkill = skillTreeUI.getSelectedSkill();

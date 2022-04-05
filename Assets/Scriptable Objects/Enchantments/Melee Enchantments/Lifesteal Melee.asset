@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Lifesteal Melee
   m_EditorClassIdentifier: 
   enchantmentName: Lifesteal
+  stacks: 1
+  description: Attacks heal you for a percentage of mitigated damage.
   lifestealRatio: 0.1

@@ -20,7 +20,6 @@ public class EnchantableEntity : MonoBehaviour
 
     public void addEnchantment(Enchantment enchantmentToAdd)
     {
-
         // Check if you already have this enchantment
         foreach (var enchantment in enchantments)
         {
@@ -59,5 +58,9 @@ public class EnchantableEntity : MonoBehaviour
 
         // Else print error
         print("ENCHANTMENT NOT FOUND: " + enchantmentToRemove.name);
+    }
+
+    public List<Enchantment> getEnchantments() {
+        return enchantments;
     }
 }

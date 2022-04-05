@@ -15,32 +15,35 @@ public class Menu : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private EquipmentHandler playerEquipment;
     [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private StatusUI statusUI;
     [SerializeField] private SkillTreeUI skillTreeUI;
     [SerializeField] private MenuUI menuUI;
     [SerializeField] private HUD hud;
     [SerializeField] protected WorldItem dropLoot; // REPLACE THIS WITH 'RESOURCE LOADING'
 
-
-
     [Header("Menu Windows")]
     [SerializeField] private GameObject inventoryScreen;
     [SerializeField] private GameObject statusScreen;
     [SerializeField] private GameObject skillTreeScreen;
-
     [SerializeField] private GameObject tooltip;
 
+    [Header("Menu Status")]
     [SerializeField] public bool menuEnabled;
 
     // Start is called before the first frame update
     private void Start()
     {
-        player = GameObject.Find("Player").GetComponent<Player>();
+        // Get components
+        player = GameManager.instance.GetPlayer();
         playerEquipment = player.GetComponent<EquipmentHandler>();
         skillTreeUI = GameObject.Find("Skill Tree UI").GetComponent<SkillTreeUI>();
         menuUI = GetComponent<MenuUI>();
         inventoryUI = GameObject.Find("Slot Holder").GetComponent<InventoryUI>();
+        statusUI = GameObject.Find("Status UI").GetComponent<StatusUI>();
         hud = GameObject.Find("HUD").GetComponent<HUD>();
         tooltip = GameObject.Find("Tooltip Holder");
+
+        // Intialize
         inventoryScreen.SetActive(true);
         skillTreeScreen.SetActive(false);
         statusScreen.SetActive(false);
@@ -86,8 +89,6 @@ public class Menu : MonoBehaviour
         }
     }
 
-
-
     private void inventoryScreenLogic()
     {
         #region Menu logic
@@ -126,7 +127,7 @@ public class Menu : MonoBehaviour
             }
         }
 
-
+        // Drop selected item
         if (Input.GetKeyDown(KeyCode.R))
         {
             Item selectedItem = inventoryUI.getSelectedItem();
@@ -140,7 +141,7 @@ public class Menu : MonoBehaviour
             var prefab = Instantiate(dropLoot, player.transform.position, Quaternion.identity);
             prefab.setItem(selectedItem);
 
-            inventoryUI.deleteSelectedItem();
+            inventoryUI.reduceSelectedItem();
         }
         inventoryScreen.SetActive(true);
 
@@ -149,7 +150,16 @@ public class Menu : MonoBehaviour
 
     private void statusScreenLogic()
     {
-        // Nothing yet
+        
+        // Status selector maneuvering
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            statusUI.moveSelectedUp(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            statusUI.moveSelectedUp(false);
+        }
     }
 
     private void skillTreeScreenLogic()
@@ -201,6 +211,8 @@ public class Menu : MonoBehaviour
         switch(window)
         {
             case MenuWindow.Inventory:
+                if (statusUI.enabled)
+                    statusUI.clearUI();
                 inventoryScreen.SetActive(true);
                 statusScreen.SetActive(false);
                 skillTreeScreen.SetActive(false);
@@ -209,8 +221,11 @@ public class Menu : MonoBehaviour
                 inventoryScreen.SetActive(false);
                 statusScreen.SetActive(true);
                 skillTreeScreen.SetActive(false);
+                statusUI.updateUI();
                 break;
             case MenuWindow.SkillTree:
+                if (statusUI.enabled)
+                        statusUI.clearUI();
                 inventoryScreen.SetActive(false);
                 statusScreen.SetActive(false);
                 skillTreeScreen.SetActive(true);
@@ -291,31 +306,6 @@ public class Menu : MonoBehaviour
                         }
                     }
                 }
-                // Don't do shit now
-
-                // If main slot is open
-                    // if one-handed
-                        // if off-hand is open || off-hand is 1handed
-                            // equip normally
-                        // else 
-                            // don't equip
-                    // if two handed
-                        // if off-hand is open
-                            // equip normally
-                        // else 
-                            // don't equip
-                
-                // else check offhand is open
-                    // if one-handed
-                        // if main-hand is open || main-hand is 1handed
-                            // equip normally
-                        // else 
-                            // don't equip
-                    // if two handed
-                        // if main-hand is open
-                            // equip normally
-                        // else 
-                            // don't equip
                 break;
             case ItemType.Armor:
                 // Equipping armor logic
@@ -344,18 +334,12 @@ public class Menu : MonoBehaviour
                 var consumable = (ConsumableItem)item;
                 if(consumable != null)
                 {
+                    // Use item
                     consumable.consume(player.gameObject);
-                    consumable.count -= 1;
-                    if(consumable.count <= 0)
-                    {
-                        // Remove item from inventory
-                        inventoryUI.deleteSelectedItem();
-                    }
-                }
 
-                // TODO:
-                // TO BE IMPLEMENTED
-                Debug.Log("Consume!");
+                    // Reduce item from inventory
+                    inventoryUI.reduceSelectedItem();
+                }
                 break;
         }
     }

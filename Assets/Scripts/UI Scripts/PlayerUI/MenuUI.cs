@@ -19,7 +19,6 @@ public class MenuUI : MonoBehaviour
     private void Update()
     {
         animator.SetBool("isVisible", isActive);
-
     }
 
     public void show()

@@ -96,7 +96,7 @@ public class LongBow : RangedWeapon
     public override void initiateAttack()
     {
         // Remove 1 arrow from inventory
-        inventory.removeItem(ItemType.Ammo);
+        inventory.removeItemOfType(ItemType.Ammo);
 
         // Reset the rotation to its parent's
         transform.rotation = transform.parent.rotation;

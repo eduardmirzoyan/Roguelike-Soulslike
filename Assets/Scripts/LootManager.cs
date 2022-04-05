@@ -34,6 +34,19 @@ public class LootManager : MonoBehaviour
     [Header("Loot tables")]
     [SerializeField] private LootTable consumableLootTable;
 
+    [Header("Weapon Descriptions")]
+    [TextArea(10, 15)]
+    public string swordDescription;
+
+    [TextArea(10, 15)]
+    public string axeDescription;
+
+    [TextArea(10, 15)]
+    public string smallShieldDescription;
+
+    [TextArea(10, 15)]
+    public string longBowDescription;
+
     private void Awake()
     {
         // If another lootmanager exists, destroy it
@@ -102,6 +115,9 @@ public class LootManager : MonoBehaviour
         // Randomize name
         newSword.name = prefixes[Random.Range(0, prefixes.Count)] + " Sword";
 
+        // Set description
+        newSword.description = swordDescription;
+
         return newSword;
     }
 
@@ -124,6 +140,9 @@ public class LootManager : MonoBehaviour
 
         // Randomize name
         newAxe.name = prefixes[Random.Range(0, prefixes.Count)] + " Axe";
+
+        // Set description
+        newAxe.description = axeDescription;
 
         return newAxe;
     }
@@ -151,6 +170,9 @@ public class LootManager : MonoBehaviour
         // Randomize name
         newSmallShield.name = prefixes[Random.Range(0, prefixes.Count)] + " Shield";
 
+        // Set description
+        newSmallShield.description = smallShieldDescription;
+
         return newSmallShield;
     }
 
@@ -173,6 +195,9 @@ public class LootManager : MonoBehaviour
 
         // Randomize name
         newLongBow.name = prefixes[Random.Range(0, prefixes.Count)] + " Long Bow";
+
+        // Set description
+        newLongBow.description = longBowDescription;
 
         return newLongBow;
     }

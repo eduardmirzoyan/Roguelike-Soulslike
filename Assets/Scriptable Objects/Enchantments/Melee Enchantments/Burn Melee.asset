@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: Burn Melee
   m_EditorClassIdentifier: 
   enchantmentName: Fire Aspect
+  stacks: 1
+  description: Attacks apply burn. Burning enemies take more damage when standing
+    still.
   burnEffect: {fileID: 11400000, guid: 98d260f15fd7ce1439a9c70f41ec6dac, type: 2}

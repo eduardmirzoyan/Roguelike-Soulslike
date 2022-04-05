@@ -35,15 +35,6 @@ public class Movement : MonoBehaviour
         body = GetComponent<Rigidbody2D>(); // Gets body physics handler
     }
 
-    protected virtual void Update()
-    {
-        var stats = GetComponent<CombatStats>();
-        if (stats != null)
-            externalSpeedBonuses = 1 + stats.movespeedMultiplier;
-        else
-            externalSpeedBonuses = 1;
-    }
-
     public void Walk(float direction) // From 0 to 1
     {
         if (isImmobile)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Speed Potion
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  type: 0
+  type: 2
   sprite: {fileID: -1851980184198936363, guid: 36e55f9730732414bb55108d6f39e17f, type: 3}
   isStackable: 0
   count: 1

@@ -52,7 +52,7 @@ public class DamageAuraEnchantment : Enchantment
     {
         particles.Stop();
         particles = null;
-        Destroy(particlesPrefab);
+        DestroyImmediate(particlesPrefab);
         base.unintialize();
     }
 }
