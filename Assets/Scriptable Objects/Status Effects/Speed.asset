@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e7264b89019c604abd14c16ef7c48c4, type: 3}
   m_Name: Speed
   m_EditorClassIdentifier: 
-  Duration: 3
+  Duration: 30
+  IsDurationReset: 0
   IsDurationStacked: 0
   IsEffectStacked: 0
   tickRate: 1

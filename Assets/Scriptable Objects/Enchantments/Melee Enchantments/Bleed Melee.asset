@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Bleed Melee
   m_EditorClassIdentifier: 
   enchantmentName: Sharpened
+  stacks: 1
+  description: Attacks cause a short-lasting, but stacking bleed.
   bleedEffect: {fileID: 11400000, guid: 56c3af0ec4a5bf44ebc466dc2227a70a, type: 2}

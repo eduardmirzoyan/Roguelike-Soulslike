@@ -37,12 +37,17 @@ public class Inventory : MonoBehaviour
 
     }
 
-    public void removeItem(ItemType itemType) {
-        foreach (var item in items) {
-            if (item != null &&  item.type == itemType) {
-                item.count--;
-                if (item.count < 1) {
-                    items.Remove(item);
+    public void removeItemOfType(ItemType itemType) {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i] != null &&  items[i] .type == itemType) {
+                // Reduce count
+                items[i].count--;
+
+                // Delete item form inventory if applicable
+                if (items[i].count < 1) {
+                    items[i].count = 1;
+                    items[i] = null;
                 }
                 return;
             }
@@ -67,8 +72,20 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void deleteItem(int index) {
-        items.RemoveAt(index);
+    public void removeItemAt(int index) {
+        if (index < 0 || index > items.Count) {
+            print("OUT OF INVENTORY INDEX");
+            return;
+        }
+        
+        // Reduce count
+        items[index].count--;
+
+        // Delete item form inventory if applicable
+        if (items[index].count < 1) {
+            items[index].count = 1;
+            items[index] = null;
+        }
     }
 
     public Item getItem(int index) {

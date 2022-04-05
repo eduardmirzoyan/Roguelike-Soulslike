@@ -10,7 +10,8 @@ public enum DisplayEquipment
     Cape,
     Chestplate,
     Boots,
-    Weapon
+    MainWeapon,
+    OffWeapon
 }
 public class EquipmentSlotUI : MonoBehaviour
 {
@@ -79,10 +80,20 @@ public class EquipmentSlotUI : MonoBehaviour
                     icon.sprite = null;
                 }
                 break;
-            case DisplayEquipment.Weapon:
+            case DisplayEquipment.MainWeapon:
                 if(playerEquipment.getMainHandWeaponItem() != null)
                 {
                     icon.sprite = playerEquipment.getMainHandWeaponItem().sprite;
+                }
+                else
+                {
+                    icon.sprite = null;
+                }
+                break;
+            case DisplayEquipment.OffWeapon:
+                if(playerEquipment.getOffHandWeaponItem() != null)
+                {
+                    icon.sprite = playerEquipment.getOffHandWeaponItem().sprite;
                 }
                 else
                 {

@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Faster Rolling
   m_EditorClassIdentifier: 
   enchantmentName: Quicker Rolls
+  stacks: 1
+  description: Increase rolling speed by 33%
   ratio: 1.33

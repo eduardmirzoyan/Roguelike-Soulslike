@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Posion Melee
   m_EditorClassIdentifier: 
   enchantmentName: Envenomed
+  stacks: 1
+  description: Attacks casue posion. Poisoned enemies take more damage when moving.
   poisonEffect: {fileID: 11400000, guid: 28ab1ce81fc1b4a4ea5af85c309c8d93, type: 2}

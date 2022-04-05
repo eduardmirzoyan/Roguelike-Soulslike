@@ -33,7 +33,6 @@ public class InventoryUI : MonoBehaviour
                 if(inventory.getItem(i) != null) // If the invetory has an item at location i
                 {
                     inventorySlots[i].addItem(inventory.getItem(i)); // Add that item to UI
-                    //inventorySlots[i].isEquipped = inventory.items[i].isEquipped;
                 }
                 else
                     inventorySlots[i].ClearSlot();
@@ -42,7 +41,6 @@ public class InventoryUI : MonoBehaviour
             {
                 inventorySlots[i].ClearSlot();
             }
-            //inventorySlots[i].isSelected = inventory.items[i].isSelected;
 
             // Handle checking slected item
             inventorySlots[i].isSelected = i == selectedItem;
@@ -94,9 +92,9 @@ public class InventoryUI : MonoBehaviour
         return inventory.getItem(selectedItem);
     }
 
-    public void deleteSelectedItem()
+    public void reduceSelectedItem()
     {
-        inventory.deleteItem(selectedItem);
+        inventory.removeItemAt(selectedItem);
     }
 
     public int getSelectedItemIndex()

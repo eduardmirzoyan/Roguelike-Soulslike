@@ -80,7 +80,7 @@ public class Axe : MeleeWeapon
 
             // Check crit
             int rand = Random.Range(0, 100);
-            if(rand <= (wielderStats.percentCritChance + owner.critChance) * 100 )
+            if(rand < (wielderStats.percentCritChance + owner.critChance) * 100 )
             {
                 print("crit!");
                 GameManager.instance.CreatePopup("CRIT", transform.parent.position, Color.yellow);

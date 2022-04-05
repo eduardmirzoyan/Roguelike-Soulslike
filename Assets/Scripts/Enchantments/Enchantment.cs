@@ -8,6 +8,9 @@ public abstract class Enchantment : ScriptableObject
     [SerializeField] public int stacks = 1;
     protected GameObject entity;
 
+    [TextArea(15, 20)]
+    [SerializeField] public string description;
+
     // Basic intialize just takes in the gameobject it is attached to
     public virtual void intialize(GameObject gameObject)
     {

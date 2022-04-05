@@ -57,6 +57,8 @@ public class Player : MonoBehaviour
     private bool isJump;
     [SerializeField] private PlayerState savedState;
 
+    [SerializeField] private bool enableWalljump = false;
+
     public enum PlayerState
     {
         idle,
@@ -209,7 +211,7 @@ public class Player : MonoBehaviour
                 handleDisplacementRequest();
 
                 // Change state if you are not airborne
-                if (mv.onWall() && !mv.isGrounded() && inputBuffer.moveDirection != 0)
+                if (enableWalljump && mv.onWall() && !mv.isGrounded() && inputBuffer.moveDirection != 0)
                     state = PlayerState.wallsliding;
                 else if (mv.isGrounded())
                 {
@@ -358,12 +360,6 @@ public class Player : MonoBehaviour
             // Handle input
             if (mv.isGrounded() && inputBuffer.jumpRequest)
                 isJump = true;
-            
-            // Temp sprinting function
-            if (inputBuffer.sprintRequest)
-                stats.movespeedMultiplier = 0.5f;
-            else
-                stats.movespeedMultiplier = 0;
 
             // Menu logic
             handleMenuRequest();

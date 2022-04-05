@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Gold On Hit
   m_EditorClassIdentifier: 
   enchantmentName: Greedy
+  stacks: 1
+  description: Attacks grant you gold for a percentage of mitigated damage.
   goldGainRatio: 0.1

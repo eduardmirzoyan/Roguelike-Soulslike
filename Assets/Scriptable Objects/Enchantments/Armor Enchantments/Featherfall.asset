@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Featherfall
   m_EditorClassIdentifier: 
   enchantmentName: Featherfalling
+  stacks: 1
+  description: Immunity to fall damage and slower descents.

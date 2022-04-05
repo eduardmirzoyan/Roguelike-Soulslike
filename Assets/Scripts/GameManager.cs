@@ -13,13 +13,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject stunnedAnimationObject;
     [SerializeField] private CameraShake mainCamera;
     [SerializeField] private PathfindingMap pathfindingMap;
-
-    [Header("Temp for TESTING ONLY!")]
-    [SerializeField] public Sprite icon1;
-    [SerializeField] public Sprite icon2;
-
+    [SerializeField] private Player player;
+    
     public static GameManager instance; // Accessible by every class at any point
-    private Player player;
+    
 
     private void Awake()
     {
@@ -33,7 +30,6 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
 
         instance = this; // Sets this to itself
-        player = GameObject.Find("Player").GetComponent<Player>();
         xpBar = GameObject.Find("Experience Bar").GetComponent<ExperienceBar>();
         xpBar.setMaxExperience(100);
         xpBar.setExperience(0);
@@ -147,60 +143,8 @@ public class GameManager : MonoBehaviour
         goldText.text = "$ " + this.gold;
     }
 
-    public Item randomizeItem()
-    {
-        // First randomly choose between a weapon or armor
-        var itemType = (ItemType)Random.Range(1, 3); // Gives (1, weapon) or (2, armor)
-        
-        // Then randomly choose weapon type or armor type (light, med, heavy)
-        switch (itemType)
-        {
-            case ItemType.Weapon:
-                var weaponType = (WeaponType)Random.Range(0, 2); // Chooses one of the weapontypes
-
-                // Then set appropriate sprite
-                //Sprite sprite;
-
-                // Then set the level of the gear based on floor level
-
-                // Create the SO item
-                WeaponItem weaponItem = new WeaponItem();
-                weaponItem.weaponType = weaponType;
-                weaponItem.name = "Random Sword";
-                weaponItem.damage = Random.Range(1, 5);
-                weaponItem.sprite = icon1;
-
-                return weaponItem;
-                //break;
-            case ItemType.Armor:
-                var armorSlot = (EquipmentSlot)Random.Range(0, 5);
-                var armorType = (ArmorType)Random.Range(0, 3);
-
-                // Then set appropriate sprite
-                //Sprite sprite;
-
-                // Then set the level of the gear based on floor level
-
-                // Create the SO item
-                ArmorItem armorItem = new ArmorItem();
-                armorItem.armorType = armorType;
-                armorItem.equipSlot = armorSlot;
-                armorItem.name = "Random Armor";
-                armorItem.defenseValue = Random.Range(1, 10);
-                armorItem.bonusStamina = Random.Range(0, 3) * 5;
-                armorItem.sprite = icon2;
-
-                return armorItem;
-
-                //break;
-        }
-
-        // If no appropriate item was created, then return null
-        return null;
-
-        // Then decide the core stats of gear based on gear level
-
-        // Finally randomize # of sub stats
+    public string getExperienceStatus() {
+        return experience + " / " + 100;
     }
 
     // Temp work around before status effects
