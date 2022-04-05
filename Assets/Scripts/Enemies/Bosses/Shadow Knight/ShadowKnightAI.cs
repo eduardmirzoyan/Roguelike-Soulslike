@@ -40,6 +40,23 @@ public class ShadowKnightAI : BossAI
     }
     [SerializeField] private ShadowKnightState shadowKnightState;    
     
+    private void Update() {
+        if (shadowKnightState != ShadowKnightState.Dead && health.isEmpty())
+        {
+            // Call it's death method
+            Die();
+
+            // Destroy body in 1 second
+            Destroy(gameObject, 10f);
+
+            // Prevent movement
+            mv.Walk(0);
+
+            // Change state to dead
+            shadowKnightState = ShadowKnightState.Dead;
+        }
+    }
+
     private void FixedUpdate()
     {
         switch(shadowKnightState) {
@@ -240,7 +257,7 @@ public class ShadowKnightAI : BossAI
                 }
             break;
             case ShadowKnightState.Dead:
-                // TODO
+                animationHandler.changeAnimationState(deadAnimation);
             break;
         }
     }

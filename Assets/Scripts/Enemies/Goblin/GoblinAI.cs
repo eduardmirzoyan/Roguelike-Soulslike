@@ -127,20 +127,20 @@ public class GoblinAI : EnemyAI
                 }
                 else { // Else chase target until it is in range or too far
 
-                    // Always face target
-                    faceTarget();
-
-                    // If you get farther than aggro range, remove target
-                    if (Vector2.Distance(transform.position, target.position) > aggroRange) {
-                        target = null;
-                    }
-
                     // If target is gone (IE dead)
                     if (target == null) {
                         // Go back to search state
                         goblinState = GoblinState.Idle;
                         return;
                     }
+
+                    // If you get farther than aggro range, remove target
+                    if (Vector2.Distance(transform.position, target.position) > aggroRange) {
+                        target = null;
+                    }
+
+                    // Always face target
+                    faceTarget();
 
                     // If you have an attack cooldown, then reduce it
                     if (attackCooldownTimer > 0) {

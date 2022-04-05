@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Summon Short Range
   m_EditorClassIdentifier: 
   enchantmentName: Helpful Familiar
+  stacks: 1
   familiarObject: {fileID: 5409549931684238168, guid: 360b2def44671b9448002e2e7e9f8460, type: 3}

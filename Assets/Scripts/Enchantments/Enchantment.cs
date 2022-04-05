@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Enchantment : ScriptableObject
 {
     [SerializeField] public string enchantmentName;
+    [SerializeField] public int stacks = 1;
     protected GameObject entity;
 
     // Basic intialize just takes in the gameobject it is attached to

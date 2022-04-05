@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 4694010908223493243}
   - component: {fileID: 4694010908223493242}
   - component: {fileID: 4694010908223493125}
-  - component: {fileID: -1200074622668097261}
   m_Layer: 15
   m_Name: Magic Bolt
   m_TagString: Untagged
@@ -157,12 +156,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d352b557b18eb18418aaaf6224608031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 4
   body: {fileID: 0}
+  creator: {fileID: 0}
+  projectileSpeed: 4
+  numberOfBounces: 0
+  numberOfPierces: 0
   gainVelocityOverTime: 0
   velocityGainRate: 0
   percentVelocityGain: 0
-  creator: {fileID: 0}
+  enableGravity: 0
 --- !u!114 &4694010908223493125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,26 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d207e68248b0b5a4ca868bc6e33c96d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boltDamage:
-    damageAmount: 3
-    source: 0
-    origin: {x: 0, y: 0, z: 0}
-    isTrue: 0
-    isAvoidable: 1
-    triggersIFrames: 1
-    effects: []
-    buildupEffects: []
-    color: {r: 0, g: 0, b: 0, a: 0}
---- !u!114 &-1200074622668097261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4694010908223493124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2184f420b2a27e419f95132a99b37f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  secondsToDestroy: 1
+  projectile: {fileID: 0}
+  damage: 1
+  target: {fileID: 0}

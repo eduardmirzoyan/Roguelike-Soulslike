@@ -76,7 +76,7 @@
      <Compile Include="Assets\Scripts\Status Effects\Timed Effects\TimedEmpowerEffect.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\ShortestPath\ShortestPathResult.cs" />
      <Compile Include="Assets\Scripts\Item\ConsumableItem.cs" />
-     <Compile Include="Assets\Scripts\Player\Rolling.cs" />
+     <Compile Include="Assets\Scripts\Player\RollingHandler.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bat\BatAI.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyShield.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\StaminaBar.cs" />
@@ -148,7 +148,7 @@
      <Compile Include="Assets\Scripts\Enemies\Bosses\Mushroom Boss\MushroomGolemAI.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyHitbox.cs" />
      <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\SlashUpgradeThree.cs" />
-     <Compile Include="Assets\Scripts\CloseAttackFamiliar.cs" />
+     <Compile Include="Assets\Scripts\Familiars\BulletAttackFamiliar.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\Graph\Simple\EdgeTemp.cs" />
      <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Mushroom Boss\Boulder.cs" />
@@ -156,7 +156,7 @@
      <Compile Include="Assets\Scripts\Player\Skill.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\SkillSlotUI.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Timed Effects\TimedPoisonEffect.cs" />
-     <Compile Include="Assets\Scripts\Familiar.cs" />
+     <Compile Include="Assets\Scripts\Familiars\Familiar.cs" />
      <Compile Include="Assets\Scripts\Environment\SpikeHandler.cs" />
      <Compile Include="Assets\Scripts\General Use\DamageFlash.cs" />
      <Compile Include="Assets\Scripts\General Use\Poise.cs" />
@@ -165,6 +165,7 @@
      <Compile Include="Assets\Scripts\Player\ComplexMovement.cs" />
      <Compile Include="Assets\Scripts\Weapons\Ranged Weapons\Ranged Weapon.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\WeaponDisplayUI.cs" />
+     <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\AmmoCountUI.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Base Effects\KnockbackEffect.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\DamageAuraEnchantment.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\StatusUI.cs" />
@@ -176,6 +177,7 @@
      <Compile Include="Assets\Scripts\PerserveBetweenLevels.cs" />
      <Compile Include="Assets\Scripts\Other\Camera.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\FeatherFallEnchantment.cs" />
+     <Compile Include="Assets\Scripts\Familiars\LaserAttackFamiliar.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\BossAI.cs" />
      <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\BlockUpgradeTwo.cs" />
      <Compile Include="Assets\Scripts\PlayerShield.cs" />
@@ -190,6 +192,7 @@
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\HUD.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\Graph\Edge.cs" />
      <Compile Include="Assets\OLD ASSETS\FieldOfView.cs" />
+     <Compile Include="Assets\Scripts\Laserbeam.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\EquipmentSlotUI.cs" />
      <Compile Include="Assets\Scripts\Projectiles\BigFireball.cs" />
      <Compile Include="Assets\Scripts\Player\WeaponSwingTrail.cs" />
@@ -216,6 +219,7 @@
      <Compile Include="Assets\Scripts\Enemies\Bosses\Shadow Knight\ShadowArrow.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\Graph\INode.cs" />
+     <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\RollDisplayUI.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\Graph\IGraph.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Base Effects\EnfeebleEffect.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Base Effects\SpeedEffect.cs" />
@@ -248,8 +252,7 @@
      <Compile Include="Assets\Scripts\Enchantments\Ranged Enchantments\PiercingProjectilesEnchantment.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\ExperienceBar.cs" />
      <Compile Include="Assets\Scripts\Enemies\Imp\ImpAI.cs" />
-     <Compile Include="Assets\Scripts\FamiliarHandler.cs" />
-     <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\AmmoCountUI.cs" />
+     <Compile Include="Assets\Scripts\Familiars\FamiliarHandler.cs" />
      <None Include="Assets\Shader\Sprite-Grayscale.shader" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

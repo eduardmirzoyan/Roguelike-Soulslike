@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8608231142097099498}
   - component: {fileID: 3184617754924566440}
   - component: {fileID: 3184617754924566441}
-  - component: {fileID: -3862820843993216567}
   - component: {fileID: 57796194466093632}
   m_Layer: 6
   m_Name: Axe
@@ -77,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 370772261
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 06c11d7ab0e1cea4e83df0a23fd3cadf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3184a0bf8474a3c4facf50764731d9d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,14 +97,14 @@ PolygonCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 4f558a14246786a49a2d10b97a205cd3, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.275, y: 1.275}
+    oldSize: {x: 1.3333334, y: 1.3333334}
     newSize: {x: 5.1, y: 5.1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -151,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponEffects: []
   state: 0
-  windupDuration: 0.3
+  windupDuration: 0.5
   activeDuration: 0.15
   recoveryDuration: 0.3
   attackMoveSpeed: 0.75
@@ -162,21 +161,9 @@ MonoBehaviour:
   animationHandler: {fileID: 0}
   spriteRenderer: {fileID: 0}
   owner: {fileID: 0}
+  wielderStats: {fileID: 0}
   wielderMovement: {fileID: 0}
   bonusDamagePercentage: 0.5
---- !u!114 &-3862820843993216567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3184617754924566443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c8ba3b5b795f034c9b2595d85fb3e52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trail: {fileID: 472128678514473323, guid: 1871a43ecc758ac49b62c7ff4d94a22c, type: 3}
 --- !u!114 &57796194466093632
 MonoBehaviour:
   m_ObjectHideFlags: 0

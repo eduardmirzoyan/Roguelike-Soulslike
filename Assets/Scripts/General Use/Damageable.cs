@@ -83,20 +83,16 @@ public class Damageable : MonoBehaviour
             }
         }
 
+        // Convert the origin to the wielder if the origin is a weapon
+        if (damage.origin.TryGetComponent<Weapon>(out Weapon weapon)) {
+            damage.origin = damage.origin.parent;
+        }
+
         // If the entity hit is an enemy
         if (TryGetComponent(out EnemyAI enemy))
         {   
             // Signal that the enemy was attacked
-
-            // If the origin is from a weapon, then flag the weapon's holder
-            if (damage.origin.TryGetComponent<MeleeWeapon>(out MeleeWeapon weapon)) {
-                
-                enemy.isAttacked(damage.origin.parent);
-            }
-            else {
-                enemy.isAttacked(damage.origin);
-            }
-            
+            enemy.isAttacked(damage.origin);
         }
 
         // Trigger onhit event
