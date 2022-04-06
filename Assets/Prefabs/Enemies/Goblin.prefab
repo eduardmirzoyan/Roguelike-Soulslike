@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectIconHolder: []
-  playerEffectable: {fileID: 65268641555537250}
+  playerEffectable: {fileID: 757988961}
 --- !u!1 &367107985
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,7 +830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wielder: {fileID: 0}
-  damage: 5
+  damage: 10
   hitAll: 0
 --- !u!1 &2112143663
 GameObject:
@@ -1394,8 +1394,8 @@ GameObject:
   - component: {fileID: 4601814791528568667}
   - component: {fileID: 3482498323359735417}
   - component: {fileID: 757988961}
-  - component: {fileID: 65268641555537250}
   - component: {fileID: 7380120275506014322}
+  - component: {fileID: 545617897}
   m_Layer: 7
   m_Name: Goblin
   m_TagString: Enemy
@@ -1557,6 +1557,7 @@ MonoBehaviour:
   boxCollider2D: {fileID: 0}
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
+  displacable: {fileID: 0}
   wanderRadius: 3
   wanderRate: 3
   aggroRange: 7
@@ -1572,7 +1573,7 @@ MonoBehaviour:
   idleAnimation: Idle
   walkAnimation: Walk
   deadAnimation: Dead
-  staggerAnimation: Stagger
+  stunnedAnimation: Stunned
   attackAnimation: Attack
   goblinState: 0
 --- !u!114 &396186816173659718
@@ -1614,8 +1615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33846741462c5094e98ae34256e583c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 100
+  maxHealth: 35
+  currentHealth: 35
 --- !u!114 &2895655846468126595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1678,6 +1679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  currentState: 
 --- !u!114 &3482498323359735417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1691,10 +1693,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  target: {fileID: 0}
   pathfindingMap: {fileID: 0}
   mv: {fileID: 0}
   platformHandler: {fileID: 0}
+  altTransform: {fileID: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 16640
@@ -1704,18 +1706,6 @@ MonoBehaviour:
   currentTarget: {x: 0, y: 0, z: 0}
   isDrop: 0
 --- !u!114 &757988961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3996419839580739552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eef73a5ebad9de7409d540737f920031, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &65268641555537250
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1740,6 +1730,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStandingPlatform: {fileID: 0}
+  isDropping: 0
+--- !u!114 &545617897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3996419839580739552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d8e52c4217a724f9062e511974f837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mv: {fileID: 0}
+  stunImmune: 0
+  knockbackImmune: 0
+  knockbackSpeed: 0
+  knockbackDuration: 0
+  stunDuration: 0
+  savedState: 
+  knockbackState: 
 --- !u!1 &3996419839722686469
 GameObject:
   m_ObjectHideFlags: 0

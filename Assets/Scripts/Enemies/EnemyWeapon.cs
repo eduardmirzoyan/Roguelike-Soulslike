@@ -10,6 +10,7 @@ public class EnemyWeapon : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private int damage = 5;
+    [SerializeField] private float force = 0;
     [SerializeField] private bool hitAll;
 
     private void Start() {
@@ -23,11 +24,18 @@ public class EnemyWeapon : MonoBehaviour
                     damageAmount = damage,
                     source = DamageSource.fromEnemy,
                     origin = transform.parent,
-                    pushForce = 200f
+                    pushForce = force
                 };
                 damageable.takeDamage(dmg);
             }
         }
     }
 
+    public void setDamage(int dmg) {
+        damage = dmg;
+    }
+
+    public void setPushForce(int fce) {
+        force = fce;
+    }
 }

@@ -5,10 +5,19 @@ using UnityEngine;
 
 public class HealingShrine : Shrine
 {
+    [SerializeField] private bool used;
     public override void activate(Player player)
     {
-        if (player.TryGetComponent(out Flask flask)) {
-            flask.refill();
+        if (!used) {
+            var flask = player.GetComponentInChildren<Flask>();
+            if (flask != null) {
+                flask.refill();
+                used = true;
+            }
         }
+        else {
+            GameManager.instance.CreatePopup("The fountain runs empty...", transform.position);
+        }
+        
     } 
 }

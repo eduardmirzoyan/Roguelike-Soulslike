@@ -45,17 +45,11 @@ public class Player : MonoBehaviour
     [SerializeField] private string fallingAnimation;
     [SerializeField] private string wallslideAnimation;
     [SerializeField] private string staggerAnimation;
+    [SerializeField] private string rollAnimation;
     [SerializeField] private string deadAnimation;
 
     [Header("Player Skills")]
     [SerializeField] public List<Skill> playerSkills;
-
-    [Header("Temp UI STUFF")]
-    [SerializeField] private BaseEffect burnEffect;
- 
-    public float regenTimer;
-    private bool isJump;
-    [SerializeField] private PlayerState savedState;
 
     [SerializeField] private bool enableWalljump = false;
 
@@ -98,10 +92,12 @@ public class Player : MonoBehaviour
 
         // Set player's stamina
         stamina = GetComponent<Stamina>();
-        regenTimer = stamina.getRegenerationRate(); // Stamina regen timer
+        // regenTimer = stamina.getRegenerationRate(); // Stamina regen timer
 
         // Set the player's start state
         state = PlayerState.idle;
+
+        animationHandler.changeAnimationState(idleAnimation);
     }
 
     protected void FixedUpdate()
@@ -109,123 +105,305 @@ public class Player : MonoBehaviour
         switch (state)
         {
             case PlayerState.idle:
-                animationHandler.changeAnimationState(idleAnimation);
+                // Do nothing lol
 
-                checkIfStaminaShouldRegen();
+                // Handle jump request
+                if (inputBuffer.jumpRequest && mv.isGrounded()) {
+                    mv.Jump();
+                }
 
-                handleMovementRequest();
-
-                handleJumpRequest();
-
-                if (inputBuffer.moveDirection != 0)
-                    state = PlayerState.walking;
-                if (inputBuffer.crouchRequest)
-                    state = PlayerState.crouching;
-                if(!mv.isGrounded())
+                // Handle airborne
+                if (!mv.isGrounded()) {
                     state = PlayerState.airborne;
-                
-                handleRollRequest();
+                    break;
+                }
 
-                handlePlayerAttackRequest();
+                // Handle displacement
+                if (displace.isDisplaced()) {
+                    // Save your current state
+                    displace.saveState(state.ToString());
+                    // Change animation
+                    animationHandler.changeAnimationState(staggerAnimation);
+                    state = PlayerState.knockedback;
+                    break;
+                }
 
-                handleDisplacementRequest();
-
-                break;
-            case PlayerState.walking:
-                animationHandler.changeAnimationState(walkAnimation);
-
-                checkIfStaminaShouldRegen();
-
-                handleMovementRequest();
-
-                handleJumpRequest();
-
-                if (inputBuffer.moveDirection == 0)
-                    state = PlayerState.idle;
-                if (inputBuffer.crouchRequest && inputBuffer.moveDirection != 0)
-                    state = PlayerState.crouchWalking;
-                if (!mv.isGrounded())
-                    state = PlayerState.airborne;
-                
-                handleRollRequest();
-
-                handlePlayerAttackRequest();
-
-                handleDisplacementRequest();
-
-                break;
-            case PlayerState.crouching:
-                animationHandler.changeAnimationState(crouchAnimation);
-
-                checkIfStaminaShouldRegen();
-
-                handleDropDownRequst();
-
-                pickUpNearbyItems();
-
-                // Conditions to change state
-                if (inputBuffer.crouchRequest && inputBuffer.moveDirection != 0)
-                    state = PlayerState.crouchWalking;
-                if (!inputBuffer.crouchRequest)
-                    state = PlayerState.idle;
-                if (!mv.isGrounded())
-                    state = PlayerState.airborne;
-
-                handleRollRequest();
-
-                handleDisplacementRequest();
-
-                break;
-            case PlayerState.crouchWalking:
-                animationHandler.changeAnimationState(crouchWalkAnimation);
-
-                mv.crouchWalk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
-
-                checkIfStaminaShouldRegen();
-
-                handleDropDownRequst();
-
-                pickUpNearbyItems();
-
-                // Conditions to change state
-                if (!(inputBuffer.crouchRequest && inputBuffer.moveDirection != 0))
-                    state = PlayerState.crouching;
-                if (!mv.isGrounded())
-                    state = PlayerState.airborne;
-
-                handleRollRequest();
-
-                handleDisplacementRequest();
-
-                break;
-            case PlayerState.airborne:
-                // Allow air control
-                mv.Walk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
-
-                // Check if the player is falling or rising
-                if (mv.checkFalling())
-                    animationHandler.changeAnimationState(fallingAnimation);
-                if (mv.checkRising())
-                    animationHandler.changeAnimationState(risingAnimation);
-
-                handleDisplacementRequest();
-
-                // Change state if you are not airborne
-                if (enableWalljump && mv.onWall() && !mv.isGrounded() && inputBuffer.moveDirection != 0)
-                    state = PlayerState.wallsliding;
-                else if (mv.isGrounded())
+                // Handle main-hand attack request
+                if (inputBuffer.mainHandAttackRequest && combatHandler.mainHandAttack())
                 {
-                    state = PlayerState.idle;
+                    // Animation handled in combat handler
+                    state = PlayerState.attacking;
+                    break;
+                }
+                
+                // Handle off-hand attack request
+                if (inputBuffer.offHandAttackRequest && combatHandler.offhandAttack())
+                {
+                    // Animation handled in combat handler
+                    state = PlayerState.attacking;
+                    break;
+                }
+
+                // Handle move request
+                if (inputBuffer.moveDirection != 0) {
+                    animationHandler.changeAnimationState(walkAnimation);
+                    state = PlayerState.walking;
+                    break;
+                }
+
+                // Handle crouch request
+                if (inputBuffer.crouchRequest) {
+                    animationHandler.changeAnimationState(crouchAnimation);
+                    state = PlayerState.crouching;
+                    break;
+                }
+                
+                // Handle roll request
+                if (inputBuffer.rollRequest && rollingHandler.canRoll()) {
+                    // Roll in your moving direction
+                    rollingHandler.startRoll(inputBuffer.moveDirection);
+
+                    // Give 100% dodge chance during roll
+                    stats.percentDodgeChance += 1f;
+
+                    // Start animation
+                    animationHandler.changeAnimationState(rollAnimation);
+
+                    state = PlayerState.rolling;
+                    break;
                 }
 
                 break;
-            case PlayerState.wallsliding:
+            case PlayerState.walking:
+                // Move
+                mv.Walk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
+
+                // Handle jump request
+                if (inputBuffer.jumpRequest && mv.isGrounded()) {
+                    mv.Jump();
+                }
+
+                // Handle airborne
+                if (!mv.isGrounded()) {
+                    state = PlayerState.airborne;
+                    break;
+                }
+
+                // Handle displacement
+                if (displace.isDisplaced()) {
+                    // Change animation
+                    animationHandler.changeAnimationState(staggerAnimation);
+                    state = PlayerState.knockedback;
+                    break;
+                }
+
+                // Handle main-hand attack request
+                if (inputBuffer.mainHandAttackRequest && combatHandler.mainHandAttack())
+                {
+                    // Animation handled in combat handler
+                    state = PlayerState.attacking;
+                    break;
+                }
+                
+                // Handle off-hand attack request
+                if (inputBuffer.offHandAttackRequest && combatHandler.offhandAttack())
+                {
+                    // Animation handled in combat handler
+                    state = PlayerState.attacking;
+                    break;
+                }
+
+                // Handle idle request
+                if (inputBuffer.moveDirection == 0) {
+                    animationHandler.changeAnimationState(idleAnimation);
+                    state = PlayerState.idle;
+                    break;
+                }
+
+                // Handle crouch request
+                if (inputBuffer.crouchRequest) {
+                    animationHandler.changeAnimationState(crouchAnimation);
+                    state = PlayerState.crouching;
+                    break;
+                }
+                
+                // Handle roll request
+                if (inputBuffer.rollRequest && rollingHandler.canRoll()) {
+                    // Roll in your moving direction
+                    rollingHandler.startRoll(inputBuffer.moveDirection);
+
+                    // Give 100% dodge chance during roll
+                    stats.percentDodgeChance += 1f;
+
+                    // Start animation
+                    animationHandler.changeAnimationState(rollAnimation);
+
+                    state = PlayerState.rolling;
+                    break;
+                }
+
+                break;
+            case PlayerState.crouching:
+                // Pick up items
+                pickUpNearbyItems();
+
+                // Handle displacement
+                if (displace.isDisplaced()) {
+                    // Change animation
+                    animationHandler.changeAnimationState(staggerAnimation);
+                    state = PlayerState.knockedback;
+                    break;
+                }
+
+                // Handle airborne
+                if (!mv.isGrounded()) {
+                    state = PlayerState.airborne;
+                    break;
+                }
+
+                // Handle drop down
+                if (inputBuffer.dropDownRequest) {
+                    platformHandler.dropFromPlatform();
+                    state = PlayerState.airborne;
+                    break;
+                }
+
+                // Handle crouchwalking request
+                if (inputBuffer.crouchRequest && inputBuffer.moveDirection != 0) {
+                    animationHandler.changeAnimationState(crouchWalkAnimation);
+                    state = PlayerState.crouchWalking;
+                    break;
+                }
+                
+                // Handle un-crouching
+                if (!inputBuffer.crouchRequest) {
+                    animationHandler.changeAnimationState(idleAnimation);
+                    state = PlayerState.idle;
+                    break;
+                }
+
+                // Handle roll request
+                if (inputBuffer.rollRequest && rollingHandler.canRoll()) {
+                    // Roll in your moving direction
+                    rollingHandler.startRoll(inputBuffer.moveDirection);
+
+                    // Give 100% dodge chance during roll
+                    stats.percentDodgeChance += 1f;
+
+                    // Start animation
+                    animationHandler.changeAnimationState(rollAnimation);
+
+                    state = PlayerState.rolling;
+                }
+
+                break;
+            case PlayerState.crouchWalking:
+                // Handle crouch moving
+                mv.crouchWalk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
+
+                // Pick up items
+                pickUpNearbyItems();
+
+                // Handle airborne
+                if (!mv.isGrounded()) {
+                    state = PlayerState.airborne;
+                    break;
+                }
+
+                // Handle displacement
+                if (displace.isDisplaced()) {
+                    // Change animation
+                    animationHandler.changeAnimationState(staggerAnimation);
+                    state = PlayerState.knockedback;
+                    break;
+                }
+
+                // Handle drop down
+                if (inputBuffer.dropDownRequest) {
+                    platformHandler.dropFromPlatform();
+                    state = PlayerState.airborne;
+                    break;
+                }
+
+                // Handle back to idle state
+                if (!inputBuffer.crouchRequest && inputBuffer.moveDirection == 0) {
+                    animationHandler.changeAnimationState(idleAnimation);
+                    state = PlayerState.idle;
+                    break;
+                }
+
+                // Handle back to walk state
+                if (!inputBuffer.crouchRequest && inputBuffer.moveDirection != 0) {
+                    animationHandler.changeAnimationState(walkAnimation);
+                    state = PlayerState.walking;
+                    break;
+                }
+
+                // Handle back to crouch state
+                if (inputBuffer.crouchRequest && inputBuffer.moveDirection == 0) {
+                    animationHandler.changeAnimationState(crouchAnimation);
+                    state = PlayerState.crouching;
+                    break;
+                }
+
+                // Handle roll request
+                if (inputBuffer.rollRequest && rollingHandler.canRoll()) {
+                    // Roll in your moving direction
+                    rollingHandler.startRoll(inputBuffer.moveDirection);
+
+                    // Give 100% dodge chance during roll
+                    stats.percentDodgeChance += 1f;
+
+                    // Start animation
+                    animationHandler.changeAnimationState(rollAnimation);
+
+                    state = PlayerState.rolling;
+                    break;
+                }
+
+                break;
+            case PlayerState.airborne:
+                // Handle animation
+                if (mv.checkFalling()) {
+                    animationHandler.changeAnimationState(fallingAnimation);
+                } else if (mv.checkRising()) {
+                    animationHandler.changeAnimationState(risingAnimation);
+                }
+                
+                // Allow movement, while in the air
+                mv.Walk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
+
+                // Handle displacement
+                if (displace.isDisplaced()) {
+                    // Change animation
+                    animationHandler.changeAnimationState(staggerAnimation);
+                    state = PlayerState.knockedback;
+                    break;
+                }
+
+                // Handle back to idle
+                if (mv.isGrounded() && !platformHandler.IsDropping()) {
+                    animationHandler.changeAnimationState(idleAnimation);
+                    state = PlayerState.idle;
+                    break;
+                }
+
+                // Handle wall-sliding if enabled
+                if (enableWalljump && mv.onWall() && !mv.isGrounded() && inputBuffer.moveDirection != 0) {
+                    // Don't care
+                    state = PlayerState.wallsliding;
+                    break;
+                }
+
+                break;
+
+            // NO WALLSIDING FOR NOW
+            # region WallSliding
+            case PlayerState.wallsliding: // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 animationHandler.changeAnimationState(wallslideAnimation);
 
                 mv.wallSlide();
                 mv.Walk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
-
-                handleDisplacementRequest();
 
                 // Conditions to change state
                 if (inputBuffer.jumpRequest && stamina.currentStamina >= mv.getWallSlideStaminaDrain())
@@ -242,28 +420,34 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.walljumping:
 
-                handleDisplacementRequest();
-
                 // Check if the player is falling or rising
                 if (mv.checkFalling())
                     animationHandler.changeAnimationState(fallingAnimation);
                 if (mv.checkRising())
                     animationHandler.changeAnimationState(risingAnimation);
 
-                break;
+                break; // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # endregion
+
             case PlayerState.rolling:
-                
+                // Handle rolling
                 rollingHandler.roll();
                 
                 if (rollingHandler.isDoneRolling()) {
+                    // Stop moving
+                    mv.Walk(0);
+                    // Start cooldown
                     rollingHandler.startCooldown();
+                    // Return dodge chance
                     stats.percentDodgeChance -= 1f;
+                    // Set animation
+                    animationHandler.changeAnimationState(idleAnimation);
                     state = PlayerState.idle;
                 }
 
             break;
             case PlayerState.attacking:
-                // Let the respective attack handle the player movement during the attack
+                // Let the combat handler handle the player movement during attack
 
                 if (!inputBuffer.mainHandAttackRequest) {
                     // Attempt to release weapon
@@ -274,15 +458,40 @@ public class Player : MonoBehaviour
                     // Attempt to release weapon
                     combatHandler.offHandRelease(inputBuffer.mainAttackTime);
                 }
-                
-                // For handling combos
-                handlePlayerAttackRequest();
 
-                // If the weapon is done attacking, then return player to idle state
+                // Handle back to idle
                 if (combatHandler.isDoneAttacking()) {
+                    // Reset attack requests
                     inputBuffer.resetAttackRequests();
+
+                    animationHandler.changeAnimationState(idleAnimation);
                     state = PlayerState.idle;
-                    return;
+                    break;
+                }
+
+                // Handle attack requests for handling combos
+                if (inputBuffer.mainHandAttackRequest && combatHandler.mainHandAttack())
+                {
+                    // Animation handled in combat handler
+                    state = PlayerState.attacking;
+                    break;
+                }
+                
+                if (inputBuffer.offHandAttackRequest && combatHandler.offhandAttack())
+                {
+                    // Animation handled in combat handler
+                    state = PlayerState.attacking;
+                    break;
+                }
+
+                // Handle new displacements
+                if (displace.isDisplaced()) {
+                    // Cancel any attack animations
+                    combatHandler.cancelAllAttacks();
+                    // Change animation
+                    animationHandler.changeAnimationState(staggerAnimation);
+                    state = PlayerState.knockedback;
+                    break;
                 }
 
                 break;
@@ -291,180 +500,102 @@ public class Player : MonoBehaviour
 
                 break;
             case PlayerState.inMenu:
-                // Player is in menu
-
-                // Play idle animation
-                animationHandler.changeAnimationState(idleAnimation);
+                // Wait for input
 
                 // Conditions to change state
                 if (!inputBuffer.menuToggleRequest)
                 {
                     menu.menuEnabled = false;
+
+                    animationHandler.changeAnimationState(idleAnimation);
                     state = PlayerState.idle;
+                    break;
                 }
                 break;
             case PlayerState.knockedback:
-                animationHandler.changeAnimationState(staggerAnimation);
-
-                mv.setFacingDirection(-displace.getKnockbackDirection());
-
-                handleDisplacementRequest();
-
+                // Perfom any active displacements
                 displace.performDisplacement();
 
+                // Handle new displacements
+                if (displace.isDisplaced()) {
+                    // Change animation
+                    animationHandler.changeAnimationState(staggerAnimation);
+                    state = PlayerState.knockedback;
+                    break;
+                }
+
+                // If displacement is done, then go back to idle
                 if (!displace.isDisplaced()) {
-                    state = (PlayerState)System.Enum.Parse(typeof(PlayerState), displace.loadState());
+                    animationHandler.changeAnimationState(idleAnimation);
+                    state = PlayerState.idle;
+                    break;
                 }    
 
                 break;
             case PlayerState.dead:
                 // Do nothing, the game is over lol
-                animationHandler.changeAnimationState(deadAnimation);
-
                 break;
-        }
-
-        // If the player's health drops to 0 at ANY point, set the player state to dead
-        if (health.isEmpty() && state != PlayerState.dead)
-        {
-            mv.Stop();
-            state = PlayerState.dead;
         }
     }
 
     protected void Update()
     {
+        // Better jump?
+        mv.improvedJumpHandling(KeyCode.Space);
+
         if (Input.GetKeyDown(KeyCode.G))  // used for testing
         {
             // Nothin
-            displace.triggerKnockback(200, 0.25f, transform.position + Vector3.right);
+            displace.triggerKnockback(600, 0.25f, transform.position + Vector3.right);
         }
         if (Input.GetKeyDown(KeyCode.H))  // used for testing
         {
             // Nothin
-            //displace.triggerStun(1f);
-            GetComponent<EffectableEntity>().addEffect(burnEffect.InitializeEffect(gameObject));
-            
         }
 
+        // Check for death
         if (health.isEmpty() && state != PlayerState.dead) {
             // Stop
             mv.Walk(0);
 
+            // Set animation
+            animationHandler.changeAnimationState(deadAnimation);
+
+            // Change state
             state = PlayerState.dead;
         }
 
-
         if (playerIsFree())
         {
-            // Handle input
-            if (mv.isGrounded() && inputBuffer.jumpRequest)
-                isJump = true;
+            // Handle opening the menu
+            if (inputBuffer.menuToggleRequest)
+            {
+                menu.menuEnabled = true;
 
-            // Menu logic
-            handleMenuRequest();
+                // Stop moving
+                mv.Stop();
+
+                // Set animation
+                animationHandler.changeAnimationState(idleAnimation);
+
+                // Change state
+                state = PlayerState.inMenu;
+            }
 
             // Use flask
             if (inputBuffer.useFlaskRequest)
                 useFlask();
 
             // Interacting with surroundings
-            if (inputBuffer.interactRequest)
+            if (inputBuffer.interactRequest) {
                 interactWithNearbyObjects();
-        }
-    }
-
-    private void handleMovementRequest()
-    {
-        mv.Walk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
-    }
-
-    private void handleJumpRequest()
-    {
-        if (isJump && mv.isGrounded()) {
-            mv.Jump();
-            isJump = false;
-        }
-    }
-
-    private void handleDisplacementRequest()
-    {
-        // If you are displaced
-        if (displace.isDisplaced()) {
-            // Save your current state
-            displace.saveState(state.ToString());
-            state = PlayerState.knockedback;
-        }
-    }
-
-    private void handleDropDownRequst() {
-        if (inputBuffer.dropDownRequest) {
-            platformHandler.dropFromPlatform();
-        }
-    }
-
-    private void handleRollRequest() {
-        if (inputBuffer.rollRequest && rollingHandler.canRoll()) {
-            if (inputBuffer.moveDirection > 0.2f)
-                rollingHandler.startRoll(1);
-            else if (inputBuffer.moveDirection < -0.2f)
-                rollingHandler.startRoll(-1);
-            else 
-                rollingHandler.startRoll(mv.getFacingDirection());
-
-            // Give 100% dodge chance during roll
-            stats.percentDodgeChance += 1f;
-
-            state = PlayerState.rolling;
-        }
-    }
-
-    private void handlePlayerAttackRequest()
-    {
-        // You can only attack if you are grounded
-        if (!mv.isGrounded())
-            return;
-
-        if (inputBuffer.mainHandAttackRequest && combatHandler.mainHandAttack())
-        {
-            state = PlayerState.attacking;
-        }
-        else if (inputBuffer.offHandAttackRequest && combatHandler.offhandAttack())
-        {
-            state = PlayerState.attacking;
-        }
-    }
-
-    private void handleMenuRequest()
-    {
-        // Enable menu
-        if (inputBuffer.menuToggleRequest)
-        {
-            menu.menuEnabled = true;
-            mv.Stop();
-            state = PlayerState.inMenu;
+            }   
         }
     }
 
     private bool playerIsFree()
     {
         return state == PlayerState.idle || state == PlayerState.walking || state == PlayerState.airborne || state == PlayerState.crouching || state == PlayerState.crouchWalking;
-    }
-
-    private void checkIfStaminaShouldRegen()
-    {
-        if (!stamina.isFull()) // Don't regen stamina if stamina is full, during wallsliding/climbing, or during defense
-        {
-            if (regenTimer > 0)
-            {
-                regenTimer -= Time.deltaTime;
-            }
-            else
-            {
-                stamina.regenerateStamina();
-                regenTimer = stamina.getRegenerationRate();
-            }
-        }
     }
 
     private IEnumerator wallJumpTimer()
@@ -479,6 +610,7 @@ public class Player : MonoBehaviour
         var collider2D = GetComponent<Collider2D>();
         var droppedItems = Physics2D.OverlapBoxAll((Vector2)collider2D.transform.position + collider2D.offset, collider2D.bounds.size, 
                             0, 1 << LayerMask.NameToLayer("Loot"));
+
         if (droppedItems.Length == 0) {
             return;
         }

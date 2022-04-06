@@ -783,6 +783,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wielder: {fileID: 0}
   damage: 5
+  force: 600
   hitAll: 0
 --- !u!1 &3964265406345287118
 GameObject:
@@ -943,6 +944,7 @@ GameObject:
   - component: {fileID: 3964265407416658802}
   - component: {fileID: 8167846359180885496}
   - component: {fileID: 8192235359947798462}
+  - component: {fileID: 1782937000}
   m_Layer: 7
   m_Name: Thief
   m_TagString: Enemy
@@ -1118,6 +1120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  currentState: 
 --- !u!114 &3964265407416658811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1136,8 +1139,9 @@ MonoBehaviour:
   boxCollider2D: {fileID: 3964265407416658815}
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
+  displacable: {fileID: 0}
   wanderRadius: 15
-  wanderRate: 15
+  wanderRate: 30
   aggroRange: 7
   attackRange: 1
   attackCooldown: 1
@@ -1153,7 +1157,7 @@ MonoBehaviour:
   maxInventorySize: 1
   lootingCircle: {fileID: 3964265407281285049}
   hasLootSprite: {fileID: 6908069387385937300, guid: 74e919aaf84a56346a21083fd378aadd, type: 3}
-  lootTime: 1
+  lootDuration: 1
   maxItemDetectionRange: 13
   dropLoot: {fileID: 0}
   idleAnimation: Idle
@@ -1163,6 +1167,7 @@ MonoBehaviour:
   riseAnimation: Rise
   fallAnimation: Fall
   lootAnimation: Loot
+  stunnedAnimation: Stunned
   thiefState: 0
 --- !u!114 &3964265407416658814
 MonoBehaviour:
@@ -1243,6 +1248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStandingPlatform: {fileID: 0}
+  isDropping: 0
 --- !u!114 &3964265407416658801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1255,8 +1261,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33846741462c5094e98ae34256e583c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 8
-  currentHealth: 8
+  maxHealth: 25
+  currentHealth: 25
 --- !u!114 &3964265407416658802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1300,6 +1306,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: dd7d08a426074f5468381aaab364b153, type: 2}
   duration: 0.05
+--- !u!114 &1782937000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3964265407416658759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d8e52c4217a724f9062e511974f837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mv: {fileID: 0}
+  stunImmune: 0
+  knockbackImmune: 0
+  knockbackSpeed: 0
+  knockbackDuration: 0
+  stunDuration: 0
+  savedState: 
+  knockbackState: 
 --- !u!1 &4548904201857931657
 GameObject:
   m_ObjectHideFlags: 0

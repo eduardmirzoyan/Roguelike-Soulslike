@@ -40,7 +40,6 @@ public class Damageable : MonoBehaviour
             if(rand <= stats.percentDodgeChance * 100)
             {
                 // Dodge ATTACK!
-                GameManager.instance.CreatePopup("DODGED", transform.position, Color.cyan);
                 return;
             }
         }
@@ -71,7 +70,6 @@ public class Damageable : MonoBehaviour
             // Add every effect in the damage
             foreach (BaseEffect effect in damage.effects)
             {
-                print(effect.name);
                 effectable.addEffect(effect.InitializeEffect(gameObject));
             }
         }
@@ -79,7 +77,7 @@ public class Damageable : MonoBehaviour
         // Check for knockback
         if (TryGetComponent(out Displacable displacable)) {
             if (damage.pushForce > 0) {
-                displacable.triggerKnockback(damage.pushForce, 0.25f, damage.origin.position);
+                displacable.triggerKnockback(damage.pushForce, 0.33f, damage.origin.position);
             }
         }
 

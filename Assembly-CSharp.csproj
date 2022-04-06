@@ -78,7 +78,6 @@
      <Compile Include="Assets\Scripts\Item\ConsumableItem.cs" />
      <Compile Include="Assets\Scripts\Player\RollingHandler.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bat\BatAI.cs" />
-     <Compile Include="Assets\Scripts\Enemies\EnemyShield.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\StaminaBar.cs" />
      <Compile Include="Assets\Scripts\General Use\AnimationHandler.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Mushroom Boss\Shockwave.cs" />
@@ -146,7 +145,6 @@
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\FlaskUI.cs" />
      <Compile Include="Assets\Scripts\General Use\Displacable.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Mushroom Boss\MushroomGolemAI.cs" />
-     <Compile Include="Assets\Scripts\Enemies\EnemyHitbox.cs" />
      <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\SlashUpgradeThree.cs" />
      <Compile Include="Assets\Scripts\Familiars\BulletAttackFamiliar.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\Graph\Simple\EdgeTemp.cs" />

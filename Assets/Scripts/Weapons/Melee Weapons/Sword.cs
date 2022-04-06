@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Sword : MeleeWeapon
 {
-
     protected void FixedUpdate()
     {
         switch (state)
@@ -49,8 +48,8 @@ public class Sword : MeleeWeapon
                     recoveryTimer -= Time.deltaTime;
                 else {
                     // Reset Combo if you finish recovering
-                    currentCombo = 0;
                     animationHandler.changeAnimationState(weaponIdleAnimation);
+                    currentCombo = 0;
                     state = WeaponState.Ready;
                 }
                 break;

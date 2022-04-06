@@ -28,7 +28,10 @@ public class Displacable : MonoBehaviour
 
     public void triggerKnockback(float pushForce, float duration, Vector3 origin)
     {
-        Debug.Log("knock");
+        if (knockbackImmune) {
+            GameManager.instance.CreatePopup(gameObject.name + " is immune to knockback.", transform.position);
+            return;
+        }
         startTime = 0f;
         knockbackSpeed += pushForce;
         knockbackDuration = duration;
@@ -37,7 +40,10 @@ public class Displacable : MonoBehaviour
 
     public void triggerStun(float duration)
     {
-        Debug.Log("stun");
+        if (stunImmune) {
+            GameManager.instance.CreatePopup(gameObject.name + " is immune to stun.", transform.position);
+            return;
+        }
         stunDuration += duration;
         GameManager.instance.stunAnimation(transform, duration);
     }
@@ -50,6 +56,8 @@ public class Displacable : MonoBehaviour
     {
         if (startTime <= knockbackDuration || stunDuration > 0)
         {
+            mv.setFacingDirection(-knockbackDirection);
+
             if(knockbackSpeed > 0.1f)
                 knockbackSpeed = Mathf.Lerp(knockbackSpeed, 0, startTime / knockbackDuration);
 

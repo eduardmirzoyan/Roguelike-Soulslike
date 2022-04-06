@@ -7,6 +7,6 @@ public class FalseShrine : Shrine
     public override void activate(Player player)
     {
         // Does nothing
-        GameManager.instance.CreatePopup("Does nothing", transform.position, Color.green);
+        GameManager.instance.CreatePopup("RIP", transform.position, Color.green);
     }
 }

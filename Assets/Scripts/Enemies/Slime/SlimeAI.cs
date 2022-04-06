@@ -15,12 +15,14 @@ public class SlimeAI : EnemyAI
     [SerializeField] private string riseAnimation = "Rise";
     [SerializeField] private string fallAnimation = "Fall";
     [SerializeField] private string prepareToJumpAnimation = "Prepare";
+    [SerializeField] private string stunnedAnimation = "Stunned";
 
     private float prepareTimer;
 
     private enum SlimeState {
         Idle,
         Preparing,
+        Stunned,
         Dead
     }
 
@@ -60,6 +62,8 @@ public class SlimeAI : EnemyAI
 
             wander();
 
+            handleDisplacement();
+
         break;
         case SlimeState.Preparing:
             if (prepareTimer > 0) {
@@ -71,6 +75,19 @@ public class SlimeAI : EnemyAI
                 wanderTimer = wanderRate;
                 slimeState = SlimeState.Idle;
             }
+
+            handleDisplacement();
+        break;
+        case SlimeState.Stunned:
+            displacable.performDisplacement();
+
+            if (!displacable.isDisplaced()) {
+                wanderTimer = wanderRate;
+                prepareTimer = prepareDuration;
+                slimeState = SlimeState.Idle;
+            }
+
+            handleDisplacement();
         break;
         }
     }
@@ -116,6 +133,13 @@ public class SlimeAI : EnemyAI
             else if (mv.checkFalling()) {
                 animationHandler.changeAnimationState(fallAnimation);
             }
+        }
+    }
+
+    private void handleDisplacement() {
+        if (displacable.isDisplaced()) {
+            animationHandler.changeAnimationState(stunnedAnimation);
+            slimeState = SlimeState.Stunned;
         }
     }
 

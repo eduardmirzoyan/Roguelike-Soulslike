@@ -63,7 +63,7 @@ public class LaserAttackFamiliar : Familiar
                 }
                 else {
                     // Fire beam at target
-                    var beam = Instantiate(laserPrefab, firePoint.transform.position, Quaternion.identity).GetComponent<Laserbeam>();
+                    var beam = Instantiate(laserPrefab, transform.position, Quaternion.identity).GetComponent<Laserbeam>();
                     beam.fireAt(target);
 
                     if (target.TryGetComponent(out Damageable damageable)) {
@@ -77,9 +77,11 @@ public class LaserAttackFamiliar : Familiar
                     }
 
                     // Reset rotation
-                    transform.rotation = Quaternion.identity;
+                    transform.rotation = owner.transform.rotation;
+                    firePoint.rotation = owner.transform.rotation;
 
                     // Reset attack rate
+                    isCharging = false;
                     fireTimer = fireRate;
                     isCharging = false;
                 }
@@ -100,10 +102,10 @@ public class LaserAttackFamiliar : Familiar
 
     private void aimAtTarget()
     {
-        Vector2 direction = target.position - firePoint.transform.position;
+        Vector2 direction = target.position - firePoint.position;
         direction.Normalize();
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        firePoint.transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+        firePoint.rotation = Quaternion.Euler(Vector3.forward * angle);
         // Set it's own rotation towards target
         transform.rotation = Quaternion.Euler(Vector3.forward * angle);
     }

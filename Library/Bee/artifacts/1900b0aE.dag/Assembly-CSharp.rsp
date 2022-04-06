@@ -414,8 +414,6 @@
 "Assets/Scripts/Enemies/Bosses/Shadow Knight/ShadowKnightAI.cs"
 "Assets/Scripts/Enemies/EnemyAI.cs"
 "Assets/Scripts/Enemies/EnemyAttack.cs"
-"Assets/Scripts/Enemies/EnemyHitbox.cs"
-"Assets/Scripts/Enemies/EnemyShield.cs"
 "Assets/Scripts/Enemies/EnemyWeapon.cs"
 "Assets/Scripts/Enemies/Fire Mage/FireMageAI.cs"
 "Assets/Scripts/Enemies/Ghost Knight/GhostKnightAI.cs"

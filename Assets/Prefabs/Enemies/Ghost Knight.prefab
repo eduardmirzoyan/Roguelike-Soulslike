@@ -1598,7 +1598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wielder: {fileID: 0}
-  damage: 5
+  damage: 7
   hitAll: 0
 --- !u!1 &5812362126555256163
 GameObject:
@@ -1656,6 +1656,7 @@ GameObject:
   - component: {fileID: 1093893461}
   - component: {fileID: -8373010377783489169}
   - component: {fileID: 1718550426}
+  - component: {fileID: 2130890609893911106}
   m_Layer: 7
   m_Name: Ghost Knight
   m_TagString: Fighter
@@ -6525,6 +6526,7 @@ MonoBehaviour:
   boxCollider2D: {fileID: 0}
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
+  displacable: {fileID: 0}
   wanderRadius: 0
   wanderRate: 0
   aggroRange: 5
@@ -6583,8 +6585,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33846741462c5094e98ae34256e583c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 100
+  maxHealth: 60
+  currentHealth: 60
 --- !u!114 &6841289740653524862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6647,6 +6649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  currentState: 
 --- !u!199 &4629255174404459221
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -6771,6 +6774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStandingPlatform: {fileID: 0}
+  isDropping: 0
 --- !u!114 &1718550426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6783,6 +6787,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eef73a5ebad9de7409d540737f920031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2130890609893911106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841289740653524853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d8e52c4217a724f9062e511974f837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mv: {fileID: 0}
+  stunImmune: 1
+  knockbackImmune: 1
+  knockbackSpeed: 0
+  knockbackDuration: 0
+  stunDuration: 0
+  savedState: 
+  knockbackState: 
 --- !u!1 &6841289740735046445
 GameObject:
   m_ObjectHideFlags: 0

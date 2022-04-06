@@ -10,10 +10,7 @@ public class CombatHandler : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Movement mv;
-    [SerializeField] private EquipmentHandler equipment;
     [SerializeField] private Stamina stamina;
-    [SerializeField] private Animator animator;
-    [SerializeField] private Keybindings keybindings;
     [SerializeField] public AbilityHolder signatureAbilityHolder;
     [SerializeField] public AbilityHolder utilityAbilityHolder;
     [SerializeField] public List<Ability> allPlayerAbilities;
@@ -26,10 +23,7 @@ public class CombatHandler : MonoBehaviour
     private void Awake()
     {
         mv = GetComponent<ComplexMovement>();
-        animator = GetComponent<Animator>();
         stamina = GetComponent<Stamina>();
-        equipment = GetComponent<EquipmentHandler>();
-        keybindings = GetComponent<Keybindings>();
         animationHandler = GetComponent<AnimationHandler>();
     }
 
@@ -51,7 +45,7 @@ public class CombatHandler : MonoBehaviour
 
     // Returns if the attack can happen
     public bool mainHandAttack() {
-        if (mainHandWeapon != null && mainHandWeapon.canInitiate() && (offHandWeapon == null || offHandWeapon.isReady())) {
+        if ((mainHandWeapon != null && mainHandWeapon.canInitiate()) && (offHandWeapon == null || offHandWeapon.isReady())) {
             // Animation is based on the current combo you are on
             animationHandler.changeAnimationState(mainHandWeapon.getAnimationName());
 
@@ -64,7 +58,7 @@ public class CombatHandler : MonoBehaviour
 
     // Returns if the attack can happen
     public bool offhandAttack() {
-        if (offHandWeapon != null && offHandWeapon.canInitiate() && (mainHandWeapon == null || mainHandWeapon.isReady())) {
+        if ((offHandWeapon != null && offHandWeapon.canInitiate()) && (mainHandWeapon == null || mainHandWeapon.isReady())) {
             // Animation is based on the current combo you are on
             animationHandler.changeAnimationState(offHandWeapon.getAnimationName());
 
@@ -94,6 +88,16 @@ public class CombatHandler : MonoBehaviour
         }
         return false;
         
+    }
+
+    public void cancelAllAttacks() {
+        if (mainHandWeapon != null) {
+            mainHandWeapon.cancelAttack();
+        }
+
+        if (offHandWeapon != null) {
+            offHandWeapon.cancelAttack();
+        }
     }
 
     public void attemptToUseSignatureAbility()
@@ -152,8 +156,6 @@ public class CombatHandler : MonoBehaviour
     {
         signatureAbilityHolder.changeAbility(ability);
     }
-
-    public AbilityHolder getSignatureAbilityHolder() => signatureAbilityHolder;
 
     public AbilityHolder getUtilityAbilityHolder() => utilityAbilityHolder;
     

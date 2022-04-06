@@ -29,9 +29,10 @@ public class ImpAI : EnemyAI
     [SerializeField] private bool hasRallied;
 
     [Header("Animation")]
-    [SerializeField] private string flyingAnimation;
-    [SerializeField] private string attackAnimation;
-    [SerializeField] private string deadAnimation;
+    [SerializeField] private string flyingAnimation = "Fly";
+    [SerializeField] private string attackAnimation = "Attack";
+    [SerializeField] private string deadAnimation = "Dead";
+    [SerializeField] private string stunnedAnimation = "Stunned";
 
     // Private helper variables
     private float interactionTimer;
@@ -45,6 +46,7 @@ public class ImpAI : EnemyAI
         Rallying,
         Attacking,
         Interacting,
+        Stunned,
         Dead
     }
     [SerializeField] private ImpState impState;
@@ -138,6 +140,8 @@ public class ImpAI : EnemyAI
                     impState = ImpState.Searching;
                 }
 
+                handleDisplacement();
+
             break;
             case ImpState.Searching:
                 animationHandler.changeAnimationState(flyingAnimation);
@@ -167,6 +171,8 @@ public class ImpAI : EnemyAI
                     impState = ImpState.Interacting;
                 }
 
+                handleDisplacement();
+
             break;
             case ImpState.Interacting:
                 animationHandler.changeAnimationState(flyingAnimation);
@@ -192,6 +198,8 @@ public class ImpAI : EnemyAI
 
                 handleRetaliation();
 
+                handleDisplacement();
+
             break;
             case ImpState.Rallying:
                 animationHandler.changeAnimationState(flyingAnimation);
@@ -205,6 +213,8 @@ public class ImpAI : EnemyAI
                 else {
                     rally();
                 }
+
+                handleDisplacement();
             break;
             case ImpState.Attacking:
                 // If you are in the middle of an attack
@@ -259,7 +269,23 @@ public class ImpAI : EnemyAI
                         agent.isStopped = false;
                         agent.SetDestination(target.position);
                     }
+
+                    handleDisplacement();
                 }
+            break;
+            case ImpState.Stunned:
+                displacable.performDisplacement();
+
+                if (!displacable.isDisplaced()) {
+                    // Reset values
+                    wanderTimer = wanderRate;
+                    attackTimer = attackDuration;
+                    attackCooldownTimer = attackCooldown;
+                    rallyTimer = rallyDuration;
+                    impState = ImpState.Idle;
+                }
+
+                handleDisplacement();
             break;
             case ImpState.Dead:
                 animationHandler.changeAnimationState(deadAnimation);
@@ -350,6 +376,13 @@ public class ImpAI : EnemyAI
         interactingCircle.fillAmount = 0; // Reset circle
         target = entity;
         impState = ImpState.Attacking;
+    }
+
+    private void handleDisplacement() {
+        if (displacable.isDisplaced()) {
+            animationHandler.changeAnimationState(stunnedAnimation);
+            impState = ImpState.Stunned;
+        }
     }
 
     protected override void OnDrawGizmosSelected() {

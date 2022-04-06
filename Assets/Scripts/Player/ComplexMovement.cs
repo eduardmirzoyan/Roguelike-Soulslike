@@ -13,7 +13,18 @@ public class ComplexMovement : Movement
     [SerializeField] protected float sprintingMultiplier;
     [SerializeField] protected float crouchWalkingMultiplier;
 
-    [SerializeField] private bool enableWallAnimations;
+    [Header("Jump Multiplier")]
+    [SerializeField] public float fallMultiplier = 2f;
+    [SerializeField] public float lowJumpMultiplier = 2.5f;
+
+    public void improvedJumpHandling(KeyCode jumpKey) {
+        if (body.velocity.y < 0) {
+            body.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+        else if (body.velocity.y > 0 && !Input.GetKey(jumpKey)) {
+            body.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        }
+    }
 
     public void sprint(float direction)
     {

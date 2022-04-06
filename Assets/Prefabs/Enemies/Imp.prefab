@@ -1202,6 +1202,7 @@ GameObject:
   - component: {fileID: 4598501649160461423}
   - component: {fileID: 1886810407}
   - component: {fileID: 1009440055318967812}
+  - component: {fileID: 9057750571525249645}
   m_Layer: 7
   m_Name: Imp
   m_TagString: Untagged
@@ -6139,9 +6140,10 @@ MonoBehaviour:
   boxCollider2D: {fileID: 0}
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
+  displacable: {fileID: 0}
   wanderRadius: 0
   wanderRate: 0
-  aggroRange: 6.9
+  aggroRange: 10
   attackRange: 3
   attackCooldown: 2
   attackDuration: 0.75
@@ -6159,8 +6161,8 @@ MonoBehaviour:
   goldGenerationRate: 5
   interactionDuration: 3
   interactionOffset: 0.25
-  rallyRadius: 7
-  rallyDuration: 3
+  rallyRadius: 8
+  rallyDuration: 1.5
   heldGold: 0
   shrinesToPatrol: []
   currentShrineIndex: 0
@@ -6168,6 +6170,7 @@ MonoBehaviour:
   flyingAnimation: Fly
   attackAnimation: Attack
   deadAnimation: Dead
+  stunnedAnimation: Stunned
   impState: 0
 --- !u!114 &4598501649160461428
 MonoBehaviour:
@@ -6226,8 +6229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33846741462c5094e98ae34256e583c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 8
-  currentHealth: 8
+  maxHealth: 25
+  currentHealth: 25
 --- !u!114 &4598501649160461429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6241,6 +6244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  currentState: 
 --- !u!114 &4598501649160461431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6254,6 +6258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  currentState: 
 --- !u!114 &4598501649160461416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6364,6 +6369,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: dd7d08a426074f5468381aaab364b153, type: 2}
   duration: 0.05
+--- !u!114 &9057750571525249645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4598501649160461437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d8e52c4217a724f9062e511974f837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mv: {fileID: 0}
+  stunImmune: 0
+  knockbackImmune: 0
+  knockbackSpeed: 0
+  knockbackDuration: 0
+  stunDuration: 0
+  savedState: 
+  knockbackState: 
 --- !u!1 &4598501649375296467
 GameObject:
   m_ObjectHideFlags: 0
@@ -6580,7 +6605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wielder: {fileID: 0}
-  damage: 5
+  damage: 6
+  force: 0
   hitAll: 0
 --- !u!1 &4598501649584933499
 GameObject:

@@ -137,4 +137,12 @@ public abstract class Weapon : MonoBehaviour
     public bool isReady() {
         return state == WeaponState.Ready;
     }
+
+    public void cancelAttack() {
+        // Reset values
+        animationHandler.changeAnimationState(weaponIdleAnimation);
+        cooldownTimer = cooldown;
+        currentCombo = 0;
+        state = WeaponState.Ready;
+    }
 }

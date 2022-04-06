@@ -16,6 +16,7 @@ public abstract class EnemyAI : MonoBehaviour
     [SerializeField] protected Collider2D boxCollider2D;
     [SerializeField] protected Health health;
     [SerializeField] protected LineOfSight lineOfSight;
+    [SerializeField] protected Displacable displacable;
 
     [Header("Wandering Settings")]
     [SerializeField] protected float wanderRadius;
@@ -50,6 +51,7 @@ public abstract class EnemyAI : MonoBehaviour
         lineOfSight = GetComponent<LineOfSight>();
         animationHandler = GetComponent<AnimationHandler>();
         mv = GetComponent<Movement>();
+        displacable = GetComponent<Displacable>();
 
         target = attacker = null;
     }
