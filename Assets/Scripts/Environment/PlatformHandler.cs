@@ -8,6 +8,8 @@ public class PlatformHandler : MonoBehaviour
     private Collider2D entityCollider;
     private int platformLayer;
 
+    [SerializeField] private bool isDropping;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -24,7 +26,6 @@ public class PlatformHandler : MonoBehaviour
         if (collision.gameObject.layer == platformLayer) {
             currentStandingPlatform = collision.collider;
         }
-        
     }
 
     private void OnCollisionExit2D(Collision2D collision) {
@@ -36,7 +37,13 @@ public class PlatformHandler : MonoBehaviour
     private IEnumerator disableCollision(float time) {
         var platform = currentStandingPlatform;
         Physics2D.IgnoreCollision(entityCollider, platform, true);
+        isDropping = true;
         yield return new WaitForSeconds(time);
         Physics2D.IgnoreCollision(entityCollider, platform, false);
+        isDropping = false;
+    }
+
+    public bool IsDropping() {
+        return isDropping;
     }
 }

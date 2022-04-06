@@ -13,7 +13,8 @@ public class MagicBolt : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Damageable damageable) && target != null && collision.transform == target)
+        var damageable = collision.GetComponent<Damageable>();
+        if (collision != null && damageable != null && target != null && collision.transform == target)
         {
             Damage dmg = new Damage {
                 damageAmount = damage,

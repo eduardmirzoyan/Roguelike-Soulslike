@@ -274,7 +274,7 @@ public class ShadowKnightAI : BossAI
 
     private void searchForEnemies() {
         // Aggressive, hunts any enemy in sight
-        var colliders = lineOfSight.getAllEnemiesInSight(aggroRange);
+       var colliders = Physics2D.OverlapCircleAll(transform.position, bowRange);
 
         if (colliders.Length != 0) {
             // Get closest enemy that meats criteria

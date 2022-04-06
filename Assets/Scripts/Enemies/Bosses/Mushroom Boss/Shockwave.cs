@@ -31,9 +31,10 @@ public class Shockwave : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
+    {   
+        var damageable = collision.GetComponent<Damageable>();
         // If arrow hits something dmaageableo other than the creator
-        if (collision.TryGetComponent(out Damageable damageable) && collision.gameObject != projectile.creator) {
+        if (damageable != null && collision.gameObject != projectile.creator) {
            
             // Deal damage
             Damage dmg = new Damage {

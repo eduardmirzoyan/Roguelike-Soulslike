@@ -14,17 +14,17 @@ public class LifestealEnchantment : MeleeEchantment
         base.intialize(weaponGameObject);
         wielderHealth = entity.transform.parent.GetComponent<Health>();
 
-        GameEvents.instance.onHit += giveGoldOnHit;
+        GameEvents.instance.onHit += giveHealthOnHit;
     }
 
     public override void unintialize()
     {
-        GameEvents.instance.onHit -= giveGoldOnHit;
+        GameEvents.instance.onHit -= giveHealthOnHit;
         wielderHealth = null;
         base.unintialize();
     }
 
-    private void giveGoldOnHit(GameObject attackingEnitiy, GameObject hitEntity, int damageTaken) {
+    private void giveHealthOnHit(GameObject attackingEnitiy, GameObject hitEntity, int damageTaken) {
         if (wielderHealth != null && attackingEnitiy == entity.transform.gameObject && damageTaken > 1) {
             var lifeGained = (int) (damageTaken * lifestealRatio);
             wielderHealth.increaseHealth(lifeGained);

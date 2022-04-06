@@ -543,6 +543,7 @@ GameObject:
   - component: {fileID: 572667285769565752}
   - component: {fileID: 6006231827792614899}
   - component: {fileID: 377130710340846240}
+  - component: {fileID: 1975976472}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Fighter
@@ -704,6 +705,7 @@ MonoBehaviour:
   boxCollider2D: {fileID: 0}
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
+  displacable: {fileID: 0}
   wanderRadius: 0
   wanderRate: 3
   aggroRange: 0
@@ -721,6 +723,7 @@ MonoBehaviour:
   riseAnimation: Rise
   fallAnimation: Fall
   prepareToJumpAnimation: Prepare
+  stunnedAnimation: Stunned
   slimeState: 0
 --- !u!114 &7831371506507338820
 MonoBehaviour:
@@ -761,8 +764,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33846741462c5094e98ae34256e583c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 15
-  currentHealth: 15
+  maxHealth: 8
+  currentHealth: 8
 --- !u!114 &6281634104381106234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -837,6 +840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  currentState: 
 --- !u!114 &6006231827792614899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -850,6 +854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStandingPlatform: {fileID: 0}
+  isDropping: 0
 --- !u!114 &377130710340846240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -875,6 +880,26 @@ MonoBehaviour:
   viewableQueue: []
   currentTarget: {x: 0, y: 0, z: 0}
   isDrop: 0
+--- !u!114 &1975976472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3492238701159351382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d8e52c4217a724f9062e511974f837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mv: {fileID: 0}
+  stunImmune: 0
+  knockbackImmune: 0
+  knockbackSpeed: 0
+  knockbackDuration: 0
+  stunDuration: 0
+  savedState: 
+  knockbackState: 
 --- !u!1 &3492238701480011910
 GameObject:
   m_ObjectHideFlags: 0

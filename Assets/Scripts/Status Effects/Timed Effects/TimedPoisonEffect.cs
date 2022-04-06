@@ -27,7 +27,6 @@ public class TimedPoisonEffect : TimedEffect
     protected override void onTick()
     {
         PoisonEffect poisonEffect = (PoisonEffect)Effect;
-        Debug.Log(Duration);
         if (health != null) {
             // If the entitiy is moving, increase the tickrate
             if (rigidbody2D.velocity.magnitude < 1f) {

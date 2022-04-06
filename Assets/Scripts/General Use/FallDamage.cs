@@ -12,7 +12,7 @@ public class FallDamage : MonoBehaviour
     [Header("Adjustable Settings")]
     [SerializeField] public bool enableFallDamage;
     [SerializeField] private float maxDropDistance;
-    [SerializeField] private Damage fallDamage;
+    [SerializeField] private int fallDamage;
 
     private void Start()
     {
@@ -33,15 +33,26 @@ public class FallDamage : MonoBehaviour
             {
                 if (fallHeight - transform.position.y >= maxDropDistance)
                 {
-                    // Deal damage, make this scale or something
-                    var damageable = GetComponent<Damageable>();
-                    if (damageable != null)
-                        damageable.takeDamage(fallDamage);
+                    // Deal damage
+                    if (TryGetComponent(out Damageable damageable)) {
+                        // Take damage based on how much you feel
+                        Damage dmg = new Damage {
+                            damageAmount = (int) (fallDamage * (fallHeight / maxDropDistance)),
+                            source = DamageSource.fromEnvironment,
+                            origin = transform
+                        };
+                        damageable.takeDamage(dmg);
+                    }
+                        
                 }
                 fallHeight = transform.position.y;
             }
         }
     }
 
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, maxDropDistance);
+    }
 
 }

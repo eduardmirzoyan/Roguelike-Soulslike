@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 0}
   creator: {fileID: 0}
-  projectileSpeed: 25
+  projectileSpeed: 35
   numberOfBounces: 0
   numberOfPierces: 0
   gainVelocityOverTime: 0
@@ -158,5 +158,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 0}
-  damage: 8
+  damage: 7
   timeTilDestroy: 2

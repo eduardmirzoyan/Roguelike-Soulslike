@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4207527586260041467}
   - component: {fileID: 4207527586260041466}
   - component: {fileID: 4207527586260041465}
-  - component: {fileID: 4207527586260041464}
   - component: {fileID: 4207527586260041447}
+  - component: {fileID: 3032045047508988652}
   m_Layer: 6
   m_Name: Small Shield
   m_TagString: Untagged
@@ -136,18 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
---- !u!114 &4207527586260041464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4207527586260041445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eef73a5ebad9de7409d540737f920031, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  currentState: 
 --- !u!114 &4207527586260041447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,4 +162,19 @@ MonoBehaviour:
   animationHandler: {fileID: 0}
   spriteRenderer: {fileID: 0}
   owner: {fileID: 0}
+  wielderStats: {fileID: 0}
   wielderMovement: {fileID: 0}
+  pushForce: 1250
+--- !u!114 &3032045047508988652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207527586260041445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42096ea89a7ec6c4e90c10d2fec71744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enchantments: []

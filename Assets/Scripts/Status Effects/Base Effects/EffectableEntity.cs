@@ -29,7 +29,6 @@ public class EffectableEntity : MonoBehaviour
         if (activeEffects.ContainsKey(timedEffect.Effect))
         {
             activeEffects[timedEffect.Effect].Activate();
-            GameManager.instance.CreatePopup(timedEffect.Effect.name, gameObject.transform.position);
         }
         else
         {

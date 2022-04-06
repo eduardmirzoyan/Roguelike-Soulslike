@@ -47,6 +47,10 @@ public class LootManager : MonoBehaviour
     [TextArea(10, 15)]
     public string longBowDescription;
 
+
+    [Header("Debugging")]
+    [SerializeField] private bool alwaysEnchant;
+
     private void Awake()
     {
         // If another lootmanager exists, destroy it
@@ -107,8 +111,13 @@ public class LootManager : MonoBehaviour
         newSword.critChance = 0.1f; // 1-7
 
         // Randomize enchantment
-        newSword.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
-
+        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
+            newSword.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
+        }
+        else {
+            newSword.enchantment = null;
+        }
+        
         // Randomize sprite
         newSword.sprite = swordSprites[Random.Range(0, swordSprites.Count)];
 
@@ -122,7 +131,6 @@ public class LootManager : MonoBehaviour
     }
 
     private WeaponItem generateRandomAxe() {
-
         // Create the scriptable object
         WeaponItem newAxe = ScriptableObject.CreateInstance<WeaponItem>();
         newAxe.weaponType = WeaponType.Axe;
@@ -133,7 +141,12 @@ public class LootManager : MonoBehaviour
         newAxe.damage = Random.Range(5, 13); // 5-12
 
         // Randomize enchantment
-        newAxe.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
+        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
+            newAxe.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
+        }
+        else {
+            newAxe.enchantment = null;
+        }
 
         // Randomize sprite
         newAxe.sprite = axeSprites[Random.Range(0, axeSprites.Count)];
@@ -162,7 +175,12 @@ public class LootManager : MonoBehaviour
         newSmallShield.critChance = 0.1f; // 1-7
 
         // Randomize enchantment
-        newSmallShield.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
+        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
+            newSmallShield.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
+        }
+        else {
+            newSmallShield.enchantment = null;
+        }
 
         // Randomize sprite
         newSmallShield.sprite = shieldSprites[Random.Range(0, shieldSprites.Count)];
@@ -188,7 +206,12 @@ public class LootManager : MonoBehaviour
         newLongBow.damage = Random.Range(6, 8);
 
         // Randomize enchantment
-        newLongBow.enchantment = rangedEnchantments[Random.Range(0, rangedEnchantments.Count)];
+        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
+            newLongBow.enchantment = rangedEnchantments[Random.Range(0, rangedEnchantments.Count)];
+        }
+        else {
+            newLongBow.enchantment = null;
+        }
 
         // Randomize sprite
         newLongBow.sprite = longBowSprites[Random.Range(0, longBowSprites.Count)];
@@ -231,7 +254,12 @@ public class LootManager : MonoBehaviour
         newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
 
         // Randomize enchantment
-        newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
+            newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+        }
+        else {
+            newArmor.enchantment = null;
+        }
 
         // Randomize sprite
         newArmor.sprite = helmetSprites[Random.Range(0, helmetSprites.Count)];
@@ -252,7 +280,12 @@ public class LootManager : MonoBehaviour
         newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
 
         // Randomize enchantment
-        newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
+            newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+        }
+        else {
+            newArmor.enchantment = null;
+        }
 
         // Randomize sprite
         newArmor.sprite = chestplateSprites[Random.Range(0, chestplateSprites.Count)];
@@ -273,7 +306,12 @@ public class LootManager : MonoBehaviour
         newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
 
         // Randomize enchantment
-        newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
+            newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+        }
+        else {
+            newArmor.enchantment = null;
+        }
 
         // Randomize sprite
         newArmor.sprite = gloveSprites[Random.Range(0, gloveSprites.Count)];
@@ -294,7 +332,12 @@ public class LootManager : MonoBehaviour
         newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
 
         // Randomize enchantment
-        newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
+            newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+        }
+        else {
+            newArmor.enchantment = null;
+        }
 
         // Randomize sprite
         newArmor.sprite = bootsSprites[Random.Range(0, bootsSprites.Count)];
@@ -315,7 +358,12 @@ public class LootManager : MonoBehaviour
         newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
 
         // Randomize enchantment
-        newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
+            newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
+        }
+        else {
+            newArmor.enchantment = null;
+        }
 
         // Randomize sprite
         newArmor.sprite = capeSprites[Random.Range(0, capeSprites.Count)];

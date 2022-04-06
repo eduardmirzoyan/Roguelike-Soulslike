@@ -162,6 +162,7 @@ MonoBehaviour:
   animationHandler: {fileID: 0}
   spriteRenderer: {fileID: 0}
   owner: {fileID: 11400000, guid: 5afe78351655d4049935cc9901e18a9a, type: 2}
+  wielderStats: {fileID: 0}
   wielderMovement: {fileID: 0}
 --- !u!114 &8006824362132755115
 MonoBehaviour:
@@ -176,6 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  currentState: 
 --- !u!114 &2511576406436061588
 MonoBehaviour:
   m_ObjectHideFlags: 0

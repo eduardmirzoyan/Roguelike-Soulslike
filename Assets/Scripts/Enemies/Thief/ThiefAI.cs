@@ -18,7 +18,7 @@ public class ThiefAI : EnemyAI
     [SerializeField] private int maxInventorySize = 1;
     [SerializeField] private Image lootingCircle;
     [SerializeField] private Sprite hasLootSprite;
-    [SerializeField] private float lootTime = 1f;
+    [SerializeField] private float lootDuration = 1f;
     [SerializeField] private float maxItemDetectionRange = 3;
     [SerializeField] protected WorldItem dropLoot; // REPLACE THIS WITH 'RESOURCE LOADING'
 
@@ -30,6 +30,7 @@ public class ThiefAI : EnemyAI
     [SerializeField] private string riseAnimation = "Rise";
     [SerializeField] private string fallAnimation = "Fall";
     [SerializeField] private string lootAnimation = "Loot";
+    [SerializeField] private string stunnedAnimation = "Stunned";
     private float lootTimer;
 
     private enum ThiefState {
@@ -37,6 +38,7 @@ public class ThiefAI : EnemyAI
         Searching,
         Attacking,
         Looting,
+        Stunned,
         Dead
     }
 
@@ -104,6 +106,8 @@ public class ThiefAI : EnemyAI
 
                 handleRetaliation();
 
+                handleDisplacement();
+
             break;
             case ThiefState.Searching:
                 // Set animations
@@ -125,7 +129,7 @@ public class ThiefAI : EnemyAI
 
                     if (Vector2.Distance(transform.position, target.position) < 
                         target.GetComponent<Collider2D>().bounds.extents.x + boxCollider2D.bounds.extents.x) { // When you get close to the item, then begin looting
-                        lootTimer = lootTime;
+                        lootTimer = lootDuration;
                         pathfindUser.stopTraveling();
                         // Change to Loot state!
                         thiefState = ThiefState.Looting;
@@ -146,6 +150,8 @@ public class ThiefAI : EnemyAI
                 }
 
                 handleRetaliation();
+
+                handleDisplacement();
 
             break;
             case ThiefState.Attacking:
@@ -200,6 +206,8 @@ public class ThiefAI : EnemyAI
                         animationHandler.changeAnimationState(walkAnimation);
                         handleForwardMovement(mv.getFacingDirection());
                     }
+
+                    handleDisplacement();
                 }
             break;
             case ThiefState.Looting:
@@ -218,7 +226,7 @@ public class ThiefAI : EnemyAI
                 // Loot timer!
                 if (lootTimer > 0) {
                     // Fill looting circle based on timer
-                    lootingCircle.fillAmount = 1 - lootTimer / lootTime;
+                    lootingCircle.fillAmount = 1 - lootTimer / lootDuration;
                     lootTimer -= Time.deltaTime;
                 }
                 else {
@@ -228,6 +236,24 @@ public class ThiefAI : EnemyAI
                 }
 
                 handleRetaliation();
+
+                handleDisplacement();
+
+            break;
+            case ThiefState.Stunned:
+                displacable.performDisplacement();
+
+                if (!displacable.isDisplaced()) {
+                    // Reset values
+                    wanderTimer = wanderRate;
+                    attackTimer = attackDuration;
+                    lootTimer = lootDuration;
+                    attackCooldownTimer = attackCooldown;
+                    lootingCircle.fillAmount = 0;
+                    thiefState = ThiefState.Idle;
+                }
+
+                handleDisplacement();
             break;
             case ThiefState.Dead:
                 // Do nothin
@@ -309,6 +335,13 @@ public class ThiefAI : EnemyAI
             else if (mv.checkFalling()) {
                 animationHandler.changeAnimationState(fallAnimation);
             }
+        }
+    }
+
+    private void handleDisplacement() {
+        if (displacable.isDisplaced()) {
+            animationHandler.changeAnimationState(stunnedAnimation);
+            thiefState = ThiefState.Stunned;
         }
     }
 

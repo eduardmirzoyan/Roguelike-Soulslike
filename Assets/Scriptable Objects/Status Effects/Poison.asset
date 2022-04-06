@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71062265f37f58041b8adbcdbfa2e115, type: 3}
   m_Name: Poison
   m_EditorClassIdentifier: 
-  Duration: 5
+  Duration: 3
   IsDurationReset: 1
   IsDurationStacked: 0
   IsEffectStacked: 0

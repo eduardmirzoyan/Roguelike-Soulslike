@@ -6,7 +6,7 @@ using UnityEngine;
 public class AnimationHandler : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    private string currentState;
+    [SerializeField] private string currentState;
 
     // Start is called before the first frame update
     private void Awake()
@@ -19,7 +19,7 @@ public class AnimationHandler : MonoBehaviour
         // Guard to prevent replaying same state
         if (currentState == newState)
             return;
-
+            
         // Play animation
         animator.Play(newState);
 

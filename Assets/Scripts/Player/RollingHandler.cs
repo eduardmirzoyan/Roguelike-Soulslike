@@ -8,11 +8,9 @@ public class RollingHandler : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Movement mv;
-    [SerializeField] private AnimationHandler animationHandler;
 
     [Header("Settings")]
     [SerializeField] private float rollCooldown = 1f;
-    [SerializeField] private string rollAnimation = "Roll";
     [SerializeField] private float rollDuration = 0.5f;
     [SerializeField] private float rollSpeed = 350f;
     private float rollCooldownTimer;
@@ -21,7 +19,6 @@ public class RollingHandler : MonoBehaviour
 
     private void Start() {
         mv = GetComponent<Movement>();
-        animationHandler = GetComponent<AnimationHandler>();
     }
 
     private void FixedUpdate() {
@@ -32,8 +29,15 @@ public class RollingHandler : MonoBehaviour
 
     // Rolling values
     public void startRoll(float direction) {
+        // Set roll direction based on input
+        if (direction > 0.2f)
+            rollDirection = 1;
+        else if (direction < -0.2f)
+            rollDirection = -1;
+        else 
+            rollDirection = mv.getFacingDirection();
+
         rollTimer = rollDuration;
-        rollDirection = direction;
     }
 
     public bool canRoll() {
@@ -41,7 +45,6 @@ public class RollingHandler : MonoBehaviour
     }
 
     public void roll() {
-        animationHandler.changeAnimationState(rollAnimation);
         mv.WalkAtSpeed(rollDirection, rollSpeed);
         if (rollTimer > 0) {
             rollTimer -= Time.deltaTime;

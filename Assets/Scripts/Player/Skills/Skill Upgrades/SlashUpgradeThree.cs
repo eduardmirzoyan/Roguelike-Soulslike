@@ -15,8 +15,4 @@ public class SlashUpgradeThree : Upgrade
         //GameEvents.current.onHit += reduceCooldownOnHit;
     }
 
-    private void reduceCooldownOnHit()
-    {
-        parent.GetComponent<CombatHandler>().getSignatureAbilityHolder().reduceAbilityCooldown(1f);
-    }
 }
