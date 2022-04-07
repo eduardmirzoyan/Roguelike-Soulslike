@@ -13,6 +13,8 @@ public class Damageable : MonoBehaviour
     [SerializeField] private float immunityTimer = 0f;
     [SerializeField] private Color defaultColor;
 
+    [SerializeField] private GameObject tempDamageEffect;
+
     private void Start() {
         health = GetComponent<Health>();
     }
@@ -79,6 +81,10 @@ public class Damageable : MonoBehaviour
             if (damage.pushForce > 0) {
                 displacable.triggerKnockback(damage.pushForce, 0.33f, damage.origin.position);
             }
+        }
+
+        if (tempDamageEffect != null) {
+            Instantiate(tempDamageEffect, transform.position, Quaternion.identity);
         }
 
         // Convert the origin to the wielder if the origin is a weapon

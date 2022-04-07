@@ -4,18 +4,11 @@ using UnityEngine;
 
 public class DamageParticles : MonoBehaviour
 {
-    [SerializeField] private GameObject particlesPrefab;
-    [SerializeField] private ParticleSystem damageParticles;
-    [SerializeField] private Color color;
-
-    private void Awake()
-    {
-        damageParticles = Instantiate(particlesPrefab, transform).GetComponent<ParticleSystem>();
-        damageParticles.startColor = color;
-    }
+    [SerializeField] private GameObject damageParticlesPrefab;
 
     public void spawnParticles()
     {
-        damageParticles.Play();
+        // Creates the particles
+        Instantiate(damageParticlesPrefab, transform);
     }
 }

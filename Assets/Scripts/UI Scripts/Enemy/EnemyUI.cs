@@ -29,6 +29,12 @@ public class EnemyUI : MonoBehaviour
         if (!canvas.enabled)
             return;
 
+        // If enemy is dead, then disable healthbar
+        if (health.isEmpty()) {
+            canvas.enabled = false;
+            return;
+        }
+
         if (mv.getFacingDirection() == -1) {
             rectTransform.localRotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
         }

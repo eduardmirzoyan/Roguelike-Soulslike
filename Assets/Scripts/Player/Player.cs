@@ -120,8 +120,6 @@ public class Player : MonoBehaviour
 
                 // Handle displacement
                 if (displace.isDisplaced()) {
-                    // Save your current state
-                    displace.saveState(state.ToString());
                     // Change animation
                     animationHandler.changeAnimationState(staggerAnimation);
                     state = PlayerState.knockedback;
@@ -666,7 +664,7 @@ public class Player : MonoBehaviour
             GameManager.instance.CreatePopup("Your flask is empty.", transform.position);
     }
 
-    private void heal(int amount)
+    public void heal(int amount)
     {
         GameManager.instance.CreatePopup("You have healed " + amount + " HP.", transform.position);
         health.increaseHealth(amount);

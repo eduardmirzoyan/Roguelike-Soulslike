@@ -25,6 +25,12 @@ public class BossHealthBarUI : MonoBehaviour
 
     public void setBoss(BossAI boss)
     {
+        // If boss is null, the disable
+        if (boss == null) {
+            enableImages(false);
+            return;
+        }
+        
         bossHealth = boss.GetComponent<Health>();
         if (bossHealth != null) {
             // Set values

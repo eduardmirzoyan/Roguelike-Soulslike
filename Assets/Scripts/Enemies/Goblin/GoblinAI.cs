@@ -11,7 +11,6 @@ public class GoblinAI : EnemyAI
     [Header("Goblin Components")]
     [SerializeField] private PathfindUser pathfindUser;
 
-
     [Header("Animation")]
     [SerializeField] private string idleAnimation = "Idle";
     [SerializeField] private string walkAnimation = "Walk";
@@ -46,11 +45,15 @@ public class GoblinAI : EnemyAI
             // Call it's death method
             Die();
 
-            // Destroy body in 1 second
-            Destroy(gameObject, 2f);
+            // Destroy body in 3 second(s)
+            Destroy(gameObject, 3f);
 
             // Prevent movement
             mv.Walk(0);
+
+            // Add knockback to corpse
+            if (target != null)
+                displacable.triggerKnockback(400f, 2f, target.position);
 
             // Change state to dead
             goblinState = GoblinState.Dead;
@@ -72,16 +75,29 @@ public class GoblinAI : EnemyAI
 
                 // If an enemy has been gound, change states
                 if (target != null) {
+
+                    // Find path to attacker
+                    pathfindUser.setPathTo(target.position);
+
+                    // Change state
                     goblinState = GoblinState.Searching;
                     return;
                 }
 
                 wander();
 
-                handleRetaliation();
-
                 // Handle any displacement
-                handleDisplacement();
+                if (displacable.isDisplaced()) {
+                    // Reset values
+                    wanderTimer = wanderRate;
+                    attackTimer = attackDuration;
+                    attackCooldownTimer = attackCooldown;
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    goblinState = GoblinState.Stunned;
+                    break;
+                }
+
+                handleRetaliation();
 
             break;
             case GoblinState.Searching:
@@ -118,7 +134,18 @@ public class GoblinAI : EnemyAI
                 }
 
                 // Handle any displacement
-                handleDisplacement();
+                if (displacable.isDisplaced()) {
+                     print("REAL DISPALCE");
+                    // Reset values
+                    wanderTimer = wanderRate;
+                    attackTimer = attackDuration;
+                    attackCooldownTimer = attackCooldown;
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    goblinState = GoblinState.Stunned;
+                    break;
+                }
+
+                handleRetaliation();
 
             break;
             case GoblinState.Attacking:
@@ -176,25 +203,35 @@ public class GoblinAI : EnemyAI
                     }
 
                     // Handle any displacement
-                    handleDisplacement();
+                    if (displacable.isDisplaced()) {
+                        // Reset values
+                        wanderTimer = wanderRate;
+                        attackTimer = attackDuration;
+                        attackCooldownTimer = attackCooldown;
+                        animationHandler.changeAnimationState(stunnedAnimation);
+                        goblinState = GoblinState.Stunned;
+                        break;
+                    }
+
+                    handleRetaliation();
                 }
             break;
             case GoblinState.Stunned:
+                // Any addition knockbacks are incoperated here
                 displacable.performDisplacement();
 
                 if (!displacable.isDisplaced()) {
-                    // Reset values
-                    wanderTimer = wanderRate;
-                    attackTimer = attackDuration;
-                    attackCooldownTimer = attackCooldown;
-                    goblinState = GoblinState.Idle;
+                    
+                    // Set to attacking
+                    goblinState = GoblinState.Attacking;
                 }
-
-                handleDisplacement();
                 
             break;
             case GoblinState.Dead:
                 animationHandler.changeAnimationState(deadAnimation);
+
+                displacable.performDisplacement();
+                
             break;
         }
     }
@@ -207,13 +244,6 @@ public class GoblinAI : EnemyAI
         // Jump if reached a wall and is grounded
         if (mv.isGrounded() && mv.onWall())
             mv.Jump();
-    }
-
-    private void handleDisplacement() {
-        if (displacable.isDisplaced()) {
-            animationHandler.changeAnimationState(stunnedAnimation);
-            goblinState = GoblinState.Stunned;
-        }
     }
 
     private void attack() {
@@ -309,17 +339,32 @@ public class GoblinAI : EnemyAI
     }
 
     private void handleRetaliation() {
-        // If entity was attacked...
+        // Handle any attacker
         if (attacker != null) {
-            // Set target to the attacker
-            target = attacker;
-
-            // Find path to attacker
-            pathfindUser.setPathTo(target.position);
-            goblinState = GoblinState.Searching;
-
+            
+            // If the entity did not have a target before, then set new target and go after it
+            if (target == null)  {
+                // Set target to the attacker
+                target = attacker;
+            }
+            
+            // If ready to be stunned
+            if (hitStun) {
+                // Make entity not stunnable
+                hitStun = false;
+                // Add knockback
+                displacable.triggerKnockback(400f, 0.25f, attacker.transform.position);
+                // Play anim
+                animationHandler.changeAnimationState(stunnedAnimation);
+                // Start cooldown for another hitstun
+                StartCoroutine(hitStunCooldown(1f));
+                // Change state
+                goblinState = GoblinState.Stunned;
+            }
+            
             // Reset attacker
             attacker = null;
         }
     }
+    
 }

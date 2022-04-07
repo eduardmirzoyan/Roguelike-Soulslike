@@ -36,14 +36,20 @@ public class GoldShrine : Shrine
 
     public override void activate(Player player)
     {
-        if (!used) 
+        
+        if (GameManager.instance.gold > 50) 
         {  
-            // Take stored gold
+            // Play animation
             animator.Play(activateAnimation);
-            GameManager.instance.CreatePopup("+ " + storedGold + " GOLD", transform.position, Color.yellow);
-            GameManager.instance.addGold(storedGold);
-            storedGold = 0;
-            used = true;
+
+            // Take gold
+            GameManager.instance.addGold(-50);
+
+            // Heal 50 hp
+            player.heal(50);
+        }
+        else {
+            GameManager.instance.CreatePopup("Not enough gold.", transform.position, Color.gray);
         }
         
     }
