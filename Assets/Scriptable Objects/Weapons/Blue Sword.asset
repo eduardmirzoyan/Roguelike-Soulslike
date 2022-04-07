@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 9157344496376886352, guid: 2fd69f148956b2348af3f15916138323, type: 3}
   type: 0
-  sprite: {fileID: 21300000, guid: 0bc41d6c2fbff9447bc1699bbe2eef22, type: 3}
+  sprite: {fileID: 21300000, guid: b4ff2424bf192dd45b4ef51bfab8c0d3, type: 3}
   isStackable: 0
   count: 1
-  description: Can't believe someone found two diamonds and a stick down here...
-  name: Minecraft Reference
-  damage: 1
-  critChance: 0.1
+  description: Beginner's sword
+  name: Rusty Sword
+  damage: 4
+  critChance: 0
   critDamage: 1
   weaponType: 0
   twoHanded: 0
-  enchantment: {fileID: 11400000, guid: 8144aabc9348f8b42af3e0906a287cba, type: 2}
+  enchantment: {fileID: 0}

@@ -162,6 +162,10 @@ public class GameManager : MonoBehaviour
         StartCoroutine(mainCamera.Shake(duration, magnitude));
     }
 
+    public void setPathFindingMap(PathfindingMap map) {
+        pathfindingMap = map;
+    }
+
     public PathfindingMap GetPathfindingMap() {
         return pathfindingMap;
     }

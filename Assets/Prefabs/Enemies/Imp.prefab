@@ -6148,8 +6148,8 @@ MonoBehaviour:
   attackCooldown: 2
   attackDuration: 0.75
   attackDashSpeed: 12
-  xpValue: 10
-  goldValue: 10
+  xpValue: 25
+  goldValue: 15
   target: {fileID: 0}
   attacker: {fileID: 0}
   agent: {fileID: 0}

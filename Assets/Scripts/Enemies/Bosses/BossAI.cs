@@ -40,4 +40,11 @@ public class BossAI : EnemyAI
                 animationHandler.changeAnimationState(idleAnimation);
         }
     }
+
+    private void OnDestroy() {
+        // If the target was the player, then disalbe the UI
+        if (target != null && target.TryGetComponent(out Player player)) {
+            bossHealthBarUI.setBoss(null);
+        }
+    }
 }

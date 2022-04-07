@@ -65,5 +65,13 @@ public class ComplexMovement : Movement
         setFacingDirection(-getFacingDirection());
     }
 
+    public void setFallMult(float fall) {
+        fallMultiplier = fall;
+    }
+
+    public float getFallMult() {
+        return fallMultiplier;
+    }
+
     public int getWallSlideStaminaDrain() => wallJumpStaminaDrain;
 }

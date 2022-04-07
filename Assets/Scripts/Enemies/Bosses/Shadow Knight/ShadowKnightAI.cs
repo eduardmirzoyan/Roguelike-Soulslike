@@ -52,11 +52,6 @@ public class ShadowKnightAI : BossAI
             // Prevent movement
             mv.Walk(0);
 
-            // If the target was the player, then disalbe the UI
-            if (target.TryGetComponent(out Player player)) {
-                bossHealthBarUI.setBoss(null);
-            }
-
             // Change state to dead
             shadowKnightState = ShadowKnightState.Dead;
         }
@@ -132,7 +127,7 @@ public class ShadowKnightAI : BossAI
                             break;
                             case 2:
                                 attackTimer = 0.5f;
-                                mv.jumpReposition(-mv.getFacingDirection() * attackRange * 2, 10);
+                                mv.jumpReposition(-mv.getFacingDirection() * attackRange * 2.5f, 10);
                                 shadowKnightState = ShadowKnightState.Reposition;
                             break;
                         }
@@ -237,7 +232,6 @@ public class ShadowKnightAI : BossAI
                 }
                 else {
                     // Do NOT Reset cooldown
-                    // attackCooldownTimer = attackCooldown;
 
                     // Change back to attacking state
                     shadowKnightState = ShadowKnightState.Aggro;
@@ -329,8 +323,10 @@ public class ShadowKnightAI : BossAI
         while (count > 0) {
             yield return new WaitForSeconds(1f);
             // Create the shadowflames
-            Instantiate(flame, spawnpoint.transform.position, Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0)));
-            Instantiate(flame, spawnpoint.transform.position, Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y - 180, 0)));
+            var proj = Instantiate(flame, spawnpoint.transform.position, Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0))).GetComponent<Projectile>();
+            proj.setCreator(gameObject);
+            proj = Instantiate(flame, spawnpoint.transform.position, Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y - 180, 0))).GetComponent<Projectile>();
+            proj.setCreator(gameObject);
             count--;
         }
     }

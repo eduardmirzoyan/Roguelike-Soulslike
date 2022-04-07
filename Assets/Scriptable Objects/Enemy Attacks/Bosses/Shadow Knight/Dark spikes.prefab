@@ -108,11 +108,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d352b557b18eb18418aaaf6224608031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 7
   body: {fileID: 0}
+  creator: {fileID: 0}
+  projectileSpeed: 7
+  numberOfBounces: 0
+  numberOfPierces: 0
   gainVelocityOverTime: 0
   velocityGainRate: 0
   percentVelocityGain: 0
+  enableGravity: 0
 --- !u!114 &2346466561121962056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,19 +129,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f410c50cc9c55a4da1d1866fe9a9378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectile: {fileID: 0}
   segment: {fileID: 6220913904902473978, guid: e03df71c35aae6d4c9dd0b55ba809458, type: 3}
   segmentSpawnPoint: {fileID: 2073894474797916672}
   spawnInterval: 0.075
-  shockwaveDamage:
-    damageAmount: 6
-    source: 1
-    origin: {x: 0, y: 0, z: 0}
-    isTrue: 0
-    isAvoidable: 0
-    triggersIFrames: 1
-    effects: []
-    buildupEffects: []
-    color: {r: 0, g: 0, b: 0, a: 0}
+  shockwaveDamage: 7
 --- !u!1 &2073894474797916675
 GameObject:
   m_ObjectHideFlags: 0

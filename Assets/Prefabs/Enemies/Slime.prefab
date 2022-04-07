@@ -714,8 +714,8 @@ MonoBehaviour:
   attackCooldown: 0
   attackDuration: 0
   attackDashSpeed: 0
-  xpValue: 50
-  goldValue: 35
+  xpValue: 10
+  goldValue: 10
   target: {fileID: 0}
   attacker: {fileID: 0}
   prepareDuration: 1.33

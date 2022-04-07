@@ -1566,8 +1566,8 @@ MonoBehaviour:
   attackCooldown: 2
   attackDuration: 0.833
   attackDashSpeed: 300
-  xpValue: 90
-  goldValue: 10
+  xpValue: 33
+  goldValue: 20
   target: {fileID: 0}
   attacker: {fileID: 0}
   pathfindUser: {fileID: 0}

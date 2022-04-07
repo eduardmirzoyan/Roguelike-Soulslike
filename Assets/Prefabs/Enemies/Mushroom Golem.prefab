@@ -234,7 +234,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wielder: {fileID: 0}
-  damage: 10
+  damage: 20
+  force: 0
   hitAll: 1
 --- !u!1 &6065330019821488897
 GameObject:
@@ -519,8 +520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33846741462c5094e98ae34256e583c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  currentHealth: 200
+  maxHealth: 250
+  currentHealth: 250
 --- !u!114 &6065330019824376829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,6 +539,7 @@ MonoBehaviour:
   isInvincible: 0
   immunityTimer: 0
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  tempDamageEffect: {fileID: 0}
 --- !u!114 &8706467391598591755
 MonoBehaviour:
   m_ObjectHideFlags: 0
