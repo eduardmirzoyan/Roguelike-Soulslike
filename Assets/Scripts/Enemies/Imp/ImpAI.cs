@@ -109,6 +109,10 @@ public class ImpAI : EnemyAI
             // Destroy in 2 seconds
             Destroy(gameObject, 2f);
 
+            // Add knockback to corpse
+            if (target != null)
+                displacable.triggerKnockback(400f, 2f, target.position);
+
             // Change state to dead
             impState = ImpState.Dead;
         }
@@ -277,18 +281,14 @@ public class ImpAI : EnemyAI
                 displacable.performDisplacement();
 
                 if (!displacable.isDisplaced()) {
-                    // Reset values
-                    wanderTimer = wanderRate;
-                    attackTimer = attackDuration;
-                    attackCooldownTimer = attackCooldown;
-                    rallyTimer = rallyDuration;
-                    impState = ImpState.Idle;
+                    
+                    impState = ImpState.Attacking;
                 }
 
-                handleDisplacement();
             break;
             case ImpState.Dead:
                 animationHandler.changeAnimationState(deadAnimation);
+                displacable.performDisplacement();
             break;
         }
     }
@@ -380,6 +380,11 @@ public class ImpAI : EnemyAI
 
     private void handleDisplacement() {
         if (displacable.isDisplaced()) {
+            // Reset values
+            wanderTimer = wanderRate;
+            attackTimer = attackDuration;
+            attackCooldownTimer = attackCooldown;
+            rallyTimer = rallyDuration;
             animationHandler.changeAnimationState(stunnedAnimation);
             impState = ImpState.Stunned;
         }

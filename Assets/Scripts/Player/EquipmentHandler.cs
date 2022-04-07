@@ -79,7 +79,7 @@ public class EquipmentHandler : MonoBehaviour
         }
 
         // If the weapon is enchantable, then add the enchantment
-        if (equippedWeapon.TryGetComponent(out EnchantableEntity enchantableEntity)) {
+        if (weaponItem.enchantment != null && equippedWeapon.TryGetComponent(out EnchantableEntity enchantableEntity)) {
             enchantableEntity.addEnchantment(weaponItem.enchantment);
         }
 

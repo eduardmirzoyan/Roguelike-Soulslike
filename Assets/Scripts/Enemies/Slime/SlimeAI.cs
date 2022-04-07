@@ -64,6 +64,8 @@ public class SlimeAI : EnemyAI
 
             handleDisplacement();
 
+            handleRetaliation();
+
         break;
         case SlimeState.Preparing:
             if (prepareTimer > 0) {
@@ -77,17 +79,16 @@ public class SlimeAI : EnemyAI
             }
 
             handleDisplacement();
+
         break;
         case SlimeState.Stunned:
             displacable.performDisplacement();
 
             if (!displacable.isDisplaced()) {
-                wanderTimer = wanderRate;
-                prepareTimer = prepareDuration;
+                // Return to Idle
                 slimeState = SlimeState.Idle;
             }
 
-            handleDisplacement();
         break;
         }
     }
@@ -136,8 +137,35 @@ public class SlimeAI : EnemyAI
         }
     }
 
+    private void handleRetaliation() {
+        // Handle any attacker
+        if (attacker != null) {
+    
+            // If ready to be stunned
+            if (hitStun) {
+                // Make entity not stunnable
+                hitStun = false;
+                // Add knockback
+                displacable.triggerKnockback(400f, 0.25f, attacker.transform.position);
+                // Play anim
+                animationHandler.changeAnimationState(stunnedAnimation);
+                // Start cooldown for another hitstun
+                StartCoroutine(hitStunCooldown(1f));
+                // Change state
+                slimeState = SlimeState.Stunned;
+            }
+            
+            // Reset attacker
+            attacker = null;
+        }
+    }
+
     private void handleDisplacement() {
         if (displacable.isDisplaced()) {
+            // Reset values
+            wanderTimer = wanderRate;
+            prepareTimer = prepareDuration;
+            // Set animation
             animationHandler.changeAnimationState(stunnedAnimation);
             slimeState = SlimeState.Stunned;
         }

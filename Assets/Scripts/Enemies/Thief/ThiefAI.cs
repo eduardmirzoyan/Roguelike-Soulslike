@@ -52,8 +52,9 @@ public class ThiefAI : EnemyAI
         pathfindUser = GetComponent<PathfindUser>();
 
         lootingCircle.fillAmount = 0;
+        wanderTimer = wanderRate;
         
-         // The thief spawns with no item and is aggressive
+        // The thief spawns with no item and is aggressive
         thiefState = ThiefState.Idle;
     }
 
@@ -74,6 +75,10 @@ public class ThiefAI : EnemyAI
 
             // Prevent movement
             mv.Walk(0);
+
+            // Add knockback to corpse
+            if (target != null)
+                displacable.triggerKnockback(400f, 2f, target.position);
 
             // Change state to dead
             thiefState = ThiefState.Dead;
@@ -97,6 +102,9 @@ public class ThiefAI : EnemyAI
                     searchForEnemies();
 
                     if (target != null) {
+                        // Set target
+                        pathfindUser.setPathTo(target.position);
+                        // Set state
                         thiefState = ThiefState.Searching;
                         return;
                     }
@@ -104,9 +112,20 @@ public class ThiefAI : EnemyAI
                 
                 wander();
 
-                handleRetaliation();
+                // Handle displacement
+                if (displacable.isDisplaced()) {
+                    // Reset values
+                    wanderTimer = wanderRate;
+                    attackTimer = attackDuration;
+                    lootTimer = lootDuration;
+                    attackCooldownTimer = attackCooldown;
+                    lootingCircle.fillAmount = 0;
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    thiefState = ThiefState.Stunned;
+                    break;
+                }
 
-                handleDisplacement();
+                handleRetaliation();
 
             break;
             case ThiefState.Searching:
@@ -149,9 +168,20 @@ public class ThiefAI : EnemyAI
                     return;
                 }
 
-                handleRetaliation();
+                // Handle displacement
+                if (displacable.isDisplaced()) {
+                    // Reset values
+                    wanderTimer = wanderRate;
+                    attackTimer = attackDuration;
+                    lootTimer = lootDuration;
+                    attackCooldownTimer = attackCooldown;
+                    lootingCircle.fillAmount = 0;
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    thiefState = ThiefState.Stunned;
+                    break;
+                }
 
-                handleDisplacement();
+                handleRetaliation();
 
             break;
             case ThiefState.Attacking:
@@ -168,20 +198,22 @@ public class ThiefAI : EnemyAI
                 else { 
                     // Else chase target until it is in range or too far
 
-                    // Always face target
-                    faceTarget();
-
-                    // If you get farther than aggro range, remove target
-                    if (Vector2.Distance(transform.position, target.position) > aggroRange) {
-                        target = null;
-                    }
-
                     // If target is gone (IE dead)
                     if (target == null) {
                         // Go back to search state
                         thiefState = ThiefState.Idle;
                         return;
                     }
+
+                    // If you get farther than aggro range, remove target
+                    if (Vector2.Distance(transform.position, target.position) > aggroRange) {
+                        target = null;
+                        thiefState = ThiefState.Idle;
+                        return;
+                    }
+
+                    // Always face target
+                    faceTarget();
 
                     // Cooldown between attacks
                     if (attackCooldownTimer > 0) {
@@ -190,6 +222,7 @@ public class ThiefAI : EnemyAI
 
                     // If you are in range
                     if (Vector3.Distance(transform.position, target.position) < attackRange) {
+                        //print("dile");
                         // Attack!
                         mv.Walk(0);
 
@@ -203,12 +236,27 @@ public class ThiefAI : EnemyAI
                         }
                     }
                     else {
+                        //print("walke");
                         animationHandler.changeAnimationState(walkAnimation);
                         handleForwardMovement(mv.getFacingDirection());
                     }
 
-                    handleDisplacement();
+                    // Handle displacement
+                    if (displacable.isDisplaced()) {
+                        // Reset values
+                        wanderTimer = wanderRate;
+                        attackTimer = attackDuration;
+                        lootTimer = lootDuration;
+                        attackCooldownTimer = attackCooldown;
+                        lootingCircle.fillAmount = 0;
+                        animationHandler.changeAnimationState(stunnedAnimation);
+                        thiefState = ThiefState.Stunned;
+                        break;
+                    }
+
+                    handleRetaliation();
                 }
+
             break;
             case ThiefState.Looting:
                 // Loot State
@@ -235,29 +283,39 @@ public class ThiefAI : EnemyAI
                     thiefState = ThiefState.Idle;
                 }
 
-                handleRetaliation();
-
-                handleDisplacement();
-
-            break;
-            case ThiefState.Stunned:
-                displacable.performDisplacement();
-
-                if (!displacable.isDisplaced()) {
+                // Handle displacement
+                if (displacable.isDisplaced()) {
                     // Reset values
                     wanderTimer = wanderRate;
                     attackTimer = attackDuration;
                     lootTimer = lootDuration;
                     attackCooldownTimer = attackCooldown;
                     lootingCircle.fillAmount = 0;
-                    thiefState = ThiefState.Idle;
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    thiefState = ThiefState.Stunned;
+                    break;
                 }
 
-                handleDisplacement();
+                handleRetaliation();
+
+            break;
+            case ThiefState.Stunned:
+
+                displacable.performDisplacement();
+
+                if (!displacable.isDisplaced()) {
+                    // Stop walking
+                    mv.Walk(0);
+                    // Change to attacking state
+                    thiefState = ThiefState.Attacking;
+                    break;
+                }
+
             break;
             case ThiefState.Dead:
                 // Do nothin
                 animationHandler.changeAnimationState(deadAnimation);
+                displacable.performDisplacement();
 
             break;
         }
@@ -338,23 +396,30 @@ public class ThiefAI : EnemyAI
         }
     }
 
-    private void handleDisplacement() {
-        if (displacable.isDisplaced()) {
-            animationHandler.changeAnimationState(stunnedAnimation);
-            thiefState = ThiefState.Stunned;
-        }
-    }
-
     private void handleRetaliation() {
         // If entity was attacked...
         if (attacker != null) {
-            // And if entity has no target or is going after an item
-            if (target == null || target.TryGetComponent(out WorldItem worldItem)) {
-                // If the attacker is a player or thief
+            // If the entity did not have a target before, then set new target and go after it
+            if (target == null)  {
+                // Set target to the attacker
                 target = attacker;
-                pathfindUser.setPathTo(target.position);
-                thiefState = ThiefState.Searching;
             }
+            
+            // If ready to be stunned
+            if (hitStun) {
+                // Make entity not stunnable
+                hitStun = false;
+                // Add knockback
+                displacable.triggerKnockback(400f, 0.25f, attacker.transform.position);
+                // Play anim
+                animationHandler.changeAnimationState(stunnedAnimation);
+                // Start cooldown for another hitstun
+                StartCoroutine(hitStunCooldown(1f));
+                // Change state
+                thiefState = ThiefState.Stunned;
+            }
+
+            // Reset attacker
             attacker = null;
         }
     }

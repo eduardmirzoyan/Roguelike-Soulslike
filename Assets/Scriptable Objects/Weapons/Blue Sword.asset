@@ -19,7 +19,7 @@ MonoBehaviour:
   count: 1
   description: Can't believe someone found two diamonds and a stick down here...
   name: Minecraft Reference
-  damage: 10
+  damage: 1
   critChance: 0.1
   critDamage: 1
   weaponType: 0

@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
             level++;
             skillpoints++;
             player.GetComponent<Health>().increaseMaxHealth(10);
-            CreatePopup("LEVEL UP!", player.gameObject.transform.position, Color.cyan);
+            CreatePopup("LEVEL UP!", player.gameObject.transform.position + Vector3.up * 0.5f, Color.cyan);
         }
         xpBar.setExperience(experience);
     }

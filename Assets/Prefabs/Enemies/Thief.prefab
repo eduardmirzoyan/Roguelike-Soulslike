@@ -1280,6 +1280,7 @@ MonoBehaviour:
   isInvincible: 0
   immunityTimer: 0
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  tempDamageEffect: {fileID: 0}
 --- !u!114 &8167846359180885496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1305,7 +1306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: dd7d08a426074f5468381aaab364b153, type: 2}
-  duration: 0.05
+  duration: 0.1
 --- !u!114 &1782937000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1324,8 +1325,6 @@ MonoBehaviour:
   knockbackSpeed: 0
   knockbackDuration: 0
   stunDuration: 0
-  savedState: 
-  knockbackState: 
 --- !u!1 &4548904201857931657
 GameObject:
   m_ObjectHideFlags: 0

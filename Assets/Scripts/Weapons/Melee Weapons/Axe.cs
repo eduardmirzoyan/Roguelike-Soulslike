@@ -43,6 +43,10 @@ public class Axe : MeleeWeapon
                     if (transform.parent.TryGetComponent(out InputBuffer inputBuffer)) {
                         inputBuffer.resetAttackRequests();
                     }
+                    if (currentCombo == 0) {
+                        GameManager.instance.shakeCamera(0.15f, 0.15f);
+                    }
+
                     currentCombo += 1;
                     wielderMovement.Stop();
                     state = WeaponState.Recovering; 

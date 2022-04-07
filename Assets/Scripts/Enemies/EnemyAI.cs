@@ -41,6 +41,7 @@ public abstract class EnemyAI : MonoBehaviour
     protected float wanderTimer;
     protected float attackCooldownTimer;
     protected float attackTimer;
+    protected bool hitStun = true;
 
     protected virtual void Start()
     {
@@ -71,6 +72,11 @@ public abstract class EnemyAI : MonoBehaviour
 
     protected void faceTarget() {
         mv.setFacingDirection(target.transform.position.x - transform.position.x);
+    }
+
+    protected IEnumerator hitStunCooldown(float time) {
+        yield return new WaitForSeconds(time);
+        hitStun = true;
     }
 
     protected virtual void OnDrawGizmosSelected() {

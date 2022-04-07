@@ -52,6 +52,11 @@ public class ShadowKnightAI : BossAI
             // Prevent movement
             mv.Walk(0);
 
+            // If the target was the player, then disalbe the UI
+            if (target.TryGetComponent(out Player player)) {
+                bossHealthBarUI.setBoss(null);
+            }
+
             // Change state to dead
             shadowKnightState = ShadowKnightState.Dead;
         }

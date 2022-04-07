@@ -15,9 +15,6 @@ public class Displacable : MonoBehaviour
     [SerializeField] private float knockbackDuration = 0;
     [SerializeField] private float stunDuration = 0;
 
-    [SerializeField] private string savedState;
-    [SerializeField] private string knockbackState;
-
     private float knockbackDirection;
     private float startTime = 0;
 
@@ -70,22 +67,8 @@ public class Displacable : MonoBehaviour
         mv.dash(knockbackSpeed, knockbackDirection);
     }
 
-    public float getKnockbackDirection() {
-        return knockbackDirection;
-    }
-
     public float getStunDuration() {
         return stunDuration;
-    }
-
-    public void saveState(string state) {
-        if (state != knockbackState) {
-            savedState = state;
-        }
-    }
-
-    public string loadState() {
-        return savedState;
     }
 
     public int getDirectionFromPoint(Vector3 origin)
