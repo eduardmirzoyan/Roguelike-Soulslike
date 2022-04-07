@@ -36,7 +36,7 @@ public class PathfindUser : MonoBehaviour
         mv = GetComponent<Movement>();
         currentPath = new Queue<Vector3>();
         currentTarget = Vector3.back;
-        pathfindingMap = GameManager.instance.GetPathfindingMap();
+        pathfindingMap = GameObject.Find("Pathfinder Map").GetComponent<PathfindingMap>();
         // If alt transform is not set, then set it to the connected component's transform
         if (altTransform == null) {
             altTransform = transform;

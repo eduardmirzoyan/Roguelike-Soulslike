@@ -6,18 +6,18 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Enchantments/Featherfall")]
 public class FeatherFallEnchantment : Enchantment
 {
-    private Rigidbody2D body;
+    private ComplexMovement cmv;
     private FallDamage fallDamage;
 
     public override void intialize(GameObject gameObject)
     {
         base.intialize(gameObject);
-        body = entity.GetComponent<Rigidbody2D>();
+        cmv = entity.GetComponent<ComplexMovement>();
         fallDamage = entity.GetComponent<FallDamage>();
 
-        if (body != null)
+        if (cmv != null)
         {
-            body.gravityScale = 1.5f;
+            cmv.setFallMult(cmv.getFallMult() / 5);
             if (fallDamage != null)
                 fallDamage.enableFallDamage = false;
         }
@@ -25,10 +25,10 @@ public class FeatherFallEnchantment : Enchantment
 
     public override void unintialize()
     {
-        body = entity.GetComponent<Rigidbody2D>();
-        if (body != null)
+        cmv = entity.GetComponent<ComplexMovement>();
+        if (cmv != null)
         {
-            body.gravityScale = 2.5f;
+            cmv.setFallMult(cmv.getFallMult() * 5);
             if (fallDamage != null)
                 fallDamage.enableFallDamage = true;
         }

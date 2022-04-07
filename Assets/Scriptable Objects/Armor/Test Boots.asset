@@ -21,6 +21,6 @@ MonoBehaviour:
   name: Test Boots
   equipSlot: 4
   armorType: 1
-  enchantment: {fileID: 11400000, guid: c2731a30ffcbd1240acb06a4cb9a18fe, type: 2}
+  enchantment: {fileID: 11400000, guid: b0d12d54d74d73a4a81ce417a8397bad, type: 2}
   defenseValue: 5
   bonusStamina: 0

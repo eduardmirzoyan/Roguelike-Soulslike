@@ -226,7 +226,7 @@ public class ImpAI : EnemyAI
                     animationHandler.changeAnimationState(attackAnimation);
 
                     attackTimer -= Time.deltaTime;
-                    if (attackTimer < attackDuration / 2) {
+                    if (attackTimer < 0.4f) {
                         body.velocity = attackDirection * attackDashSpeed;
                     }
                 }

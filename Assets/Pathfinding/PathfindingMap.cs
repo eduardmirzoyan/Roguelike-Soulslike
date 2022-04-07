@@ -55,7 +55,40 @@ public class PathfindingMap : MonoBehaviour
     [SerializeField] private bool drawLines;
 
     private void Start() {
-        // Might run into problem of duplicates in graph! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        print("started");
+        intializePathfindingMap();
+    }
+
+    private void Update() {
+        // if (Input.GetKeyDown(KeyCode.P)) { 
+        //     debugGraph();
+        // }
+
+        // // Testing purposes
+        // if (Input.GetKeyDown(KeyCode.Mouse1)) { 
+        //     Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //     Vector3Int cellPosition = groundTilemap.WorldToCell(mousePosition);
+        //     print("Mouse press: " + mousePosition);
+        //     print("Cell position: " + cellPosition);
+        // }
+
+        // // Testing purposes
+        // if (Input.GetKeyDown(KeyCode.Mouse2)) { 
+        //     Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //     var hit = Physics2D.Raycast(mousePosition, Vector2.down, 1000f, obstaclesMask);
+        //     if (hit) {
+        //         // Shift point down
+        //         hit.point = hit.point - Vector2.up * 0.3f;
+        //         Vector3Int cellPosition = groundTilemap.WorldToCell(hit.point);
+        //         print("Ray hit position: " + hit.point);
+        //         print("Ray cell position: " + cellPosition);
+        //         Debug.DrawLine(mousePosition, hit.point, Color.green, 30f);
+        //     }
+        // }
+    }
+
+    public void intializePathfindingMap() {
+
         graph = new Graph<Vector3Int, string>();
         cellSizeX = groundTilemap.cellSize.x;
         cellSizeY = groundTilemap.cellSize.y;
@@ -65,34 +98,6 @@ public class PathfindingMap : MonoBehaviour
 
         // Connect all the points in the graph
         connectPoints();
-    }
-
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.P)) { 
-            debugGraph();
-        }
-
-        // Testing purposes
-        if (Input.GetKeyDown(KeyCode.Mouse1)) { 
-            Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int cellPosition = groundTilemap.WorldToCell(mousePosition);
-            print("Mouse press: " + mousePosition);
-            print("Cell position: " + cellPosition);
-        }
-
-        // Testing purposes
-        if (Input.GetKeyDown(KeyCode.Mouse2)) { 
-            Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var hit = Physics2D.Raycast(mousePosition, Vector2.down, 1000f, obstaclesMask);
-            if (hit) {
-                // Shift point down
-                hit.point = hit.point - Vector2.up * 0.3f;
-                Vector3Int cellPosition = groundTilemap.WorldToCell(hit.point);
-                print("Ray hit position: " + hit.point);
-                print("Ray cell position: " + cellPosition);
-                Debug.DrawLine(mousePosition, hit.point, Color.green, 30f);
-            }
-        }
     }
 
     public bool isPointInsideMap(Vector3 point) {

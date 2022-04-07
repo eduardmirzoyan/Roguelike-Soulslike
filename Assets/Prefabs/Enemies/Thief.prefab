@@ -1141,14 +1141,14 @@ MonoBehaviour:
   lineOfSight: {fileID: 0}
   displacable: {fileID: 0}
   wanderRadius: 15
-  wanderRate: 30
+  wanderRate: 20
   aggroRange: 7
   attackRange: 1
   attackCooldown: 1
   attackDuration: 0.85
   attackDashSpeed: 100
-  xpValue: 100
-  goldValue: 10
+  xpValue: 33
+  goldValue: 30
   target: {fileID: 0}
   attacker: {fileID: 0}
   pathfindUser: {fileID: 0}
@@ -1261,8 +1261,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33846741462c5094e98ae34256e583c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 25
-  currentHealth: 25
+  maxHealth: 30
+  currentHealth: 30
 --- !u!114 &3964265407416658802
 MonoBehaviour:
   m_ObjectHideFlags: 0

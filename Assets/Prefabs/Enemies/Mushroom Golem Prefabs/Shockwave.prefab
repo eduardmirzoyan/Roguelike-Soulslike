@@ -129,7 +129,7 @@ MonoBehaviour:
   segment: {fileID: 701857165914415394, guid: 88e51c643c01a0a42892a06fc4f9280b, type: 3}
   segmentSpawnPoint: {fileID: 2108529596446502152}
   spawnInterval: 0.25
-  shockwaveDamage: 10
+  shockwaveDamage: 15
 --- !u!114 &4894185898945027259
 MonoBehaviour:
   m_ObjectHideFlags: 0

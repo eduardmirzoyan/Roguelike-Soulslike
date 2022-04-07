@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
 
     public static LevelManager instance; // Accessible by every class at any point
 
+    [SerializeField] private PathfindingMap pathfindingMap;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -39,5 +41,6 @@ public class LevelManager : MonoBehaviour
 
         // Load next scene
         SceneManager.LoadScene(levelIndex);
+        
     }
 }
