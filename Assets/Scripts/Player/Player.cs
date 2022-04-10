@@ -50,7 +50,6 @@ public class Player : MonoBehaviour
 
     [Header("Player Skills")]
     [SerializeField] public List<Skill> playerSkills;
-
     [SerializeField] private bool enableWalljump = false;
 
     public enum PlayerState
@@ -446,6 +445,8 @@ public class Player : MonoBehaviour
             break;
             case PlayerState.attacking:
                 // Let the combat handler handle the player movement during attack
+                // Allow walking but with very reduced movespeed
+                mv.WalkNoTurn(inputBuffer.moveDirection * combatHandler.getAttackMoveSpeedMultiplier());
 
                 if (!inputBuffer.mainHandAttackRequest) {
                     // Attempt to release weapon
@@ -459,11 +460,33 @@ public class Player : MonoBehaviour
 
                 // Handle back to idle
                 if (combatHandler.isDoneAttacking()) {
+                    // Stop moving
+                    mv.Walk(0);
+
                     // Reset attack requests
                     inputBuffer.resetAttackRequests();
 
+                    // Change animation
                     animationHandler.changeAnimationState(idleAnimation);
                     state = PlayerState.idle;
+                    break;
+                }
+
+                // Handle roll cancel
+                if (inputBuffer.rollRequest && combatHandler.weaponsAreRecovering() && rollingHandler.canRoll()) {
+                    // Cancel the current animation
+                    combatHandler.cancelAllAttacks();
+
+                    // Roll in your moving direction
+                    rollingHandler.startRoll(inputBuffer.moveDirection);
+
+                    // Give 100% dodge chance during roll
+                    stats.percentDodgeChance += 1f;
+
+                    // Start animation
+                    animationHandler.changeAnimationState(rollAnimation);
+
+                    state = PlayerState.rolling;
                     break;
                 }
 
@@ -571,7 +594,7 @@ public class Player : MonoBehaviour
                 menu.menuEnabled = true;
 
                 // Stop moving
-                mv.Stop();
+                mv.Walk(0);
 
                 // Set animation
                 animationHandler.changeAnimationState(idleAnimation);

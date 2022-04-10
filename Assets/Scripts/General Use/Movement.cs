@@ -40,17 +40,22 @@ public class Movement : MonoBehaviour
         if (isImmobile)
             return;
 
-
         body.velocity = new Vector2(direction * movespeed * Time.deltaTime, body.velocity.y); // Actually moves the character
 
         if (direction > 0.1f && !isFacingRight || direction < -0.1f && isFacingRight)
         {
             isFacingRight = !isFacingRight;
             transform.Rotate(0f, 180f, 0f);
-            var dustTrail = GetComponent<DustTrail>();
-            if (dustTrail != null)
+            if (TryGetComponent(out DustTrail dustTrail))
                 dustTrail.createDust();
         }
+    }
+
+    public void WalkNoTurn(float direction) {
+        if (isImmobile)
+            return;
+
+        body.velocity = new Vector2(direction * movespeed * Time.deltaTime, body.velocity.y); // Actually moves the character
     }
 
     public void WalkAtSpeed(float direction, float movespeed) // From 0 to 1
@@ -64,8 +69,7 @@ public class Movement : MonoBehaviour
         {
             isFacingRight = !isFacingRight;
             transform.Rotate(0f, 180f, 0f);
-            var dustTrail = GetComponent<DustTrail>();
-            if (dustTrail != null)
+            if (TryGetComponent(out DustTrail dustTrail))
                 dustTrail.createDust();
         }
     }
@@ -73,8 +77,7 @@ public class Movement : MonoBehaviour
     public void Jump()
     {
         body.velocity = new Vector2(body.velocity.x, jumpPower); // Vector2.up * jumpPower;
-        var dustTrail = GetComponent<DustTrail>();
-        if (dustTrail != null)
+        if (TryGetComponent(out DustTrail dustTrail))
             dustTrail.createDust();
     }
 
@@ -88,7 +91,13 @@ public class Movement : MonoBehaviour
         return Physics2D.OverlapCircle(wallCheck.position, wallcheckRadius, wallLayer);
     }
 
-    public float getMovespeed() => movespeed;
+    public void setMoveSpeed(float newSpeed) {
+        movespeed = newSpeed;
+    }
+
+    public float getMovespeed() {
+        return movespeed;
+    }
 
     // Zeros horizontal movement
     public void Stop()

@@ -9,7 +9,6 @@ public class GhostKnightAI : EnemyAI
 {
     [Header("Components")]
     [SerializeField] private PathfindUser pathfindUser;
-    [SerializeField] private CombatStats stats;
     [SerializeField] private ParticleSystem sleepingParticles;
 
     [Header("Animation")]
@@ -32,7 +31,6 @@ public class GhostKnightAI : EnemyAI
         base.Start();
         // Get required components
         pathfindUser = GetComponent<PathfindUser>();
-        stats = GetComponent<CombatStats>();
         sleepingParticles = GetComponent<ParticleSystem>();
         pathfindUser = GetComponent<PathfindUser>();
 

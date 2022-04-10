@@ -23,5 +23,5 @@ MonoBehaviour:
   critChance: 0
   critDamage: 1
   weaponType: 1
-  twoHanded: 1
+  twoHanded: 0
   enchantment: {fileID: 0}

@@ -11,6 +11,7 @@ public class LootManager : MonoBehaviour
     [SerializeField] private List<Sprite> swordSprites;
     [SerializeField] private List<Sprite> axeSprites;
     [SerializeField] private List<Sprite> shieldSprites;
+    [SerializeField] private List<Sprite> spearSprites;
     [SerializeField] private List<MeleeEchantment> meleeEchantments;
 
     [Header("Ranged Weapons")]
@@ -22,6 +23,7 @@ public class LootManager : MonoBehaviour
     [SerializeField] private GameObject axePrefab;
     [SerializeField] private GameObject smallShieldPrefab;
     [SerializeField] private GameObject longBowPrefab;
+    [SerializeField] private GameObject spearPrefab;
 
     [Header("Armor")]
     [SerializeField] private List<Sprite> helmetSprites;
@@ -46,6 +48,8 @@ public class LootManager : MonoBehaviour
 
     [TextArea(10, 15)]
     public string longBowDescription;
+    [TextArea(10, 15)]
+    public string spearDescription;
 
 
     [Header("Debugging")]
@@ -82,7 +86,7 @@ public class LootManager : MonoBehaviour
     }
 
     private WeaponItem generateRandomWeapon() {
-        var weaponType = (WeaponType)Random.Range(0, 4); // 0-3
+        var weaponType = (WeaponType)Random.Range(0, 5); // 0 - 4
         switch(weaponType) {
             case WeaponType.Sword:
                 return generateRandomSword();
@@ -92,6 +96,8 @@ public class LootManager : MonoBehaviour
                 return generateRandomSmallShield();
             case WeaponType.LongBow:
                 return generateRandomLongBow();
+            case WeaponType.Spear:
+                return generateRandomSpear();
         }
         return null;
     }
@@ -134,7 +140,7 @@ public class LootManager : MonoBehaviour
         // Create the scriptable object
         WeaponItem newAxe = ScriptableObject.CreateInstance<WeaponItem>();
         newAxe.weaponType = WeaponType.Axe;
-        newAxe.twoHanded = true;
+        newAxe.twoHanded = false;
         newAxe.prefab = axePrefab;
 
         // Randomize damage stats
@@ -197,9 +203,40 @@ public class LootManager : MonoBehaviour
     private WeaponItem generateRandomLongBow() {
 
         // Create the scriptable object
+        WeaponItem newSpear = ScriptableObject.CreateInstance<WeaponItem>();
+        newSpear.weaponType = WeaponType.LongBow;
+        newSpear.twoHanded = false;
+        newSpear.prefab = spearPrefab;
+
+        // Randomize damage stats
+        newSpear.damage = Random.Range(5, 7);
+
+        // Randomize enchantment
+        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
+            newSpear.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
+        }
+        else {
+            newSpear.enchantment = null;
+        }
+
+        // Randomize sprite
+        newSpear.sprite = spearSprites[Random.Range(0, spearSprites.Count)];
+
+        // Randomize name
+        newSpear.name = prefixes[Random.Range(0, prefixes.Count)] + " Spear";
+
+        // Set description
+        newSpear.description = spearDescription;
+
+        return newSpear;
+    }
+
+    private WeaponItem generateRandomSpear() {
+
+        // Create the scriptable object
         WeaponItem newLongBow = ScriptableObject.CreateInstance<WeaponItem>();
-        newLongBow.weaponType = WeaponType.LongBow;
-        newLongBow.twoHanded = true;
+        newLongBow.weaponType = WeaponType.Spear;
+        newLongBow.twoHanded = false;
         newLongBow.prefab = longBowPrefab;
 
         // Randomize damage stats

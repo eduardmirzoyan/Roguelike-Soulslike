@@ -60,7 +60,7 @@ public class Damageable : MonoBehaviour
 
         // Damage particles if possible
         if (TryGetComponent(out DamageParticles damageParticles))
-            damageParticles.spawnParticles();
+            damageParticles.spawnDamageParticles();
 
         // Flash if applicible
         if (TryGetComponent(out DamageFlash damageFlash))

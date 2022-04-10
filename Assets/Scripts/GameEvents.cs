@@ -32,4 +32,6 @@ public class GameEvents : MonoBehaviour
             onWeaponChange(weapon, onMainHand);
         }
     }
+
+    
 }

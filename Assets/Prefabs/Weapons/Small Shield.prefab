@@ -154,7 +154,7 @@ MonoBehaviour:
   windupDuration: 0.416
   activeDuration: 0.167
   recoveryDuration: 0.167
-  attackMoveSpeed: 0.5
+  moveSpeedMultiplier: 0
   maxCombo: 0
   cooldown: 2
   weaponIdleAnimation: Small Shield Idle
@@ -165,6 +165,7 @@ MonoBehaviour:
   wielderStats: {fileID: 0}
   wielderMovement: {fileID: 0}
   pushForce: 1250
+  dashMultiplier: 2
 --- !u!114 &3032045047508988652
 MonoBehaviour:
   m_ObjectHideFlags: 0

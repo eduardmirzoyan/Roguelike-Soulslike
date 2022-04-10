@@ -719,6 +719,7 @@ MonoBehaviour:
   target: {fileID: 0}
   attacker: {fileID: 0}
   prepareDuration: 1.33
+  deathParticles: {fileID: 4364977842541986429, guid: 69983349b7a3bcd408f7caaf575d931a, type: 3}
   idleAnimation: Idle
   walkAnimation: Walk
   riseAnimation: Rise
@@ -912,7 +913,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32a697b9c83e5b489c252759b7e2466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageParticlesPrefab: {fileID: 4966307847548928999, guid: 2809d85d466243d49bf3bd326ca6841d, type: 3}
+  damageParticlesPrefab: {fileID: 6810468508830901031, guid: f310e49f7843f0c418c2eee2697c9da7, type: 3}
+  spawnPoint: {fileID: 3492238701159351371}
 --- !u!1 &3492238701480011910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,7 +1661,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5670589154456759230
 Canvas:

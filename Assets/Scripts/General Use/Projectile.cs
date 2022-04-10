@@ -106,6 +106,12 @@ public class Projectile : MonoBehaviour
         body.velocity = Vector2.zero;
     }
 
+    public void unFreezePosition() {
+        enableGravity = true;
+        body.isKinematic = false;
+        body.velocity = Vector2.zero;
+    }
+
     private void Update() {
         if (enableGravity) {
             turn();

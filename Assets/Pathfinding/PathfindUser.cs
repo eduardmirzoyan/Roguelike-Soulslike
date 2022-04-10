@@ -24,9 +24,8 @@ public class PathfindUser : MonoBehaviour
 
     // Private fields
     private Queue<Vector3> currentPath;
-    private bool isJump;
+    [SerializeField] private bool isJump;
     [SerializeField] private bool isDrop;
-    private bool properjump;
 
     // Start is called before the first frame update
     private void Start()
@@ -55,10 +54,12 @@ public class PathfindUser : MonoBehaviour
 
     private void jump() {
         if (mv.isGrounded()) {
+            // If the jump distance is one block or less, use pre-calculated jumppower
             if (Mathf.Abs(currentTarget.x) <= 1) {
                 rb.velocity = new Vector2(rb.velocity.x, jumpHeightToVelocityPairs[(int)currentTarget.z]);
             }
             else {
+                // Else solve for jump power
                 Vector2 optimal = pathfindingMap.getOptimalIntialVelocity(currentTarget.x, currentTarget.y, mv.getMovespeed() * Time.deltaTime, Physics2D.gravity.y);
                 rb.velocity = new Vector2(rb.velocity.x, optimal.y);
             }
@@ -136,7 +137,7 @@ public class PathfindUser : MonoBehaviour
 
     public void moveToLocation() {
         // Check if currentTarget is set and you are not jumping
-        if (currentTarget != Vector3.back  && !isJump && !isDrop) {
+        if (currentTarget != Vector3.back && !isJump && !isDrop) {
             // Check if the location that you need to go to is to the left or right of your current position
             if (currentTarget.x - padding > altTransform.position.x) {
                 
@@ -163,6 +164,47 @@ public class PathfindUser : MonoBehaviour
             nextTarget();
             // Check for recalibration if you don't make the jump
             //StartCoroutine(recalibrateIn(5f));
+            isJump = false;
+        }
+
+        if (isDrop) {
+            platformHandler.dropFromPlatform();
+            nextTarget();
+            isDrop = false;
+        }
+    }
+
+    public void moveToLocation(float speedMultiplier) {
+        // Check if currentTarget is set and you are not jumping or dropping
+        if (currentTarget != Vector3.back && !isJump && !isDrop) {
+            // Check if the location that you need to go to is to the left or right of your current position
+            if (currentTarget.x - padding > altTransform.position.x) {
+                if (mv.isGrounded())
+                    mv.Walk(1 * speedMultiplier);
+                else
+                    mv.Walk(1);
+            }
+            else if(currentTarget.x + padding < altTransform.position.x) {
+                if (mv.isGrounded())
+                    mv.Walk(-1 * speedMultiplier);
+                else
+                    mv.Walk(-1);
+            }
+            else {
+                mv.Walk(0);
+            }
+
+            if (Vector2.Distance(altTransform.position, currentTarget) < minTargetDistance && mv.isGrounded()) {
+                nextTarget();
+            }
+        }
+        else {
+            mv.Walk(0);
+        }
+
+        if (isJump) {
+            jump();
+            nextTarget();
             isJump = false;
         }
 

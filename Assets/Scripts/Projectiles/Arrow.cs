@@ -39,7 +39,7 @@ public class Arrow : MonoBehaviour
 
             // If the projectile cannot pierce, make it stuck in enenmy
             if (!projectile.pierce()) {
-                 // Disable collider as to not trigger on other entities
+                // Disable collider as to not trigger on other entities
                 GetComponent<Collider2D>().enabled = false;
 
                 // Make the arrow 'stick' into it's target

@@ -7,7 +7,8 @@ using UnityEngine;
 public class SlimeAI : EnemyAI
 {
     [Header("Slime Settings")]
-    [SerializeField] protected float prepareDuration;
+    [SerializeField] private float prepareDuration;
+    [SerializeField] private GameObject deathParticles;
 
     [Header("Slime Animations")]
     [SerializeField] private string idleAnimation = "Idle";
@@ -47,6 +48,9 @@ public class SlimeAI : EnemyAI
 
             // Change state to dead
             slimeState = SlimeState.Dead;
+
+            // Spawn particles
+            Instantiate(deathParticles, transform.position, Quaternion.identity);
 
             // Destroy instantly
             Destroy(gameObject);

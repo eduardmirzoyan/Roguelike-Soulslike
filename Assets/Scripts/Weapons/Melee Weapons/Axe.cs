@@ -18,7 +18,7 @@ public class Axe : MeleeWeapon
                 // Weapon is winding up the attack
                 if (windupTimer > 0)
                 {
-                    wielderMovement.Stop();
+                    wielderMovement.Walk(0);
                     windupTimer -= Time.deltaTime;
                 }
                 else {
@@ -34,7 +34,7 @@ public class Axe : MeleeWeapon
                 if (activeTimer > 0)
                 {   
                     // Check for enemies hit
-                    wielderMovement.Walk(wielderMovement.getFacingDirection() * attackMoveSpeed);
+                    // wielderMovement.Walk(wielderMovement.getFacingDirection() * attackMoveSpeed);
 
                     activeTimer -= Time.deltaTime;
                 }
@@ -48,7 +48,7 @@ public class Axe : MeleeWeapon
                     }
 
                     currentCombo += 1;
-                    wielderMovement.Stop();
+                    // wielderMovement.Stop();
                     state = WeaponState.Recovering; 
                 }
                 break;

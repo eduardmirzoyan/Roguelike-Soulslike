@@ -31,6 +31,7 @@ public class ImpAI : EnemyAI
     [Header("Animation")]
     [SerializeField] private string flyingAnimation = "Fly";
     [SerializeField] private string attackAnimation = "Attack";
+    [SerializeField] private string rallyAnimation = "Rally";
     [SerializeField] private string deadAnimation = "Dead";
     [SerializeField] private string stunnedAnimation = "Stunned";
 
@@ -206,7 +207,7 @@ public class ImpAI : EnemyAI
 
             break;
             case ImpState.Rallying:
-                animationHandler.changeAnimationState(flyingAnimation);
+                animationHandler.changeAnimationState(rallyAnimation);
 
                 // Don't move while rallying
                 agent.isStopped = true;
@@ -226,7 +227,7 @@ public class ImpAI : EnemyAI
                     animationHandler.changeAnimationState(attackAnimation);
 
                     attackTimer -= Time.deltaTime;
-                    if (attackTimer < 0.4f) {
+                    if (attackTimer < 0.45f) {
                         body.velocity = attackDirection * attackDashSpeed;
                     }
                 }
@@ -372,7 +373,7 @@ public class ImpAI : EnemyAI
     }
 
     public void aggroOn(Transform entity) {
-        print(gameObject.name + " is aggro'd on " + entity.name);
+        // print(gameObject.name + " is aggro'd on " + entity.name);
         interactingCircle.fillAmount = 0; // Reset circle
         target = entity;
         impState = ImpState.Attacking;
@@ -385,6 +386,8 @@ public class ImpAI : EnemyAI
             attackTimer = attackDuration;
             attackCooldownTimer = attackCooldown;
             rallyTimer = rallyDuration;
+            // Stop particles
+            rallyParticles.Stop();
             animationHandler.changeAnimationState(stunnedAnimation);
             impState = ImpState.Stunned;
         }

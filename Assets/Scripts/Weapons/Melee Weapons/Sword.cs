@@ -16,7 +16,7 @@ public class Sword : MeleeWeapon
                 // Weapon is winding up the attack
                 if (windupTimer > 0)
                 {
-                    wielderMovement.Stop();
+                    wielderMovement.Walk(0);
                     windupTimer -= Time.deltaTime;
                 }
                 else {
@@ -27,9 +27,6 @@ public class Sword : MeleeWeapon
                 // Weapon is capable of dealing damage, hitbox active
                 if (activeTimer > 0)
                 {   
-                    // Check for enemies hit
-                    wielderMovement.Walk(wielderMovement.getFacingDirection() * attackMoveSpeed);
-
                     activeTimer -= Time.deltaTime;
                 }
                 else 
@@ -38,7 +35,6 @@ public class Sword : MeleeWeapon
                         inputBuffer.resetAttackRequests();
                     }
                     currentCombo += 1;
-                    wielderMovement.Stop();
                     state = WeaponState.Recovering; 
                 }
                 break;

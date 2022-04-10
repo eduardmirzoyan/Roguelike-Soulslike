@@ -54,38 +54,37 @@ public class PathfindingMap : MonoBehaviour
     /// </summary>
     [SerializeField] private bool drawLines;
 
-    private void Start() {
-        print("started");
+    private void Awake() {
         intializePathfindingMap();
     }
 
-    private void Update() {
-        // if (Input.GetKeyDown(KeyCode.P)) { 
-        //     debugGraph();
-        // }
+    // private void Update() {
+    //     if (Input.GetKeyDown(KeyCode.P)) { 
+    //         debugGraph();
+    //     }
 
-        // // Testing purposes
-        // if (Input.GetKeyDown(KeyCode.Mouse1)) { 
-        //     Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //     Vector3Int cellPosition = groundTilemap.WorldToCell(mousePosition);
-        //     print("Mouse press: " + mousePosition);
-        //     print("Cell position: " + cellPosition);
-        // }
+    //     // Testing purposes
+    //     if (Input.GetKeyDown(KeyCode.Mouse1)) { 
+    //         Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //         Vector3Int cellPosition = groundTilemap.WorldToCell(mousePosition);
+    //         print("Mouse press: " + mousePosition);
+    //         print("Cell position: " + cellPosition);
+    //     }
 
-        // // Testing purposes
-        // if (Input.GetKeyDown(KeyCode.Mouse2)) { 
-        //     Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //     var hit = Physics2D.Raycast(mousePosition, Vector2.down, 1000f, obstaclesMask);
-        //     if (hit) {
-        //         // Shift point down
-        //         hit.point = hit.point - Vector2.up * 0.3f;
-        //         Vector3Int cellPosition = groundTilemap.WorldToCell(hit.point);
-        //         print("Ray hit position: " + hit.point);
-        //         print("Ray cell position: " + cellPosition);
-        //         Debug.DrawLine(mousePosition, hit.point, Color.green, 30f);
-        //     }
-        // }
-    }
+    //     // Testing purposes
+    //     if (Input.GetKeyDown(KeyCode.Mouse2)) { 
+    //         Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //         var hit = Physics2D.Raycast(mousePosition, Vector2.down, 1000f, obstaclesMask);
+    //         if (hit) {
+    //             // Shift point down
+    //             hit.point = hit.point - Vector2.up * 0.3f;
+    //             Vector3Int cellPosition = groundTilemap.WorldToCell(hit.point);
+    //             print("Ray hit position: " + hit.point);
+    //             print("Ray cell position: " + cellPosition);
+    //             Debug.DrawLine(mousePosition, hit.point, Color.green, 30f);
+    //         }
+    //     }
+    // }
 
     public void intializePathfindingMap() {
 

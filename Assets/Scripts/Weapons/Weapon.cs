@@ -25,7 +25,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float windupDuration;
     [SerializeField] protected float activeDuration;
     [SerializeField] protected float recoveryDuration;
-    [SerializeField] protected float attackMoveSpeed;
+    [SerializeField] protected float moveSpeedMultiplier;
     [SerializeField] protected int maxCombo = 2;
     [SerializeField] protected float cooldown;
     
@@ -58,7 +58,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.TryGetComponent(out Damageable damageable) &&  collision.gameObject != this.gameObject)
+        if(collision.TryGetComponent(out Damageable damageable) && collision.gameObject != this.gameObject)
         {
             var damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
 
@@ -136,6 +136,14 @@ public abstract class Weapon : MonoBehaviour
 
     public bool isReady() {
         return state == WeaponState.Ready;
+    }
+
+    public bool isRecovering() {
+        return state == WeaponState.Recovering;
+    }
+
+    public float getMoveSpeedMultiplier() {
+        return moveSpeedMultiplier;
     }
 
     public void cancelAttack() {

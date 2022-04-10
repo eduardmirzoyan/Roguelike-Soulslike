@@ -152,9 +152,9 @@ MonoBehaviour:
   weaponEffects: []
   state: 0
   windupDuration: 0.5
-  activeDuration: 0.15
-  recoveryDuration: 0.3
-  attackMoveSpeed: 0.75
+  activeDuration: 0.25
+  recoveryDuration: 0.2
+  moveSpeedMultiplier: 0.1
   maxCombo: 1
   cooldown: 0
   weaponIdleAnimation: Axe Idle

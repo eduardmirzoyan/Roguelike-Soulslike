@@ -323,7 +323,7 @@ MonoBehaviour:
   windupDuration: 0
   activeDuration: 0.1
   recoveryDuration: 0.2
-  attackMoveSpeed: 0
+  moveSpeedMultiplier: 0.05
   maxCombo: 0
   cooldown: 1
   weaponIdleAnimation: Idle
@@ -331,14 +331,16 @@ MonoBehaviour:
   animationHandler: {fileID: 0}
   spriteRenderer: {fileID: 0}
   owner: {fileID: 0}
+  wielderStats: {fileID: 0}
   wielderMovement: {fileID: 0}
   projectilePrefab: {fileID: 8180301358172037419, guid: 68c17c556d903654f8619bcb20b7fee5, type: 3}
   firepoint: {fileID: 1170771796490494274}
   projectileSpeed: 15
-  projectieSizeMult: 1
-  projectieSpeedMult: 1
+  projectileSizeMult: 1
+  projectileSpeedMult: 1
   numberOfPierces: 0
   numberOfBounces: 0
+  inventory: {fileID: 0}
   shootAnimation: Shoot
   aimRotationSpeed: 100
 --- !u!114 &8994757141273729616
@@ -354,6 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  currentState: 
 --- !u!114 &8154203011443008889
 MonoBehaviour:
   m_ObjectHideFlags: 0

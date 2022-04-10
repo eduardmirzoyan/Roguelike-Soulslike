@@ -17,6 +17,7 @@ public abstract class EnemyAI : MonoBehaviour
     [SerializeField] protected Health health;
     [SerializeField] protected LineOfSight lineOfSight;
     [SerializeField] protected Displacable displacable;
+    [SerializeField] protected CombatStats stats;
 
     [Header("Wandering Settings")]
     [SerializeField] protected float wanderRadius;
@@ -53,6 +54,7 @@ public abstract class EnemyAI : MonoBehaviour
         animationHandler = GetComponent<AnimationHandler>();
         mv = GetComponent<Movement>();
         displacable = GetComponent<Displacable>();
+        stats = GetComponent<CombatStats>();
 
         target = attacker = null;
     }

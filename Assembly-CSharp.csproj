@@ -162,6 +162,7 @@
      <Compile Include="Assets\Scripts\Status Effects\Base Effects\BaseEffect.cs" />
      <Compile Include="Assets\Scripts\Player\ComplexMovement.cs" />
      <Compile Include="Assets\Scripts\Weapons\Ranged Weapons\Ranged Weapon.cs" />
+     <Compile Include="Assets\Scripts\GoblinCamp.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\WeaponDisplayUI.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\AmmoCountUI.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Base Effects\KnockbackEffect.cs" />
@@ -221,6 +222,7 @@
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\Graph\IGraph.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Base Effects\EnfeebleEffect.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Base Effects\SpeedEffect.cs" />
+     <Compile Include="Assets\Testing Shit\Spider\Spider.cs" />
      <Compile Include="Assets\Scripts\Environment\FalseShrine.cs" />
      <Compile Include="Assets\Scripts\Abillities\SlashAbility.cs" />
      <Compile Include="Assets\Scripts\Other\TimedDestroy.cs" />
@@ -251,6 +253,7 @@
      <Compile Include="Assets\Scripts\UI Scripts\ExperienceBar.cs" />
      <Compile Include="Assets\Scripts\Enemies\Imp\ImpAI.cs" />
      <Compile Include="Assets\Scripts\Familiars\FamiliarHandler.cs" />
+     <Compile Include="Assets\Scripts\Projectiles\SpearProjectile.cs" />
      <None Include="Assets\Shader\Sprite-Grayscale.shader" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

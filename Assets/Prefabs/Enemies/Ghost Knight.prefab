@@ -662,7 +662,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0.5}
-  m_SizeDelta: {x: 1, y: 1}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &986126622
 Canvas:
@@ -1658,6 +1658,7 @@ GameObject:
   - component: {fileID: -8373010377783489169}
   - component: {fileID: 1718550426}
   - component: {fileID: 2130890609893911106}
+  - component: {fileID: 495678929619438457}
   m_Layer: 7
   m_Name: Ghost Knight
   m_TagString: Fighter
@@ -6532,7 +6533,7 @@ MonoBehaviour:
   wanderRate: 0
   aggroRange: 5
   attackRange: 2
-  attackCooldown: 2
+  attackCooldown: 1.25
   attackDuration: 1.5
   attackDashSpeed: 200
   xpValue: 33
@@ -6807,6 +6808,21 @@ MonoBehaviour:
   knockbackSpeed: 0
   knockbackDuration: 0
   stunDuration: 0
+--- !u!114 &495678929619438457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841289740653524853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c32a697b9c83e5b489c252759b7e2466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageParticlesPrefab: {fileID: 8865745841887048178, guid: 9903a678a7f6be34193580ceec34e0e3, type: 3}
+  deathParticlesPrefab: {fileID: 8865745841887048178, guid: 9903a678a7f6be34193580ceec34e0e3, type: 3}
+  spawnPoint: {fileID: 6841289740653524856}
 --- !u!1 &6841289740735046445
 GameObject:
   m_ObjectHideFlags: 0

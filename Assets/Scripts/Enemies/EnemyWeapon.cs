@@ -31,6 +31,10 @@ public class EnemyWeapon : MonoBehaviour
         }
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
     public void setDamage(int dmg) {
         damage = dmg;
     }

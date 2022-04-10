@@ -116,7 +116,7 @@ PolygonCollider2D:
     - - {x: -0.12216841, y: 0.04479061}
       - {x: 0.041879013, y: -0.11810914}
       - {x: 0.3631593, y: 0.2021823}
-      - {x: 0.36444634, y: 0.36485454}
+      - {x: 0.41098857, y: 0.4131205}
       - {x: 0.20786546, y: 0.36454213}
 --- !u!95 &1187901017
 Animator:
@@ -154,7 +154,7 @@ MonoBehaviour:
   windupDuration: 0.2
   activeDuration: 0.1
   recoveryDuration: 0.2
-  attackMoveSpeed: 1
+  moveSpeedMultiplier: 0.25
   maxCombo: 2
   cooldown: 0
   weaponIdleAnimation: Sword Idle

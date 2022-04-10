@@ -7,7 +7,8 @@ public enum WeaponType
     Sword,
     Axe,
     SmallShield,
-    LongBow
+    LongBow,
+    Spear
 }
 
 [CreateAssetMenu]

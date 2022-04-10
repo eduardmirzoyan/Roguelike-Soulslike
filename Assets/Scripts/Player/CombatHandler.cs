@@ -16,6 +16,9 @@ public class CombatHandler : MonoBehaviour
     [SerializeField] public List<Ability> allPlayerAbilities;
     [SerializeField] private AnimationHandler animationHandler;
 
+    [Header("Settings")]
+    [SerializeField] private float attackMoveSpeedMultiplier;
+
     [Header("Weapons")]
     [SerializeField] private Weapon mainHandWeapon;
     [SerializeField] private Weapon offHandWeapon;
@@ -99,59 +102,6 @@ public class CombatHandler : MonoBehaviour
             offHandWeapon.cancelAttack();
         }
     }
-
-    public void attemptToUseSignatureAbility()
-    {
-        // Check if player has an ability equipped and ready and if he has pressed the correct key
-        if (signatureAbilityHolder.isReady())
-        {
-            // Check if the player has enough stamina to use the ability
-            if (stamina.drainStamina(signatureAbilityHolder.getAbility().staminaCost))
-            {
-                // Check if ability requires a weapon to use
-                if (signatureAbilityHolder.getAbility().requiresWeapon && GetComponentInChildren<Weapon>() == null)
-                    GameManager.instance.CreatePopup("You need a weapon equipped to use this ability.", transform.position);
-                else
-                {
-                    // if all pass, then use the ability and change the player's state
-                    mv.Stop();
-                    signatureAbilityHolder.useAbility();
-                    //attacking = true;
-
-                    // Trigger event
-                }
-            }
-            else
-                GameManager.instance.CreatePopup("Not enough stamina.", transform.position);
-        }
-    }
-
-    public void attemptToUseUtilityAbility()
-    {
-        // Check if player has an ability equipped and ready and if he has pressed the correct key
-        if (utilityAbilityHolder.isReady())
-        {
-            // Check if the player has enough stamina to use the ability
-            if (stamina.drainStamina(utilityAbilityHolder.getAbility().staminaCost))
-            {
-                // Check if ability requires a weapon to use
-                if (utilityAbilityHolder.getAbility().requiresWeapon && GetComponentInChildren<Weapon>() == null)
-                    GameManager.instance.CreatePopup("You need a weapon equipped to use this ability.", transform.position);
-                else
-                {
-                    // if all pass, then use the ability and change the player's state
-                    mv.Stop();
-                    utilityAbilityHolder.useAbility();
-
-                    //state = PlayerState.locked;
-                    //attacking = true;
-                }
-            }
-            else
-                GameManager.instance.CreatePopup("Not enough stamina.", transform.position);
-        }
-    }
-
     public void equipSignatureAbility(Ability ability)
     {
         signatureAbilityHolder.changeAbility(ability);
@@ -172,5 +122,30 @@ public class CombatHandler : MonoBehaviour
         return false;
     }
 
+    public float getAttackMoveSpeedMultiplier() {
+        // If mainhand is attacking, then get mainhand
+        if (mainHandWeapon != null && !mainHandWeapon.isReady()) {
+            return mainHandWeapon.getMoveSpeedMultiplier();
+        }
+        // If offhand is attacking, then get offhand
+        if (offHandWeapon != null && !offHandWeapon.isReady()) {
+            return offHandWeapon.getMoveSpeedMultiplier();
+        }
+        // Else return 0
+        return 0;
+    }
+
+    public bool weaponsAreRecovering() {
+        // Either mainhand weapon is not equipped or in recover state
+        if (mainHandWeapon == null || mainHandWeapon.isRecovering()) {
+            // Either offhand weapon is not equipped or in recover state
+            if (offHandWeapon == null || offHandWeapon.isRecovering()) {
+                // Then you are recovering
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
     
 }

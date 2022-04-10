@@ -482,6 +482,16 @@ public class ThiefAI : EnemyAI
                 inventory.addItem(worldItem.GetItem());
                 Destroy(worldItem.gameObject);
                 lootingCircle.sprite = hasLootSprite;
+
+                // Buff thief
+                var weapon = GetComponentInChildren<EnemyWeapon>();
+                if (weapon != null) {
+                    // Increase damage by 25%
+                    weapon.setDamage((int) (weapon.getDamage() * 0.25f));
+
+                    // Increase movespeed by 25%
+                    mv.setMoveSpeed(mv.getMovespeed() * 1.25f);
+                }
             }
             else
                 print("Item doesn't exist here");

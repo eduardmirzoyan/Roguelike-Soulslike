@@ -36,9 +36,6 @@ public class LongBow : RangedWeapon
                 else if (Input.GetKey(KeyCode.DownArrow) && trans > -25) { // Min angle of -25
                     transform.Rotate(-Vector3.forward * aimRotationSpeed * Time.deltaTime);
                 }
-
-                // Prevent movement
-                wielderMovement.Walk(0);
                 
                 // When the bow is released, switch to active state
                 if (isReleased) {
@@ -69,6 +66,7 @@ public class LongBow : RangedWeapon
                 }
                 break;
             case WeaponState.Active: // Firing bow
+                // Prevent movement
                 wielderMovement.Walk(0);
 
                 if (activeTimer > 0) {   
@@ -79,6 +77,7 @@ public class LongBow : RangedWeapon
                 }
                 break;
             case WeaponState.Recovering: // Going back to idle
+                // Prevent movement
                 wielderMovement.Walk(0);
 
                 // Weapon is recovering to ready state

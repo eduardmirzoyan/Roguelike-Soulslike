@@ -5,6 +5,7 @@ using UnityEngine;
 public class SmallShield : MeleeWeapon
 {
     [SerializeField] private float pushForce;
+    [SerializeField] private float dashMultiplier;
 
     private void FixedUpdate() {
         switch (state)
@@ -17,10 +18,11 @@ public class SmallShield : MeleeWeapon
                 
                 break;
             case WeaponState.WindingUp:
+                // Dash until times up or get near something?
+
                 // Weapon is winding up the attack
                 if (windupTimer > 0)
                 {
-                    wielderMovement.Walk(0);
                     windupTimer -= Time.deltaTime;
                 }
                 else {
@@ -31,8 +33,8 @@ public class SmallShield : MeleeWeapon
                 // Weapon is capable of dealing damage, hitbox active
                 if (activeTimer > 0)
                 {   
-                    // Check for enemies hit
-                    wielderMovement.Walk(wielderMovement.getFacingDirection() * attackMoveSpeed);
+                    // Dash
+                    wielderMovement.dash(wielderMovement.getMovespeed() * dashMultiplier, wielderMovement.getFacingDirection());
 
                     activeTimer -= Time.deltaTime;
                 }
@@ -87,6 +89,9 @@ public class SmallShield : MeleeWeapon
                 pushForce = adjustedPush
             };
             damageable.takeDamage(dmg);
+
+            // Stop dashing
+            activeTimer = 0;
         }
     }
 }
