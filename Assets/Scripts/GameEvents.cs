@@ -14,8 +14,9 @@ public class GameEvents : MonoBehaviour
     }
     
     public event Action<GameObject, GameObject, int> onHit;
-
     public event Action<Weapon, bool> onWeaponChange;
+    public event Action<GoblinAI, GoblinCamp> onLeaveGoblinCamp;
+    public event Action<GoblinAI, GoblinCamp> onJoinGoblinCamp;
 
     public void triggerOnHit(GameObject attackingEnitiy, GameObject hitEntity, int damageTaken)
     {
@@ -33,5 +34,11 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public void triggerLeaveGoblinCamp() {
+
+    }
     
+    public void triggerJoinGoblinCamp() {
+        
+    }
 }

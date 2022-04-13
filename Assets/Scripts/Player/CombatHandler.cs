@@ -102,6 +102,7 @@ public class CombatHandler : MonoBehaviour
             offHandWeapon.cancelAttack();
         }
     }
+    
     public void equipSignatureAbility(Ability ability)
     {
         signatureAbilityHolder.changeAbility(ability);
@@ -122,24 +123,11 @@ public class CombatHandler : MonoBehaviour
         return false;
     }
 
-    public float getAttackMoveSpeedMultiplier() {
-        // If mainhand is attacking, then get mainhand
-        if (mainHandWeapon != null && !mainHandWeapon.isReady()) {
-            return mainHandWeapon.getMoveSpeedMultiplier();
-        }
-        // If offhand is attacking, then get offhand
-        if (offHandWeapon != null && !offHandWeapon.isReady()) {
-            return offHandWeapon.getMoveSpeedMultiplier();
-        }
-        // Else return 0
-        return 0;
-    }
-
     public bool weaponsAreRecovering() {
         // Either mainhand weapon is not equipped or in recover state
-        if (mainHandWeapon == null || mainHandWeapon.isRecovering()) {
+        if (mainHandWeapon == null || mainHandWeapon.isRecovering() || mainHandWeapon.isReady()) {
             // Either offhand weapon is not equipped or in recover state
-            if (offHandWeapon == null || offHandWeapon.isRecovering()) {
+            if (offHandWeapon == null || offHandWeapon.isRecovering() || offHandWeapon.isReady()) {
                 // Then you are recovering
                 return true;
             }

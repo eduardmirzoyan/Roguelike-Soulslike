@@ -535,6 +535,7 @@ public class PathfindingMap : MonoBehaviour
             {
                 if (groundTilemap.HasTile(localPlace))
                 {
+                    Debug.DrawRay(pos, Vector2.up * 5, Color.blue, 100f);
                     throw new System.Exception("A PLATFORM AND GROUND TILE ARE OVERLAPPING AT: " + localPlace);
                 }
                 grid.Add(localPlace);

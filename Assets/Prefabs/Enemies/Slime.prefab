@@ -537,7 +537,6 @@ GameObject:
   - component: {fileID: 7831371506507338820}
   - component: {fileID: 4282156032667235912}
   - component: {fileID: 6281634104381106234}
-  - component: {fileID: -2510874952693145454}
   - component: {fileID: 8562900931839601486}
   - component: {fileID: 3302980281153564039}
   - component: {fileID: 572667285769565752}
@@ -545,6 +544,7 @@ GameObject:
   - component: {fileID: 377130710340846240}
   - component: {fileID: 1975976472}
   - component: {fileID: 252549381}
+  - component: {fileID: 949751380}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Fighter
@@ -707,6 +707,7 @@ MonoBehaviour:
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
   displacable: {fileID: 0}
+  stats: {fileID: 0}
   wanderRadius: 0
   wanderRate: 3
   aggroRange: 0
@@ -784,22 +785,6 @@ MonoBehaviour:
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  tempDamageEffect: {fileID: 0}
---- !u!114 &-2510874952693145454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3492238701159351382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9923e5b7480c8ab4bb71e98a11fc7f0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flashMaterial: {fileID: 2100000, guid: dd7d08a426074f5468381aaab364b153, type: 2}
-  duration: 0.05
 --- !u!114 &8562900931839601486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,6 +842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStandingPlatform: {fileID: 0}
+  dropTime: 0.35
   isDropping: 0
 --- !u!114 &377130710340846240
 MonoBehaviour:
@@ -882,6 +868,7 @@ MonoBehaviour:
   padding: 0.05
   viewableQueue: []
   currentTarget: {x: 0, y: 0, z: 0}
+  isJump: 0
   isDrop: 0
 --- !u!114 &1975976472
 MonoBehaviour:
@@ -898,9 +885,7 @@ MonoBehaviour:
   mv: {fileID: 0}
   stunImmune: 0
   knockbackImmune: 0
-  knockbackSpeed: 0
-  knockbackDuration: 0
-  stunDuration: 0
+  twoDimensionalKnockback: 0
 --- !u!114 &252549381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,7 +899,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageParticlesPrefab: {fileID: 6810468508830901031, guid: f310e49f7843f0c418c2eee2697c9da7, type: 3}
+  deathParticlesPrefab: {fileID: 0}
   spawnPoint: {fileID: 3492238701159351371}
+--- !u!114 &949751380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3492238701159351382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440e28ef0705b0f478182348446ed31f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displacable: {fileID: 0}
+  health: {fileID: 0}
+  damageRequiredRatio: 0.25
+  bufferDuration: 0.25
+  pushforce: 250
+  pushDuration: 0.5
 --- !u!1 &3492238701480011910
 GameObject:
   m_ObjectHideFlags: 0

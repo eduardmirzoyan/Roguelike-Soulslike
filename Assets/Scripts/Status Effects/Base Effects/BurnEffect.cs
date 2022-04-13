@@ -7,6 +7,7 @@ public class BurnEffect : BaseEffect
 {
     public int tickDamage;
     public Color damageColor;
+    public GameObject onFireParticles;
 
     public override TimedEffect InitializeEffect(GameObject parent)
     {

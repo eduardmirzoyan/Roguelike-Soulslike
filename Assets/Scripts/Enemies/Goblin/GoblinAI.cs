@@ -12,7 +12,8 @@ public class GoblinAI : EnemyAI
     [SerializeField] private PathfindUser pathfindUser;
 
     [Header("Goblin Settings")]
-    [SerializeField] private GoblinCamp currentCamp;
+    [SerializeField] private Transform currentCamp;
+    [SerializeField] private Transform targetCamp;
     [SerializeField] private float campSiteRange;
     [SerializeField] private float patrolMultiplier;
 
@@ -26,6 +27,8 @@ public class GoblinAI : EnemyAI
     private enum GoblinState {
         Idle,
         Patroling,
+        AtCamp,
+        Chasing,
         Attacking,
         Stunned,
         Dead
@@ -79,48 +82,44 @@ public class GoblinAI : EnemyAI
         switch(goblinState) {
             case GoblinState.Idle:
                 // Set animation based on movement
-                if (Mathf.Abs(body.velocity.x) < 0.1f)
+                if (Mathf.Abs(body.velocity.x) < 0.05f)
                     animationHandler.changeAnimationState(idleAnimation);
                 else
                     animationHandler.changeAnimationState(walkAnimation);
 
+                // Search for targets
                 searchForEnemies();
 
-                // If an enemy has been gound, change states
+                // Retaliate on being hit
+                handleRetaliation();
+                
+                // If target was found then chase
                 if (target != null) {
-
-                    // Find path to attacker
                     pathfindUser.setPathTo(target.position);
-
-                    // If goblin is going to a camp
-                    if (target.TryGetComponent(out GoblinCamp camp)) {
-                        // Move at 50% speed
-                        stats.movespeedMultiplier = -0.5f;
-                    }
-                    else {
-                        stats.movespeedMultiplier = 0f;
-                    }
-
-                    // Change state
-                    goblinState = GoblinState.Patroling;
-                    return;
+                    stats.movespeedMultiplier = 0;
+                    goblinState = GoblinState.Chasing;
+                    break;
                 }
 
-                // If they are at a campsite, then wander
-                wanderAtCamp();
+                // If no target, then go to camp
+                if (targetCamp == null) {
+                    goToNearestCamp();
+                    stats.movespeedMultiplier = 0;
+                    goblinState = GoblinState.Patroling;
+                    break;
+                }
 
                 // Handle any displacement
                 if (displacable.isDisplaced()) {
-                    // Reset values
-                    wanderTimer = wanderRate;
-                    attackTimer = attackDuration;
-                    attackCooldownTimer = attackCooldown;
+                    if (displacable.isStunned()) {
+                        // Reset values
+                        resetValues();
+                    }
+                    
                     animationHandler.changeAnimationState(stunnedAnimation);
                     goblinState = GoblinState.Stunned;
                     break;
                 }
-
-                handleRetaliation();
 
             break;
             case GoblinState.Patroling:
@@ -130,82 +129,195 @@ public class GoblinAI : EnemyAI
                 else
                     animationHandler.changeAnimationState(walkAnimation);
 
-                // If target is removed during travel, then cancel path
-                if (target == null) {
-                    pathfindUser.stopTraveling();
-                    goblinState = GoblinState.Idle;
-                    return;
-                }
-                
-                // Move towards target
-                pathfindUser.moveToLocation(1 + stats.movespeedMultiplier);
+                // If you have a camp to go to, then go to it
+                if (targetCamp != null) {
+                    // Move towards target
+                    pathfindUser.moveToLocation(1 + stats.movespeedMultiplier);
 
-                // If you got within campsite range
-                if (Vector2.Distance(transform.position, target.position) < campSiteRange) {
+                    // If you arrived within campsite range
+                    if (Vector2.Distance(transform.position, targetCamp.position) < campSiteRange) {
+                        // Stop moving
+                        pathfindUser.stopTraveling();
 
-                    // If you have reached a campsite, then notify the campsite
-                    if (target.TryGetComponent(out GoblinCamp camp)) {
-                        // Leave current camp
-                        if (currentCamp != null) {
-                            currentCamp.leaveCamp(this);
+                        // Leave current camp if possible
+                        if (currentCamp != null && currentCamp.TryGetComponent(out GoblinCamp campToLeave)) {
+                            campToLeave.leaveCamp(this);
+                            currentCamp = null;
                         }
 
-                        // Stop moving
-                        pathfindUser.stopTraveling();
-
                         // Join new camp
-                        camp.joinCamp(this);
+                        if (targetCamp.TryGetComponent(out GoblinCamp campToJoin)) {
+                            campToJoin.joinCamp(this);
+                        }
 
                         // Set current camp
-                        currentCamp = camp;
-                        
-                        // Remove target
-                        target = null;
+                        currentCamp = targetCamp;
 
-                        // Change to Idle state until camp tells you to move
-                        goblinState = GoblinState.Idle;
-                        return;
-                    }
-                }
-                
-                // If you go within attack range
-                if (Vector2.Distance(transform.position, target.position) < attackRange) {
+                        // Remove target camp
+                        targetCamp = null;
 
-                    // if it's a player, then attack
-                    if (target.TryGetComponent(out Player player)) {
-                        // Stop moving
-                        pathfindUser.stopTraveling();
-                        
-                        // Change to Attack State!
-                        goblinState = GoblinState.Attacking;
-                        return;
+                        goblinState = GoblinState.AtCamp;
+                        break;
                     }
+
+                    // Still search for enemies
+                    searchForEnemies();
+
                     
                 }
-
-                // If entity has reached the end of the path and has not reacted to target, then go back to being idle
-                if (pathfindUser.isDonePathing()) {
-                    target = null;
+                else { // If no camp target, then go back to idle
+                    stats.movespeedMultiplier = 0f;
                     goblinState = GoblinState.Idle;
-                    return;
+                }
+
+                // Handle being attacked
+                handleRetaliation();
+
+                // If you have an enemy target, then switch to chasing it
+                if (target != null) {
+                    // Leave camp
+                    if (currentCamp != null && currentCamp.TryGetComponent(out GoblinCamp camp)) {
+                        camp.leaveCamp(this);
+                        currentCamp = null;
+                    }
+                    // Remove target camp
+                    targetCamp = null;
+
+                    pathfindUser.setPathTo(target.position);
+                    stats.movespeedMultiplier = 0f;
+                    goblinState = GoblinState.Chasing;
+                    break;
                 }
 
                 // Handle any displacement
                 if (displacable.isDisplaced()) {
-                    // Reset values
-                    wanderTimer = wanderRate;
-                    attackTimer = attackDuration;
-                    attackCooldownTimer = attackCooldown;
+                    if (displacable.isStunned()) {
+                        // Reset values
+                        resetValues();
+                    }
+
                     animationHandler.changeAnimationState(stunnedAnimation);
                     goblinState = GoblinState.Stunned;
                     break;
                 }
 
+            break;
+            case GoblinState.AtCamp:
+                // Set animation based on movement
+                if (Mathf.Abs(body.velocity.x) < 0.1f)
+                    animationHandler.changeAnimationState(idleAnimation);
+                else
+                    animationHandler.changeAnimationState(walkAnimation);
+
+
+                if (currentCamp != null) {
+                    // Else wander until camp sets target
+                    wanderAtCamp();
+
+                    // If assigned a new camp then patrol to it
+                    if (targetCamp != null) {
+                        // Set path
+                        pathfindUser.setPathTo(targetCamp.position);
+                        // Set patrol speed
+                        stats.movespeedMultiplier = -0.5f;
+                        // Change states
+                        goblinState = GoblinState.Patroling;
+                        break;
+                    }
+                }
+                else { // If you are not at a current camp, then go back to idle
+                    
+                    goblinState = GoblinState.Idle;
+                    break;
+                }
+
+                // Still search for enemies
+                searchForEnemies();
+
+                // Handle any enemies attacking
                 handleRetaliation();
+
+                // If enemy was found, then chase
+                if (target != null) {
+                    
+                    // Leave camp
+                    if (currentCamp != null && currentCamp.TryGetComponent(out GoblinCamp camp)) {
+                        camp.leaveCamp(this);
+                        currentCamp = null;
+                    }
+                    // Remove target camp
+                    targetCamp = null;
+
+                    // Set path
+                    pathfindUser.setPathTo(target.position);
+                    // Set patrol speed
+                    stats.movespeedMultiplier = 0;
+                    // Change states
+                    goblinState = GoblinState.Chasing;
+                    break;
+                }
+
+                // Handle any displacement
+                if (displacable.isDisplaced()) {
+                    if (displacable.isStunned()) {
+                        // Reset values
+                        resetValues();
+                    }
+
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    goblinState = GoblinState.Stunned;
+                    break;
+                }
+
+            break;
+            case GoblinState.Chasing:
+                // Set animation based on movement
+                if (Mathf.Abs(body.velocity.x) < 0.1f)
+                    animationHandler.changeAnimationState(idleAnimation);
+                else
+                    animationHandler.changeAnimationState(walkAnimation);
+                
+                // If target is gone
+                if (target == null) {
+                    goblinState = GoblinState.Idle;
+                    break;
+                }
+
+                // If target is too far
+                if (Vector2.Distance(target.transform.position, transform.position) > aggroRange) {
+                    target = null;
+                    goblinState = GoblinState.Idle;
+                    break;
+                }
+
+                // Move towards target
+                pathfindUser.moveToLocation(1 + stats.movespeedMultiplier);
+
+                // If you go within attack range
+                if (Vector2.Distance(transform.position, target.position) < attackRange) {
+                    // Stop moving
+                    pathfindUser.stopTraveling();
+                    
+                    // Change to Attack State!
+                    goblinState = GoblinState.Attacking;
+                    return;
+                }
+
+                // Handle any displacement
+                if (displacable.isDisplaced()) {
+                    if (displacable.isStunned()) {
+                        // Reset values
+                        resetValues();
+                    }
+
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    goblinState = GoblinState.Stunned;
+                    break;
+                }
 
             break;
             case GoblinState.Attacking:
-                // If you are in the middle of an attack, then let it play
+                // If you are in the middle of an attack, then let it play out
                 if (attackTimer > 0) {
                     animationHandler.changeAnimationState(attackAnimation);
                     
@@ -213,12 +325,12 @@ public class GoblinAI : EnemyAI
                     if (attackTimer < attackDuration / 2) {
                         mv.dash(attackDashSpeed, mv.getFacingDirection());
                     }
-
                 }
                 else { // Else chase target until it is in range or too far
 
                     // If target is gone (IE dead)
                     if (target == null) {
+                        mv.Walk(0);
                         // Go back to search state
                         goblinState = GoblinState.Idle;
                         return;
@@ -257,27 +369,26 @@ public class GoblinAI : EnemyAI
                         animationHandler.changeAnimationState(walkAnimation);
                         handleForwardMovement(mv.getFacingDirection());
                     }
-
-                    // Handle any displacement
-                    if (displacable.isDisplaced()) {
+                }
+                
+                // Handle any displacement
+                if (displacable.isDisplaced()) {
+                    if (attackTimer > 0 || displacable.isStunned()) {
                         // Reset values
-                        wanderTimer = wanderRate;
-                        attackTimer = attackDuration;
-                        attackCooldownTimer = attackCooldown;
-                        animationHandler.changeAnimationState(stunnedAnimation);
-                        goblinState = GoblinState.Stunned;
-                        break;
+                        resetValues();
                     }
 
-                    handleRetaliation();
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    goblinState = GoblinState.Stunned;
+                    break;
                 }
+
             break;
             case GoblinState.Stunned:
                 // Any addition knockbacks are incoperated here
                 displacable.performDisplacement();
 
                 if (!displacable.isDisplaced()) {
-                    
                     // Set to attacking
                     goblinState = GoblinState.Attacking;
                 }
@@ -304,8 +415,10 @@ public class GoblinAI : EnemyAI
 
     public void patrolTo(Transform camp) {
         // If the goblin has no target, then go to camp
-        if (target == null) {
-            target = camp;
+        if (targetCamp == null) {
+            stats.movespeedMultiplier = -0.5f;
+            targetCamp = camp;
+            pathfindUser.setPathTo(targetCamp.position);
         }
     }
 
@@ -328,8 +441,8 @@ public class GoblinAI : EnemyAI
 
             // If a possible enemy is found, then set it as target
             if (closest != null) {
-                target = closest;
-                pathfindUser.setPathTo(target.position);
+                targetCamp = closest;
+                pathfindUser.setPathTo(targetCamp.position);
             }
         }
         
@@ -345,7 +458,7 @@ public class GoblinAI : EnemyAI
         var colliders = lineOfSight.getAllEnemiesInSight(aggroRange);
 
         if (colliders.Length != 0) {
-            // Get closest enemy that meats criteria
+            // Get closest enemy that meets criteria
 
             Transform closest = null;
             float shortestDistance = Mathf.Infinity;
@@ -387,7 +500,7 @@ public class GoblinAI : EnemyAI
                 return;
             }
 
-            Vector3 randomPoint = getRandomPointInRadius(wanderRadius, 0, currentCamp.transform.position, true);
+            Vector3 randomPoint = getRandomPointInRadius(wanderRadius, 0, currentCamp.position, true);
             
             pathfindUser.setPathTo(randomPoint);
             wanderTimer = wanderRate;
@@ -437,22 +550,21 @@ public class GoblinAI : EnemyAI
             
             // If the entity did not have a target before, then set new target and go after it
             if (target == null)  {
+               
+                // Remove camp
+                if (currentCamp != null && currentCamp.TryGetComponent(out GoblinCamp camp)) {
+                    camp.leaveCamp(this);
+                    currentCamp = null;
+                }
+                
+                // Remove target camp
+                targetCamp = null;
+
+                // Set movespeed
+                stats.movespeedMultiplier = 0f;
+
                 // Set target to the attacker
                 target = attacker;
-            }
-            
-            // If ready to be stunned
-            if (hitStun) {
-                // Make entity not stunnable
-                hitStun = false;
-                // Add knockback
-                displacable.triggerKnockback(400f, 0.25f, attacker.transform.position);
-                // Play anim
-                animationHandler.changeAnimationState(stunnedAnimation);
-                // Start cooldown for another hitstun
-                StartCoroutine(hitStunCooldown(1f));
-                // Change state
-                goblinState = GoblinState.Stunned;
             }
             
             // Reset attacker
@@ -460,12 +572,18 @@ public class GoblinAI : EnemyAI
         }
     }
     
+    private void OnDestroy() {
+        // Create corpse
+        if (health.currentHealth <= 0)
+            GameManager.instance.spawnCorpse(gameObject);
+    }
+
     protected override void OnDrawGizmosSelected() {
         base.OnDrawGizmosSelected();
 
-        if (currentCamp != null) {
+        if (targetCamp != null) {
             Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(currentCamp.transform.position, wanderRadius);
+            Gizmos.DrawWireSphere(targetCamp.transform.position, wanderRadius);
         }
 
         Gizmos.color = Color.white;

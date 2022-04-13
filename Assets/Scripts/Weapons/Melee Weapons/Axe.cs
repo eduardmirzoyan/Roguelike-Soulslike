@@ -6,6 +6,8 @@ public class Axe : MeleeWeapon
 {
     [SerializeField] private float bonusDamagePercentage;
 
+    private float tempDashspeed;
+
     protected void FixedUpdate()
     {
         switch (state)
@@ -22,10 +24,8 @@ public class Axe : MeleeWeapon
                     windupTimer -= Time.deltaTime;
                 }
                 else {
-                    // Spawn trail if possible
-                    if(TryGetComponent(out WeaponSwingTrail weaponSwingTrail))
-                        weaponSwingTrail.spawnTrail();
 
+                    tempDashspeed = dashspeed;
                     state = WeaponState.Active; 
                 }
                 break;
@@ -33,22 +33,26 @@ public class Axe : MeleeWeapon
                 // Weapon is capable of dealing damage, hitbox active
                 if (activeTimer > 0)
                 {   
-                    // Check for enemies hit
-                    // wielderMovement.Walk(wielderMovement.getFacingDirection() * attackMoveSpeed);
+                    // Move while attacking
+                    wielderMovement.dash(tempDashspeed, wielderMovement.getFacingDirection());
+                    tempDashspeed = Mathf.Lerp(tempDashspeed, 0, 1 - activeTimer / activeDuration);
 
                     activeTimer -= Time.deltaTime;
                 }
                 else 
                 {
+                    // Reset requests
                     if (transform.parent.TryGetComponent(out InputBuffer inputBuffer)) {
                         inputBuffer.resetAttackRequests();
                     }
+
+                    // Screenshake for visual effect
                     if (currentCombo == 0) {
                         GameManager.instance.shakeCamera(0.15f, 0.15f);
                     }
 
+                    // Increase combo
                     currentCombo += 1;
-                    // wielderMovement.Stop();
                     state = WeaponState.Recovering; 
                 }
                 break;
@@ -71,6 +75,7 @@ public class Axe : MeleeWeapon
         if(collision.TryGetComponent(out Damageable damageable) && collision.gameObject != this.gameObject)
         {
             int damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
+            var damageColor = Color.white;
             
             // If the hit target is effectable
             if (collision.TryGetComponent(out EffectableEntity effectableEntity)) {
@@ -86,9 +91,8 @@ public class Axe : MeleeWeapon
             int rand = Random.Range(0, 100);
             if(rand < (wielderStats.percentCritChance + owner.critChance) * 100 )
             {
-                print("crit!");
-                GameManager.instance.CreatePopup("CRIT", transform.parent.position, Color.yellow);
                 damage = (int) (damage * (1 + owner.critDamage));
+                damageColor = Color.yellow;
             }
 
             Damage dmg = new Damage
@@ -96,9 +100,20 @@ public class Axe : MeleeWeapon
                 damageAmount = damage,
                 source = DamageSource.fromPlayer,
                 origin = transform,
-                effects = weaponEffects
+                effects = weaponEffects,
+                color = damageColor
             };
             damageable.takeDamage(dmg);
         }
     }
+
+    public override bool canInitiate()
+    {
+        if (currentCombo > maxCombo) {
+            return false;
+        }
+
+        return state == WeaponState.Ready || recoveryTimer <= recoveryDuration / 2;
+    }
+
 }

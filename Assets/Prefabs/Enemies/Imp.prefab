@@ -1233,6 +1233,7 @@ GameObject:
   - component: {fileID: 1886810407}
   - component: {fileID: 9057750571525249645}
   - component: {fileID: 8527715583796434547}
+  - component: {fileID: 2836032385639927022}
   m_Layer: 7
   m_Name: Imp
   m_TagString: Untagged
@@ -6114,6 +6115,7 @@ MonoBehaviour:
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
   displacable: {fileID: 0}
+  stats: {fileID: 0}
   wanderRadius: 0
   wanderRate: 0
   aggroRange: 10
@@ -6249,8 +6251,6 @@ MonoBehaviour:
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  tempDamageEffect: {fileID: 0}
 --- !u!199 &4598501649160461423
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -6345,9 +6345,7 @@ MonoBehaviour:
   mv: {fileID: 0}
   stunImmune: 0
   knockbackImmune: 0
-  knockbackSpeed: 0
-  knockbackDuration: 0
-  stunDuration: 0
+  twoDimensionalKnockback: 1
 --- !u!114 &8527715583796434547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6363,6 +6361,24 @@ MonoBehaviour:
   damageParticlesPrefab: {fileID: 8865745841887048178, guid: ad88325a20afcab4ea2664cac0b447d0, type: 3}
   deathParticlesPrefab: {fileID: 8865745841887048178, guid: ad88325a20afcab4ea2664cac0b447d0, type: 3}
   spawnPoint: {fileID: 5268090611695308641}
+--- !u!114 &2836032385639927022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4598501649160461437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440e28ef0705b0f478182348446ed31f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displacable: {fileID: 0}
+  health: {fileID: 0}
+  damageRequiredRatio: 0.25
+  bufferDuration: 0.5
+  pushforce: 400
+  pushDuration: 0.25
 --- !u!1 &4598501649375296467
 GameObject:
   m_ObjectHideFlags: 0

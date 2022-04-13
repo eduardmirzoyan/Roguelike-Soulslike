@@ -60,40 +60,58 @@ public class SlimeAI : EnemyAI
     protected void FixedUpdate()
     {
         switch(slimeState) {
-        case SlimeState.Idle:
+            case SlimeState.Idle:
 
-            handleAnimation();
+                handleAnimation();
 
-            wander();
+                wander();
 
-            handleDisplacement();
+                // Handle displacement
+                if (displacable.isDisplaced()) {
+                    if (displacable.isStunned()) {
+                        // Reset values
+                        resetValues();
+                    }
+                    
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    slimeState = SlimeState.Stunned;
+                    break;
+                }
 
-            handleRetaliation();
+            break;
+            case SlimeState.Preparing:
+                if (prepareTimer > 0) {
+                    animationHandler.changeAnimationState(prepareToJumpAnimation);
+                    prepareTimer -= Time.deltaTime;
+                }
+                else {
+                    bounce(mv.getFacingDirection());
+                    wanderTimer = wanderRate;
+                    slimeState = SlimeState.Idle;
+                }
 
-        break;
-        case SlimeState.Preparing:
-            if (prepareTimer > 0) {
-                animationHandler.changeAnimationState(prepareToJumpAnimation);
-                prepareTimer -= Time.deltaTime;
-            }
-            else {
-                bounce(mv.getFacingDirection());
-                wanderTimer = wanderRate;
-                slimeState = SlimeState.Idle;
-            }
+                // Handle displacement
+                if (displacable.isDisplaced()) {
+                    if (displacable.isStunned()) {
+                        // Reset values
+                        resetValues();
+                    }
+                    
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    slimeState = SlimeState.Stunned;
+                    break;
+                }
 
-            handleDisplacement();
+            break;
+            case SlimeState.Stunned:
+                displacable.performDisplacement();
 
-        break;
-        case SlimeState.Stunned:
-            displacable.performDisplacement();
+                if (!displacable.isDisplaced()) {
+                    // Return to Idle
+                    slimeState = SlimeState.Idle;
+                }
 
-            if (!displacable.isDisplaced()) {
-                // Return to Idle
-                slimeState = SlimeState.Idle;
-            }
-
-        break;
+            break;
         }
     }
 
@@ -138,40 +156,6 @@ public class SlimeAI : EnemyAI
             else if (mv.checkFalling()) {
                 animationHandler.changeAnimationState(fallAnimation);
             }
-        }
-    }
-
-    private void handleRetaliation() {
-        // Handle any attacker
-        if (attacker != null) {
-    
-            // If ready to be stunned
-            if (hitStun) {
-                // Make entity not stunnable
-                hitStun = false;
-                // Add knockback
-                displacable.triggerKnockback(400f, 0.25f, attacker.transform.position);
-                // Play anim
-                animationHandler.changeAnimationState(stunnedAnimation);
-                // Start cooldown for another hitstun
-                StartCoroutine(hitStunCooldown(1f));
-                // Change state
-                slimeState = SlimeState.Stunned;
-            }
-            
-            // Reset attacker
-            attacker = null;
-        }
-    }
-
-    private void handleDisplacement() {
-        if (displacable.isDisplaced()) {
-            // Reset values
-            wanderTimer = wanderRate;
-            prepareTimer = prepareDuration;
-            // Set animation
-            animationHandler.changeAnimationState(stunnedAnimation);
-            slimeState = SlimeState.Stunned;
         }
     }
 

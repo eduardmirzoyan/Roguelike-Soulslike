@@ -10,13 +10,22 @@ public class HealingShrine : Shrine
     {
         if (!used) {
             var flask = player.GetComponentInChildren<Flask>();
-            if (flask != null) {
+            if (flask != null && !flask.isFull()) {
+                // Refill flask
                 flask.refill();
+
+                // Create popup
+                PopUpTextManager.instance.createPopup("Your flask has been refilled.", Color.white, transform.position);
+
+                // Prevent re-usage
                 used = true;
+            }
+            else {
+                PopUpTextManager.instance.createPopup("Your flask is already full...", Color.gray, transform.position);
             }
         }
         else {
-            GameManager.instance.CreatePopup("The fountain runs empty...", transform.position);
+            PopUpTextManager.instance.createPopup("The fountain runs empty...", Color.gray, transform.position);
         }
         
     } 

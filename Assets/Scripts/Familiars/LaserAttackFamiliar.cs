@@ -71,7 +71,8 @@ public class LaserAttackFamiliar : Familiar
                         Damage dmg = new Damage {
                             damageAmount = laserDamage,
                             source = DamageSource.fromPlayer,
-                            origin = owner.transform
+                            origin = owner.transform,
+                            color = Color.white
                         };
                         damageable.takeDamage(dmg);
                     }
@@ -86,6 +87,9 @@ public class LaserAttackFamiliar : Familiar
                     isCharging = false;
                 }
             }
+        }
+        else { // If no target
+            transform.rotation = owner.transform.rotation;
         }
     }
 

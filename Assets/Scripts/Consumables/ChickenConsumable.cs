@@ -12,7 +12,8 @@ public class ChickenConsumable : ConsumableItem
         var consumerHealth = consumer.GetComponent<Health>();
         if(consumerHealth != null)
         {
-            GameManager.instance.CreatePopup("You have a nice chicken feast...", consumer.gameObject.transform.position);
+            var healAmount = (int)(consumerHealth.maxHealth * healPercentage);
+            PopUpTextManager.instance.createVerticalPopup("+" + healAmount + "HP", Color.green, consumer.gameObject.transform.position);
             consumerHealth.increaseHealth((int)(consumerHealth.maxHealth * healPercentage));
         }
     }

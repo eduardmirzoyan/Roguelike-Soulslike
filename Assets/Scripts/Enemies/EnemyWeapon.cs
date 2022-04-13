@@ -24,7 +24,8 @@ public class EnemyWeapon : MonoBehaviour
                     damageAmount = damage,
                     source = DamageSource.fromEnemy,
                     origin = transform.parent,
-                    pushForce = force
+                    pushForce = force,
+                    color = Color.red
                 };
                 damageable.takeDamage(dmg);
             }

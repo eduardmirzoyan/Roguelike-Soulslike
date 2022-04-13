@@ -21,7 +21,6 @@ public class MushroomGolemAI : BossAI
     [SerializeField] private float followRange;
 
     [Header("Mushroom Golem Animation")]
-    [SerializeField] private string sleepAnimation = "Sleep";
     [SerializeField] private string awakenAnimation = "Awaken";
 
     private bool awake = false;

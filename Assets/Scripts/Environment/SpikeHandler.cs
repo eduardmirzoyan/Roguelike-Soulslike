@@ -31,8 +31,8 @@ public class SpikeHandler : MonoBehaviour
             Damage dmg = new Damage {
                 damageAmount = damage,
                 source = DamageSource.fromEnvironment,
-                origin = transform
-                
+                origin = transform,
+                color = Color.red
             };
             damageable.takeDamage(dmg);
         }
@@ -44,7 +44,7 @@ public class SpikeHandler : MonoBehaviour
 
     private bool touchingSpikes()
     {
-        return Physics2D.OverlapBox(spikeCheck.position, bounds, 0, spikeLayer) && body.velocity.y < -0.05f;
+        return Physics2D.OverlapBox(spikeCheck.position, bounds, 0, spikeLayer) && body.velocity.y < -0.1f;
     }
 
     private void OnDrawGizmosSelected() {

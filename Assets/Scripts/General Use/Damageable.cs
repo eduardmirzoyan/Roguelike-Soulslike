@@ -11,9 +11,6 @@ public class Damageable : MonoBehaviour
     [SerializeField] private float immunityDuration = 0.5f;
     [SerializeField] private bool isInvincible;
     [SerializeField] private float immunityTimer = 0f;
-    [SerializeField] private Color defaultColor;
-
-    [SerializeField] private GameObject tempDamageEffect;
 
     private void Start() {
         health = GetComponent<Health>();
@@ -52,11 +49,13 @@ public class Damageable : MonoBehaviour
         // Reduce hp
         health.reduceHealth(correctedDamage);
 
-        // Visual feedback
-        if (damage.color.a == 0) // If the damage does not have a color, then use default color
-            GameManager.instance.CreatePopup(correctedDamage.ToString(), transform.position, defaultColor);
-        else
-            GameManager.instance.CreatePopup(correctedDamage.ToString(), transform.position, damage.color);
+        // Damage popup
+        PopUpTextManager.instance.createPopup(correctedDamage.ToString(), damage.color, transform.position);
+
+        // Convert the origin to the wielder if the origin is a weapon
+        if (damage.origin.TryGetComponent<Weapon>(out Weapon weapon)) {
+            damage.origin = damage.origin.parent;
+        }
 
         // Damage particles if possible
         if (TryGetComponent(out DamageParticles damageParticles))
@@ -65,6 +64,11 @@ public class Damageable : MonoBehaviour
         // Flash if applicible
         if (TryGetComponent(out DamageFlash damageFlash))
             damageFlash.Flash();
+        
+        // Increment hitstun if possible
+        if (TryGetComponent(out HitStun hitStun)) {
+            hitStun.increment(correctedDamage, damage.origin.position);
+        }
 
         // Add any direct Status effets
         if (TryGetComponent(out EffectableEntity effectable) && damage.effects != null)
@@ -83,15 +87,6 @@ public class Damageable : MonoBehaviour
             }
         }
 
-        if (tempDamageEffect != null) {
-            Instantiate(tempDamageEffect, transform.position, Quaternion.identity);
-        }
-
-        // Convert the origin to the wielder if the origin is a weapon
-        if (damage.origin.TryGetComponent<Weapon>(out Weapon weapon)) {
-            damage.origin = damage.origin.parent;
-        }
-
         // If the entity hit is an enemy
         if (TryGetComponent(out EnemyAI enemy))
         {   
@@ -102,6 +97,7 @@ public class Damageable : MonoBehaviour
         // Trigger onhit event
         GameEvents.instance.triggerOnHit(damage.origin.gameObject, gameObject, correctedDamage);
 
+        // Reset I-frames
         immunityTimer = immunityDuration;
     }
 

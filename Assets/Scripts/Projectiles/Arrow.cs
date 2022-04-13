@@ -33,7 +33,8 @@ public class Arrow : MonoBehaviour
             Damage dmg = new Damage {
                 damageAmount = damage,
                 source = DamageSource.fromPlayer,
-                origin = projectile.creator.transform
+                origin = projectile.creator.transform,
+                color = Color.white
             };
             damageable.takeDamage(dmg);
 

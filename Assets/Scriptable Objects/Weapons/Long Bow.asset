@@ -20,6 +20,8 @@ MonoBehaviour:
   description: A longer bow
   name: Long Bow
   damage: 10
-  weaponType: 4
-  twoHanded: 1
+  critChance: 0
+  critDamage: 1
+  weaponType: 3
+  twoHanded: 0
   enchantment: {fileID: 11400000, guid: ddd7bf0a6856f774babcfde03b763f08, type: 2}

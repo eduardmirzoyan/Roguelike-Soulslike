@@ -36,7 +36,6 @@ public class GoldShrine : Shrine
 
     public override void activate(Player player)
     {
-        
         if (GameManager.instance.gold > 50) 
         {  
             // Play animation
@@ -45,11 +44,11 @@ public class GoldShrine : Shrine
             // Take gold
             GameManager.instance.addGold(-50);
 
-            // Heal 50 hp
-            player.heal(50);
+            // Heal 10 hp
+            player.heal(15);
         }
         else {
-            GameManager.instance.CreatePopup("Not enough gold.", transform.position, Color.gray);
+            PopUpTextManager.instance.createPopup("Not enough gold.", Color.gray, transform.position);
         }
         
     }

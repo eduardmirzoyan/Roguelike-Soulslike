@@ -165,6 +165,7 @@ public class InputBuffer : MonoBehaviour
     public void resetAttackRequests() {
         mainHandAttackRequest = false;
         offHandAttackRequest = false;
+        
     }
 
     //Call when we want to process the inputBuffer

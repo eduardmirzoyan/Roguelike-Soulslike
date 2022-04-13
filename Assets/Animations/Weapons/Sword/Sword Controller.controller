@@ -32,7 +32,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword Attack 0
+  m_Name: Sword Attack 2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -158,7 +158,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword Attack 2
+  m_Name: Sword Attack 1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -260,7 +260,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword Attack 1
+  m_Name: Sword Attack 1 111
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -377,7 +377,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword Heavy
+  m_Name: Sword Attack 0
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -435,19 +435,19 @@ AnimatorStateMachine:
     m_Position: {x: 180, y: -60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 267552529169651291}
-    m_Position: {x: -220, y: 0, z: 0}
+    m_Position: {x: 180, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8614279588579225610}
-    m_Position: {x: 180, y: -10, z: 0}
+    m_Position: {x: 180, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7049039627936049517}
     m_Position: {x: -220, y: -50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1915164406354258203}
-    m_Position: {x: 180, y: 40, z: 0}
+    m_Position: {x: 530, y: 70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4462411724236332202}
-    m_Position: {x: 180, y: 90, z: 0}
+    m_Position: {x: 180, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2738964397602254982}
     m_Position: {x: -220, y: 50, z: 0}

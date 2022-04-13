@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class LongBow : RangedWeapon
 {
@@ -29,12 +30,18 @@ public class LongBow : RangedWeapon
             case WeaponState.WindingUp: // Pulling back the bow is the windup time
 
                 // You may aim the bow during windup
-                var trans = UnityEditor.TransformUtils.GetInspectorRotation(gameObject.transform).z;
+                var trans = TransformUtils.GetInspectorRotation(gameObject.transform).z;
                 if (Input.GetKey(KeyCode.UpArrow) && trans < 45) { // Max angle of -25
                     transform.Rotate(Vector3.forward * aimRotationSpeed * Time.deltaTime);
                 }
                 else if (Input.GetKey(KeyCode.DownArrow) && trans > -25) { // Min angle of -25
                     transform.Rotate(-Vector3.forward * aimRotationSpeed * Time.deltaTime);
+                }
+
+                // Allow slow horizontal movement
+                var horizontal = Input.GetAxis("Horizontal");
+                if (horizontal > 0.1f || horizontal < -0.1f ) {
+                    wielderMovement.dash(20, horizontal);
                 }
                 
                 // When the bow is released, switch to active state

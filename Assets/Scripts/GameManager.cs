@@ -7,13 +7,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private GameObject floatingTextPrefab;
+    [SerializeField] private GameObject popUpTextPrefab;
     [SerializeField] private ExperienceBar xpBar;
     [SerializeField] private Text goldText;
     [SerializeField] private GameObject stunnedAnimationObject;
     [SerializeField] private CameraShake mainCamera;
     [SerializeField] private PathfindingMap pathfindingMap;
     [SerializeField] private Player player;
+
+    [SerializeField] private GameObject corpsePrefab;
     
     public static GameManager instance; // Accessible by every class at any point
     
@@ -43,12 +45,6 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += saveState; // Once a new scene is loaded, game is saved
         DontDestroyOnLoad(gameObject);
     }
-
-    // Resources for game
-    public List<Sprite> playerSprites;
-    public List<Sprite> weaponSprties;
-    public List<int> weaponPrices;
-    public List<int> xpTable;
 
     // References
     // public Player player;
@@ -110,19 +106,15 @@ public class GameManager : MonoBehaviour
 
     public void CreatePopup(string text, Vector3 position)
     {
-        GameObject prefab = Instantiate(floatingTextPrefab, position, Quaternion.identity);
-        prefab.GetComponentInChildren<TextMesh>().text = text;
-    }
+        GameObject prefab = Instantiate(popUpTextPrefab, position, Quaternion.identity);
 
-    public void CreatePopup(string text, Vector3 position, Color textColor)
-    {
-        float spawnVariation = 0.25f;
-        Vector3 spawnPosition = position + new Vector3(Random.Range(-spawnVariation, spawnVariation), Random.Range(-spawnVariation, spawnVariation), 0);
-        GameObject prefab = Instantiate(floatingTextPrefab, spawnPosition, Quaternion.identity);
-        prefab.GetComponentInChildren<TextMesh>().text = text;
-        prefab.GetComponentInChildren<TextMesh>().color = textColor;    
+        // Set text
+        var textMeshes = prefab.GetComponentsInChildren<TextMesh>();
+        foreach (var textMesh in textMeshes) {
+            textMesh.text = text;
+        }
     }
-
+    
     public void addExperience(int xp)
     {
         experience += xp;
@@ -132,7 +124,7 @@ public class GameManager : MonoBehaviour
             level++;
             skillpoints++;
             player.GetComponent<Health>().increaseMaxHealth(10);
-            CreatePopup("LEVEL UP!", player.gameObject.transform.position + Vector3.up * 0.5f, Color.cyan);
+            PopUpTextManager.instance.createPopup("LEVEL UP!", Color.cyan, player.gameObject.transform.position + Vector3.up * 0.5f);
         }
         xpBar.setExperience(experience);
     }
@@ -162,11 +154,9 @@ public class GameManager : MonoBehaviour
         StartCoroutine(mainCamera.Shake(duration, magnitude));
     }
 
-    public void setPathFindingMap(PathfindingMap map) {
-        pathfindingMap = map;
+    public void spawnCorpse(GameObject host){
+        var corpse = Instantiate(corpsePrefab).GetComponent<Corpse>();
+        corpse.setHost(host);
     }
-
-    public PathfindingMap GetPathfindingMap() {
-        return pathfindingMap;
-    }
+    
 }

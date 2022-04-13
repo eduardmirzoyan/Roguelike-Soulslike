@@ -25,7 +25,6 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float windupDuration;
     [SerializeField] protected float activeDuration;
     [SerializeField] protected float recoveryDuration;
-    [SerializeField] protected float moveSpeedMultiplier;
     [SerializeField] protected int maxCombo = 2;
     [SerializeField] protected float cooldown;
     
@@ -40,7 +39,6 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected CombatStats wielderStats;
     [SerializeField] protected Movement wielderMovement;
     
-
     // Assuming instaniation means equippment
     protected void Awake()
     {
@@ -51,6 +49,10 @@ public abstract class Weapon : MonoBehaviour
 
         // Set weapon sprite
         spriteRenderer = GetComponent<SpriteRenderer>();
+        // If the main object does not have a renderer, then check children
+        if (spriteRenderer == null) {
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
 
         // Set the weapon to ready state
         state = WeaponState.Ready;
@@ -61,14 +63,15 @@ public abstract class Weapon : MonoBehaviour
         if(collision.TryGetComponent(out Damageable damageable) && collision.gameObject != this.gameObject)
         {
             var damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
+            var damageColor = Color.white;
 
             // Check crit
             int rand = Random.Range(0, 100);
             if(rand <= (wielderStats.percentCritChance + owner.critChance) * 100 )
             {
-                print("crit!");
-                GameManager.instance.CreatePopup("CRIT", transform.parent.position, Color.yellow);
+                // Change damage amount and color
                 damage = (int) (damage * (1 + owner.critDamage));
+                damageColor = Color.yellow;
             }
 
             Damage dmg = new Damage
@@ -76,13 +79,14 @@ public abstract class Weapon : MonoBehaviour
                 damageAmount = damage,
                 source = DamageSource.fromPlayer,
                 origin = transform,
-                effects = weaponEffects
+                effects = weaponEffects,
+                color = damageColor
             };
             damageable.takeDamage(dmg);
         }
     }
 
-     public virtual bool canInitiate() {
+    public virtual bool canInitiate() {
         if (currentCombo > maxCombo) {
             return false;
         }
@@ -90,8 +94,10 @@ public abstract class Weapon : MonoBehaviour
         return cooldownTimer <= 0 && state == WeaponState.Ready || state == WeaponState.Recovering;
     }
 
-    public virtual void initiateAttack()
-    {
+    public virtual void initiateAttack() {
+        // Stop movement
+        wielderMovement.Walk(0);
+        
         animationHandler.changeAnimationState(weaponAttackAnimation + " " + currentCombo);
         windupTimer = windupDuration;
         activeTimer = activeDuration;
@@ -142,15 +148,13 @@ public abstract class Weapon : MonoBehaviour
         return state == WeaponState.Recovering;
     }
 
-    public float getMoveSpeedMultiplier() {
-        return moveSpeedMultiplier;
-    }
-
-    public void cancelAttack() {
+    public virtual void cancelAttack() {
         // Reset values
-        animationHandler.changeAnimationState(weaponIdleAnimation);
-        cooldownTimer = cooldown;
-        currentCombo = 0;
-        state = WeaponState.Ready;
+        if (state != WeaponState.Ready) {
+            animationHandler.changeAnimationState(weaponIdleAnimation);
+            cooldownTimer = cooldown;
+            currentCombo = 0;
+            state = WeaponState.Ready;
+        }
     }
 }

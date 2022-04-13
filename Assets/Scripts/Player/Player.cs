@@ -445,8 +445,6 @@ public class Player : MonoBehaviour
             break;
             case PlayerState.attacking:
                 // Let the combat handler handle the player movement during attack
-                // Allow walking but with very reduced movespeed
-                mv.WalkNoTurn(inputBuffer.moveDirection * combatHandler.getAttackMoveSpeedMultiplier());
 
                 if (!inputBuffer.mainHandAttackRequest) {
                     // Attempt to release weapon
@@ -455,7 +453,7 @@ public class Player : MonoBehaviour
 
                 if (!inputBuffer.offHandAttackRequest) {
                     // Attempt to release weapon
-                    combatHandler.offHandRelease(inputBuffer.mainAttackTime);
+                    combatHandler.offHandRelease(inputBuffer.offAttackTime);
                 }
 
                 // Handle back to idle
@@ -640,7 +638,7 @@ public class Player : MonoBehaviour
             var worldItem = droppedItem.GetComponent<WorldItem>();
             if (worldItem != null)
             {
-                GameManager.instance.CreatePopup("You picked up " + worldItem.GetItem().name, transform.position);
+                PopUpTextManager.instance.createVerticalPopup("You picked up " + worldItem.GetItem().name, Color.white, transform.position);
                 inventory.addItem(worldItem.GetItem());
 
                 Destroy(droppedItem.gameObject);
@@ -673,23 +671,21 @@ public class Player : MonoBehaviour
 
     private void useFlask()
     {
+        // If you are at full health, do nothing
         if(health.isFull())
-        {
-            GameManager.instance.CreatePopup("You are already at full Health.", transform.position);
             return;
-        }
 
         if (flask.use()) // Uses flask and checks result
         {
             heal((int)(health.getMaxHP() * flask.getHealPercentage()));
         }
         else
-            GameManager.instance.CreatePopup("Your flask is empty.", transform.position);
+            PopUpTextManager.instance.createVerticalPopup("Your flask is empty.", Color.gray, transform.position);
     }
 
     public void heal(int amount)
     {
-        GameManager.instance.CreatePopup("You have healed " + amount + " HP.", transform.position);
+        PopUpTextManager.instance.createVerticalPopup("+" + amount + " HP.", Color.green, transform.position);
         health.increaseHealth(amount);
     }
 
@@ -702,7 +698,7 @@ public class Player : MonoBehaviour
     // Assumes that you already know the prereq skills and knowledge
     public void learnSkill(Skill skill)
     {
-        GameManager.instance.CreatePopup("You have learned the skill: " + skill.name, transform.position);
+        PopUpTextManager.instance.createVerticalPopup("You have learned the skill: " + skill.name, Color.white, transform.position);
         // Nested switch in order to decide on what changes the skill should do
         if (skill is ActiveSkill)
         {

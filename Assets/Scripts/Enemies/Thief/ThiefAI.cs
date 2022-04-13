@@ -14,7 +14,7 @@ public class ThiefAI : EnemyAI
     [SerializeField] private Inventory inventory;
 
     [Header("Looting Values")]
-    [SerializeField] private float maxWanderRadius;
+    [SerializeField] private float minWanderRadius;
     [SerializeField] private int maxInventorySize = 1;
     [SerializeField] private Image lootingCircle;
     [SerializeField] private Sprite hasLootSprite;
@@ -114,12 +114,11 @@ public class ThiefAI : EnemyAI
 
                 // Handle displacement
                 if (displacable.isDisplaced()) {
-                    // Reset values
-                    wanderTimer = wanderRate;
-                    attackTimer = attackDuration;
-                    lootTimer = lootDuration;
-                    attackCooldownTimer = attackCooldown;
-                    lootingCircle.fillAmount = 0;
+                    if (displacable.isStunned()) {
+                        // Reset values
+                        resetValues();
+                    }
+                    
                     animationHandler.changeAnimationState(stunnedAnimation);
                     thiefState = ThiefState.Stunned;
                     break;
@@ -170,12 +169,11 @@ public class ThiefAI : EnemyAI
 
                 // Handle displacement
                 if (displacable.isDisplaced()) {
-                    // Reset values
-                    wanderTimer = wanderRate;
-                    attackTimer = attackDuration;
-                    lootTimer = lootDuration;
-                    attackCooldownTimer = attackCooldown;
-                    lootingCircle.fillAmount = 0;
+                    if (displacable.isStunned()) {
+                        // Reset values
+                        resetValues();
+                    }
+                    
                     animationHandler.changeAnimationState(stunnedAnimation);
                     thiefState = ThiefState.Stunned;
                     break;
@@ -243,12 +241,11 @@ public class ThiefAI : EnemyAI
 
                     // Handle displacement
                     if (displacable.isDisplaced()) {
-                        // Reset values
-                        wanderTimer = wanderRate;
-                        attackTimer = attackDuration;
-                        lootTimer = lootDuration;
-                        attackCooldownTimer = attackCooldown;
-                        lootingCircle.fillAmount = 0;
+                        if (displacable.isStunned()) {
+                            // Reset values
+                            resetValues();
+                        }
+                        
                         animationHandler.changeAnimationState(stunnedAnimation);
                         thiefState = ThiefState.Stunned;
                         break;
@@ -285,12 +282,11 @@ public class ThiefAI : EnemyAI
 
                 // Handle displacement
                 if (displacable.isDisplaced()) {
-                    // Reset values
-                    wanderTimer = wanderRate;
-                    attackTimer = attackDuration;
-                    lootTimer = lootDuration;
-                    attackCooldownTimer = attackCooldown;
-                    lootingCircle.fillAmount = 0;
+                    if (displacable.isStunned()) {
+                        // Reset values
+                        resetValues();
+                    }
+                    
                     animationHandler.changeAnimationState(stunnedAnimation);
                     thiefState = ThiefState.Stunned;
                     break;
@@ -306,6 +302,7 @@ public class ThiefAI : EnemyAI
                 if (!displacable.isDisplaced()) {
                     // Stop walking
                     mv.Walk(0);
+                    
                     // Change to attacking state
                     thiefState = ThiefState.Attacking;
                     break;
@@ -403,20 +400,6 @@ public class ThiefAI : EnemyAI
             if (target == null)  {
                 // Set target to the attacker
                 target = attacker;
-            }
-            
-            // If ready to be stunned
-            if (hitStun) {
-                // Make entity not stunnable
-                hitStun = false;
-                // Add knockback
-                displacable.triggerKnockback(400f, 0.25f, attacker.transform.position);
-                // Play anim
-                animationHandler.changeAnimationState(stunnedAnimation);
-                // Start cooldown for another hitstun
-                StartCoroutine(hitStunCooldown(1f));
-                // Change state
-                thiefState = ThiefState.Stunned;
             }
 
             // Reset attacker
@@ -538,6 +521,20 @@ public class ThiefAI : EnemyAI
         }
     }
 
+    protected override void resetValues()
+    {
+        base.resetValues();
+        lootTimer = lootDuration;
+        attackCooldownTimer = attackCooldown;
+        lootingCircle.fillAmount = 0;
+    }
+
+    private void OnDestroy() {
+        // Create corpse
+        if (health.currentHealth <= 0)
+            GameManager.instance.spawnCorpse(gameObject);
+    }
+
     protected override void OnDrawGizmosSelected() {
         base.OnDrawGizmosSelected();
 
@@ -545,6 +542,6 @@ public class ThiefAI : EnemyAI
         Gizmos.DrawWireSphere(transform.position, maxItemDetectionRange);
 
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, maxWanderRadius);
+        Gizmos.DrawWireSphere(transform.position, minWanderRadius);
     }
 }

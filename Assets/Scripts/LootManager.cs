@@ -200,7 +200,7 @@ public class LootManager : MonoBehaviour
         return newSmallShield;
     }
 
-    private WeaponItem generateRandomLongBow() {
+    private WeaponItem generateRandomSpear() {
 
         // Create the scriptable object
         WeaponItem newSpear = ScriptableObject.CreateInstance<WeaponItem>();
@@ -209,7 +209,10 @@ public class LootManager : MonoBehaviour
         newSpear.prefab = spearPrefab;
 
         // Randomize damage stats
-        newSpear.damage = Random.Range(5, 7);
+        newSpear.damage = Random.Range(4, 5);
+
+        // Set crit chance
+        newSpear.critChance = 0.1f;
 
         // Randomize enchantment
         if (Random.Range(0, 2) == 0 || alwaysEnchant) {
@@ -231,7 +234,7 @@ public class LootManager : MonoBehaviour
         return newSpear;
     }
 
-    private WeaponItem generateRandomSpear() {
+    private WeaponItem generateRandomLongBow() {
 
         // Create the scriptable object
         WeaponItem newLongBow = ScriptableObject.CreateInstance<WeaponItem>();

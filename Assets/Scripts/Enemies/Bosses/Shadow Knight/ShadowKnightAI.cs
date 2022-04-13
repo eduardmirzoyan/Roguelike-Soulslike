@@ -184,6 +184,7 @@ public class ShadowKnightAI : BossAI
                     attackCooldownTimer = attackCooldown;
 
                     // Change back to attacking state
+                    animationHandler.changeAnimationState(idleAnimation);
                     shadowKnightState = ShadowKnightState.Aggro;
                 }
             break;
@@ -204,6 +205,7 @@ public class ShadowKnightAI : BossAI
                     attackCooldownTimer = attackCooldown;
 
                     // Change back to attacking state
+                    animationHandler.changeAnimationState(idleAnimation);
                     shadowKnightState = ShadowKnightState.Aggro;
                 }
             break;
@@ -216,6 +218,7 @@ public class ShadowKnightAI : BossAI
                     attackCooldownTimer = attackCooldown;
 
                     // Change back to attacking state
+                    animationHandler.changeAnimationState(idleAnimation);
                     shadowKnightState = ShadowKnightState.Aggro;
                 }
             break;
@@ -234,6 +237,7 @@ public class ShadowKnightAI : BossAI
                     // Do NOT Reset cooldown
 
                     // Change back to attacking state
+                    animationHandler.changeAnimationState(idleAnimation);
                     shadowKnightState = ShadowKnightState.Aggro;
                 }
             break;
@@ -252,6 +256,7 @@ public class ShadowKnightAI : BossAI
                     attackCooldownTimer = attackCooldown;
 
                     // Change back to attacking state
+                    animationHandler.changeAnimationState(idleAnimation);
                     shadowKnightState = ShadowKnightState.Aggro;
                 }
             break;

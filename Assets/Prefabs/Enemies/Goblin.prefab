@@ -1398,6 +1398,7 @@ GameObject:
   - component: {fileID: 545617897}
   - component: {fileID: 1102080480225475738}
   - component: {fileID: 6068789745772862928}
+  - component: {fileID: 1330719610}
   m_Layer: 7
   m_Name: Goblin
   m_TagString: Enemy
@@ -1413,7 +1414,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3996419839580739552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3, y: -0.35, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3996419840953450215}
@@ -1574,6 +1575,7 @@ MonoBehaviour:
   attacker: {fileID: 0}
   pathfindUser: {fileID: 0}
   currentCamp: {fileID: 0}
+  targetCamp: {fileID: 0}
   campSiteRange: 1
   patrolMultiplier: 0
   idleAnimation: Idle
@@ -1639,8 +1641,6 @@ MonoBehaviour:
   immunityDuration: 0.2
   isInvincible: 0
   immunityTimer: 0
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  tempDamageEffect: {fileID: 5311476491815218923, guid: 047ef147dec3f7e438224abebb93ae03, type: 3}
 --- !u!114 &2082075224925123617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1689,7 +1689,7 @@ MonoBehaviour:
   pathfindingMap: {fileID: 0}
   mv: {fileID: 0}
   platformHandler: {fileID: 0}
-  altTransform: {fileID: 0}
+  altTransform: {fileID: 3996419839580739557}
   groundMask:
     serializedVersion: 2
     m_Bits: 16640
@@ -1697,6 +1697,7 @@ MonoBehaviour:
   padding: 0.05
   viewableQueue: []
   currentTarget: {x: 0, y: 0, z: 0}
+  isJump: 0
   isDrop: 0
 --- !u!114 &757988961
 MonoBehaviour:
@@ -1723,6 +1724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStandingPlatform: {fileID: 0}
+  dropTime: 0.5
   isDropping: 0
 --- !u!114 &545617897
 MonoBehaviour:
@@ -1739,9 +1741,7 @@ MonoBehaviour:
   mv: {fileID: 0}
   stunImmune: 0
   knockbackImmune: 0
-  knockbackSpeed: 0
-  knockbackDuration: 0
-  stunDuration: 0
+  twoDimensionalKnockback: 0
 --- !u!114 &1102080480225475738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1769,13 +1769,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b431ac3d6efd3c746a0f6d587c9164ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defense: 12
+  defense: 4
   bonusStamina: 0
   percentCritChance: 0
   percentDodgeChance: 0
   damageDealtMultiplier: 0
   movespeedMultiplier: 0
   damageTakenMultiplier: 0
+--- !u!114 &1330719610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3996419839580739552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440e28ef0705b0f478182348446ed31f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displacable: {fileID: 0}
+  health: {fileID: 0}
+  damageRequiredRatio: 0.25
+  bufferDuration: 0.5
+  pushforce: 400
+  pushDuration: 0.25
 --- !u!1 &3996419839722686469
 GameObject:
   m_ObjectHideFlags: 0

@@ -43,37 +43,39 @@ public class WeaponDisplayUI : MonoBehaviour
     private void changeWeapon(Weapon weapon, bool onMainHand) {
         // If weapon is equipped on the hand we don't care about then skip
         if (displayMainHand != onMainHand) {
-            // If the new weapon is null, then dip
-            if (weapon == null) {
-                // Set image to false
-                image.enabled = false;
-                return;
-            }
-            // If the weapon is equipped to the off-hand, but this display's main-hand
-            if(displayMainHand && !onMainHand) {
-                if (combatHandler.getOffHandWeapon().getOwner().twoHanded) {
-                    image.enabled = true;
-                    image.sprite = combatHandler.getOffHandWeapon().GetComponent<SpriteRenderer>().sprite;
-                    slider.value = 0;
+            // // If the new weapon is null, then dip
+            // if (weapon == null) {
+            //     // Set image to false
+            //     image.enabled = false;
+            //     return;
+            // }
 
-                    // Change transparancy
-                    var color = image.color;
-                    color.a = 0.5f;
-                    image.color = color;
-                }
-            } // If the weapon is equipped to the main-hand, but this display's off-hand
-            else if(!displayMainHand && onMainHand) {
-                if (combatHandler.getMainHandWeapon().getOwner().twoHanded) {
-                    image.enabled = true;
-                    image.sprite = combatHandler.getMainHandWeapon().GetComponent<SpriteRenderer>().sprite;
-                    slider.value = 0;
+            // // Remove this~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            // // If the weapon is equipped to the off-hand, but this display's main-hand
+            // if(displayMainHand && !onMainHand) {
+            //     if (combatHandler.getOffHandWeapon().getOwner().twoHanded) {
+            //         image.enabled = true;
+            //         image.sprite = combatHandler.getOffHandWeapon().GetComponent<SpriteRenderer>().sprite;
+            //         slider.value = 0;
 
-                    // Change transparancy
-                    var color = image.color;
-                    color.a = 0.5f;
-                    image.color = color;
-                }
-            }
+            //         // Change transparancy
+            //         var color = image.color;
+            //         color.a = 0.5f;
+            //         image.color = color;
+            //     }
+            // } // If the weapon is equipped to the main-hand, but this display's off-hand
+            // else if(!displayMainHand && onMainHand) {
+            //     if (combatHandler.getMainHandWeapon().getOwner().twoHanded) {
+            //         image.enabled = true;
+            //         image.sprite = combatHandler.getMainHandWeapon().GetComponent<SpriteRenderer>().sprite;
+            //         slider.value = 0;
+
+            //         // Change transparancy
+            //         var color = image.color;
+            //         color.a = 0.5f;
+            //         image.color = color;
+            //     }
+            // }
 
             return;
         }
@@ -91,7 +93,16 @@ public class WeaponDisplayUI : MonoBehaviour
         }
         else {
             image.enabled = true;
-            image.sprite = weapon.GetComponent<SpriteRenderer>().sprite;
+
+            // Find renderer
+            var renderer = weapon.GetComponent<SpriteRenderer>();
+            // Check children if must
+            if (renderer == null) {
+                renderer = weapon.GetComponentInChildren<SpriteRenderer>();
+            }
+
+            // Set sprite
+            image.sprite = renderer.sprite;
 
             // Change transparancy
             var color = image.color;

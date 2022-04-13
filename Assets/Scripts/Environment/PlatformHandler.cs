@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlatformHandler : MonoBehaviour
 {
     [SerializeField] private Collider2D currentStandingPlatform;
+    [SerializeField] private float dropTime = 0.35f;
     private Collider2D entityCollider;
     private int platformLayer;
 
@@ -19,7 +20,7 @@ public class PlatformHandler : MonoBehaviour
 
     public void dropFromPlatform() {
         if (currentStandingPlatform != null)
-            StartCoroutine(disableCollision(0.35f));
+            StartCoroutine(disableCollision(dropTime));
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {

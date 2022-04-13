@@ -8,19 +8,28 @@ public class SpearProjectile : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Projectile projectile;
     [SerializeField] private ParticleSystem trail;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     [Header("Settings")]
     [SerializeField] private int damage;
     [SerializeField] private bool isDead;
+    [SerializeField] private List<BaseEffect> spearEffects;
     
     private void Awake() {
         projectile = GetComponent<Projectile>();
         trail = GetComponentInChildren<ParticleSystem>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
-    public void initializeSpear(int damage, float speed, GameObject owner) {
+    public void initializeSpear(int damage, List<BaseEffect> ownerEffects, float speed, Sprite sprite, GameObject owner) {
         // Set damage
         this.damage = damage;
+
+        // Set sprite
+        spriteRenderer.sprite = sprite;
+
+        // Set effects
+        spearEffects = ownerEffects;
 
         // Set projectile
         projectile.initializeProjectile(1, speed, 0, 0, owner);
@@ -35,7 +44,9 @@ public class SpearProjectile : MonoBehaviour
             Damage dmg = new Damage {
                 damageAmount = damage,
                 source = DamageSource.fromPlayer,
-                origin = projectile.creator.transform
+                origin = projectile.creator.transform,
+                effects = spearEffects,
+                color = Color.white
             };
             damageable.takeDamage(dmg);
 
@@ -66,7 +77,9 @@ public class SpearProjectile : MonoBehaviour
                 Damage dmg = new Damage {
                     damageAmount = damage,
                     source = DamageSource.fromPlayer,
-                    origin = projectile.creator.transform
+                    origin = projectile.creator.transform,
+                    effects = spearEffects,
+                    color = Color.white
                 };
                 damageable1.takeDamage(dmg);
             }

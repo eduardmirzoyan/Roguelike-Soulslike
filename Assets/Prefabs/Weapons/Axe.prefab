@@ -152,8 +152,8 @@ MonoBehaviour:
   weaponEffects: []
   state: 0
   windupDuration: 0.5
-  activeDuration: 0.25
-  recoveryDuration: 0.2
+  activeDuration: 0.15
+  recoveryDuration: 0.3
   moveSpeedMultiplier: 0.1
   maxCombo: 1
   cooldown: 0
@@ -164,6 +164,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   wielderStats: {fileID: 0}
   wielderMovement: {fileID: 0}
+  dashspeed: 200
   bonusDamagePercentage: 0.5
 --- !u!114 &57796194466093632
 MonoBehaviour:

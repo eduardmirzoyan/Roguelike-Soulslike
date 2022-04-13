@@ -156,6 +156,10 @@ public class Movement : MonoBehaviour
         body.velocity = new Vector2(direction * Time.deltaTime * dashSpeed, body.velocity.y);
     }
 
+    public void twoDDash(float dashSpeed, Vector2 direction) {
+        body.velocity = direction * dashSpeed * Time.deltaTime;
+    }
+
     public void jumpReposition(float xVel, float jumpPower)
     {
         body.velocity = new Vector2(xVel, jumpPower);

@@ -17,7 +17,6 @@ public class Flask : MonoBehaviour
 
     public void refill()
     {
-        GameManager.instance.CreatePopup("Your fkask has been refilled.", transform.position);
         currentCharges = maxCharges;
     }
 
@@ -49,6 +48,10 @@ public class Flask : MonoBehaviour
 
     public bool isEmpty()
     {
-        return currentCharges == 0 ? true : false;
+        return currentCharges == 0;
+    }
+
+    public bool isFull() {
+        return currentCharges >= maxCharges;
     }
 }

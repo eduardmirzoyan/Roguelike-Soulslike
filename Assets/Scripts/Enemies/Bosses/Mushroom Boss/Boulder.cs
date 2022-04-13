@@ -28,7 +28,8 @@ public class Boulder : MonoBehaviour
             Damage dmg = new Damage {
                 damageAmount = boulderDamage,
                 source = DamageSource.fromEnemy,
-                origin = projectile.creator.transform
+                origin = projectile.creator.transform,
+                color = Color.red
             };
             damageable.takeDamage(dmg);
         }

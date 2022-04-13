@@ -75,10 +75,18 @@ public abstract class EnemyAI : MonoBehaviour
     protected void faceTarget() {
         mv.setFacingDirection(target.transform.position.x - transform.position.x);
     }
+    
+    // DISPLACEMENT LOGIC
 
-    protected IEnumerator hitStunCooldown(float time) {
-        yield return new WaitForSeconds(time);
-        hitStun = true;
+    public bool isAttacking() {
+        return attackTimer > 0;
+    }
+
+    protected virtual void resetValues() {
+        // Resets any attacking values
+        attackTimer = 0;
+        attackCooldownTimer = attackCooldown;
+        wanderTimer = wanderRate;
     }
 
     protected virtual void OnDrawGizmosSelected() {

@@ -151,9 +151,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponEffects: []
   state: 0
-  windupDuration: 0.416
-  activeDuration: 0.167
-  recoveryDuration: 0.167
+  windupDuration: 0.33
+  activeDuration: 0.25
+  recoveryDuration: 0.15
   moveSpeedMultiplier: 0
   maxCombo: 0
   cooldown: 2
@@ -164,8 +164,8 @@ MonoBehaviour:
   owner: {fileID: 0}
   wielderStats: {fileID: 0}
   wielderMovement: {fileID: 0}
-  pushForce: 1250
-  dashMultiplier: 2
+  dashspeed: 700
+  pushForce: 1000
 --- !u!114 &3032045047508988652
 MonoBehaviour:
   m_ObjectHideFlags: 0

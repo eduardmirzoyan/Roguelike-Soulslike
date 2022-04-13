@@ -11,6 +11,7 @@ public class Shockwave : MonoBehaviour
     [SerializeField] private float spawnInterval; // Rate at which segments spawn
 
     [SerializeField] private int shockwaveDamage;
+    [SerializeField] private float shockwavePushForce;
 
     private float timer; // Timer to keep track of each segment
 
@@ -40,7 +41,9 @@ public class Shockwave : MonoBehaviour
             Damage dmg = new Damage {
                 damageAmount = shockwaveDamage,
                 source = DamageSource.fromEnemy,
-                origin = projectile.creator.transform
+                origin = projectile.creator.transform,
+                pushForce = shockwavePushForce,
+                color = Color.red
             };
             damageable.takeDamage(dmg);
         }

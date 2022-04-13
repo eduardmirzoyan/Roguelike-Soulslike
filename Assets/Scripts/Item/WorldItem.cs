@@ -15,6 +15,8 @@ public class WorldItem : MonoBehaviour
         spriteRend.sprite = item.sprite;
         if (item.type == ItemType.Weapon)
             spriteRend.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -45));
+        else if (item.type == ItemType.Ammo)
+            spriteRend.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90));
         else 
             spriteRend.transform.rotation = Quaternion.identity;   
         
@@ -27,6 +29,7 @@ public class WorldItem : MonoBehaviour
 
     public void setItem(Item newItem)
     {
-        item = newItem;         
+        item = Instantiate(newItem);
+        item.count = newItem.count;    
     }
 }

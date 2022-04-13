@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class FalseShrine : Shrine
 {
+    [SerializeField] private string message = "RIP";
+
     public override void activate(Player player)
     {
-        // Does nothing
-        GameManager.instance.CreatePopup("RIP", transform.position, Color.green);
+        // Print text
+        PopUpTextManager.instance.createPopup(message, Color.green, transform.position);
     }
 }

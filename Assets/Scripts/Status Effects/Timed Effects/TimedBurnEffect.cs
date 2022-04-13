@@ -21,6 +21,10 @@ public class TimedBurnEffect : TimedEffect
     protected override void ApplyEffect()
     {
         // Does nothing on apply
+        BurnEffect burnEffect = (BurnEffect)Effect;
+
+        // Create fire particles
+        // var ps = GameObject.Instantiate(burnEffect.onFireParticles, health.transform).GetComponent<ParticleSystem>();
     }
 
     protected override void onTick()
@@ -37,7 +41,9 @@ public class TimedBurnEffect : TimedEffect
             }
 
             health.reduceHealth(burnEffect.tickDamage);
-            GameManager.instance.CreatePopup(burnEffect.tickDamage + "", health.transform.position, burnEffect.damageColor);
+
+            // Create popup
+            PopUpTextManager.instance.createShortPopup(burnEffect.tickDamage + "", burnEffect.damageColor, health.transform.position);
         }
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 7887729837408243033, guid: 3cb36c01c9fd6f0408b6361d63630262, type: 3}
   type: 0
-  sprite: {fileID: 21300000, guid: 51c49496b473c46489aa68367c99ea83, type: 3}
+  sprite: {fileID: 21300000, guid: eeda5aafab86e4e44bab30c8fb3e19f2, type: 3}
   isStackable: 0
   count: 1
   description: Poky-poky
@@ -24,4 +24,4 @@ MonoBehaviour:
   critDamage: 1
   weaponType: 4
   twoHanded: 0
-  enchantment: {fileID: 0}
+  enchantment: {fileID: 11400000, guid: b1bc8a01ee4e36840a5173c527d6f256, type: 2}

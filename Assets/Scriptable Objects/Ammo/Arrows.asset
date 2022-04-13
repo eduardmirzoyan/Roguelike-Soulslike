@@ -16,6 +16,6 @@ MonoBehaviour:
   type: 3
   sprite: {fileID: 6099581493293703690, guid: 74e919aaf84a56346a21083fd378aadd, type: 3}
   isStackable: 1
-  count: 195
+  count: 20
   description: Common Arrows
   name: Arrows

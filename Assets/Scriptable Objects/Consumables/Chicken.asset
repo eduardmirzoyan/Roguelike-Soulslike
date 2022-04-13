@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Chicken
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  type: 0
+  type: 2
   sprite: {fileID: 8132948862792318974, guid: 74e919aaf84a56346a21083fd378aadd, type: 3}
   isStackable: 1
   count: 1
-  description: Winner winner chicken dinner. Heals 50% of your max HP.
+  description: Winner winner chicken dinner. Heals 15% of your max HP.
   name: Chicken Dinner
-  healPercentage: 0.5
+  healPercentage: 0.15

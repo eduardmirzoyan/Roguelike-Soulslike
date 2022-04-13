@@ -196,9 +196,9 @@ public class Menu : MonoBehaviour
         // Change window enum
         if(window + direction < MenuWindow.Inventory)
         {
-            window = MenuWindow.SkillTree;
+            window = MenuWindow.Status;
         }
-        else if(window + direction > MenuWindow.SkillTree)
+        else if(window + direction > MenuWindow.Status)
         {
             window = MenuWindow.Inventory;
         }   

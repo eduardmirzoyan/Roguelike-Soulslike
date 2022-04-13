@@ -116,7 +116,7 @@ PolygonCollider2D:
     - - {x: -0.12216841, y: 0.04479061}
       - {x: 0.041879013, y: -0.11810914}
       - {x: 0.3631593, y: 0.2021823}
-      - {x: 0.41098857, y: 0.4131205}
+      - {x: 0.37579563, y: 0.36034116}
       - {x: 0.20786546, y: 0.36454213}
 --- !u!95 &1187901017
 Animator:
@@ -151,10 +151,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponEffects: []
   state: 0
-  windupDuration: 0.2
+  windupDuration: 0.33
   activeDuration: 0.1
-  recoveryDuration: 0.2
-  moveSpeedMultiplier: 0.25
+  recoveryDuration: 0.15
   maxCombo: 2
   cooldown: 0
   weaponIdleAnimation: Sword Idle
@@ -164,6 +163,16 @@ MonoBehaviour:
   owner: {fileID: 11400000, guid: 5afe78351655d4049935cc9901e18a9a, type: 2}
   wielderStats: {fileID: 0}
   wielderMovement: {fileID: 0}
+  dashspeed: 0
+  dashspeed0: 300
+  dashspeed1: 200
+  dashspeed2: 500
+  windupDuration1: 0.15
+  activeDuration1: 0.2
+  recoveryDuration1: 0.2
+  windupDuration2: 0.3
+  activeDuration2: 0.2
+  recoveryDuration2: 0.05
 --- !u!114 &8006824362132755115
 MonoBehaviour:
   m_ObjectHideFlags: 0

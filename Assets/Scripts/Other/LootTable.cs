@@ -31,7 +31,6 @@ public class LootTable : ScriptableObject
                 
             roll -= drop.weight;
         }
-
         return table[roll].item;
     }
 }

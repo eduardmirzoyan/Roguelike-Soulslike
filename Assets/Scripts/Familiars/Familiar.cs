@@ -38,18 +38,6 @@ public abstract class Familiar : MonoBehaviour
         else if (agent.velocity.x < -0.1f) {
             mv.setFacingDirection(-1);
         }
-
-        // var targetPosition = (Vector2)homePosition.position + Vector2.right * spacing * (position + 1) * -owner.GetComponent<Movement>().getFacingDirection();
-
-        // var hit = Physics2D.Raycast(homePosition.position, Vector2.right * -owner.GetComponent<Movement>().getFacingDirection(), spacing * position);
-        // if (hit)
-        //     targetPosition = hit.point;
-
-        // Vector3 direction = targetPosition - (Vector2)transform.position;
-        // if (Vector2.Distance(targetPosition, transform.position) < 0.1f)
-        //     direction = Vector2.zero;
-        // direction.Normalize();
-        // movement = direction;
     }
 
     public void setHome(Transform newHome) => homePosition = newHome;

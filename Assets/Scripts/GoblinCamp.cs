@@ -93,9 +93,8 @@ public class GoblinCamp : MonoBehaviour
         if (sentGoblin == null) {
             print("Goblin that was supposed to be sent is gone!");
         }
-
-        // Send goblin to next camp
-        sentGoblin.patrolTo(nextCamp.transform);
+        else // Send goblin to next camp
+            sentGoblin.patrolTo(nextCamp.transform);
     }
 
     public void leaveCamp(GoblinAI goblin) {

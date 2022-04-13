@@ -27,7 +27,7 @@ public class TimedBleedEffect : TimedEffect
 
         if (health != null) {
             health.reduceHealth(bleedEffect.tickDamage * EffectStacks);
-            GameManager.instance.CreatePopup(bleedEffect.tickDamage * EffectStacks + "", health.transform.position, bleedEffect.damageColor);
+            PopUpTextManager.instance.createShortPopup(bleedEffect.tickDamage * EffectStacks + "", bleedEffect.damageColor, health.transform.position);
         }
     }
 }

@@ -16,8 +16,9 @@ MonoBehaviour:
   IsDurationReset: 1
   IsDurationStacked: 0
   IsEffectStacked: 0
-  tickRate: 1
+  tickRate: 0.5
   icon: {fileID: -1070304041610068177, guid: 7cabf2d15a1c4e342ba0b77966b5de03, type: 3}
   flavorText: You are on fire, not in a good way...
   tickDamage: 2
   damageColor: {r: 1, g: 0.60275817, b: 0, a: 1}
+  onFireParticles: {fileID: 4105515789000892619, guid: 143760ea68508f04e9eed6fc147510bc, type: 3}

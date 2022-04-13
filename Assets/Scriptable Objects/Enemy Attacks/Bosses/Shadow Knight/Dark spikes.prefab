@@ -134,6 +134,7 @@ MonoBehaviour:
   segmentSpawnPoint: {fileID: 2073894474797916672}
   spawnInterval: 0.075
   shockwaveDamage: 7
+  shockwavePushForce: 400
 --- !u!1 &2073894474797916675
 GameObject:
   m_ObjectHideFlags: 0

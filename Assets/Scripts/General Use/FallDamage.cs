@@ -39,7 +39,8 @@ public class FallDamage : MonoBehaviour
                         Damage dmg = new Damage {
                             damageAmount = (int) (fallDamage * (fallHeight / maxDropDistance)),
                             source = DamageSource.fromEnvironment,
-                            origin = transform
+                            origin = transform,
+                            color = Color.red
                         };
                         damageable.takeDamage(dmg);
                     }

@@ -36,8 +36,11 @@ public class TimedPoisonEffect : TimedEffect
                 poisonEffect.tickRate = 0.5f;
             }
 
+            // Reduce hp
             health.reduceHealth(poisonEffect.tickDamage);
-            GameManager.instance.CreatePopup(poisonEffect.tickDamage + "", health.transform.position, poisonEffect.damageColor);
+
+            // Create popup
+            PopUpTextManager.instance.createShortPopup(poisonEffect.tickDamage + "", poisonEffect.damageColor, health.transform.position);
         }
     }
 }

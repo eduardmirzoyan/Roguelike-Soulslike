@@ -5,7 +5,8 @@ using UnityEngine;
 public class SmallShield : MeleeWeapon
 {
     [SerializeField] private float pushForce;
-    [SerializeField] private float dashMultiplier;
+
+    private float tempDashspeed;
 
     private void FixedUpdate() {
         switch (state)
@@ -26,6 +27,7 @@ public class SmallShield : MeleeWeapon
                     windupTimer -= Time.deltaTime;
                 }
                 else {
+                    tempDashspeed = dashspeed;
                     state = WeaponState.Active; 
                 }
                 break;
@@ -33,8 +35,9 @@ public class SmallShield : MeleeWeapon
                 // Weapon is capable of dealing damage, hitbox active
                 if (activeTimer > 0)
                 {   
-                    // Dash
-                    wielderMovement.dash(wielderMovement.getMovespeed() * dashMultiplier, wielderMovement.getFacingDirection());
+                    // Move while attacking
+                    wielderMovement.dash(tempDashspeed, wielderMovement.getFacingDirection());
+                    tempDashspeed = Mathf.Lerp(tempDashspeed, 0, 1 - activeTimer / activeDuration);
 
                     activeTimer -= Time.deltaTime;
                 }
@@ -67,17 +70,20 @@ public class SmallShield : MeleeWeapon
         {
             var damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
             var adjustedPush = pushForce;
+            var damageColor = Color.white;
 
             // Check crit
             int rand = Random.Range(0, 100);
             if(rand <= (wielderStats.percentCritChance + owner.critChance) * 100 )
             {
-                print("crit!");
-                GameManager.instance.CreatePopup("CRIT", transform.parent.position, Color.yellow);
+                // Increase damage
                 damage = (int) (damage * (1 + owner.critDamage));
 
-                // Crits increase pushforce
+                // Increase pushforce
                 adjustedPush = (adjustedPush * (1 + owner.critDamage));
+
+                // Change color
+                damageColor = Color.yellow;
             }
 
             Damage dmg = new Damage
@@ -86,7 +92,8 @@ public class SmallShield : MeleeWeapon
                 source = DamageSource.fromPlayer,
                 origin = transform,
                 effects = weaponEffects,
-                pushForce = adjustedPush
+                pushForce = adjustedPush,
+                color = damageColor
             };
             damageable.takeDamage(dmg);
 

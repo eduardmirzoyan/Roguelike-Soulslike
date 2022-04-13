@@ -145,7 +145,14 @@ public class ImpAI : EnemyAI
                     impState = ImpState.Searching;
                 }
 
-                handleDisplacement();
+                // Handle displacement
+                if (displacable.isDisplaced()) {
+                    if (displacable.isStunned())
+                        resetValues();
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    impState = ImpState.Stunned;
+                    break;
+                }
 
             break;
             case ImpState.Searching:
@@ -176,7 +183,16 @@ public class ImpAI : EnemyAI
                     impState = ImpState.Interacting;
                 }
 
-                handleDisplacement();
+                // Handle displacement
+                if (displacable.isDisplaced()) {
+                    if (displacable.isStunned())
+                        resetValues();
+                        
+                    rallyParticles.Stop();
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    impState = ImpState.Stunned;
+                    break;
+                }
 
             break;
             case ImpState.Interacting:
@@ -203,7 +219,16 @@ public class ImpAI : EnemyAI
 
                 handleRetaliation();
 
-                handleDisplacement();
+                // Handle displacement
+                if (displacable.isDisplaced()) {
+                    if (displacable.isStunned())
+                        resetValues();
+
+                    rallyParticles.Stop();
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    impState = ImpState.Stunned;
+                    break;
+                }
 
             break;
             case ImpState.Rallying:
@@ -219,7 +244,17 @@ public class ImpAI : EnemyAI
                     rally();
                 }
 
-                handleDisplacement();
+                // Handle displacement
+                if (displacable.isDisplaced()) {
+                    if (displacable.isStunned())
+                        resetValues();
+
+                    rallyParticles.Stop();
+                    animationHandler.changeAnimationState(stunnedAnimation);
+                    impState = ImpState.Stunned;
+                    break;
+                }
+
             break;
             case ImpState.Attacking:
                 // If you are in the middle of an attack
@@ -275,7 +310,14 @@ public class ImpAI : EnemyAI
                         agent.SetDestination(target.position);
                     }
 
-                    handleDisplacement();
+                    // Handle displacement
+                    if (displacable.isDisplaced()) {
+                        if (displacable.isStunned())
+                            resetValues();
+                        animationHandler.changeAnimationState(stunnedAnimation);
+                        impState = ImpState.Stunned;
+                        break;
+                    }
                 }
             break;
             case ImpState.Stunned:
@@ -373,24 +415,22 @@ public class ImpAI : EnemyAI
     }
 
     public void aggroOn(Transform entity) {
-        // print(gameObject.name + " is aggro'd on " + entity.name);
         interactingCircle.fillAmount = 0; // Reset circle
         target = entity;
         impState = ImpState.Attacking;
     }
 
-    private void handleDisplacement() {
-        if (displacable.isDisplaced()) {
-            // Reset values
-            wanderTimer = wanderRate;
-            attackTimer = attackDuration;
-            attackCooldownTimer = attackCooldown;
-            rallyTimer = rallyDuration;
-            // Stop particles
-            rallyParticles.Stop();
-            animationHandler.changeAnimationState(stunnedAnimation);
-            impState = ImpState.Stunned;
-        }
+    protected override void resetValues()
+    {
+        base.resetValues();
+        rallyTimer = rallyDuration;
+        rallyParticles.Stop();
+    }
+
+    private void OnDestroy() {
+        // Create corpse
+        if (health.currentHealth <= 0)
+            GameManager.instance.spawnCorpse(gameObject);
     }
 
     protected override void OnDrawGizmosSelected() {

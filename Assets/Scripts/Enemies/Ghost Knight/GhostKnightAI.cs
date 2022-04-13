@@ -127,27 +127,6 @@ public class GhostKnightAI : EnemyAI
 
             break;
             case KnightState.Attacking:
-
-                // If target is gone (IE dead)
-                if (target == null) {
-                    sleep();
-
-                    // Go back sleep state
-                    knightState = KnightState.Sleeping;
-                    return;
-                }
-                
-                // If target goes too far
-                if (Vector2.Distance(target.position, transform.position) > aggroRange) {
-                    target = null;
-
-                    sleep();
-
-                    // Go back sleep state
-                    knightState = KnightState.Sleeping;
-                    return;
-                }
-
                 // If you are in the middle of an attack, then let it play
                 if (attackTimer > 0) {
                     animationHandler.changeAnimationState(attackAnimation);
@@ -163,6 +142,26 @@ public class GhostKnightAI : EnemyAI
                 }
                 else { // Else chase target until it is in range or too far
                     animationHandler.changeAnimationState(idleAnimation);
+
+                    // If target is gone (IE dead)
+                    if (target == null) {
+                        sleep();
+
+                        // Go back sleep state
+                        knightState = KnightState.Sleeping;
+                        return;
+                    }
+                    
+                    // If target goes too far
+                    if (Vector2.Distance(target.position, transform.position) > aggroRange) {
+                        target = null;
+
+                        sleep();
+
+                        // Go back sleep state
+                        knightState = KnightState.Sleeping;
+                        return;
+                    }
 
                     // Always face target
                     faceTarget();

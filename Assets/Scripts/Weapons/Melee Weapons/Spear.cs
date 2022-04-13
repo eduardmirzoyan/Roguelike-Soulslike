@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Spear : MeleeWeapon
 {
@@ -20,6 +21,8 @@ public class Spear : MeleeWeapon
 
     [SerializeField] private float projectileSpeed;
 
+    private float tempDashspeed;
+
     protected void FixedUpdate()
     {
         switch (state)
@@ -33,8 +36,6 @@ public class Spear : MeleeWeapon
                 else {
                     animationHandler.changeAnimationState(weaponIdleAnimation);
                 }
-
-                
                 
                 break;
             case WeaponState.WindingUp:
@@ -43,12 +44,18 @@ public class Spear : MeleeWeapon
                 if (chargeTime > 0 || Time.time - heldTime > windupDuration) {
 
                     // You may aim the spear during charge up
-                    var trans = UnityEditor.TransformUtils.GetInspectorRotation(gameObject.transform).z;
+                    var trans = TransformUtils.GetInspectorRotation(gameObject.transform).z;
                     if (Input.GetKey(KeyCode.UpArrow) && trans < 25) { // Max angle of 0
                         transform.Rotate(Vector3.forward * aimRotationSpeed * Time.deltaTime);
                     }
                     else if (Input.GetKey(KeyCode.DownArrow) && trans > -25) { // Min angle of -45
                         transform.Rotate(-Vector3.forward * aimRotationSpeed * Time.deltaTime);
+                    }
+                    
+                    // Allow slow horizontal movement
+                    var horizontal = Input.GetAxis("Horizontal");
+                    if (horizontal > 0.1f || horizontal < -0.1f ) {
+                        wielderMovement.dash(20, horizontal);
                     }
 
                     // Want to throw
@@ -82,7 +89,7 @@ public class Spear : MeleeWeapon
 
                         // Initalize the arrow's values
                         if (spear != null) {
-                            spear.initializeSpear(damage, scaledSpeed, transform.parent.gameObject);
+                            spear.initializeSpear(damage, weaponEffects, scaledSpeed, spriteRenderer.sprite, transform.parent.gameObject);
                         }
                         
                         // Start cooldown
@@ -92,17 +99,20 @@ public class Spear : MeleeWeapon
                         chargeTime = 0;
 
                         // Set active time to 0
-                        activeTimer = 0;
+                        activeTimer = 0.33f;
 
                         // Set new recovery
-                        recoveryTimer = 0.33f;
+                        recoveryTimer = 0;
 
                         // Reset rotation to parent's
                         transform.rotation = transform.parent.rotation;
 
+                        // Push backwards
+                        tempDashspeed = -dashspeed / 3;
+                        
+
                         state = WeaponState.Active; 
                     }
-
 
                 }
                 else { // Else do a normal melee attack
@@ -114,6 +124,7 @@ public class Spear : MeleeWeapon
                         windupTimer -= Time.deltaTime;
                     }
                     else {
+                        tempDashspeed = dashspeed;
                         state = WeaponState.Active; 
                     }
                 }
@@ -123,10 +134,15 @@ public class Spear : MeleeWeapon
                 // Weapon is capable of dealing damage, hitbox active
                 if (activeTimer > 0)
                 {   
+                    // Move while attacking
+                    wielderMovement.dash(tempDashspeed, wielderMovement.getFacingDirection());
+                    tempDashspeed = Mathf.Lerp(tempDashspeed, 0, 1 - activeTimer / activeDuration);
+
                     activeTimer -= Time.deltaTime;
                 }
                 else 
                 {
+                    wielderMovement.Walk(0);
                     if (transform.parent.TryGetComponent(out InputBuffer inputBuffer)) {
                         inputBuffer.resetAttackRequests();
                     }
@@ -175,9 +191,8 @@ public class Spear : MeleeWeapon
                 chargeTime = maxCharge;
         }
             
-
         // Reset time
-        heldTime = Time.time;
+        heldTime = float.MaxValue;
     }
 
     public void reduceCooldown() {
@@ -189,5 +204,14 @@ public class Spear : MeleeWeapon
     public override bool canRelease()
     {
         return !isReleased && state == WeaponState.WindingUp;
+    }
+
+    public override void cancelAttack()
+    {
+        if (state != WeaponState.Ready) {
+            animationHandler.changeAnimationState(weaponIdleAnimation);
+            currentCombo = 0;
+            state = WeaponState.Ready;
+        }
     }
 }

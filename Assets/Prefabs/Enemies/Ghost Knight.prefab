@@ -1598,8 +1598,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wielder: {fileID: 0}
-  damage: 7
-  force: 0
+  damage: 9
+  force: 600
   hitAll: 0
 --- !u!1 &5812362126555256163
 GameObject:
@@ -6529,6 +6529,7 @@ MonoBehaviour:
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
   displacable: {fileID: 0}
+  stats: {fileID: 0}
   wanderRadius: 0
   wanderRate: 0
   aggroRange: 5
@@ -6541,7 +6542,6 @@ MonoBehaviour:
   target: {fileID: 0}
   attacker: {fileID: 0}
   pathfindUser: {fileID: 0}
-  stats: {fileID: 0}
   sleepingParticles: {fileID: 0}
   idleAnimation: Idle
   deadAnimation: Dead
@@ -6605,8 +6605,6 @@ MonoBehaviour:
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  tempDamageEffect: {fileID: 0}
 --- !u!114 &-1901823173913954643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6763,6 +6761,7 @@ MonoBehaviour:
   padding: 0.05
   viewableQueue: []
   currentTarget: {x: 0, y: 0, z: 0}
+  isJump: 0
   isDrop: 0
 --- !u!114 &-8373010377783489169
 MonoBehaviour:
@@ -6777,6 +6776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStandingPlatform: {fileID: 0}
+  dropTime: 0.35
   isDropping: 0
 --- !u!114 &1718550426
 MonoBehaviour:
@@ -6805,9 +6805,7 @@ MonoBehaviour:
   mv: {fileID: 0}
   stunImmune: 1
   knockbackImmune: 1
-  knockbackSpeed: 0
-  knockbackDuration: 0
-  stunDuration: 0
+  twoDimensionalKnockback: 0
 --- !u!114 &495678929619438457
 MonoBehaviour:
   m_ObjectHideFlags: 0

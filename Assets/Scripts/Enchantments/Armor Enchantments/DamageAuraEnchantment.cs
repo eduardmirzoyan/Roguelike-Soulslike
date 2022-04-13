@@ -38,7 +38,8 @@ public class DamageAuraEnchantment : Enchantment
                     Damage dmg = new Damage {
                         damageAmount = auraDamage,
                         source = DamageSource.fromPlayer,
-                        origin = entity.transform
+                        origin = entity.transform,
+                        color = Color.white
                     };
                     damageable.takeDamage(dmg);
                 }

@@ -945,6 +945,7 @@ GameObject:
   - component: {fileID: 8167846359180885496}
   - component: {fileID: 1782937000}
   - component: {fileID: 57978320211921031}
+  - component: {fileID: -5621630907249341548}
   m_Layer: 7
   m_Name: Thief
   m_TagString: Enemy
@@ -1140,8 +1141,9 @@ MonoBehaviour:
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
   displacable: {fileID: 0}
-  wanderRadius: 15
-  wanderRate: 20
+  stats: {fileID: 0}
+  wanderRadius: 10
+  wanderRate: 15
   aggroRange: 7
   attackRange: 1
   attackCooldown: 1
@@ -1153,13 +1155,13 @@ MonoBehaviour:
   attacker: {fileID: 0}
   pathfindUser: {fileID: 0}
   inventory: {fileID: 0}
-  maxWanderRadius: 13.1
+  minWanderRadius: 0
   maxInventorySize: 1
   lootingCircle: {fileID: 3964265407281285049}
   hasLootSprite: {fileID: 6908069387385937300, guid: 74e919aaf84a56346a21083fd378aadd, type: 3}
   lootDuration: 1
   maxItemDetectionRange: 13
-  dropLoot: {fileID: 0}
+  dropLoot: {fileID: 8328910403653533859, guid: 66f3cd2f0caf40b4abb72fdaaf077c54, type: 3}
   idleAnimation: Idle
   walkAnimation: Walk
   deadAnimation: Dead
@@ -1207,6 +1209,7 @@ MonoBehaviour:
   padding: 0.05
   viewableQueue: []
   currentTarget: {x: 0, y: 0, z: 0}
+  isJump: 0
   isDrop: 0
 --- !u!114 &3964265407416658813
 MonoBehaviour:
@@ -1248,6 +1251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStandingPlatform: {fileID: 0}
+  dropTime: 0.5
   isDropping: 0
 --- !u!114 &3964265407416658801
 MonoBehaviour:
@@ -1279,8 +1283,6 @@ MonoBehaviour:
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  tempDamageEffect: {fileID: 0}
 --- !u!114 &8167846359180885496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1308,9 +1310,7 @@ MonoBehaviour:
   mv: {fileID: 0}
   stunImmune: 0
   knockbackImmune: 0
-  knockbackSpeed: 0
-  knockbackDuration: 0
-  stunDuration: 0
+  twoDimensionalKnockback: 0
 --- !u!114 &57978320211921031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1326,6 +1326,24 @@ MonoBehaviour:
   damageParticlesPrefab: {fileID: 8865745841887048178, guid: ad88325a20afcab4ea2664cac0b447d0, type: 3}
   deathParticlesPrefab: {fileID: 8865745841887048178, guid: 3aa166a33a10b944ca097a6f8fdc862b, type: 3}
   spawnPoint: {fileID: 3964265407416658756}
+--- !u!114 &-5621630907249341548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3964265407416658759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440e28ef0705b0f478182348446ed31f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displacable: {fileID: 0}
+  health: {fileID: 0}
+  damageRequiredRatio: 0.25
+  bufferDuration: 0.5
+  pushforce: 400
+  pushDuration: 0.25
 --- !u!1 &4548904201857931657
 GameObject:
   m_ObjectHideFlags: 0

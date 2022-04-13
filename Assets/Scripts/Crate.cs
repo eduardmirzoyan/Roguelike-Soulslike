@@ -8,7 +8,6 @@ using UnityEngine;
 public class Crate : MonoBehaviour
 {
     [SerializeField] private WorldItem itemHolder;
-
     [SerializeField] private Item containedItem;
 
     // Update is called once per frame
