@@ -72,7 +72,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void removeItemAt(int index) {
+    public void reduceItemAt(int index) {
         if (index < 0 || index > items.Count) {
             print("OUT OF INVENTORY INDEX");
             return;
@@ -86,6 +86,16 @@ public class Inventory : MonoBehaviour
             items[index].count = 1;
             items[index] = null;
         }
+    }
+
+    public void removeItemAt(int index) {
+        if (index < 0 || index > items.Count) {
+            print("OUT OF INVENTORY INDEX");
+            return;
+        }
+
+        // Set slot to null
+        items[index] = null;
     }
 
     public Item getItem(int index) {

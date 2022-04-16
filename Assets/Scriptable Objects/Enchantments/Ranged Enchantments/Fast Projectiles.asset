@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99dc9930ea776cd409e6fb936330ab5f, type: 3}
   m_Name: Fast Projectiles
   m_EditorClassIdentifier: 
-  enchantmentName: Faster
+  enchantmentName: Faster Projectiles
+  stacks: 1
+  description: 
   speedMultiplier: 0.5

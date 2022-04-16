@@ -12,7 +12,7 @@ public class PotionConsumable : ConsumableItem
         var consumerEffectable = consumer.GetComponent<EffectableEntity>();
         if (consumerEffectable != null)
         {
-            GameManager.instance.CreatePopup("You take a sip of the potion...", consumer.gameObject.transform.position);
+            PopUpTextManager.instance.createPopup("You take a sip of the potion...", Color.white, consumer.gameObject.transform.position);
             consumerEffectable.addEffect(baseEffect.InitializeEffect(consumer));
         }
     }

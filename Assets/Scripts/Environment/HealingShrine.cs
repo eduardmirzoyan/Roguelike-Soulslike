@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class HealingShrine : Shrine
 {
+    [SerializeField] private string activateAnimation = "Activate";
     [SerializeField] private bool used;
     public override void activate(Player player)
     {
         if (!used) {
             var flask = player.GetComponentInChildren<Flask>();
             if (flask != null && !flask.isFull()) {
+                // Play animation
+                GetComponent<Animator>().Play(activateAnimation);
+                
                 // Refill flask
                 flask.refill();
 

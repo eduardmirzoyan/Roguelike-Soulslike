@@ -42,6 +42,7 @@ public class StatusUI : MonoBehaviour
     }
 
     public void updateUI() {
+        selectedItemIndex = -1;
         updateBasicStatus();
         updateCombatStatus();
         updateEnchantmentsUI();
@@ -91,7 +92,7 @@ public class StatusUI : MonoBehaviour
         var offWeaponItem = equipmentHandler.getOffHandWeaponItem();
         if (offWeaponItem != null && offWeaponItem.enchantment != null) {
             var enchantmentHolder = Instantiate(enchantmentHolderPrefab, weaponVerticalLayoutGroup.transform);
-            enchantmentHolder.GetComponentInChildren<Text>().text = mainWeaponItem.enchantment.enchantmentName;
+            enchantmentHolder.GetComponentInChildren<Text>().text = offWeaponItem.enchantment.enchantmentName;
             enchantmentHolders.Add(enchantmentHolder);
             allEnchantments.Add(offWeaponItem.enchantment);
         }
@@ -131,7 +132,7 @@ public class StatusUI : MonoBehaviour
 
     public (Transform, Enchantment) getSelectedEnchantment() {
         // If nothing is selected, return null
-        if (selectedItemIndex < 0) {
+        if (selectedItemIndex < 0 || selectedItemIndex > enchantmentHolders.Count) {
             return (null, null);
         }
         // Else return the selected gameobject's transform

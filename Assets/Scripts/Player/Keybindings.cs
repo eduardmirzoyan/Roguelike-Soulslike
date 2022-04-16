@@ -15,5 +15,5 @@ public class Keybindings : MonoBehaviour
     public KeyCode crouchKey = KeyCode.DownArrow;
     public KeyCode interactKey2 = KeyCode.UpArrow;
     public KeyCode pickUpKey = KeyCode.DownArrow;
-    public KeyCode rollKey = KeyCode.LeftShift;
+    public KeyCode rollKey = KeyCode.D;
 }

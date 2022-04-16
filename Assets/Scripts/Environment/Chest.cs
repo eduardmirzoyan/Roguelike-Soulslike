@@ -5,7 +5,7 @@ using UnityEngine;
 public class Chest : MonoBehaviour
 {
     [SerializeField] private Sprite emptyChest;
-    [SerializeField] public int moneyMount;
+    [SerializeField] public int moneyAmount;
     [SerializeField] private WorldItem itemHolder;
 
     [SerializeField] private bool isColleced;
@@ -24,7 +24,9 @@ public class Chest : MonoBehaviour
             Instantiate(itemHolder, new Vector2(transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
 
             // Create popup
-            PopUpTextManager.instance.createVerticalPopup("You opened the chest.", Color.white, transform.position);
+            PopUpTextManager.instance.createVerticalPopup("+" + moneyAmount + " gold", Color.yellow, transform.position);
+
+            GameManager.instance.addGold(moneyAmount);
 
             // Change sprite
             GetComponent<SpriteRenderer>().sprite = emptyChest;

@@ -40,7 +40,7 @@ public class LongBow : RangedWeapon
 
                 // Allow slow horizontal movement
                 var horizontal = Input.GetAxis("Horizontal");
-                if (horizontal > 0.1f || horizontal < -0.1f ) {
+                if (horizontal > 0.5f || horizontal < -0.5f ) {
                     wielderMovement.dash(20, horizontal);
                 }
                 

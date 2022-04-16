@@ -121,10 +121,6 @@ public class Menu : MonoBehaviour
             {
                 attemptToUseSelectedItem(item, inventoryUI.getSelectedItemIndex());
             }
-            else 
-            {
-                print("no item to use!");
-            }
         }
 
         // Drop selected item
@@ -141,7 +137,8 @@ public class Menu : MonoBehaviour
             var prefab = Instantiate(dropLoot, player.transform.position, Quaternion.identity);
             prefab.setItem(selectedItem);
 
-            inventoryUI.reduceSelectedItem();
+            
+            inventoryUI.removeSelectedItem();
         }
         inventoryScreen.SetActive(true);
 

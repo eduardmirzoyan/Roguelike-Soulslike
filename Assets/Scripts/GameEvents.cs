@@ -15,8 +15,9 @@ public class GameEvents : MonoBehaviour
     
     public event Action<GameObject, GameObject, int> onHit;
     public event Action<Weapon, bool> onWeaponChange;
-    public event Action<GoblinAI, GoblinCamp> onLeaveGoblinCamp;
-    public event Action<GoblinAI, GoblinCamp> onJoinGoblinCamp;
+
+    public event Action<TimedEffect, EffectableEntity> onAddStatusEffect;
+    public event Action<TimedEffect, EffectableEntity> onRemoveStatusEffect;
 
     public void triggerOnHit(GameObject attackingEnitiy, GameObject hitEntity, int damageTaken)
     {
@@ -34,11 +35,17 @@ public class GameEvents : MonoBehaviour
         }
     }
 
-    public void triggerLeaveGoblinCamp() {
-
+    public void triggerAddStatusEffect(TimedEffect timedEffect, EffectableEntity effectableEntity) {
+        if (onAddStatusEffect != null) 
+        {
+            onAddStatusEffect(timedEffect, effectableEntity);
+        }
     }
     
-    public void triggerJoinGoblinCamp() {
-        
+    public void triggerRemoveStatusEffect(TimedEffect timedEffect, EffectableEntity effectableEntity) {
+        if (onRemoveStatusEffect != null) 
+        {
+            onRemoveStatusEffect(timedEffect, effectableEntity);
+        }
     }
 }

@@ -28,6 +28,8 @@ public class ShadowKnightAI : BossAI
     [SerializeField] private float bowRange;
     [SerializeField] private float followRange;
 
+    private bool hasSlammed;
+
     private enum ShadowKnightState {
         Idle,
         Aggro,
@@ -102,67 +104,66 @@ public class ShadowKnightAI : BossAI
                 // Cache distance
                 var distance = Vector3.Distance(transform.position, target.position);
 
-                // If you are in range
+                // Movement logic 
                 if (distance < attackRange) {
                     // Don't move
+                    animationHandler.changeAnimationState(idleAnimation);
+                    mv.Walk(0);
+                }
+                else if (distance > followRange) {
+                    // Walk towards target
+                    animationHandler.changeAnimationState(walkAnimation);
+                    handleForwardMovement(mv.getFacingDirection());
+                }
+
+                // Attack logic
+                if (attackCooldownTimer <= 0 && distance < followRange) {
+                    // Stop moving
                     mv.Walk(0);
 
-                    // Change animation
-                    animationHandler.changeAnimationState(idleAnimation);
+                    // Do random melee attack
+                    int choice = Random.Range(0, 3); // 0 - 3
 
-                    // Check if cooldown is over
-                    if (attackCooldownTimer <= 0) {
-                        // Randomly pick an attack
-                        int choice = Random.Range(0, 3); // 0 - 3
-                        switch(choice) {
-                            case 0:
-                                attackTimer = 1.25f;
-                                animationHandler.changeAnimationState(frontStabAnimation);
-                                shadowKnightState = ShadowKnightState.FrontStab;
-                            break;
-                            case 1:
-                                attackTimer = 1.083f;
-                                animationHandler.changeAnimationState(overheadSwingAnimation);
-                                shadowKnightState = ShadowKnightState.OverheadSlash;
-                            break;
-                            case 2:
-                                attackTimer = 0.5f;
-                                mv.jumpReposition(-mv.getFacingDirection() * attackRange * 2.5f, 10);
-                                shadowKnightState = ShadowKnightState.Reposition;
-                            break;
-                        }
+                    switch(choice) {
+                        case 0:
+                            attackTimer = 1.25f;
+                            animationHandler.changeAnimationState(frontStabAnimation);
+                            shadowKnightState = ShadowKnightState.FrontStab;
+                            return;
+                        case 1:
+                            attackTimer = 1.083f;
+                            hasSlammed = false;
+                            animationHandler.changeAnimationState(overheadSwingAnimation);
+                            shadowKnightState = ShadowKnightState.OverheadSlash;
+                            return;
+                        case 2:
+                            attackTimer = 0.5f;
+                            mv.jumpReposition(-mv.getFacingDirection() * attackRange * 2.5f, 10);
+                            shadowKnightState = ShadowKnightState.Reposition;
+                            return;
                     }
                 }
-                else {
-                    // If you are in bow range
-                    if (attackCooldownTimer <= 0 && distance > bowRange) {
-                        // Stop moving
-                        mv.Walk(0);
+                else if (attackCooldownTimer <= 0 && distance > bowRange) {
+                    // Stop moving
+                    mv.Walk(0);
 
-                        // Randomly choose between bow or cast
-                        int choice = Random.Range(0, 3);
+                    // Do ranged attack
+                    // Randomly choose between bow or cast
+                    int choice = Random.Range(0, 3); // 0 - 2
 
-                        switch(choice) {
-                            case 0:
-                                attackTimer = 4f;
-                                animationHandler.changeAnimationState(summonShadowFlameAnimation);
-                                StartCoroutine(summonShadowFlame(3));
-                                shadowKnightState = ShadowKnightState.ShadowFlame;
-                            break;
-                            default: // case 1 or 2 does the same thing
-                                attackTimer = 0.75f;
-                                animationHandler.changeAnimationState(shootBowAnimation);
-                                startBowAttack();
-                                shadowKnightState = ShadowKnightState.ShootBow;
-                            break;
-                        }
-                    }
-                    else {
-                        if (distance > followRange) {
-                            // Walk towards target
-                            animationHandler.changeAnimationState(walkAnimation);
-                            handleForwardMovement(mv.getFacingDirection());
-                        }
+                    switch(choice) {
+                        case 0:
+                            attackTimer = 4f;
+                            animationHandler.changeAnimationState(summonShadowFlameAnimation);
+                            StartCoroutine(summonShadowFlame(3));
+                            shadowKnightState = ShadowKnightState.ShadowFlame;
+                            return;
+                        default: // case 1 or 2 does the same thing
+                            attackTimer = 0.75f;
+                            animationHandler.changeAnimationState(shootBowAnimation);
+                            startBowAttack();
+                            shadowKnightState = ShadowKnightState.ShootBow;
+                            return;
                     }
                 }
 
@@ -197,6 +198,11 @@ public class ShadowKnightAI : BossAI
                     }
                     else {
                         mv.Walk(0);
+                    }
+
+                    if (!hasSlammed && attackTimer < 0.33f) {
+                        hasSlammed = true;
+                        GameManager.instance.shakeCamera(0.25f, 0.5f);
                     }
 
                 }

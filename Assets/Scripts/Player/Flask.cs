@@ -22,12 +22,11 @@ public class Flask : MonoBehaviour
 
     public bool use()
     {
-        currentCharges -= 1;
-        if (currentCharges < 0)
-        {
+        if (currentCharges <= 0) {
             currentCharges = 0;
             return false;
         }
+        currentCharges -= 1;
         return true;
     }
 

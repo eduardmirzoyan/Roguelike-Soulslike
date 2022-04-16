@@ -602,8 +602,18 @@ public class Player : MonoBehaviour
             }
 
             // Use flask
-            if (inputBuffer.useFlaskRequest)
-                useFlask();
+            if (inputBuffer.useFlaskRequest) {
+                // If you are at full health, do nothing
+                if(health.isFull()) {
+                    PopUpTextManager.instance.createPopup("Already at full HP.", Color.gray, transform.position);
+                }
+                else {
+                    useFlask();
+                }
+                // Reset request
+                inputBuffer.resetFlaskRequest();
+            }
+                
 
             // Interacting with surroundings
             if (inputBuffer.interactRequest) {
@@ -671,16 +681,10 @@ public class Player : MonoBehaviour
 
     private void useFlask()
     {
-        // If you are at full health, do nothing
-        if(health.isFull())
-            return;
-
         if (flask.use()) // Uses flask and checks result
-        {
             heal((int)(health.getMaxHP() * flask.getHealPercentage()));
-        }
         else
-            PopUpTextManager.instance.createVerticalPopup("Your flask is empty.", Color.gray, transform.position);
+            PopUpTextManager.instance.createVerticalPopup("Flask is empty.", Color.gray, transform.position);
     }
 
     public void heal(int amount)

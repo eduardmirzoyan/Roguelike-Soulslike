@@ -6,18 +6,21 @@ public class SpikeHandler : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Rigidbody2D body;
-    [SerializeField] protected Transform spikeCheck;
-    [SerializeField] protected LayerMask spikeLayer;
-    [SerializeField] protected Vector2 bounds;
+    [SerializeField] private Transform spikeCheck;
+    [SerializeField] private LayerMask spikeLayer;
+    [SerializeField] private Vector2 bounds;
+    [SerializeField] private BaseEffect bleedEffect;
 
     [Header("Settings")]
     [SerializeField] private int damage;
     [SerializeField] private bool isImmune;
     
+    private Transform spikes;
 
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        spikes = GameObject.Find("Spikes").gameObject.transform;
     }
 
     private void FixedUpdate()
@@ -31,7 +34,8 @@ public class SpikeHandler : MonoBehaviour
             Damage dmg = new Damage {
                 damageAmount = damage,
                 source = DamageSource.fromEnvironment,
-                origin = transform,
+                origin = spikes,
+                effects = new List<BaseEffect>() { bleedEffect },
                 color = Color.red
             };
             damageable.takeDamage(dmg);

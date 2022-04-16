@@ -180,6 +180,7 @@
      <Compile Include="Assets\Scripts\PerserveBetweenLevels.cs" />
      <Compile Include="Assets\Scripts\Other\Camera.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\FeatherFallEnchantment.cs" />
+     <Compile Include="Assets\Scripts\Environment\InteractableTooltip.cs" />
      <Compile Include="Assets\Scripts\Familiars\LaserAttackFamiliar.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\BossAI.cs" />
      <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\BlockUpgradeTwo.cs" />

@@ -92,9 +92,13 @@ public class InventoryUI : MonoBehaviour
         return inventory.getItem(selectedItem);
     }
 
+    public void removeSelectedItem() {
+        inventory.removeItemAt(selectedItem);
+    }
+
     public void reduceSelectedItem()
     {
-        inventory.removeItemAt(selectedItem);
+        inventory.reduceItemAt(selectedItem);
     }
 
     public int getSelectedItemIndex()

@@ -74,12 +74,12 @@ public class InputBuffer : MonoBehaviour
             dropDownRequest = false;
         }
 
-        if (flaskInputTimer > 0) {
-            flaskInputTimer -= Time.deltaTime;
-        }
-        else {
-            useFlaskRequest = false;
-        }
+        // if (flaskInputTimer > 0) {
+        //     flaskInputTimer -= Time.deltaTime;
+        // }
+        // else {
+        //     useFlaskRequest = false;
+        // }
     }
 
     //Check inputs here, and add them to the input buffer
@@ -124,7 +124,11 @@ public class InputBuffer : MonoBehaviour
         // Check input for Flask usage
         if (Input.GetKeyDown(keybindings.flaskKey)) {
             useFlaskRequest = true;
-            flaskInputTimer = bufferRatio * Time.deltaTime;
+            //flaskInputTimer = bufferRatio * Time.deltaTime;
+        }
+
+        if (useFlaskRequest && Input.GetKeyUp(keybindings.flaskKey)) {
+            useFlaskRequest = false;
         }
 
         // Buffer Attacks and abilities
@@ -165,7 +169,10 @@ public class InputBuffer : MonoBehaviour
     public void resetAttackRequests() {
         mainHandAttackRequest = false;
         offHandAttackRequest = false;
-        
+    }
+
+    public void resetFlaskRequest() {
+        useFlaskRequest = false;
     }
 
     //Call when we want to process the inputBuffer

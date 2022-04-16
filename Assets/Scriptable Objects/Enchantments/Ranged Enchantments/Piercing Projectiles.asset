@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1474a88c402ea624dbbb883f8b8c5291, type: 3}
   m_Name: Piercing Projectiles
   m_EditorClassIdentifier: 
-  enchantmentName: Pokey
+  enchantmentName: Piercing Projectiles
+  stacks: 1
+  description: 
   numberOfPierces: 1

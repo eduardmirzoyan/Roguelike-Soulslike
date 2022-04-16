@@ -60,8 +60,7 @@ public class TooltipUI : MonoBehaviour
 
                             // Set description
                             itemDescription.text = 
-                                "Defense: " + armorItem.defenseValue
-                                + "\nBonus Stamina: " + armorItem.bonusStamina
+                                "AMR: " + armorItem.defenseValue
                                 + "\n" + armorItem.description;
                             break;
                         case ItemType.Weapon:
@@ -73,16 +72,18 @@ public class TooltipUI : MonoBehaviour
 
                             // Set item modifier
                             if (weaponItem.enchantment != null) {
+                                itemModifer.gameObject.SetActive(true);
                                 itemModifer.text = weaponItem.enchantment.enchantmentName;
                             }
                             else {
+                                itemModifer.gameObject.SetActive(false);
                                 itemModifer.text = "";
                             }
 
                             // Set description
                             itemDescription.text = 
-                                 "\nDamage: " + weaponItem.damage
-                                + "\nCrit Chance: " + weaponItem.critChance * 100 + "%"
+                                 "DMG: " + weaponItem.damage
+                                + "\nCRIT: " + weaponItem.critChance * 100 + "%"
                                 + "\n" + weaponItem.description;
                             break;
                         default:

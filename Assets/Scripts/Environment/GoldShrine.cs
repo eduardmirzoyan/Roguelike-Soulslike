@@ -48,7 +48,7 @@ public class GoldShrine : Shrine
             player.heal(15);
         }
         else {
-            PopUpTextManager.instance.createPopup("Not enough gold.", Color.gray, transform.position);
+            PopUpTextManager.instance.createPopup("Offer 50 gold in exchange for some life essence.", Color.gray, transform.position);
         }
         
     }

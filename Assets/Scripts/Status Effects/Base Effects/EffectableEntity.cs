@@ -19,22 +19,31 @@ public class EffectableEntity : MonoBehaviour
             effect.Tick();
             if (effect.IsFinished)
             {
+                // Remove effect
                 activeEffects.Remove(effect.Effect);
+                // Trigger event
+                GameEvents.instance.triggerRemoveStatusEffect(effect, this);
             }
         }
     }
 
     public void addEffect(TimedEffect timedEffect)
     {
+        print("added effect to: " + gameObject.name);
         if (activeEffects.ContainsKey(timedEffect.Effect))
         {
             activeEffects[timedEffect.Effect].Activate();
         }
         else
         {
+            // Add effect
             activeEffects.Add(timedEffect.Effect, timedEffect);
+            // Activate effect
             timedEffect.Activate();
         }
+
+        // Trigger event
+        GameEvents.instance.triggerAddStatusEffect(timedEffect, this);
     }
 
     public bool removeEffect(BaseEffect baseEffect) {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoblinCamp : MonoBehaviour
+public class GoblinCamp : Shrine
 {
     [Header("Settings")]
     [SerializeField] private float timeAtCamp;
@@ -64,6 +64,11 @@ public class GoblinCamp : MonoBehaviour
             // Issue command to goblin in 5 seconds
             StartCoroutine(sendGoblinIn(timeAtCamp));
         }
+    }
+
+    public override void activate(Player player)
+    {
+        PopUpTextManager.instance.createPopup("To be implemented.",  Color.gray, transform.position);
     }
 
     public void setPatrolRoute(Transform[] goblinCampTransforms) {

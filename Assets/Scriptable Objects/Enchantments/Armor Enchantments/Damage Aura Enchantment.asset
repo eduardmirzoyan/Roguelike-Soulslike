@@ -18,4 +18,4 @@ MonoBehaviour:
   particlesPrefab: {fileID: 4951145564583668689, guid: 4bcbacf32e400fc4584f48e88bb52403, type: 3}
   procTime: 3
   auraRadius: 2
-  auraDamage: 1
+  auraDamage: 2

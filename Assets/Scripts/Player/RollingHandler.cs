@@ -17,6 +17,10 @@ public class RollingHandler : MonoBehaviour
     private float rollTimer;
     private float rollDirection;
 
+    [SerializeField] private float lerpFactor;
+
+    private float workingRollSpeed;
+
     private void Start() {
         mv = GetComponent<Movement>();
     }
@@ -37,6 +41,10 @@ public class RollingHandler : MonoBehaviour
         else 
             rollDirection = mv.getFacingDirection();
 
+        // Set roll speed to lerp
+        workingRollSpeed = rollSpeed;
+
+        // Start timer
         rollTimer = rollDuration;
     }
 
@@ -45,9 +53,12 @@ public class RollingHandler : MonoBehaviour
     }
 
     public void roll() {
-        mv.WalkAtSpeed(rollDirection, rollSpeed);
         if (rollTimer > 0) {
             rollTimer -= Time.deltaTime;
+
+            // Lerp speed
+            mv.dash(workingRollSpeed, rollDirection);
+            // workingRollSpeed = Mathf.Lerp(workingRollSpeed, 0, lerpFactor);
         }
     }
 

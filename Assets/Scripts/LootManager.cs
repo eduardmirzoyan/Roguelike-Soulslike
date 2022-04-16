@@ -204,7 +204,7 @@ public class LootManager : MonoBehaviour
 
         // Create the scriptable object
         WeaponItem newSpear = ScriptableObject.CreateInstance<WeaponItem>();
-        newSpear.weaponType = WeaponType.LongBow;
+        newSpear.weaponType = WeaponType.Spear;
         newSpear.twoHanded = false;
         newSpear.prefab = spearPrefab;
 
@@ -238,7 +238,7 @@ public class LootManager : MonoBehaviour
 
         // Create the scriptable object
         WeaponItem newLongBow = ScriptableObject.CreateInstance<WeaponItem>();
-        newLongBow.weaponType = WeaponType.Spear;
+        newLongBow.weaponType = WeaponType.LongBow;
         newLongBow.twoHanded = false;
         newLongBow.prefab = longBowPrefab;
 

@@ -18,10 +18,10 @@ public class ComplexMovement : Movement
     [SerializeField] public float lowJumpMultiplier = 2.5f;
 
     public void improvedJumpHandling(KeyCode jumpKey) {
-        if (body.velocity.y < 0) {
+        if (body.velocity.y < -0.1f) {
             body.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
-        else if (body.velocity.y > 0 && !Input.GetKey(jumpKey)) {
+        else if (body.velocity.y > 0.1f && !Input.GetKey(jumpKey)) {
             body.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
     }

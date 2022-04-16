@@ -213,11 +213,12 @@ MonoBehaviour:
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
   displacable: {fileID: 0}
+  stats: {fileID: 0}
   wanderRadius: 0
   wanderRate: 0
   aggroRange: 30
   attackRange: 4.5
-  attackCooldown: 1
+  attackCooldown: 1.25
   attackDuration: 0
   attackDashSpeed: 400
   xpValue: 100
@@ -241,7 +242,7 @@ MonoBehaviour:
   flame: {fileID: 2073894473641317745, guid: 47d43c06beac8724b8af9cda8767bd56, type: 3}
   spawnpoint: {fileID: 1657400761}
   bowRange: 10
-  followRange: 6
+  followRange: 5
   shadowKnightState: 0
 --- !u!114 &6092390457356614901
 MonoBehaviour:
@@ -300,7 +301,6 @@ MonoBehaviour:
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &7620669740257576051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,7 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wielder: {fileID: 0}
-  damage: 15
+  damage: 10
   force: 0
   hitAll: 0
 --- !u!1 &8252513415144303147

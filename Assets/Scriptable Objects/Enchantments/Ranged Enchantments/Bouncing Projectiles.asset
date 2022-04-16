@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796edafc7452b774fb809ec6d8ef66b2, type: 3}
   m_Name: Bouncing Projectiles
   m_EditorClassIdentifier: 
-  enchantmentName: Bouncy
+  enchantmentName: Bouncy Projectiles
+  stacks: 1
+  description: 
   numberOfBounces: 1

@@ -168,8 +168,11 @@ public class Movement : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         if (!flying) {
-            Gizmos.DrawWireCube(groundCheck.transform.position, groundCheckBoxSize);
-            Gizmos.DrawWireSphere(wallCheck.transform.position, wallcheckRadius);
+            if (groundCheck != null)
+                Gizmos.DrawWireCube(groundCheck.transform.position, groundCheckBoxSize);
+                
+            if (wallCheck != null)
+                Gizmos.DrawWireSphere(wallCheck.transform.position, wallcheckRadius);
         }
     }
 }
