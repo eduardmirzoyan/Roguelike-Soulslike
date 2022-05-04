@@ -1,3 +1,2 @@
-C:/Users/eduar/Desktop/Unity[[:space:]]Projects/Roguelike-Soulslike/Library/Artifacts filter=lfs diff=lfs merge=lfs -text
 C:/Users/eduar/Desktop/Unity[[:space:]]Projects/Roguelike-Soulslike/Library/ArtifactDB filter=lfs diff=lfs merge=lfs -text
 Library/ArtifactDB filter=lfs diff=lfs merge=lfs -text
