@@ -109,12 +109,12 @@ TextureImporter:
       name: walk_1
       rect:
         serializedVersion: 2
-        x: 52
+        x: 48
         y: 0
-        width: 36
-        height: 36
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -130,12 +130,12 @@ TextureImporter:
       name: walk_2
       rect:
         serializedVersion: 2
-        x: 100
+        x: 96
         y: 0
-        width: 36
-        height: 36
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -151,12 +151,12 @@ TextureImporter:
       name: walk_3
       rect:
         serializedVersion: 2
-        x: 148
+        x: 144
         y: 0
-        width: 36
-        height: 36
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -169,22 +169,22 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gk_idle
+      name: walk_0
       rect:
         serializedVersion: 2
-        x: 5
+        x: 0
         y: 0
-        width: 36
-        height: 36
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a9c807d4a800a3e0800000000000000
-      internalID: -2044624726750869082
+      spriteID: 4646ce323715ddc80800000000000000
+      internalID: -8296385383580801948
       vertices: []
       indices: 
       edges: []

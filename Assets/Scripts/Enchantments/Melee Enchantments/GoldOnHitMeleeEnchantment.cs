@@ -7,10 +7,13 @@ public class GoldOnHitMeleeEnchantment : MeleeEchantment
 {
     [SerializeField] private float goldGainRatio;
 
+    private GameObject wielder;
+
     // Get weapon's gameobject
     public override void intialize(GameObject weaponGameObject)
     {
         base.intialize(weaponGameObject);
+        wielder = weaponGameObject.transform.parent.gameObject;
 
         GameEvents.instance.onHit += giveGoldOnHit;
     }
@@ -23,10 +26,16 @@ public class GoldOnHitMeleeEnchantment : MeleeEchantment
     }
 
     private void giveGoldOnHit(GameObject attackingEnitiy, GameObject hitEntity, int damageTaken) {
-        if (attackingEnitiy == entity.transform.gameObject && damageTaken > 1) {
+        if (attackingEnitiy == wielder && damageTaken > 1) {
             var goldGenerated = (int) (damageTaken * goldGainRatio);
-            Debug.Log("You gained: " + goldGenerated + " gold.");
+
+            // Min gold gain is 1
+            goldGenerated = Mathf.Max(goldGenerated, 1);
+
             GameManager.instance.addGold(goldGenerated);
+
+            // Create popup
+            PopUpTextManager.instance.createWeakVertPopup("+" + goldGenerated + " G", Color.yellow, attackingEnitiy.transform.position, 0.5f);
         }
     }
 }

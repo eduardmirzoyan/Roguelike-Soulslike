@@ -18,8 +18,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject corpsePrefab;
     
     public static GameManager instance; // Accessible by every class at any point
-    
-
     private void Awake()
     {
         if(GameManager.instance != null)
@@ -42,8 +40,10 @@ public class GameManager : MonoBehaviour
         // Get pathfinding map for platformer AIs
         pathfindingMap = GameObject.Find("Pathfinder Map").GetComponent<PathfindingMap>();
 
+        player = GameObject.Find("Player").GetComponent<Player>();
+
         SceneManager.sceneLoaded += saveState; // Once a new scene is loaded, game is saved
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
     }
 
     // References
@@ -66,7 +66,6 @@ public class GameManager : MonoBehaviour
      * 
      * 
      * */
-
 
     public Player GetPlayer() {
         return player;

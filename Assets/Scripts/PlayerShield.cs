@@ -52,7 +52,7 @@ public class PlayerShield : Shield
     private void takeBlockStaminaDamage(int damage)
     {
         // Drains stamina and gets result about what to do to player
-        damage -= GetComponentInParent<CombatStats>().defense / 4; // Reduce stamina damage by fourth of defense value
+        damage -= GetComponentInParent<Stats>().defense / 4; // Reduce stamina damage by fourth of defense value
         if (damage < 1)
             damage = 1;
 

@@ -15,6 +15,7 @@ public class TooltipUI : MonoBehaviour
     [SerializeField] private Text itemType;
     [SerializeField] private Text itemModifer;
     [SerializeField] private Text itemDescription;
+    [SerializeField] private Text itemFlavor;
     [SerializeField] private Item selectedItem;
     [SerializeField] private Menu menu;
 
@@ -52,39 +53,57 @@ public class TooltipUI : MonoBehaviour
 
                             // Set modifier
                             if (armorItem.enchantment != null) {
-                                itemModifer.text = armorItem.enchantment.enchantmentName;
+                                
+                                itemModifer.text = "[<color=#1EDFEC>" + armorItem.enchantment.enchantmentName + "</color>]"; ;
                             }
                             else {
-                                itemModifer.text = "";
+                                itemModifer.text = "[<color=grey>Empty</color>]";
                             }
 
                             // Set description
-                            itemDescription.text = 
-                                "AMR: " + armorItem.defenseValue
-                                + "\n" + armorItem.description;
+                            itemDescription.text = "AMR: " + armorItem.defenseValue;
+                            
+                            itemFlavor.text = armorItem.description;
                             break;
                         case ItemType.Weapon:
                             // Cache weapon
                             var weaponItem = (WeaponItem)selectedItem;
 
                             // Set item type
-                            itemType.text = weaponItem.weaponType.ToString() + " " + (weaponItem.twoHanded ? "(2H)" : "(1H)");
+                            itemType.text = weaponItem.weaponType.ToString();
 
                             // Set item modifier
-                            if (weaponItem.enchantment != null) {
+                            if (weaponItem.enchantmentSlots > 0) {
+                                // Enable display
                                 itemModifer.gameObject.SetActive(true);
-                                itemModifer.text = weaponItem.enchantment.enchantmentName;
+                                // Cache
+                                string[] enchantmentNames = new string[weaponItem.enchantmentSlots];
+
+                                // Add all used slots
+                                for (int i = 0; i < weaponItem.enchantments.Count; i++)
+                                {
+                                    enchantmentNames[i] = "[<color=#1EDFEC>" + weaponItem.enchantments[i].enchantmentName + "</color>]";
+                                }
+
+                                // Add all empty slots
+                                for (int i = weaponItem.enchantments.Count; i < weaponItem.enchantmentSlots; i++)
+                                {
+                                    enchantmentNames[i] = "[<color=grey>Empty</color>]";
+                                }
+                                
+                                itemModifer.text = string.Join("  ", enchantmentNames);
                             }
-                            else {
-                                itemModifer.gameObject.SetActive(false);
-                                itemModifer.text = "";
+                            else {;
+                                itemModifer.text = "No Slots";
                             }
 
                             // Set description
-                            itemDescription.text = 
-                                 "DMG: " + weaponItem.damage
-                                + "\nCRIT: " + weaponItem.critChance * 100 + "%"
-                                + "\n" + weaponItem.description;
+                            itemDescription.text
+                                = "DMG: " + weaponItem.damage + "\n"
+                                + "CRIT: " + weaponItem.critChance * 100 + "%\n";
+                            
+                            // Set flavor text
+                            itemFlavor.text = weaponItem.description;
                             break;
                         default:
                             // Set item type to name and modifier to null
@@ -93,6 +112,7 @@ public class TooltipUI : MonoBehaviour
                             // Set item text and description
                             itemType.text = selectedItem.name;
                             itemDescription.text = selectedItem.description;
+                            itemFlavor.text = "";
                             break;
                     }
                 }
@@ -117,6 +137,7 @@ public class TooltipUI : MonoBehaviour
 
                     itemModifer.text = "";
                     itemDescription.text = selected.Item2.description;
+                    itemFlavor.text = "";
                 }
                 else { // If something isn't selected, then send tooltip to narnia
                     transform.position = new Vector3(1000, 1000, 1000);

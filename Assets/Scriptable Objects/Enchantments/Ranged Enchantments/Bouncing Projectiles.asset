@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enchantmentName: Bouncy Projectiles
   stacks: 1
-  description: 
+  description: Projectiles bounce once.
   numberOfBounces: 1

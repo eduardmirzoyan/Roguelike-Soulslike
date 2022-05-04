@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enchantmentName: Faster Projectiles
   stacks: 1
-  description: 
+  description: Projectiles travel 50% quicker
   speedMultiplier: 0.5

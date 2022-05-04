@@ -6,6 +6,7 @@ using UnityEngine;
 public class SpeedEffect : BaseEffect
 {
     public float percentSpeedBoost;
+    public GameObject speedParticles;
 
     public override TimedEffect InitializeEffect(GameObject parent)
     {

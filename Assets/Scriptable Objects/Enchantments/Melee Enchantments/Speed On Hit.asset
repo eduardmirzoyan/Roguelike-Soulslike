@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558a249595b994d4b9dd9d660c9b9df8, type: 3}
+  m_Name: Speed On Hit
+  m_EditorClassIdentifier: 
+  enchantmentName: Lightweight
+  stacks: 1
+  description: Attacks grant you 15% MVSPD for 2 sec.
+  speedEffect: {fileID: 11400000, guid: 178163cc2b1729e4bb771f6b9f3fe5ad, type: 2}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Damageable))]
-[RequireComponent(typeof(CombatStats))]
+[RequireComponent(typeof(Stats))]
 public class Crate : MonoBehaviour
 {
     [SerializeField] private WorldItem itemHolder;

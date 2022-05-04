@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum MenuWindow
 {
@@ -137,8 +138,11 @@ public class Menu : MonoBehaviour
             var prefab = Instantiate(dropLoot, player.transform.position, Quaternion.identity);
             prefab.setItem(selectedItem);
 
-            
+            // Remove item from inventory
             inventoryUI.removeSelectedItem();
+
+            // Trigger event
+            GameEvents.instance.triggerOnItemDrop(prefab.GetComponent<WorldItem>());
         }
         inventoryScreen.SetActive(true);
 

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent (typeof(Stats))]
 public class Damageable : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Health health;
+    [SerializeField] private Stats stats;
 
     [Header("Settings")]
     [SerializeField] private float immunityDuration = 0.5f;
@@ -14,6 +16,7 @@ public class Damageable : MonoBehaviour
 
     private void Start() {
         health = GetComponent<Health>();
+        stats = GetComponent<Stats>();
     }
 
     private void FixedUpdate()
@@ -31,16 +34,13 @@ public class Damageable : MonoBehaviour
         if (isInvincible || immunityTimer > 0)
             return;
 
-        // Check dodge and block chance
-        if(TryGetComponent(out CombatStats stats))
+        // Roll to see if damage is dodged
+        int roll = Random.Range(0, 100);
+        if(roll < stats.percentDodgeChance * 100)
         {
-            // RNG test
-            int rand = Random.Range(0, 100);
-            if(rand <= stats.percentDodgeChance * 100)
-            {
-                // Dodge ATTACK!
-                return;
-            }
+            PopUpTextManager.instance.createPopup("Dodged", Color.cyan, transform.position);
+            // Dodge ATTACK!
+            return;
         }
 
         // Reduce damage if possible
@@ -54,6 +54,9 @@ public class Damageable : MonoBehaviour
 
         // Convert the origin to the wielder if the origin is a weapon
         if (damage.origin.TryGetComponent<Weapon>(out Weapon weapon)) {
+            // Trigger weapon hit
+            GameEvents.instance.triggerOnWeaponHit(weapon, gameObject);
+            
             damage.origin = damage.origin.parent;
         }
 
@@ -103,12 +106,14 @@ public class Damageable : MonoBehaviour
 
     // Reduce damage based on stats if possible
     private int reduceDamageBasedOnStats(int damage) 
-    {
-        if (TryGetComponent(out CombatStats stats)) 
-        {
-            int reducedStandardDamage = Mathf.RoundToInt(damage * (1 - stats.damageTakenMultiplier)) - stats.defense / 4;
-            return Mathf.Max(reducedStandardDamage, 1); // Min reduced damage to take is 1
-        }
-        return damage;
+    {   
+        // Reduce damage by defense
+        int reducedDamage = Mathf.RoundToInt(damage * (1 - stats.defense / 100f));
+
+        // Reduce damage by multiplier
+        reducedDamage = Mathf.RoundToInt(reducedDamage * (1 - stats.damageTakenMultiplier));
+        
+        // Minimum damage to take is 1
+        return Mathf.Max(reducedDamage, 1);
     }
 }

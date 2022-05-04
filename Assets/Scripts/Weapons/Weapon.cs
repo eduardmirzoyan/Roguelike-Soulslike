@@ -36,7 +36,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected AnimationHandler animationHandler;
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] protected WeaponItem owner; // The reference to the weaponitem that created this object
-    [SerializeField] protected CombatStats wielderStats;
+    [SerializeField] protected Stats wielderStats;
     [SerializeField] protected Movement wielderMovement;
     
     // Assuming instaniation means equippment
@@ -45,7 +45,7 @@ public abstract class Weapon : MonoBehaviour
         // Set weapon animator
         animationHandler = GetComponent<AnimationHandler>();
         wielderMovement = GetComponentInParent<Movement>();
-        wielderStats = GetComponentInParent<CombatStats>();
+        wielderStats = GetComponentInParent<Stats>();
 
         // Set weapon sprite
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -58,20 +58,30 @@ public abstract class Weapon : MonoBehaviour
         state = WeaponState.Ready;
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collision.TryGetComponent(out Damageable damageable) && collision.gameObject != this.gameObject)
+        if(collider.TryGetComponent(out Damageable damageable) && collider.gameObject != this.gameObject)
         {
+            // Roll for miss
+            int rand = Random.Range(0, 100);
+            if(rand < (wielderStats.percentMissChance) * 100 )
+            {
+                PopUpTextManager.instance.createPopup("Miss", Color.gray, collider.transform.position);
+                return;
+            }
+
             var damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
             var damageColor = Color.white;
 
-            // Check crit
-            int rand = Random.Range(0, 100);
+            // Roll for crit
+            rand = Random.Range(0, 100);
             if(rand <= (wielderStats.percentCritChance + owner.critChance) * 100 )
             {
                 // Change damage amount and color
                 damage = (int) (damage * (1 + owner.critDamage));
                 damageColor = Color.yellow;
+                // Trigger event
+                GameEvents.instance.triggerOnCrit(this, damageable.transform);
             }
 
             Damage dmg = new Damage

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Curse
   m_EditorClassIdentifier: 
   Duration: 5
-  IsDurationReset: 1
-  IsDurationStacked: 0
-  IsEffectStacked: 1
+  isDurationReset: 1
+  isDurationStacked: 0
+  maxStacks: 5
   tickRate: 1
   icon: {fileID: 21300000, guid: 257ece91ef9162e42bc05040e0bfad08, type: 3}
   flavorText: RIP

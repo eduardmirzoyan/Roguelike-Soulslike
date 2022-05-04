@@ -11,6 +11,8 @@ public class LongBow : RangedWeapon
     [Header("Settings")]
     [SerializeField] private string shootAnimation;
     [SerializeField] private float aimRotationSpeed;
+    [SerializeField] private int maxAimDegree = 45;
+    [SerializeField] private int minAimDegree = -25;
 
     // Whether or not the bow was released from drawback
     private bool isReleased;
@@ -30,11 +32,11 @@ public class LongBow : RangedWeapon
             case WeaponState.WindingUp: // Pulling back the bow is the windup time
 
                 // You may aim the bow during windup
-                var trans = TransformUtils.GetInspectorRotation(gameObject.transform).z;
-                if (Input.GetKey(KeyCode.UpArrow) && trans < 45) { // Max angle of -25
+                var rotation = GetSignedEulerAngles(gameObject.transform.localEulerAngles);
+                if (Input.GetKey(KeyCode.UpArrow) && rotation.z < maxAimDegree) { // Max angle
                     transform.Rotate(Vector3.forward * aimRotationSpeed * Time.deltaTime);
                 }
-                else if (Input.GetKey(KeyCode.DownArrow) && trans > -25) { // Min angle of -25
+                else if (Input.GetKey(KeyCode.DownArrow) && rotation.z > minAimDegree) { // Min angle
                     transform.Rotate(-Vector3.forward * aimRotationSpeed * Time.deltaTime);
                 }
 
@@ -42,6 +44,9 @@ public class LongBow : RangedWeapon
                 var horizontal = Input.GetAxis("Horizontal");
                 if (horizontal > 0.5f || horizontal < -0.5f ) {
                     wielderMovement.dash(20, horizontal);
+                }
+                else {
+                    wielderMovement.Walk(0);
                 }
                 
                 // When the bow is released, switch to active state
@@ -137,5 +142,15 @@ public class LongBow : RangedWeapon
     public override bool canRelease()
     {
         return state == WeaponState.WindingUp && !isReleased;
+    }
+
+    private Vector3 GetSignedEulerAngles (Vector3 angles)
+    {
+        Vector3 signedAngles = Vector3.zero;
+        for (int i = 0; i < 3; i++)
+        {
+            signedAngles[i] = (angles[i] + 180f) % 360f - 180f;
+        }
+        return signedAngles;
     }
 }

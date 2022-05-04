@@ -690,8 +690,8 @@ GameObject:
   - component: {fileID: 7380120275506014322}
   - component: {fileID: 545617897}
   - component: {fileID: 1102080480225475738}
-  - component: {fileID: 6068789745772862928}
   - component: {fileID: 1330719610}
+  - component: {fileID: 6101033685479803541}
   m_Layer: 7
   m_Name: Goblin
   m_TagString: Enemy
@@ -858,10 +858,10 @@ MonoBehaviour:
   wanderRadius: 3
   wanderRate: 3
   aggroRange: 7
-  attackRange: 2
+  attackRange: 1.1
   attackCooldown: 2
   attackDuration: 0.833
-  attackDashSpeed: 300
+  attackDashSpeed: 250
   xpValue: 33
   goldValue: 20
   target: {fileID: 0}
@@ -931,6 +931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 0}
+  stats: {fileID: 0}
   immunityDuration: 0.2
   isInvincible: 0
   immunityTimer: 0
@@ -1050,25 +1051,6 @@ MonoBehaviour:
   damageParticlesPrefab: {fileID: 8865745841887048178, guid: ad88325a20afcab4ea2664cac0b447d0, type: 3}
   deathParticlesPrefab: {fileID: 8865745841887048178, guid: 3aa166a33a10b944ca097a6f8fdc862b, type: 3}
   spawnPoint: {fileID: 3996419839580739557}
---- !u!114 &6068789745772862928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3996419839580739552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b431ac3d6efd3c746a0f6d587c9164ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defense: 0
-  bonusStamina: 0
-  percentCritChance: 0
-  percentDodgeChance: 0
-  damageDealtMultiplier: 0
-  movespeedMultiplier: 0
-  damageTakenMultiplier: 0
 --- !u!114 &1330719610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1087,6 +1069,26 @@ MonoBehaviour:
   bufferDuration: 0.5
   pushforce: 400
   pushDuration: 0.25
+--- !u!114 &6101033685479803541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3996419839580739552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807c355fd4e2f1b49a01a21cf99c407e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defense: 0
+  bonusStamina: 0
+  percentCritChance: 0
+  percentDodgeChance: 0
+  percentMissChance: 0
+  damageDealtMultiplier: 0
+  movespeedMultiplier: 0
+  damageTakenMultiplier: 0
 --- !u!1 &3996419839722686469
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,7 +34,7 @@ public class GoldShrine : Shrine
         storedGold += amount;
     }
 
-    public override void activate(Player player)
+    public override void activatePress(Player player)
     {
         if (GameManager.instance.gold > 50) 
         {  
@@ -48,7 +48,7 @@ public class GoldShrine : Shrine
             player.heal(15);
         }
         else {
-            PopUpTextManager.instance.createPopup("Offer 50 gold in exchange for some life essence.", Color.gray, transform.position);
+            PopUpTextManager.instance.createVerticalPopup("Offer 50 gold in exchange for some life essence.", Color.gray, transform.position);
         }
         
     }

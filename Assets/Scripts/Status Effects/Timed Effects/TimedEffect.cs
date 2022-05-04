@@ -5,11 +5,12 @@ using UnityEngine;
 public abstract class TimedEffect
 {
     protected float Duration;
-    protected int EffectStacks;
+    protected int stacks;
     public BaseEffect Effect;
     protected readonly GameObject Obj;
     public bool IsFinished;
     public Sprite icon;
+
     private float timer;
 
     public TimedEffect(BaseEffect effect, GameObject parent)
@@ -45,22 +46,24 @@ public abstract class TimedEffect
      */
     public void Activate()
     {
-        if (Effect.IsEffectStacked || Duration <= 0)
+        if (stacks < Effect.maxStacks || Duration <= 0)
         {
             ApplyEffect();
-            EffectStacks++;
+            stacks++;
         }
 
-        if (Effect.IsDurationStacked || Duration <= 0)
+        if (Effect.isDurationStacked || Duration <= 0)
         {
             Duration += Effect.Duration;
+            timer = Effect.tickRate;
         }
-        else if (Effect.IsDurationReset)
+        else if (Effect.isDurationReset)
         {
             Duration = Effect.Duration;
+            timer = Effect.tickRate;
         }
 
-        timer = Effect.tickRate;
+        
     }
 
     // Logic for what to do if effect is applied
@@ -72,5 +75,5 @@ public abstract class TimedEffect
     // Logic for what to if effect is removed
     public abstract void End();
 
-    public int getStacks() => EffectStacks;
+    public int getStacks() => stacks;
 }

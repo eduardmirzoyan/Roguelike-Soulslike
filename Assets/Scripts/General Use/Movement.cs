@@ -160,6 +160,10 @@ public class Movement : MonoBehaviour
         body.velocity = direction * dashSpeed * Time.deltaTime;
     }
 
+    public void goTo(Vector2 position) {
+        body.MovePosition(position);
+    }
+
     public void jumpReposition(float xVel, float jumpPower)
     {
         body.velocity = new Vector2(xVel, jumpPower);

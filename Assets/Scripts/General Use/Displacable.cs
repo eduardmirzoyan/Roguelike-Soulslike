@@ -11,7 +11,7 @@ public class Displacable : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private bool stunImmune;
     [SerializeField] private bool knockbackImmune;
-    [SerializeField] private bool twoDimensionalKnockback;
+    [SerializeField] public bool twoDimensionalKnockback;
 
     // Knockback counters
     private float knockbackSpeed = 0;

@@ -7,6 +7,7 @@ public class BleedEffect : BaseEffect
 {
     public int tickDamage;
     public Color damageColor;
+    public GameObject bleedingParticles;
 
     public override TimedEffect InitializeEffect(GameObject parent)
     {

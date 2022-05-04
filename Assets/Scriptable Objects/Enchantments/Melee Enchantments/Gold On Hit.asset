@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2346033d6bd37604b8cd2f386451adcc, type: 3}
   m_Name: Gold On Hit
   m_EditorClassIdentifier: 
-  enchantmentName: Greedy
+  enchantmentName: Midas Touch
   stacks: 1
-  description: Attacks grant you gold for a percentage of mitigated damage.
+  description: Attacks grant you gold for 10% of mitigated damage.
   goldGainRatio: 0.1

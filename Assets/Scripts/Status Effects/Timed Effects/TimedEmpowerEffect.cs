@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TimedEmpowerEffect : TimedEffect
 {
-    private readonly CombatStats stats;
+    private readonly Stats stats;
 
     public TimedEmpowerEffect(BaseEffect effect, GameObject parent) : base(effect, parent)
     {
-        stats = parent.GetComponent<CombatStats>();
+        stats = parent.GetComponent<Stats>();
     }
 
     public override void End()

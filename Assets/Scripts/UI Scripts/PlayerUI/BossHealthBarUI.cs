@@ -7,11 +7,13 @@ public class BossHealthBarUI : MonoBehaviour
 {
     [SerializeField] public Slider slider;
     [SerializeField] private Health bossHealth;
+    [SerializeField] private StatusEffectsUI statusEffectsUI;
     [SerializeField] private Image[] images;
-
+    
     private void Awake() {
         bossHealth = null;
         images = GetComponentsInChildren<Image>();
+        statusEffectsUI = GetComponentInChildren<StatusEffectsUI>();
         enableImages(false);
     }
 
@@ -37,9 +39,13 @@ public class BossHealthBarUI : MonoBehaviour
             slider.maxValue = bossHealth.getMaxHP();
             slider.value = bossHealth.getHP();
             
+            // Set status UI
+            statusEffectsUI.setEntity(bossHealth.GetComponent<EffectableEntity>());
+
             // Enable visuals
             enableImages(true);
         }
+        
     }
 
     private void enableImages(bool enable) {

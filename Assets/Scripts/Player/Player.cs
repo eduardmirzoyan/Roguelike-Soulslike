@@ -9,7 +9,7 @@ using UnityEngine;
 [RequireComponent(typeof(EffectableEntity))]
 [RequireComponent(typeof(AnimationHandler))]
 [RequireComponent(typeof(Damageable))]
-[RequireComponent(typeof(CombatStats))]
+[RequireComponent(typeof(Stats))]
 [RequireComponent(typeof(Keybindings))]
 [RequireComponent(typeof(EquipmentHandler))]
 [RequireComponent(typeof(CombatHandler))]
@@ -17,6 +17,7 @@ using UnityEngine;
 [RequireComponent(typeof(EnchantableEntity))]
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(RollingHandler))]
+[RequireComponent(typeof(InteractionHandler))]
 public class Player : MonoBehaviour
 {
     [Header("Components")]
@@ -25,12 +26,13 @@ public class Player : MonoBehaviour
     [SerializeField] private Displacable displace;
     [SerializeField] private Health health;
     [SerializeField] private AnimationHandler animationHandler;
-    [SerializeField] private CombatStats stats;
+    [SerializeField] private Stats stats;
     [SerializeField] private Stamina stamina;
     [SerializeField] private InputBuffer inputBuffer;
     [SerializeField] private Menu menu;
     [SerializeField] private CombatHandler combatHandler;
     [SerializeField] private RollingHandler rollingHandler;
+    [SerializeField] private InteractionHandler interactionHandler;
 
     [Header("Items")]
     [SerializeField] private Inventory inventory;
@@ -52,6 +54,9 @@ public class Player : MonoBehaviour
     [SerializeField] public List<Skill> playerSkills;
     [SerializeField] private bool enableWalljump = false;
 
+    // Temp
+    [SerializeField] private BaseEffect effect;
+
     public enum PlayerState
     {
         idle,
@@ -70,6 +75,9 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private PlayerState state;
 
+    // INTERACTION HANDLER
+    [SerializeField] private List<Shrine> interactingShrines;
+
     // Handle physics in Fixed Update, used for physics, ridgid bodys and collisions
     // Handle inputs in Update. simple timers, non-physics objects (don't include anything 'framerate' dependant)
     protected void Start()
@@ -79,12 +87,13 @@ public class Player : MonoBehaviour
         animationHandler = GetComponent<AnimationHandler>();
         health = GetComponent<Health>();
         displace = GetComponent<Displacable>();
-        stats = GetComponent<CombatStats>();
+        stats = GetComponent<Stats>();
         stamina = GetComponent<Stamina>();
         inventory = GetComponentInChildren<Inventory>();
         combatHandler = GetComponent<CombatHandler>();
         inputBuffer = GetComponent<InputBuffer>();
         rollingHandler = GetComponent<RollingHandler>();
+        interactionHandler = GetComponent<InteractionHandler>();
 
         // Gets flask
         flask = GetComponentInChildren<Flask>();
@@ -95,6 +104,8 @@ public class Player : MonoBehaviour
 
         // Set the player's start state
         state = PlayerState.idle;
+
+        interactingShrines = new List<Shrine>();
 
         animationHandler.changeAnimationState(idleAnimation);
     }
@@ -242,7 +253,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.crouching:
                 // Pick up items
-                pickUpNearbyItems();
+                interactionHandler.pickUpNearbyItems();
 
                 // Handle displacement
                 if (displace.isDisplaced()) {
@@ -299,7 +310,7 @@ public class Player : MonoBehaviour
                 mv.crouchWalk(inputBuffer.moveDirection * (1 + stats.movespeedMultiplier));
 
                 // Pick up items
-                pickUpNearbyItems();
+                interactionHandler.pickUpNearbyItems();
 
                 // Handle airborne
                 if (!mv.isGrounded()) {
@@ -431,14 +442,19 @@ public class Player : MonoBehaviour
                 rollingHandler.roll();
                 
                 if (rollingHandler.isDoneRolling()) {
+                    // End roll
+                    rollingHandler.endRoll();
+
                     // Stop moving
                     mv.Walk(0);
-                    // Start cooldown
-                    rollingHandler.startCooldown();
+                    
                     // Return dodge chance
                     stats.percentDodgeChance -= 1f;
+
                     // Set animation
                     animationHandler.changeAnimationState(idleAnimation);
+
+                    // Change states
                     state = PlayerState.idle;
                 }
 
@@ -570,6 +586,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))  // used for testing
         {
             // Nothin
+            GetComponent<EffectableEntity>().addEffect(effect.InitializeEffect(gameObject));
         }
 
         // Check for death
@@ -605,7 +622,7 @@ public class Player : MonoBehaviour
             if (inputBuffer.useFlaskRequest) {
                 // If you are at full health, do nothing
                 if(health.isFull()) {
-                    PopUpTextManager.instance.createPopup("Already at full HP.", Color.gray, transform.position);
+                    PopUpTextManager.instance.createVerticalPopup("Already at full HP.", Color.gray, transform.position);
                 }
                 else {
                     useFlask();
@@ -614,12 +631,19 @@ public class Player : MonoBehaviour
                 inputBuffer.resetFlaskRequest();
             }
                 
-
             // Interacting with surroundings
-            if (inputBuffer.interactRequest) {
-                interactWithNearbyObjects();
-            }   
+            if (inputBuffer.interactPressRequest) {
+                interactionHandler.interactWithNearbyObjects();
+            }
+            else if (inputBuffer.interactReleaseRequest) {
+                interactionHandler.releaseNearbyObjects();
+            }
+            
         }
+    }
+
+    public bool isIdle() {
+        return state == PlayerState.idle;
     }
 
     private bool playerIsFree()
@@ -632,51 +656,6 @@ public class Player : MonoBehaviour
         state = PlayerState.walljumping;
         yield return new WaitForSeconds(mv.wallJumpTime);
         state = PlayerState.airborne;
-    }
-
-    private void pickUpNearbyItems()
-    {   
-        var collider2D = GetComponent<Collider2D>();
-        var droppedItems = Physics2D.OverlapBoxAll((Vector2)collider2D.transform.position + collider2D.offset, collider2D.bounds.size, 
-                            0, 1 << LayerMask.NameToLayer("Loot"));
-
-        if (droppedItems.Length == 0) {
-            return;
-        }
-            
-        foreach (var droppedItem in droppedItems) {
-            var worldItem = droppedItem.GetComponent<WorldItem>();
-            if (worldItem != null)
-            {
-                PopUpTextManager.instance.createVerticalPopup("You picked up " + worldItem.GetItem().name, Color.white, transform.position);
-                inventory.addItem(worldItem.GetItem());
-
-                Destroy(droppedItem.gameObject);
-            }
-        }
-    }
-
-    private void interactWithNearbyObjects()
-    {
-        var collider2D = GetComponent<Collider2D>();
-        var iteractables = Physics2D.OverlapBoxAll(collider2D.transform.position, collider2D.bounds.size, 0, 1 << LayerMask.NameToLayer("Interactables"));
-        if (iteractables.Length == 0) {
-            return;
-        }
-            
-        foreach (var hit in iteractables) {
-            if (hit.TryGetComponent(out Shrine shrine)) {
-                shrine.activate(this);
-            }
-
-            if (hit.TryGetComponent(out Chest chest)) {
-                chest.open();
-            }
-            
-            if (hit.TryGetComponent(out Door door)) {
-                door.open();
-            }
-        }
     }
 
     private void useFlask()
@@ -756,11 +735,5 @@ public class Player : MonoBehaviour
             }
 
         }
-    }
-
-    private void OnDrawGizmosSelected() {
-        var collider2D = GetComponent<Collider2D>();
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube((Vector2)collider2D.transform.position + collider2D.offset, collider2D.bounds.size);
     }
 }

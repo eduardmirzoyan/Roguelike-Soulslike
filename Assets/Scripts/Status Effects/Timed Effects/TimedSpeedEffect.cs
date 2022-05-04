@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class TimedSpeedEffect : TimedEffect
 {
-    private readonly CombatStats stats;
+    private readonly Stats stats;
+    private ParticleSystem speedParticles;
 
     public TimedSpeedEffect(BaseEffect effect, GameObject parent) : base(effect, parent)
     {
-        stats = parent.GetComponent<CombatStats>();
+        stats = parent.GetComponent<Stats>();
     }
 
     public override void End()
@@ -26,6 +27,13 @@ public class TimedSpeedEffect : TimedEffect
         if (stats != null)
         {
             stats.movespeedMultiplier += speedEffect.percentSpeedBoost;
+
+            // Add speed particles
+            speedParticles = GameObject.Instantiate(speedEffect.speedParticles, stats.transform).GetComponent<ParticleSystem>();
+            // Set duration
+            var main = speedParticles.main;
+            main.duration = Effect.Duration;
+            speedParticles.Play();
         }
     }
 

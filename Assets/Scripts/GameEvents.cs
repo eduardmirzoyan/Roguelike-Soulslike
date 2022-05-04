@@ -14,16 +14,27 @@ public class GameEvents : MonoBehaviour
     }
     
     public event Action<GameObject, GameObject, int> onHit;
+    public event Action<Weapon, GameObject> onWeaponHit;
     public event Action<Weapon, bool> onWeaponChange;
-
+    public event Action<Item> onItemPickup;
+    public event Action<WorldItem> onItemDrop;
     public event Action<TimedEffect, EffectableEntity> onAddStatusEffect;
     public event Action<TimedEffect, EffectableEntity> onRemoveStatusEffect;
+    public event Action<Weapon, Transform> onCrit;
 
     public void triggerOnHit(GameObject attackingEnitiy, GameObject hitEntity, int damageTaken)
     {
         if (onHit != null)
         {
             onHit(attackingEnitiy, hitEntity, damageTaken);
+        }
+    }
+
+    public void triggerOnWeaponHit(Weapon weapon, GameObject hitEntity) 
+    {
+        if (onWeaponHit != null)
+        {
+            onWeaponHit(weapon, hitEntity);
         }
     }
 
@@ -46,6 +57,27 @@ public class GameEvents : MonoBehaviour
         if (onRemoveStatusEffect != null) 
         {
             onRemoveStatusEffect(timedEffect, effectableEntity);
+        }
+    }
+
+    public void triggerOnCrit(Weapon weapon, Transform target) {
+        if (onCrit != null) 
+        {
+            onCrit(weapon, target);
+        }
+    }
+
+    public void triggerOnItemDrop(WorldItem item) {
+        if (onItemDrop != null) 
+        {
+            onItemDrop(item);
+        }
+    }
+
+    public void triggerOnItemPickup(Item item) {
+        if (onItemPickup != null) 
+        {
+            onItemPickup(item);
         }
     }
 }

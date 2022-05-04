@@ -43,7 +43,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9157344496376886352}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -164,9 +164,9 @@ MonoBehaviour:
   wielderStats: {fileID: 0}
   wielderMovement: {fileID: 0}
   dashspeed: 0
-  dashspeed0: 300
+  dashspeed0: 250
   dashspeed1: 200
-  dashspeed2: 500
+  dashspeed2: 300
   windupDuration1: 0.15
   activeDuration1: 0.2
   recoveryDuration1: 0.2

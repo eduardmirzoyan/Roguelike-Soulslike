@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enchantmentName: Piercing Projectiles
   stacks: 1
-  description: 
+  description: Projectiles pierce enemies once.
   numberOfPierces: 1

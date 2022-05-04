@@ -9,6 +9,5 @@ public class AmmoItem : Item
     {
         type = ItemType.Ammo;
         isStackable = true;
-        count = 1;
     }
 }

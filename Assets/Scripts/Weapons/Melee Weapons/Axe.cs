@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Axe : MeleeWeapon
 {
-    [SerializeField] private float bonusDamagePercentage;
-
-    private float tempDashspeed;
-
     protected void FixedUpdate()
     {
         switch (state)
@@ -70,26 +66,35 @@ public class Axe : MeleeWeapon
         }
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collision.TryGetComponent(out Damageable damageable) && collision.gameObject != this.gameObject)
+        if(collider.TryGetComponent(out Damageable damageable) && collider.gameObject != this.gameObject)
         {
+            // Roll for miss
+            int roll = Random.Range(0, 100);
+            if(roll < (wielderStats.percentMissChance) * 100 )
+            {
+                PopUpTextManager.instance.createPopup("Miss", Color.gray, collider.transform.position);
+                return;
+            }
+
             int damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
             var damageColor = Color.white;
             
+            // Roll for crit
+            roll = Random.Range(0, 100);
+
             // If the hit target is effectable
-            if (collision.TryGetComponent(out EffectableEntity effectableEntity)) {
+            if (collider.TryGetComponent(out EffectableEntity effectableEntity)) {
 
                 // If "mark" effect was found and sucessfully removed
-                if (effectableEntity.removeEffect(ScriptableObject.CreateInstance<MarkEffect>())) {
-                    // Increase damage
-                    damage = (int)(damage * (1 + bonusDamagePercentage));
+                if (effectableEntity.removeEffect(ScriptableObject.CreateInstance<MarkEffect>()) != null) {
+                    // Guarantee a crit
+                    roll = -1;
                 }
             }
-
-            // Check crit
-            int rand = Random.Range(0, 100);
-            if(rand < (wielderStats.percentCritChance + owner.critChance) * 100 )
+            
+            if (roll < (wielderStats.percentCritChance + owner.critChance) * 100)
             {
                 damage = (int) (damage * (1 + owner.critDamage));
                 damageColor = Color.yellow;

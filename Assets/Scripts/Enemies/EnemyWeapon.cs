@@ -17,9 +17,19 @@ public class EnemyWeapon : MonoBehaviour
         wielder = GetComponentInParent<EnemyAI>();
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (hitAll || other.transform == wielder.getTarget()) {
-            if (other.TryGetComponent(out Damageable damageable)) {
+    private void OnTriggerEnter2D(Collider2D collider) {
+        if (hitAll || collider.transform == wielder.getTarget()) {
+            if (collider.TryGetComponent(out Damageable damageable)) {
+                // Roll for miss
+                if (wielder.TryGetComponent(out Stats wielderStats)) {
+                    int rand = Random.Range(0, 100);
+                    if(rand < (wielderStats.percentMissChance) * 100 )
+                    {
+                        PopUpTextManager.instance.createPopup("Miss", Color.gray, collider.transform.position);
+                        return;
+                    }
+                }
+
                 Damage dmg = new Damage {
                     damageAmount = damage,
                     source = DamageSource.fromEnemy,

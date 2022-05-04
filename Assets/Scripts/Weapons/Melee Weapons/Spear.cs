@@ -5,23 +5,29 @@ using UnityEditor;
 
 public class Spear : MeleeWeapon
 {
+    [Header("Debugging")]
     [SerializeField] private bool isReleased;
     [SerializeField] private float heldTime;
-    [SerializeField] private float aimRotationSpeed;
-
-    [SerializeField] private float maxCharge;
     [SerializeField] private float chargeTime;
 
+
+    [Header("Settings")]
+    [SerializeField] private float maxCharge;
+    [SerializeField] private float aimRotationSpeed;
+    [SerializeField] private int maxAimDegree = 45;
+    [SerializeField] private int minAimDegree = -15;
+    [SerializeField] private float projectileSpeed;
+    
+
+    [Header("Animation")]
     [SerializeField] private string missingIdleAnimation = "Idle Missing";
     [SerializeField] private string chargeThrowAnimation = "Spear Charge";
     [SerializeField] private string releaseThrowAnimation = "Spear Throw";
 
+    [Header("Components")]
     [SerializeField] private GameObject spearProjectilePrefab;
     [SerializeField] private Transform firepoint;
 
-    [SerializeField] private float projectileSpeed;
-
-    private float tempDashspeed;
 
     protected void FixedUpdate()
     {
@@ -44,11 +50,11 @@ public class Spear : MeleeWeapon
                 if (chargeTime > 0 || Time.time - heldTime > windupDuration) {
 
                     // You may aim the spear during charge up
-                    var trans = TransformUtils.GetInspectorRotation(gameObject.transform).z;
-                    if (Input.GetKey(KeyCode.UpArrow) && trans < 25) { // Max angle of 0
+                    var rotation = GetSignedEulerAngles(gameObject.transform.localEulerAngles);
+                    if (Input.GetKey(KeyCode.UpArrow) && rotation.z < maxAimDegree) {
                         transform.Rotate(Vector3.forward * aimRotationSpeed * Time.deltaTime);
                     }
-                    else if (Input.GetKey(KeyCode.DownArrow) && trans > -25) { // Min angle of -45
+                    else if (Input.GetKey(KeyCode.DownArrow) && rotation.z > minAimDegree) {
                         transform.Rotate(-Vector3.forward * aimRotationSpeed * Time.deltaTime);
                     }
                     
@@ -213,5 +219,15 @@ public class Spear : MeleeWeapon
             currentCombo = 0;
             state = WeaponState.Ready;
         }
+    }
+
+    private Vector3 GetSignedEulerAngles (Vector3 angles)
+    {
+        Vector3 signedAngles = Vector3.zero;
+        for (int i = 0; i < 3; i++)
+        {
+            signedAngles[i] = (angles[i] + 180f) % 360f - 180f;
+        }
+        return signedAngles;
     }
 }

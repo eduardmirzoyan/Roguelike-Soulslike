@@ -22,18 +22,21 @@ public class StatusEffectsUI : MonoBehaviour
 
     private void Start() {
         // Subscribe to events
-        GameEvents.instance.onAddStatusEffect += addStatusEffect;
-        GameEvents.instance.onRemoveStatusEffect += removeStatusEffect;
+        if (effectableEntity != null) {
+            GameEvents.instance.onAddStatusEffect += addStatusEffect;
+            GameEvents.instance.onRemoveStatusEffect += removeStatusEffect;
+        }
     }
 
-    public void addStatusEffect(TimedEffect timedEffect, EffectableEntity effectableEntity) {
+    private void addStatusEffect(TimedEffect timedEffect, EffectableEntity effectableEntity) {
         // If this is the entity getting the effect
         if (effectableEntity == this.effectableEntity) {
             // If the effect is already in the dictionary, then increment its stacks
             foreach (var effect in effectHolderDict.Keys.ToList()) {
                 if (effect.GetType() == timedEffect.GetType()) {
                     // Display the stacks
-                    effectHolderDict[effect].gameObject.GetComponentInChildren<Text>().text = "x" + effect.getStacks().ToString();
+                    if (effect.getStacks() > 1)
+                        effectHolderDict[effect].gameObject.GetComponentInChildren<Text>().text = effect.getStacks().ToString();
                     // Exit function
                     return;
                 }
@@ -46,19 +49,16 @@ public class StatusEffectsUI : MonoBehaviour
 
             // Set stacks
             if (timedEffect.getStacks() > 1)
-                holderObject.GetComponentInChildren<Text>().text = "x" + timedEffect.getStacks().ToString();
+                holderObject.GetComponentInChildren<Text>().text = timedEffect.getStacks().ToString();
             else
                 holderObject.GetComponentInChildren<Text>().text = "";
 
             // Save reference
             effectHolderDict.Add(timedEffect, holderObject);
         }
-        // else {
-        //     print("effectable entity did not match: " + effectableEntity.name + " vs " + this.effectableEntity.gameObject.name);
-        // }
     }
 
-    public void removeStatusEffect(TimedEffect timedEffect, EffectableEntity effectableEntity) {
+    private void removeStatusEffect(TimedEffect timedEffect, EffectableEntity effectableEntity) {
         // If this is the entity removing the effect
         if (effectableEntity == this.effectableEntity) {
             if (effectHolderDict.ContainsKey(timedEffect)) {
@@ -72,6 +72,19 @@ public class StatusEffectsUI : MonoBehaviour
             else {
                 print("Effect to remove not found: " + timedEffect.ToString());
             }
+        }
+    }
+
+    public void setEntity(EffectableEntity effectableEntity) {
+        this.effectableEntity = effectableEntity;
+
+        if (this.effectableEntity == null) {
+            GameEvents.instance.onAddStatusEffect -= addStatusEffect;
+            GameEvents.instance.onRemoveStatusEffect -= removeStatusEffect;
+        }
+        else {
+            GameEvents.instance.onAddStatusEffect += addStatusEffect;
+            GameEvents.instance.onRemoveStatusEffect += removeStatusEffect;
         }
     }
 }

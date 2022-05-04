@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea389e263f269434b808ca2b435722ce, type: 3}
+  m_Name: Blind On Hit
+  m_EditorClassIdentifier: 
+  enchantmentName: Shiny
+  stacks: 1
+  description: Attacks have a 5% chance to BLIND enemies, causing all melee attacks
+    to miss
+  blindEffect: {fileID: 11400000, guid: 2e2f91ed0903c8c4da56095f8ecd5260, type: 2}
+  chance: 0.05

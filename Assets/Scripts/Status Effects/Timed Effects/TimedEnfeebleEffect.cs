@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TimedEnfeebleEffect : TimedEffect
 {
-    private readonly CombatStats stats;
+    private readonly Stats stats;
 
     public TimedEnfeebleEffect(BaseEffect effect, GameObject parent) : base(effect, parent)
     {
-        stats = parent.GetComponent<CombatStats>();
+        stats = parent.GetComponent<Stats>();
     }
 
     public override void End()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class TimedBleedEffect : TimedEffect
 {
     private Health health;
+    private ParticleSystem bleedParticles;
 
     public TimedBleedEffect(BaseEffect effect, GameObject parent) : base(effect, parent)
     {
@@ -18,7 +19,15 @@ public class TimedBleedEffect : TimedEffect
 
     protected override void ApplyEffect()
     {
-        // Does nothing on apply
+        if (bleedParticles == null) {
+            BleedEffect bleedEffect = (BleedEffect)Effect;
+            // Create fire particles
+            bleedParticles = GameObject.Instantiate(bleedEffect.bleedingParticles, health.transform).GetComponent<ParticleSystem>();
+            // Set duration
+            var main = bleedParticles.main;
+            main.duration = Effect.Duration;
+            bleedParticles.Play();
+        }
     }
 
     protected override void onTick()
@@ -26,8 +35,8 @@ public class TimedBleedEffect : TimedEffect
         BleedEffect bleedEffect = (BleedEffect)Effect;
 
         if (health != null) {
-            health.reduceHealth(bleedEffect.tickDamage * EffectStacks);
-            PopUpTextManager.instance.createShortPopup(bleedEffect.tickDamage * EffectStacks + "", bleedEffect.damageColor, health.transform.position);
+            health.reduceHealth(bleedEffect.tickDamage * stacks);
+            PopUpTextManager.instance.createWeakPopup(bleedEffect.tickDamage * stacks + "", bleedEffect.damageColor, health.transform.position);
         }
     }
 }

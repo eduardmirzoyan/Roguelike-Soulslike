@@ -34,7 +34,7 @@ public class EffectBuildupHandler : MonoBehaviour
     public void addEffectBuildUp(BuildupEffect buildUpEffect)
     {
         var amount = buildUpEffect.buildUpAmount;
-        var stats = GetComponent<CombatStats>();
+        var stats = GetComponent<Stats>();
         if(stats != null)
         {
             // ?

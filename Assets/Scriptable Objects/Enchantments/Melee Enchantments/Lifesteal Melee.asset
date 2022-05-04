@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627f71d976611b042a9360212318d0d9, type: 3}
   m_Name: Lifesteal Melee
   m_EditorClassIdentifier: 
-  enchantmentName: Lifesteal
+  enchantmentName: Vampiric
   stacks: 1
-  description: Attacks heal you for a percentage of mitigated damage.
-  lifestealRatio: 0.1
+  description: Attacks heal you for 20% of your mitigated damage.
+  lifestealRatio: 0.2

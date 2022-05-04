@@ -6,6 +6,7 @@ public class TimedBurnEffect : TimedEffect
 {
     private Health health;
     private Rigidbody2D rigidbody2D;
+    private ParticleSystem fireParticles;
 
     public TimedBurnEffect(BaseEffect effect, GameObject parent) : base(effect, parent)
     {
@@ -20,11 +21,13 @@ public class TimedBurnEffect : TimedEffect
 
     protected override void ApplyEffect()
     {
-        // Does nothing on apply
         BurnEffect burnEffect = (BurnEffect)Effect;
-
         // Create fire particles
-        // var ps = GameObject.Instantiate(burnEffect.onFireParticles, health.transform).GetComponent<ParticleSystem>();
+        fireParticles = GameObject.Instantiate(burnEffect.onFireParticles, health.transform).GetComponent<ParticleSystem>();
+        // Set duration
+        var main = fireParticles.main;
+        main.duration = Effect.Duration;
+        fireParticles.Play();
     }
 
     protected override void onTick()
@@ -43,7 +46,7 @@ public class TimedBurnEffect : TimedEffect
             health.reduceHealth(burnEffect.tickDamage);
 
             // Create popup
-            PopUpTextManager.instance.createShortPopup(burnEffect.tickDamage + "", burnEffect.damageColor, health.transform.position);
+            PopUpTextManager.instance.createWeakPopup(burnEffect.tickDamage + "", burnEffect.damageColor, health.transform.position);
         }
     }
 }

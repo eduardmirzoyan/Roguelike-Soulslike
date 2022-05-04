@@ -9,7 +9,7 @@ public class StatusUI : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private Health health;
     [SerializeField] private Stamina stamina;
-    [SerializeField] private CombatStats stats;
+    [SerializeField] private Stats stats;
     [SerializeField] private EquipmentHandler equipmentHandler;
     [SerializeField] private EnchantableEntity enchantableEntity;
     [SerializeField] private List<GameObject> enchantmentHolders;
@@ -22,7 +22,8 @@ public class StatusUI : MonoBehaviour
     [SerializeField] private Text combatStatusRight;
 
     [SerializeField] private GameObject enchantmentHolderPrefab;
-    [SerializeField] private VerticalLayoutGroup weaponVerticalLayoutGroup;
+    [SerializeField] private VerticalLayoutGroup mainWeaponVerticalLayoutGroup;
+    [SerializeField] private VerticalLayoutGroup offWeaponVerticalLayoutGroup;
     [SerializeField] private VerticalLayoutGroup armorVerticalLayoutGroup;
 
     [Header("Selection")]
@@ -36,7 +37,7 @@ public class StatusUI : MonoBehaviour
         equipmentHandler = player.GetComponent<EquipmentHandler>();
         health = player.GetComponent<Health>();
         stamina = player.GetComponent<Stamina>();
-        stats = player.GetComponent<CombatStats>();
+        stats = player.GetComponent<Stats>();
 
         selectedItemIndex = -1;
     }
@@ -67,34 +68,39 @@ public class StatusUI : MonoBehaviour
     }
 
     private void updateCombatStatus() {
-        combatStatusLeft.text = 
-            "Armor: " + stats.defense
+        combatStatusLeft.text 
+        = "Armor: " + stats.defense
         + "\nGlobal Crit: " + stats.percentCritChance * 100 +  "%"
         + "\nDmg Bonus: " + stats.damageDealtMultiplier * 100 + "%"
         + "\nDmg Reduction: " + stats.damageTakenMultiplier * 100 + "%";
 
-        combatStatusRight.text = 
-            "Dodge Chance: " + stats.percentDodgeChance * 100 + "%"
+        combatStatusRight.text 
+        = "Dodge Chance: " + stats.percentDodgeChance * 100 + "%"
         + "\nMovespeed Bonus: " + stats.movespeedMultiplier * 100 + "%";
     }
 
     private void updateEnchantmentsUI() {
         // Add main-hand weapon enchantment
         var mainWeaponItem = equipmentHandler.getMainHandWeaponItem();
-        if (mainWeaponItem != null && mainWeaponItem.enchantment != null) {
-            var enchantmentHolder = Instantiate(enchantmentHolderPrefab, weaponVerticalLayoutGroup.transform);
-            enchantmentHolder.GetComponentInChildren<Text>().text = mainWeaponItem.enchantment.enchantmentName;
-            enchantmentHolders.Add(enchantmentHolder);
-            allEnchantments.Add(mainWeaponItem.enchantment);
+        if (mainWeaponItem != null && mainWeaponItem.enchantments != null) {
+            foreach (Enchantment enchantment in mainWeaponItem.enchantments) {
+                var enchantmentHolder = Instantiate(enchantmentHolderPrefab, mainWeaponVerticalLayoutGroup.transform);
+                enchantmentHolder.GetComponentInChildren<Text>().text = enchantment.enchantmentName;
+                enchantmentHolders.Add(enchantmentHolder);
+                allEnchantments.Add(enchantment);
+            }
+            
         }
 
         // Add off-hand weapon enchantment
         var offWeaponItem = equipmentHandler.getOffHandWeaponItem();
-        if (offWeaponItem != null && offWeaponItem.enchantment != null) {
-            var enchantmentHolder = Instantiate(enchantmentHolderPrefab, weaponVerticalLayoutGroup.transform);
-            enchantmentHolder.GetComponentInChildren<Text>().text = offWeaponItem.enchantment.enchantmentName;
-            enchantmentHolders.Add(enchantmentHolder);
-            allEnchantments.Add(offWeaponItem.enchantment);
+        if (offWeaponItem != null && offWeaponItem.enchantments != null) {
+            foreach (Enchantment enchantment in offWeaponItem.enchantments) {
+                var enchantmentHolder = Instantiate(enchantmentHolderPrefab, offWeaponVerticalLayoutGroup.transform);
+                enchantmentHolder.GetComponentInChildren<Text>().text = enchantment.enchantmentName;
+                enchantmentHolders.Add(enchantmentHolder);
+                allEnchantments.Add(enchantment);
+            }
         }
 
         // Add amor enchantments

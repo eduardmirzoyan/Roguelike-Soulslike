@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    public void open()
+    public void enter()
     {
         LevelManager.instance.loadNextLevel();
     }

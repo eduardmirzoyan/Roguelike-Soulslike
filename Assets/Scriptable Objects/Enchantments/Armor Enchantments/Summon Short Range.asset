@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3547fad42521858468a042244aa46b37, type: 3}
   m_Name: Summon Short Range
   m_EditorClassIdentifier: 
-  enchantmentName: Protected by Elephant Familiar
+  enchantmentName: Mini Demon Familiar
   stacks: 1
   description: Item is haunted by a small familiar that will attack your enemies.
     Familiar attack speed scales with number of familiars.

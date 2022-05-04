@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enchantmentName: Jagged
   stacks: 1
-  description: Attacks reduce the enemy's armor.
+  description: Attacks reduce the enemy's AMR by 10% for 5 sec, up to 10 stacks.
   armorReductionEffect: {fileID: 11400000, guid: 954904986e039cc489181b9596894e99, type: 2}

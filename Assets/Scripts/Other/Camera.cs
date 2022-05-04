@@ -10,11 +10,12 @@ public class Camera : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.Find("Player").transform;
+        player = GameManager.instance.GetPlayer().transform;
     }
 
     private void Update()
     {
-        transform.position = new Vector3(player.position.x + xOffset, player.position.y + yOffset, player.position.z - 10);
+        if (player != null)
+            transform.position = new Vector3(player.position.x + xOffset, player.position.y + yOffset, player.position.z - 10);
     }
 }

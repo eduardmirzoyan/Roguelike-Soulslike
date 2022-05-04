@@ -6,8 +6,6 @@ public class SmallShield : MeleeWeapon
 {
     [SerializeField] private float pushForce;
 
-    private float tempDashspeed;
-
     private void FixedUpdate() {
         switch (state)
         {
@@ -63,18 +61,25 @@ public class SmallShield : MeleeWeapon
         }
     }
 
-
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collision.TryGetComponent(out Damageable damageable) &&  collision.gameObject != this.gameObject)
+        if(collider.TryGetComponent(out Damageable damageable) &&  collider.gameObject != this.gameObject)
         {
+            // Roll for miss
+            int roll = Random.Range(0, 100);
+            if(roll < (wielderStats.percentMissChance) * 100 )
+            {
+                PopUpTextManager.instance.createPopup("Miss", Color.gray, collider.transform.position);
+                return;
+            }
+
             var damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
             var adjustedPush = pushForce;
             var damageColor = Color.white;
 
-            // Check crit
-            int rand = Random.Range(0, 100);
-            if(rand <= (wielderStats.percentCritChance + owner.critChance) * 100 )
+            // Roll for crit
+            roll = Random.Range(0, 100);
+            if(roll <= (wielderStats.percentCritChance + owner.critChance) * 100 )
             {
                 // Increase damage
                 damage = (int) (damage * (1 + owner.critDamage));

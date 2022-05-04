@@ -46,6 +46,9 @@ public class GoblinAI : EnemyAI
         // Go to nearest camp
         goToNearestCamp();
 
+        // Reset cooldown
+        attackCooldownTimer = attackCooldown;
+
         // Set starting state
         goblinState = GoblinState.Patroling;
     }
@@ -353,6 +356,7 @@ public class GoblinAI : EnemyAI
 
                     // If you are in range
                     if (Vector3.Distance(transform.position, target.position) < attackRange) {
+                        
                         // Don't move
                         mv.Walk(0);
 
@@ -361,8 +365,16 @@ public class GoblinAI : EnemyAI
 
                         // Check if cooldown is over
                         if (attackCooldownTimer <= 0) {
-                            // Start the attack
-                            attack();
+                            // Raycast ahead
+                            var hits = Physics2D.RaycastAll(transform.position, mv.getFacingDirection() * Vector2.right, attackRange);
+                            foreach (var hit in hits) {
+                                // If the target is on the same level, then attack
+                                if (hit.transform == target.transform) {
+                                    // Start the attack
+                                    attack();
+                                    return;
+                                }
+                            }
                         }
                     }
                     else {

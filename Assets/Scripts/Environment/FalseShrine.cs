@@ -6,9 +6,9 @@ public class FalseShrine : Shrine
 {
     [SerializeField] private string message = "RIP";
 
-    public override void activate(Player player)
+    public override void activatePress(Player player)
     {
         // Print text
-        PopUpTextManager.instance.createPopup(message, Color.green, transform.position);
+        PopUpTextManager.instance.createVerticalPopup(message, Color.green, transform.position);
     }
 }

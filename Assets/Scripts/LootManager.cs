@@ -6,12 +6,17 @@ public class LootManager : MonoBehaviour
 {
     public static LootManager instance; // Accessible by every class at any point
 
+    [Header("General Settings")]
+    [SerializeField] private int maxSlots = 4;
+    [SerializeField] private int minSlots = 2;
+
     [Header("Melee Weapons")]
     [SerializeField] private List<string> prefixes;
     [SerializeField] private List<Sprite> swordSprites;
     [SerializeField] private List<Sprite> axeSprites;
     [SerializeField] private List<Sprite> shieldSprites;
     [SerializeField] private List<Sprite> spearSprites;
+    [SerializeField] private List<Sprite> daggerSprites;
     [SerializeField] private List<MeleeEchantment> meleeEchantments;
 
     [Header("Ranged Weapons")]
@@ -24,6 +29,7 @@ public class LootManager : MonoBehaviour
     [SerializeField] private GameObject smallShieldPrefab;
     [SerializeField] private GameObject longBowPrefab;
     [SerializeField] private GameObject spearPrefab;
+    [SerializeField] private GameObject daggerPrefab;
 
     [Header("Armor")]
     [SerializeField] private List<Sprite> helmetSprites;
@@ -50,6 +56,8 @@ public class LootManager : MonoBehaviour
     public string longBowDescription;
     [TextArea(10, 15)]
     public string spearDescription;
+    [TextArea(10, 15)]
+    public string daggerDescription;
 
 
     [Header("Debugging")]
@@ -71,34 +79,31 @@ public class LootManager : MonoBehaviour
     public Item getRandomItem()
     {
         // First randomly choose between a weapon or armor
-        var itemType = (ItemType)Random.Range(0, 2); // 0 - weapon, 1 - armor
+        var roll = Random.Range(0, 10); // 0 - 9
 
-        // Then randomly choose weapon type or armor type
-        switch (itemType)
-        {
-            case ItemType.Weapon:
-                return generateRandomWeapon();
-            case ItemType.Armor:
-                return generateRandomArmorPiece();
-            default:
-                return null;
+        if (roll > 3) {
+            return generateRandomWeapon();
         }
+        return generateRandomArmorPiece();
     }
 
     private WeaponItem generateRandomWeapon() {
-        var weaponType = (WeaponType)Random.Range(0, 5); // 0 - 4
-        switch(weaponType) {
-            case WeaponType.Sword:
+        var roll = Random.Range(0, 5); // 0 - 4
+        switch(roll) {
+            case 0:
                 return generateRandomSword();
-            case WeaponType.Axe:
+            case 1:
                 return generateRandomAxe();
-            case WeaponType.SmallShield:
-                return generateRandomSmallShield();
-            case WeaponType.LongBow:
+            case 2:
                 return generateRandomLongBow();
-            case WeaponType.Spear:
+            case 3:
                 return generateRandomSpear();
+            case 4:
+                return generateRandomDagger();
+            // case 2:
+            //     return generateRandomSmallShield();
         }
+        print("Error while generating loot");
         return null;
     }
 
@@ -116,13 +121,15 @@ public class LootManager : MonoBehaviour
         // Set crit chance
         newSword.critChance = 0.1f; // 1-7
 
-        // Randomize enchantment
-        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
-            newSword.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
-        }
-        else {
-            newSword.enchantment = null;
-        }
+        // Randomly choose up to maxSltos
+        int roll = Random.Range(minSlots, maxSlots + 1);
+        newSword.enchantmentSlots = roll;
+
+        // Randomly choose between 0 and amount of slots
+        roll = Random.Range(0, minSlots + 1); 
+        if (roll == 0 && alwaysEnchant)
+            roll = 1;
+        newSword.enchantments = getRandomMeleeEnchantments(roll);
         
         // Randomize sprite
         newSword.sprite = swordSprites[Random.Range(0, swordSprites.Count)];
@@ -146,13 +153,15 @@ public class LootManager : MonoBehaviour
         // Randomize damage stats
         newAxe.damage = Random.Range(5, 13); // 5-12
 
-        // Randomize enchantment
-        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
-            newAxe.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
-        }
-        else {
-            newAxe.enchantment = null;
-        }
+        // Randomly choose up to maxSltos
+        int roll = Random.Range(minSlots, maxSlots + 1);
+        newAxe.enchantmentSlots = roll;
+
+        // Randomly choose between 0 and amount of slots
+        roll = Random.Range(0, minSlots + 1); 
+        if (roll == 0 && alwaysEnchant)
+            roll = 1;
+        newAxe.enchantments = getRandomMeleeEnchantments(roll);
 
         // Randomize sprite
         newAxe.sprite = axeSprites[Random.Range(0, axeSprites.Count)];
@@ -180,13 +189,15 @@ public class LootManager : MonoBehaviour
         // Set crit chance
         newSmallShield.critChance = 0.1f; // 1-7
 
-        // Randomize enchantment
-        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
-            newSmallShield.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
-        }
-        else {
-            newSmallShield.enchantment = null;
-        }
+        // Randomly choose up to maxSltos
+        int roll = Random.Range(minSlots, maxSlots + 1);
+        newSmallShield.enchantmentSlots = roll;
+
+        // Randomly choose between 0 and amount of slots
+        roll = Random.Range(0, minSlots + 1); 
+        if (roll == 0 && alwaysEnchant)
+            roll = 1;
+        newSmallShield.enchantments = getRandomMeleeEnchantments(roll);
 
         // Randomize sprite
         newSmallShield.sprite = shieldSprites[Random.Range(0, shieldSprites.Count)];
@@ -214,13 +225,15 @@ public class LootManager : MonoBehaviour
         // Set crit chance
         newSpear.critChance = 0.1f;
 
-        // Randomize enchantment
-        if (Random.Range(0, 2) == 0 || alwaysEnchant) {
-            newSpear.enchantment = meleeEchantments[Random.Range(0, meleeEchantments.Count)];
-        }
-        else {
-            newSpear.enchantment = null;
-        }
+        // Randomly choose up to maxSltos
+        int roll = Random.Range(minSlots, maxSlots + 1);
+        newSpear.enchantmentSlots = roll;
+
+        // Randomly choose between 0 and amount of slots
+        roll = Random.Range(0, minSlots + 1); 
+        if (roll == 0 && alwaysEnchant)
+            roll = 1;
+        newSpear.enchantments = getRandomMeleeEnchantments(roll);
 
         // Randomize sprite
         newSpear.sprite = spearSprites[Random.Range(0, spearSprites.Count)];
@@ -232,6 +245,42 @@ public class LootManager : MonoBehaviour
         newSpear.description = spearDescription;
 
         return newSpear;
+    }
+
+    private WeaponItem generateRandomDagger() {
+
+        // Create the scriptable object
+        WeaponItem newDagger = ScriptableObject.CreateInstance<WeaponItem>();
+        newDagger.weaponType = WeaponType.Dagger;
+        newDagger.twoHanded = false;
+        newDagger.prefab = daggerPrefab;
+
+        // Randomize damage stats
+        newDagger.damage = Random.Range(1, 4);
+
+        // Set crit chance
+        newDagger.critChance = 0.15f;
+
+        // Randomly choose up to maxSltos
+        int roll = Random.Range(minSlots, maxSlots + 1);
+        newDagger.enchantmentSlots = roll;
+
+        // Randomly choose between 0 and amount of slots
+        roll = Random.Range(0, minSlots + 1); 
+        if (roll == 0 && alwaysEnchant)
+            roll = 1;
+        newDagger.enchantments = getRandomMeleeEnchantments(roll);
+        
+        // Randomize sprite
+        newDagger.sprite = daggerSprites[Random.Range(0, daggerSprites.Count)];
+
+        // Randomize name
+        newDagger.name = prefixes[Random.Range(0, prefixes.Count)] + " Dagger";
+
+        // Set description
+        newDagger.description = daggerDescription;
+
+        return newDagger;
     }
 
     private WeaponItem generateRandomLongBow() {
@@ -247,10 +296,11 @@ public class LootManager : MonoBehaviour
 
         // Randomize enchantment
         if (Random.Range(0, 2) == 0 || alwaysEnchant) {
-            newLongBow.enchantment = rangedEnchantments[Random.Range(0, rangedEnchantments.Count)];
+            newLongBow.enchantments = new List<Enchantment>();
+            newLongBow.enchantments.Add(rangedEnchantments[Random.Range(0, rangedEnchantments.Count)]);
         }
         else {
-            newLongBow.enchantment = null;
+            newLongBow.enchantments = null;
         }
 
         // Randomize sprite
@@ -417,5 +467,37 @@ public class LootManager : MonoBehaviour
     public Item getConsumableDrop()
     {
         return consumableLootTable.getDrop();
+    }
+
+    private List<Enchantment> getRandomMeleeEnchantments(int count) {
+        if (count <= 0)
+            return null;
+
+        List<Enchantment> enchantments = new List<Enchantment>();
+        List<MeleeEchantment> possibleChoices = new List<MeleeEchantment>();
+        // Copy list
+        possibleChoices.AddRange(meleeEchantments);
+
+        for (int i = 0; i < count; i++)
+        {
+            // If you have no choices left, then leave
+            if (possibleChoices.Count <= 0)
+                break;
+            
+            // Randomly choose from pool
+            var randomChoice = possibleChoices[Random.Range(0, possibleChoices.Count)];
+            // If enchantment was already chosen, then remove it from the pool and retry next iteration
+            if (enchantments.Contains(randomChoice)) {
+                // Remove enchantment from pool
+                possibleChoices.Remove(randomChoice);
+                // Move back counter
+                i--;
+            }
+            else { // Add enchantment
+                enchantments.Add(randomChoice);
+            }
+        }
+
+        return enchantments;
     }
 }

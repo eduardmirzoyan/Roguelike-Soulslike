@@ -8,7 +8,8 @@ public enum WeaponType
     Axe,
     SmallShield,
     LongBow,
-    Spear
+    Spear,
+    Dagger
 }
 
 [CreateAssetMenu]
@@ -19,7 +20,8 @@ public class WeaponItem : Item
     public float critDamage = 1f;
     public WeaponType weaponType;
     public bool twoHanded;
-    public Enchantment enchantment;
+    public List<Enchantment> enchantments;
+    public int enchantmentSlots = 3;
 
     public void Awake()
     {

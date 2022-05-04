@@ -66,9 +66,9 @@ public class GoblinCamp : Shrine
         }
     }
 
-    public override void activate(Player player)
+    public override void activatePress(Player player)
     {
-        PopUpTextManager.instance.createPopup("To be implemented.",  Color.gray, transform.position);
+        PopUpTextManager.instance.createVerticalPopup("To be implemented.",  Color.gray, transform.position);
     }
 
     public void setPatrolRoute(Transform[] goblinCampTransforms) {

@@ -24,7 +24,7 @@ public class Chest : MonoBehaviour
             Instantiate(itemHolder, new Vector2(transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
 
             // Create popup
-            PopUpTextManager.instance.createVerticalPopup("+" + moneyAmount + " gold", Color.yellow, transform.position);
+            PopUpTextManager.instance.createWeakPopup("+" + moneyAmount + " gold", Color.yellow, transform.position, 0.5f);
 
             GameManager.instance.addGold(moneyAmount);
 

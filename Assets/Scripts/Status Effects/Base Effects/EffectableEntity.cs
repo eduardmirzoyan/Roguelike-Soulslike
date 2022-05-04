@@ -29,7 +29,6 @@ public class EffectableEntity : MonoBehaviour
 
     public void addEffect(TimedEffect timedEffect)
     {
-        print("added effect to: " + gameObject.name);
         if (activeEffects.ContainsKey(timedEffect.Effect))
         {
             activeEffects[timedEffect.Effect].Activate();
@@ -46,26 +45,39 @@ public class EffectableEntity : MonoBehaviour
         GameEvents.instance.triggerAddStatusEffect(timedEffect, this);
     }
 
-    public bool removeEffect(BaseEffect baseEffect) {
-        if (activeEffects == null)
-            return false;
-
+    public TimedEffect removeEffect(BaseEffect baseEffect) {
         // Find an effect with the same type
         foreach (var effect in activeEffects.Keys.ToList()) {
             if (effect.GetType() == baseEffect.GetType()) {
+                // Cache effect
+                var cache = activeEffects[effect];
+
                 // Force end the effect
                 activeEffects[effect].End();
 
+                // Trigger event
+                GameEvents.instance.triggerRemoveStatusEffect(activeEffects[effect], this);
+
                 // Then remove it
                 activeEffects.Remove(effect);
+
+                return cache;
+            }
+        }
+        return null;
+    }
+
+    public int getActiveEffectCount() {
+        return activeEffects.Count;
+    }
+
+    public bool containsEffect(BaseEffect baseEffect) {
+        foreach (var bEffect in activeEffects.Keys) {
+            if (bEffect.GetType() == baseEffect.GetType()) {
                 return true;
             }
         }
         return false;
     }
 
-    public Dictionary<BaseEffect, TimedEffect> GetKeyValuePairs()
-    {
-        return activeEffects;
-    }
 }

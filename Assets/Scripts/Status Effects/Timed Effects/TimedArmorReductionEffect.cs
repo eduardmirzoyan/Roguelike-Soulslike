@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class TimedArmorReductionEffect : TimedEffect
 {
-    private CombatStats stats;
+    private Stats stats;
     private int stolenArmorAmount;
 
     public TimedArmorReductionEffect(BaseEffect effect, GameObject parent) : base(effect, parent)
     {
-        stats = parent.GetComponent<CombatStats>();
+        stats = parent.GetComponent<Stats>();
         stolenArmorAmount = 0;
     }
 
@@ -30,7 +30,7 @@ public class TimedArmorReductionEffect : TimedEffect
             stats.defense += stolenArmorAmount;
 
             // Then calculate the new percentage to take
-            int amountToTake = (int)(stats.defense * armorReductionEffect.percentArmorReduction * (EffectStacks + 1));
+            int amountToTake = (int)(stats.defense * armorReductionEffect.percentArmorReduction * (stacks + 1));
             
             // Cache that amount
             stolenArmorAmount = amountToTake;

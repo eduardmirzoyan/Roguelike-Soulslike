@@ -104,6 +104,9 @@ public class ImpAI : EnemyAI
             // Stop nav agent
             agent.isStopped = true;
 
+            // Make knockback 1-d
+            displacable.twoDimensionalKnockback = false;
+
             // Give gravity
             body.gravityScale = 2.5f;
 

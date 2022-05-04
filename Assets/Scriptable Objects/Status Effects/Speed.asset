@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Speed
   m_EditorClassIdentifier: 
   Duration: 30
-  IsDurationReset: 0
-  IsDurationStacked: 0
-  IsEffectStacked: 0
+  isDurationReset: 1
+  isDurationStacked: 0
+  maxStacks: 1
   tickRate: 1
   icon: {fileID: -5888591523885108491, guid: cf52667835bff0a43aaf1134f7711089, type: 3}
   flavorText: You feel quick...
   percentSpeedBoost: 0.25
+  speedParticles: {fileID: 774375910574379926, guid: 6975eb3de9c8cff418935e37500b15a4, type: 3}

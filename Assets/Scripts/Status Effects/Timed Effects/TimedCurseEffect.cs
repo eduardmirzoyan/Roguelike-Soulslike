@@ -19,8 +19,8 @@ public class TimedCurseEffect : TimedEffect
     protected override void ApplyEffect()
     {
         
-        if (EffectStacks + 1 >= ((CurseEffect)Effect).triggerAmount) {
-            EffectStacks = 0;
+        if (stacks + 1 >= ((CurseEffect)Effect).triggerAmount) {
+            stacks = 0;
             // Instantly set health to 0
             if (health != null) {
                 health.reduceHealth(health.getMaxHP());

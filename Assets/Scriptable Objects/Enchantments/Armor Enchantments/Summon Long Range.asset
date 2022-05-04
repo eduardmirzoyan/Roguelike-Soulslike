@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506e38aa462a61047b85400bf49ead71, type: 3}
   m_Name: Summon Long Range
   m_EditorClassIdentifier: 
-  enchantmentName: Protected by Eye Familiar
+  enchantmentName: Mini Cthulhu Familiar
   stacks: 1
   description: Item is haunted by a small familiar that will attack your enemies.
     Needs to charge up but deals considerable damage.

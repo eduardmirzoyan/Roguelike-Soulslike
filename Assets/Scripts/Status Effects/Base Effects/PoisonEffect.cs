@@ -7,6 +7,7 @@ public class PoisonEffect : BaseEffect
 {
     public int tickDamage;
     public Color damageColor;
+    public GameObject poisonedParticles;
 
     public override TimedEffect InitializeEffect(GameObject parent)
     {

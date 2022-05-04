@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 7620669740257576051}
   - component: {fileID: 7459072633601142575}
   - component: {fileID: 7099486156053418503}
+  - component: {fileID: 3673910848110389437}
   m_Layer: 7
   m_Name: Shadow Knight Boss
   m_TagString: Enemy
@@ -345,6 +346,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   currentState: 
+--- !u!114 &3673910848110389437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252513414407207741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807c355fd4e2f1b49a01a21cf99c407e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defense: 0
+  bonusStamina: 0
+  percentCritChance: 0
+  percentDodgeChance: 0
+  percentMissChance: 0
+  damageDealtMultiplier: 0
+  movespeedMultiplier: 0
+  damageTakenMultiplier: 0
 --- !u!1 &8252513414490932037
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,9 +19,11 @@ MonoBehaviour:
   count: 1
   description: Beginner's sword
   name: Rusty Sword
-  damage: 2
+  damage: 4
   critChance: 0
   critDamage: 1
   weaponType: 0
   twoHanded: 0
-  enchantment: {fileID: 11400000, guid: b1bc8a01ee4e36840a5173c527d6f256, type: 2}
+  enchantments:
+  - {fileID: 11400000, guid: 43f645103240e864fb8ac92147fde9ad, type: 2}
+  enchantmentSlots: 3

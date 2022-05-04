@@ -637,7 +637,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.375391, y: -0.3837061}
+  m_Offset: {x: 0.375391, y: -0.8}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -718,12 +718,12 @@ GameObject:
   - component: {fileID: 2917032428379126711}
   - component: {fileID: 4408043583777253001}
   - component: {fileID: 4629255174404459221}
-  - component: {fileID: 1093893460}
   - component: {fileID: 1093893461}
   - component: {fileID: -8373010377783489169}
   - component: {fileID: 1718550426}
   - component: {fileID: 2130890609893911106}
   - component: {fileID: 495678929619438457}
+  - component: {fileID: 2304472212375511074}
   m_Layer: 7
   m_Name: Ghost Knight
   m_TagString: Fighter
@@ -791,12 +791,12 @@ SpriteRenderer:
   m_SortingLayerID: -2079674183
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2044624726750869082, guid: af71b87a17687c947b2c2f2b1bad7f8b, type: 3}
+  m_Sprite: {fileID: -8296385383580801948, guid: af71b87a17687c947b2c2f2b1bad7f8b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.5714285, y: 2.5714285}
+  m_Size: {x: 3.4285715, y: 3.4285715}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -834,12 +834,12 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.010727048, y: -0.15911388}
+  m_Offset: {x: 0, y: -0.6}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.5714285, y: 2.5714285}
-    newSize: {x: 2.5714285, y: 2.5714285}
+    oldSize: {x: 3.4285715, y: 3.4285715}
+    newSize: {x: 3.4285715, y: 3.4285715}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1502,9 +1502,9 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 0.01
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0, z: 0}
+    m_Position: {x: 0, y: -0.5, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1, y: -1, z: 1}
+    m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -5608,6 +5608,7 @@ MonoBehaviour:
   attacker: {fileID: 0}
   pathfindUser: {fileID: 0}
   sleepingParticles: {fileID: 0}
+  altTransform: {fileID: 59125269300799294}
   idleAnimation: Idle
   deadAnimation: Dead
   attackAnimation: Attack
@@ -5667,6 +5668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 0}
+  stats: {fileID: 0}
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
@@ -5757,7 +5759,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -940002561
   m_SortingLayer: 8
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -5783,25 +5785,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &1093893460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6841289740653524853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b431ac3d6efd3c746a0f6d587c9164ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defense: 999
-  bonusStamina: 0
-  percentCritChance: 0
-  percentDodgeChance: 0
-  damageDealtMultiplier: 0
-  movespeedMultiplier: 0
-  damageTakenMultiplier: 0
 --- !u!114 &1093893461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5886,6 +5869,26 @@ MonoBehaviour:
   damageParticlesPrefab: {fileID: 8865745841887048178, guid: 9903a678a7f6be34193580ceec34e0e3, type: 3}
   deathParticlesPrefab: {fileID: 8865745841887048178, guid: 9903a678a7f6be34193580ceec34e0e3, type: 3}
   spawnPoint: {fileID: 6841289740653524856}
+--- !u!114 &2304472212375511074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841289740653524853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807c355fd4e2f1b49a01a21cf99c407e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defense: 100
+  bonusStamina: 0
+  percentCritChance: 0
+  percentDodgeChance: 0
+  percentMissChance: 0
+  damageDealtMultiplier: 0
+  movespeedMultiplier: 0
+  damageTakenMultiplier: 0
 --- !u!1 &6841289740735046445
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class RollingHandler : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Movement mv;
+    [SerializeField] private Collider2D hitbox;
 
     [Header("Settings")]
     [SerializeField] private float rollCooldown = 1f;
@@ -23,6 +24,7 @@ public class RollingHandler : MonoBehaviour
 
     private void Start() {
         mv = GetComponent<Movement>();
+        hitbox = GetComponent<Collider2D>();
     }
 
     private void FixedUpdate() {
@@ -41,11 +43,19 @@ public class RollingHandler : MonoBehaviour
         else 
             rollDirection = mv.getFacingDirection();
 
+        mv.setFacingDirection(rollDirection);
+
         // Set roll speed to lerp
         workingRollSpeed = rollSpeed;
 
         // Start timer
         rollTimer = rollDuration;
+    }
+
+    public void endRoll() {
+
+        // Reset cooldown
+        rollCooldownTimer = rollCooldown;
     }
 
     public bool canRoll() {
@@ -58,12 +68,7 @@ public class RollingHandler : MonoBehaviour
 
             // Lerp speed
             mv.dash(workingRollSpeed, rollDirection);
-            // workingRollSpeed = Mathf.Lerp(workingRollSpeed, 0, lerpFactor);
         }
-    }
-
-    public void startCooldown() {
-        rollCooldownTimer = rollCooldown;
     }
 
     public bool isDoneRolling() {

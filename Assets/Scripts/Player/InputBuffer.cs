@@ -6,28 +6,23 @@ public class InputBuffer : MonoBehaviour
 {
     [SerializeField] private Keybindings keybindings;
     [SerializeField] private List<ActionItem> inputBuffer = new List<ActionItem>();  //The input buffer
-    [SerializeField] private bool actionAllowed;  //set to true whenever we want to process actions from the input buffer, set to false when an action has to wait in the buffer
-                                                  //Notice I don't have any code here which sets actionAllowed to true, because that probably depends on states like in the middle of throwing a punch animation, or checking if a jump has finished, or whatever
 
     [SerializeField] private bool enableBuffering;
-
     [SerializeField] private int bufferRatio = 2;
 
+    public float moveDirection { get; private set; }
     public bool jumpRequest { get; private set; }
     public bool dropDownRequest { get; private set; }
     public bool crouchRequest { get; private set; }
-    public float moveDirection { get; private set; }
     public bool menuToggleRequest { get; private set; }
     public bool mainHandAttackRequest { get; private set; }
-    public bool heavyAttackRequest;
     public bool offHandAttackRequest { get; private set; }
-    public bool utilityAbilityRequest;
     public bool rollRequest { get; private set; }
-    public bool interactRequest { get; private set; }
     public bool useFlaskRequest { get; private set; }
-
-    // Temp
-    public bool sprintRequest { get; private set; }
+    public bool interactPressRequest { get; private set; }
+    public bool interactReleaseRequest { get; private set; }
+    public bool helpRequest { get; private set; }
+    public bool pauseMenuRequest { get; private set; }
 
     private float rollTimer;
     private float jumpInputTimer;
@@ -73,13 +68,6 @@ public class InputBuffer : MonoBehaviour
         else {
             dropDownRequest = false;
         }
-
-        // if (flaskInputTimer > 0) {
-        //     flaskInputTimer -= Time.deltaTime;
-        // }
-        // else {
-        //     useFlaskRequest = false;
-        // }
     }
 
     //Check inputs here, and add them to the input buffer
@@ -111,20 +99,18 @@ public class InputBuffer : MonoBehaviour
 
         // Check input for interacting
         if (Input.GetKeyDown(keybindings.interactKey) || Input.GetKeyDown(keybindings.interactKey2))
-            interactRequest = true;
+            interactPressRequest = true;
         else
-            interactRequest = false;
+            interactPressRequest = false;
 
-        // Check input for Sprinting
-        if (Input.GetKey(keybindings.sprintKey))
-            sprintRequest = true;
+        if (Input.GetKeyUp(keybindings.interactKey) || Input.GetKeyUp(keybindings.interactKey2))
+            interactReleaseRequest = true;
         else
-            sprintRequest = false;
+            interactReleaseRequest = false;
 
         // Check input for Flask usage
         if (Input.GetKeyDown(keybindings.flaskKey)) {
             useFlaskRequest = true;
-            //flaskInputTimer = bufferRatio * Time.deltaTime;
         }
 
         if (useFlaskRequest && Input.GetKeyUp(keybindings.flaskKey)) {
@@ -143,6 +129,7 @@ public class InputBuffer : MonoBehaviour
             mainAttackTime = Time.time;
         }
 
+        // Check for main hand release
         if (mainHandAttackRequest && Input.GetKeyUp(keybindings.mainhandAttackKey)) {
             mainHandAttackRequest = false;
             mainAttackTime = Time.time - mainAttackTime;
@@ -154,9 +141,18 @@ public class InputBuffer : MonoBehaviour
             offAttackTime = Time.time;
         }
 
+        // Check for off hand release
         if (offHandAttackRequest && Input.GetKeyUp(keybindings.offhandAttackKey)) {
             offHandAttackRequest = false;
             offAttackTime = Time.time - offAttackTime;
+        }
+
+        // Check for help screen
+        if (Input.GetKeyDown(keybindings.helpKey)) {
+            helpRequest = true;
+        }
+        else {
+            helpRequest = false;
         }
 
         // On press set "attack" to true
@@ -202,23 +198,6 @@ public class InputBuffer : MonoBehaviour
 
         // Reset all requests
         resetAttackRequests();
-
-        // Then toggle the chosen action
-        switch (ai.Action)
-        {
-            case ActionItem.InputAction.LightAttack:
-                //mainHandAttackRequest = true;
-                break;
-            case ActionItem.InputAction.HeavyAttack:
-                heavyAttackRequest = true;
-                break;
-            case ActionItem.InputAction.SignatureAttack:
-                offHandAttackRequest = true;
-                break;
-            case ActionItem.InputAction.UtilityAttack:
-                utilityAbilityRequest = true;
-                break;
-        }
     }
 }
 public class ActionItem

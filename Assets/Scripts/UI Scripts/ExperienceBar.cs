@@ -5,15 +5,18 @@ using UnityEngine.UI;
 
 public class ExperienceBar : MonoBehaviour
 {
-    [SerializeField] public Slider slider;
-    public void setMaxExperience(int stamina)
+    [SerializeField] private Slider slider;
+    [SerializeField] private Text text;
+
+    public void setMaxExperience(int maxExp)
     {
-        slider.maxValue = stamina;
-        slider.value = stamina;
+        slider.maxValue = maxExp;
+        text.text =  "XP: 0/" + maxExp;
     }
 
-    public void setExperience(int stamina)
+    public void setExperience(int exp)
     {
-        slider.value = stamina;
+        slider.value = exp;
+        text.text = "XP: " + exp + "/" + slider.maxValue;
     }
 }

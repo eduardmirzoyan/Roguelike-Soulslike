@@ -6,6 +6,7 @@ public class TimedPoisonEffect : TimedEffect
 {
     private Health health;
     private Rigidbody2D rigidbody2D;
+    private ParticleSystem poisonParticles;
 
     public TimedPoisonEffect(BaseEffect effect, GameObject parent) : base(effect, parent)
     {
@@ -21,7 +22,13 @@ public class TimedPoisonEffect : TimedEffect
 
     protected override void ApplyEffect()
     {
-        // Does nothing on apply
+        PoisonEffect poisonEffect = (PoisonEffect)Effect;
+        // Create fire particles
+        poisonParticles = GameObject.Instantiate(poisonEffect.poisonedParticles, health.transform).GetComponent<ParticleSystem>();
+        // Set duration
+        var main = poisonParticles.main;
+        main.duration = Effect.Duration;
+        poisonParticles.Play();
     }
 
     protected override void onTick()
@@ -40,7 +47,7 @@ public class TimedPoisonEffect : TimedEffect
             health.reduceHealth(poisonEffect.tickDamage);
 
             // Create popup
-            PopUpTextManager.instance.createShortPopup(poisonEffect.tickDamage + "", poisonEffect.damageColor, health.transform.position);
+            PopUpTextManager.instance.createWeakPopup(poisonEffect.tickDamage + "", poisonEffect.damageColor, health.transform.position);
         }
     }
 }

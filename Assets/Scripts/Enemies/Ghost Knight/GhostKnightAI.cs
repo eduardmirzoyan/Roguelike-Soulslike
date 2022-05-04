@@ -10,6 +10,7 @@ public class GhostKnightAI : EnemyAI
     [Header("Components")]
     [SerializeField] private PathfindUser pathfindUser;
     [SerializeField] private ParticleSystem sleepingParticles;
+    [SerializeField] private Transform altTransform;
 
     [Header("Animation")]
     [SerializeField] private string idleAnimation = "Idle";
@@ -178,8 +179,16 @@ public class GhostKnightAI : EnemyAI
 
                         // Check if cooldown is over
                         if (attackCooldownTimer <= 0) {
-                            // Start the attack
-                            attack();
+                            // Raycast ahead
+                            var hits = Physics2D.RaycastAll(altTransform.position, mv.getFacingDirection() * Vector2.right, attackRange);
+                            foreach (var hit in hits) {
+                                // If the target is on the same level, then attack
+                                if (hit.transform == target.transform) {
+                                    // Start the attack
+                                    attack();
+                                    return;
+                                }
+                            }
                         }
                     }
                     else {

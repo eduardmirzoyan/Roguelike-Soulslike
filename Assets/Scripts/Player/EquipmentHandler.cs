@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CombatStats))]
+[RequireComponent(typeof(Stats))]
 [RequireComponent(typeof(EnchantableEntity))]
 [RequireComponent(typeof(Stamina))]
 public class EquipmentHandler : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private CombatStats stats;
+    [SerializeField] private Stats stats;
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private Stamina stamina;
     [SerializeField] private EnchantableEntity enchantableEntity;
@@ -23,10 +23,13 @@ public class EquipmentHandler : MonoBehaviour
     public int[] equippedArmorIndexes; // Holds the indexes of the equipped items in respect to the position in the player's inventory
     // ^^^ Set to -1 if nothing is equipped at that slot
 
+    [Header("Settings")]
+    [SerializeField] private float duelwieldingPenalty = 0f;
+
     private void Start()
     {
         // Get references
-        stats = GetComponent<CombatStats>();
+        stats = GetComponent<Stats>();
         stamina = GetComponent<Stamina>();
         //inventoryUI = GetComponentInChildren<InventoryUI>();
         enchantableEntity = GetComponent<EnchantableEntity>();
@@ -78,14 +81,16 @@ public class EquipmentHandler : MonoBehaviour
             combatHandler.setOffHandWeapon(equippedWeapon);
         }
 
-        // If the weapon is enchantable, then add the enchantment
-        if (weaponItem.enchantment != null && equippedWeapon.TryGetComponent(out EnchantableEntity enchantableEntity)) {
-            enchantableEntity.addEnchantment(weaponItem.enchantment);
+        // If the weapon has enchantments, then add the enchantment
+        if (weaponItem.enchantments != null && equippedWeapon.TryGetComponent(out EnchantableEntity enchantableEntity)) {
+            foreach (Enchantment enchantment in weaponItem.enchantments) {
+                enchantableEntity.addEnchantment(enchantment);
+            }
         }
 
-        if (isDuelWielding() && TryGetComponent(out CombatStats stats)) {
+        if (isDuelWielding() && TryGetComponent(out Stats stats)) {
             // Reduce damage by 25%
-            stats.damageDealtMultiplier -= 0.25f;
+            stats.damageDealtMultiplier -= duelwieldingPenalty;
         }
 
         // Trigger event
@@ -99,12 +104,20 @@ public class EquipmentHandler : MonoBehaviour
         inventoryUI.equipItemAtIndex(index, false);
 
         // If you were duel wielding before, then get back your damage
-        if (isDuelWielding() && TryGetComponent(out CombatStats stats)) {
+        if (isDuelWielding() && TryGetComponent(out Stats stats)) {
             // Reduce damage by 25%
-            stats.damageDealtMultiplier += 0.25f;
+            stats.damageDealtMultiplier += duelwieldingPenalty;
         }
 
         if (onMainHand) {
+            // Remove enchantments
+            // If the weapon has enchantments, then add the enchantment
+            if (equippedWeaponItem[0].enchantments != null && combatHandler.getMainHandWeapon().TryGetComponent(out EnchantableEntity enchantableEntity)) {
+                foreach (Enchantment enchantment in equippedWeaponItem[0].enchantments) {
+                    enchantableEntity.removeEnchantment(enchantment);
+                }
+            }
+
             // Set mainhand weapon item values to null
             equippedWeaponItem[0] = null;
             equippedWeaponIndexes[0] = -1;
@@ -116,6 +129,14 @@ public class EquipmentHandler : MonoBehaviour
             combatHandler.setMainHandWeapon(null);
         }
         else {
+            // Remove enchantments
+            // If the weapon has enchantments, then add the enchantment
+             if (equippedWeaponItem[1].enchantments != null && combatHandler.getOffHandWeapon().TryGetComponent(out EnchantableEntity enchantableEntity)) {
+                foreach (Enchantment enchantment in equippedWeaponItem[1].enchantments) {
+                    enchantableEntity.removeEnchantment(enchantment);
+                }
+            }
+
             // Set offhand weapon item values to null
             equippedWeaponItem[1] = null;
             equippedWeaponIndexes[1] = -1;
@@ -151,8 +172,9 @@ public class EquipmentHandler : MonoBehaviour
 
         // Add new armor's stats to player
         stats.defense += newArmor.defenseValue;
-        stats.bonusStamina += newArmor.bonusStamina;
 
+        // Add stamina
+        stats.bonusStamina += newArmor.bonusStamina;
         stamina.maxStamina += newArmor.bonusStamina;
 
         // Add the armor's enchantment to the player
@@ -164,9 +186,9 @@ public class EquipmentHandler : MonoBehaviour
     {
         // Remove armor stats
         stats.defense -= equippedArmor[slot].defenseValue;
-        stats.bonusStamina -= equippedArmor[slot].bonusStamina;
 
         // Remove max stamina effects
+        stats.bonusStamina -= equippedArmor[slot].bonusStamina;
         stamina.maxStamina -= equippedArmor[slot].bonusStamina;
         if (stamina.currentStamina > stamina.maxStamina)
             stamina.currentStamina = stamina.maxStamina;

@@ -51,8 +51,12 @@ public class ThiefAI : EnemyAI
         inventory.setMax(maxInventorySize);
         pathfindUser = GetComponent<PathfindUser>();
 
+        // Reset looting
         lootingCircle.fillAmount = 0;
         wanderTimer = wanderRate;
+
+        // Reset attack timer
+        attackCooldownTimer = attackCooldown;
         
         // The thief spawns with no item and is aggressive
         thiefState = ThiefState.Idle;
@@ -99,16 +103,17 @@ public class ThiefAI : EnemyAI
                     searchForItem();
                     
                     // Search for enemies, if found set targetT
-                    searchForEnemies();
+                    searchForEnemies();   
+                }
 
-                    if (target != null) {
+                // If a target is found, then go after it
+                if (target != null) {
                         // Set target
                         pathfindUser.setPathTo(target.position);
                         // Set state
                         thiefState = ThiefState.Searching;
                         return;
                     }
-                }
                 
                 wander();
 
@@ -229,8 +234,16 @@ public class ThiefAI : EnemyAI
 
                         // If the cooldown between attacks is over, then start new attack
                         if (attackCooldownTimer <= 0) {
-                            // Start the attack
-                            attack();
+                            // Raycast ahead
+                            var hits = Physics2D.RaycastAll(transform.position, mv.getFacingDirection() * Vector2.right, attackRange);
+                            foreach (var hit in hits) {
+                                // If the target is on the same level, then attack
+                                if (hit.transform == target.transform) {
+                                    // Start the attack
+                                    attack();
+                                    return;
+                                }
+                            }
                         }
                     }
                     else {

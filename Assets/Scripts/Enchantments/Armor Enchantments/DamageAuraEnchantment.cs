@@ -52,8 +52,7 @@ public class DamageAuraEnchantment : Enchantment
     public override void unintialize()
     {
         particles.Stop();
-        particles = null;
-        DestroyImmediate(particlesPrefab);
+        Destroy(particles.gameObject);
         base.unintialize();
     }
 }

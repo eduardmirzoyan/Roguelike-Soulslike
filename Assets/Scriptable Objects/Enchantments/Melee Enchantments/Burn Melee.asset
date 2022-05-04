@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enchantmentName: Fire Aspect
   stacks: 1
-  description: Attacks apply burn. Burning enemies take more damage when standing
-    still.
+  description: Attacks apply BURN for 5 sec, dealing 20% weapon damage per tick.
+    BURN deals damage faster when standing still.
   burnEffect: {fileID: 11400000, guid: 98d260f15fd7ce1439a9c70f41ec6dac, type: 2}
+  weaponDamageRatio: 0.2

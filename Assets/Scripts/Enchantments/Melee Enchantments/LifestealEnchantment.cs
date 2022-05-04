@@ -25,10 +25,15 @@ public class LifestealEnchantment : MeleeEchantment
     }
 
     private void giveHealthOnHit(GameObject attackingEnitiy, GameObject hitEntity, int damageTaken) {
-        if (wielderHealth != null && attackingEnitiy == entity.transform.gameObject && damageTaken > 1) {
+        if (wielderHealth != null && attackingEnitiy == wielderHealth.gameObject && damageTaken > 1) {
+            // Calculate heal amount
             var lifeGained = (int) (damageTaken * lifestealRatio);
-            wielderHealth.increaseHealth(lifeGained);
-            Debug.Log("You healed: " + lifeGained + " hp.");
+
+            if (lifeGained > 0) {
+                wielderHealth.increaseHealth(lifeGained);
+                // Create popup
+                PopUpTextManager.instance.createPopup("+" + lifeGained, Color.green, wielderHealth.transform.position, 0.75f);
+            }
         }
     }
 }

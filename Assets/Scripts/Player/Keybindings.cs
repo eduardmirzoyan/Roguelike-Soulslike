@@ -16,4 +16,6 @@ public class Keybindings : MonoBehaviour
     public KeyCode interactKey2 = KeyCode.UpArrow;
     public KeyCode pickUpKey = KeyCode.DownArrow;
     public KeyCode rollKey = KeyCode.D;
+    public KeyCode helpKey = KeyCode.F1;
+    public KeyCode menuKey = KeyCode.Escape;
 }

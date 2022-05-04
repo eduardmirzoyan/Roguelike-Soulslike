@@ -2,26 +2,19 @@ using UnityEngine;
 
 public abstract class BaseEffect : ScriptableObject
 {
-    /**
-     * Time duration of the buff in seconds.
-     */
+    /// Time duration of the buff in seconds.
     public float Duration;
 
-    /**
-     * Effect value is increased each time the buff is applied.
-     */
-    public bool IsDurationReset;
+    /// Duration is reset each time the buff is applied
+    public bool isDurationReset;
 
-    /**
-     * Duration is increased each time the buff is applied.
-     */
-    public bool IsDurationStacked;
+    /// Duration is increased each time the buff is applied.
+    public bool isDurationStacked;
 
-    /**
-     * Effect value is increased each time the buff is applied.
-     */
-    public bool IsEffectStacked;
+    /// The maximum amount of stacks this buff can reach, -1 means infinite
+    public int maxStacks = 1;
 
+    /// How often the effect ticks
     public float tickRate = 1;
 
     // Icon of the effect for status screen
@@ -33,5 +26,3 @@ public abstract class BaseEffect : ScriptableObject
     public abstract TimedEffect InitializeEffect(GameObject parent);
 
 }
-
-// Names: Perk, Attribute, Modifier, Passive, Enchantment

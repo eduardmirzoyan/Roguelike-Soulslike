@@ -17,8 +17,6 @@ public class Sword : MeleeWeapon
     [SerializeField] private float activeDuration2;
     [SerializeField] private float recoveryDuration2;
 
-    private float tempDashspeed;
-
     protected void FixedUpdate()
     {
         switch (state)
