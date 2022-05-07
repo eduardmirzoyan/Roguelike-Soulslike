@@ -5,20 +5,30 @@ using UnityEngine.UI;
 
 public class EnemyUI : MonoBehaviour
 {
-    [SerializeField] private Canvas canvas;
+    [SerializeField] private GameObject healthBarHolder;
     [SerializeField] private RectTransform rectTransform;
+    [SerializeField] private Image indicatorImage;
     [SerializeField] private Movement mv;
     [SerializeField] private Health health;
+    [SerializeField] private float indicatorDuration = 1f;
+
+    private Coroutine indicatorRoutine;
 
     // Start is called before the first frame update
-    private void Start()
-    {
-        canvas = GetComponent<Canvas>();
+    private void Awake() {
         rectTransform = GetComponent<RectTransform>();
         mv = GetComponentInParent<Movement>();
         health = GetComponentInParent<Health>();
-        canvas.enabled = false;
+        
+        if (healthBarHolder == null) {
+            print("ERROR SETTING HEALTHBAR: " + gameObject.name);
+        }
 
+        healthBarHolder.SetActive(false);
+    }
+
+    private void Start()
+    {
         GameEvents.instance.onHit += enableCanvasOnHit;
     }
 
@@ -26,12 +36,12 @@ public class EnemyUI : MonoBehaviour
     private void Update()
     {
         // If canvas is disabled, then don't do anything
-        if (!canvas.enabled)
+        if (!healthBarHolder.activeInHierarchy)
             return;
 
         // If enemy is dead, then disable healthbar
         if (health.isEmpty()) {
-            canvas.enabled = false;
+            healthBarHolder.SetActive(false);
             return;
         }
 
@@ -47,7 +57,28 @@ public class EnemyUI : MonoBehaviour
         if (hit == null || attacker == null || mv == null)
             return;
         if (hit.gameObject == mv.gameObject && damage > 0) {
-            canvas.enabled = true;
+            healthBarHolder.SetActive(true);
         }
+    }
+
+    public void enableIndicator(Sprite sprite) {
+        if (indicatorRoutine != null) {
+            StopCoroutine(indicatorRoutine);
+        }
+        indicatorRoutine = StartCoroutine(showIndicator(indicatorDuration, sprite));
+    }
+
+    private IEnumerator showIndicator(float duration, Sprite indicatorSprite) {
+        indicatorImage.enabled = true;
+        indicatorImage.sprite = indicatorSprite;
+
+        float elapsedTime = 0;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        indicatorImage.enabled = false;
     }
 }

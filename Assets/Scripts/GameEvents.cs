@@ -10,6 +10,11 @@ public class GameEvents : MonoBehaviour
 
     private void Awake()
     {
+        if(GameManager.instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         instance = this;
     }
     

@@ -100,6 +100,7 @@ public class GoblinAI : EnemyAI
                 if (target != null) {
                     pathfindUser.setPathTo(target.position);
                     stats.movespeedMultiplier = 0;
+                    GetComponentInChildren<EnemyUI>().enableIndicator(GameManager.instance.aggroIndicatorSprite);
                     goblinState = GoblinState.Chasing;
                     break;
                 }
@@ -188,6 +189,7 @@ public class GoblinAI : EnemyAI
 
                     pathfindUser.setPathTo(target.position);
                     stats.movespeedMultiplier = 0f;
+                    GetComponentInChildren<EnemyUI>().enableIndicator(GameManager.instance.aggroIndicatorSprite);
                     goblinState = GoblinState.Chasing;
                     break;
                 }
@@ -257,6 +259,8 @@ public class GoblinAI : EnemyAI
                     stats.movespeedMultiplier = 0;
                     // Change states
                     goblinState = GoblinState.Chasing;
+                    // Set visual indicator
+                    GetComponentInChildren<EnemyUI>().enableIndicator(GameManager.instance.aggroIndicatorSprite);
                     break;
                 }
 
@@ -289,6 +293,7 @@ public class GoblinAI : EnemyAI
                 // If target is too far
                 if (Vector2.Distance(target.transform.position, transform.position) > aggroRange) {
                     target = null;
+                    GetComponentInChildren<EnemyUI>().enableIndicator(GameManager.instance.deaggroIndicatorSprite);
                     goblinState = GoblinState.Idle;
                     break;
                 }
@@ -341,6 +346,7 @@ public class GoblinAI : EnemyAI
 
                     // If you get farther than aggro range, remove target
                     if (Vector2.Distance(transform.position, target.position) > aggroRange) {
+                        GetComponentInChildren<EnemyUI>().enableIndicator(GameManager.instance.deaggroIndicatorSprite);
                         target = null;
                         goblinState = GoblinState.Idle;
                         return;
@@ -354,11 +360,13 @@ public class GoblinAI : EnemyAI
                         attackCooldownTimer -= Time.deltaTime;
                     }
 
+
                     // If you are in range
                     if (Vector3.Distance(transform.position, target.position) < attackRange) {
                         
                         // Don't move
                         mv.Walk(0);
+                        
 
                         // Change animation
                         animationHandler.changeAnimationState(idleAnimation);

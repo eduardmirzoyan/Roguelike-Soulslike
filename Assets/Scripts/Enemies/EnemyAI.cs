@@ -42,7 +42,6 @@ public abstract class EnemyAI : MonoBehaviour
     protected float wanderTimer;
     protected float attackCooldownTimer;
     protected float attackTimer;
-    protected bool hitStun = true;
 
     protected virtual void Start()
     {
@@ -58,6 +57,7 @@ public abstract class EnemyAI : MonoBehaviour
 
         target = attacker = null;
     }
+
     public virtual void Die()
     {
         GameManager.instance.addExperience(xpValue);
@@ -77,7 +77,6 @@ public abstract class EnemyAI : MonoBehaviour
     }
     
     // DISPLACEMENT LOGIC
-
     public bool isAttacking() {
         return attackTimer > 0;
     }

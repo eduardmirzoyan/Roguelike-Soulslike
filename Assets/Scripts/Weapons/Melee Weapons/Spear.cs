@@ -59,10 +59,7 @@ public class Spear : MeleeWeapon
                     }
                     
                     // Allow slow horizontal movement
-                    var horizontal = Input.GetAxis("Horizontal");
-                    if (horizontal > 0.1f || horizontal < -0.1f ) {
-                        wielderMovement.dash(20, horizontal);
-                    }
+                    wielderMovement.WalkNoTurn(InputBuffer.instance.moveDirection * windUpSpeedMultiplier);
 
                     // Want to throw
                     animationHandler.changeAnimationState(chargeThrowAnimation);

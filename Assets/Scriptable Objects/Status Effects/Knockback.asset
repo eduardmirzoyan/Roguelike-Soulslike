@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Knockback
   m_EditorClassIdentifier: 
   Duration: 1
-  IsDurationStacked: 0
-  IsEffectStacked: 1
+  isDurationReset: 0
+  isDurationStacked: 0
+  maxStacks: 1
   tickRate: 0.1
   icon: {fileID: 1175512310471143804, guid: f3431b64a116bf248a3f497144e67b13, type: 3}
   flavorText: 
   origin: {x: 0, y: 0, z: 0}
-  pushForce: 10
+  pushForce: 15

@@ -27,6 +27,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float recoveryDuration;
     [SerializeField] protected int maxCombo = 2;
     [SerializeField] protected float cooldown;
+    [SerializeField] protected float windUpSpeedMultiplier = 0.1f;
     
     [Header("Animation")]
     [SerializeField] protected string weaponIdleAnimation;

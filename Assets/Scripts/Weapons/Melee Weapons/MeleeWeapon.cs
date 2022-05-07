@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MeleeWeapon : Weapon
 {
-    // ?
     [SerializeField] protected float dashspeed;
     protected float tempDashspeed;
 }

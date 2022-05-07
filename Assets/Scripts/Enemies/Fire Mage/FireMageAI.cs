@@ -9,10 +9,6 @@ public class FireMageAI : EnemyAI
     [SerializeField] protected Collidable collidable;
     [SerializeField] protected Damageable damageable;
 
-    [Header("Fire Mage Attacks")]
-    [SerializeField] private EnemyAttack castFireball; // ID 1
-    [SerializeField] private EnemyAttack castBigFireball; // ID 2
-    [SerializeField] private EnemyAttack castTeleport; // ID 3
 
     [Header("Fire ball Prefab")]
     [SerializeField] private Transform firePoint;

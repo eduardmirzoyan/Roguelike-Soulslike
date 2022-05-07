@@ -7,11 +7,14 @@ public class Displacable : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Movement mv;
+    [SerializeField] private Collider2D collider2d;
+    [SerializeField] private GameObject particles;
 
     [Header("Settings")]
     [SerializeField] private bool stunImmune;
     [SerializeField] private bool knockbackImmune;
     [SerializeField] public bool twoDimensionalKnockback;
+    [SerializeField] private float wallCheckDistance = 0.1f;
 
     // Knockback counters
     private float knockbackSpeed = 0;
@@ -21,10 +24,14 @@ public class Displacable : MonoBehaviour
 
     // Stun counters
     private float stunDuration = 0;
+    private float hitBoxWidth = 0;
+    private bool isPinned = false;
 
-    private void Start()
+    private void Awake()
     {
         mv = GetComponent<Movement>();
+        collider2d = GetComponent<Collider2D>();
+        hitBoxWidth = collider2d.bounds.extents.x;
     }
 
     public void triggerKnockback(float pushForce, float duration, Vector3 origin)
@@ -38,7 +45,7 @@ public class Displacable : MonoBehaviour
         knockbackSpeed += pushForce;
         knockbackDuration = duration;
         knockbackDirection = (transform.position - origin).normalized;
-        // knockbackDirection = getDirectionFromPoint(origin);
+        isPinned = false;
     }
 
     public void triggerStun(float duration)
@@ -47,8 +54,14 @@ public class Displacable : MonoBehaviour
             PopUpTextManager.instance.createPopup(gameObject.name + " is immune to stun.", Color.gray, transform.position);
             return;
         }
+
         stunDuration += duration;
-        GameManager.instance.stunAnimation(transform, duration);
+        if (particles != null) {
+            var ps = Instantiate(particles, transform).GetComponent<ParticleSystem>();
+            var main = ps.main;
+            main.duration = duration;
+            ps.Play();
+        }
     }
 
     public bool isDisplaced() {
@@ -73,16 +86,42 @@ public class Displacable : MonoBehaviour
     }
 
     private void performStun() {
-        if(stunDuration > 0)
+        if(stunDuration > 0) {
             stunDuration -= Time.deltaTime;
+        }
     }
 
     private void performKnockback() {
         if (startTime <= knockbackDuration) {
             mv.setFacingDirection(-knockbackDirection.x);
 
-            if(knockbackSpeed > 0.1f)
-                knockbackSpeed = Mathf.Lerp(knockbackSpeed, 0, startTime / knockbackDuration);
+            if(knockbackSpeed > 0.1f) {
+                knockbackSpeed = Mathf.SmoothStep(knockbackSpeed, 0, startTime / knockbackDuration);
+            }
+                
+            // Check to see if collided with wall
+            
+            if (!isPinned) {
+                var hit = Physics2D.Raycast(collider2d.bounds.center, Vector2.right * Mathf.Sign(knockbackDirection.x), 
+                                        hitBoxWidth + wallCheckDistance, 1 << LayerMask.NameToLayer("Ground"));
+
+                // If you hit a wall while knockedback, then stun
+                if (hit) {
+                    // Remove knocback
+                    resetKnockback();
+
+                    // Trigger stun
+                    triggerStun(0.5f);
+
+                    // Deal damage
+                    if (TryGetComponent(out Health health)) {
+                        health.reduceHealth(5);
+                        PopUpTextManager.instance.createPopup("" + 5, Color.red, transform.position);
+                    }
+
+                    isPinned = true;
+                }
+            }
 
             startTime += Time.deltaTime;
         }
@@ -97,11 +136,17 @@ public class Displacable : MonoBehaviour
         return stunDuration;
     }
 
-    public int getDirectionFromPoint(Vector3 origin)
-    {
-        float normalizedXPush = (transform.position - origin).normalized.x;
-        return (normalizedXPush > 0.1f) ? 1 : (normalizedXPush < -0.1f) ? -1 : 0;
+    private void resetKnockback() {
+        knockbackDirection = Vector2.zero;
+        knockbackDuration = 0;
+        knockbackSpeed = 0;
     }
 
-    
+    private void OnDrawGizmosSelected() {
+        if (knockbackDirection != null && collider2d != null) {
+            // Test
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(collider2d.bounds.center, Vector2.right * Mathf.Sign(knockbackDirection.x) * (hitBoxWidth + wallCheckDistance));
+        }
+    }
 }

@@ -16,7 +16,7 @@ public class Dagger : MeleeWeapon
                 // Weapon is winding up the attack
                 if (windupTimer > 0)
                 {
-                    wielderMovement.Walk(0);
+                    wielderMovement.WalkNoTurn(InputBuffer.instance.moveDirection * windUpSpeedMultiplier);
                     windupTimer -= Time.deltaTime;
                 }
                 else {

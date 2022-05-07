@@ -54,8 +54,11 @@ public class Player : MonoBehaviour
     [SerializeField] public List<Skill> playerSkills;
     [SerializeField] private bool enableWalljump = false;
 
-    // Temp
+
+    // Temp Testing stuff
     [SerializeField] private BaseEffect effect;
+    [SerializeField] private float knocbackStrength;
+    [SerializeField] private float knocbackTime;
 
     public enum PlayerState
     {
@@ -91,7 +94,7 @@ public class Player : MonoBehaviour
         stamina = GetComponent<Stamina>();
         inventory = GetComponentInChildren<Inventory>();
         combatHandler = GetComponent<CombatHandler>();
-        inputBuffer = GetComponent<InputBuffer>();
+        inputBuffer = InputBuffer.instance;
         rollingHandler = GetComponent<RollingHandler>();
         interactionHandler = GetComponent<InteractionHandler>();
 
@@ -255,8 +258,12 @@ public class Player : MonoBehaviour
                 // Pick up items
                 interactionHandler.pickUpNearbyItems();
 
+                // Attempt to pan down
+                Camera.instance.checkPanDown();
+
                 // Handle displacement
                 if (displace.isDisplaced()) {
+                    Camera.instance.resetPan();
                     // Change animation
                     animationHandler.changeAnimationState(staggerAnimation);
                     state = PlayerState.knockedback;
@@ -265,12 +272,14 @@ public class Player : MonoBehaviour
 
                 // Handle airborne
                 if (!mv.isGrounded()) {
+                    Camera.instance.resetPan();
                     state = PlayerState.airborne;
                     break;
                 }
 
                 // Handle drop down
                 if (inputBuffer.dropDownRequest) {
+                    Camera.instance.resetPan();
                     platformHandler.dropFromPlatform();
                     state = PlayerState.airborne;
                     break;
@@ -278,6 +287,7 @@ public class Player : MonoBehaviour
 
                 // Handle crouchwalking request
                 if (inputBuffer.crouchRequest && inputBuffer.moveDirection != 0) {
+                    Camera.instance.resetPan();
                     animationHandler.changeAnimationState(crouchWalkAnimation);
                     state = PlayerState.crouchWalking;
                     break;
@@ -285,6 +295,7 @@ public class Player : MonoBehaviour
                 
                 // Handle un-crouching
                 if (!inputBuffer.crouchRequest) {
+                    Camera.instance.resetPan();
                     animationHandler.changeAnimationState(idleAnimation);
                     state = PlayerState.idle;
                     break;
@@ -292,6 +303,7 @@ public class Player : MonoBehaviour
 
                 // Handle roll request
                 if (inputBuffer.rollRequest && rollingHandler.canRoll()) {
+                    Camera.instance.resetPan();
                     // Roll in your moving direction
                     rollingHandler.startRoll(inputBuffer.moveDirection);
 
@@ -581,10 +593,11 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))  // used for testing
         {
             // Nothin
-            displace.triggerKnockback(600, 0.25f, transform.position + Vector3.right);
+            displace.triggerKnockback(knocbackStrength, knocbackTime, transform.position + Vector3.right);
         }
         if (Input.GetKeyDown(KeyCode.H))  // used for testing
         {
+            //displace.triggerKnockback(600, 0.25f, transform.position + Vector3.right);
             // Nothin
             GetComponent<EffectableEntity>().addEffect(effect.InitializeEffect(gameObject));
         }

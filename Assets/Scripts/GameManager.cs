@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player player;
 
     [SerializeField] private GameObject corpsePrefab;
+    public Sprite aggroIndicatorSprite;
+    public Sprite deaggroIndicatorSprite;
     
     public static GameManager instance; // Accessible by every class at any point
     private void Awake()

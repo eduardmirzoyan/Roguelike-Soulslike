@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InputBuffer : MonoBehaviour
 {
+    public static InputBuffer instance;
     [SerializeField] private Keybindings keybindings;
     [SerializeField] private List<ActionItem> inputBuffer = new List<ActionItem>();  //The input buffer
 
@@ -34,6 +35,13 @@ public class InputBuffer : MonoBehaviour
 
     private void Awake()
     {
+        if(GameManager.instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        
         keybindings = GetComponent<Keybindings>();
     }
 
