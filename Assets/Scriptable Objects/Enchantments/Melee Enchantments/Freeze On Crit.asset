@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9bf9841bd1d9c048aa55a774129cef9, type: 3}
+  m_Name: Freeze On Crit
+  m_EditorClassIdentifier: 
+  enchantmentName: Chilling
+  stacks: 1
+  description: 'Apply FREEZING on CRIT
+
+    (At 3 stacks of FREEZING, enemy is stunned
+    for 1s)'
+  freezeEffect: {fileID: 0}

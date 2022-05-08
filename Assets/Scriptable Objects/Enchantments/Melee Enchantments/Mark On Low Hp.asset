@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enchantmentName: Executioner
   stacks: 1
-  description: Apply MARKED to enemies under 33% HP.
+  description: 'Apply MARKED to enemies under 33% HP.
+
+    MARKED enemies take 15%
+    more damage.'
   markEffect: {fileID: 11400000, guid: fa7dafbda3c63c044a134b4de2944347, type: 2}
   healthThresholdPercent: 0.33

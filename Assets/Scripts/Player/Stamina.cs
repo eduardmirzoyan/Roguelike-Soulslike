@@ -4,80 +4,144 @@ using UnityEngine;
 
 public class Stamina : MonoBehaviour
 {
+    private enum StaminaState { Full, Depleted, Regenerating };
+    [SerializeField] private StaminaState staminaState;
     public int maxStamina;
-    public int currentStamina;
-    [SerializeField] private int regenerationValue;
-    [SerializeField] private float regenerationRate;
+    public float currentStamina;
 
-    public float regenTimer;
+    [SerializeField] private float regenDelay = 2f;
+    [SerializeField] private float regenDuration = 5f;
 
-    public float getRegenerationRate()
-    {
-        return regenerationRate;
+    private float regenDurationTimer;
+    private float regenDelayTimer;
+
+    private void Start() {
+        GameEvents.instance.triggerStaminaChange(this);
     }
 
-    // Returns True if after reduction, the player has 0 or more stamina, else returns False if player would have gone negative
-    public bool drainStamina(int value)
-    {
-        if (currentStamina >= value)
-        {
-            regenTimer = 2f; // Reset timer
-            currentStamina -= value; // Drain stamina
-            return true; // Ability can be used
+    private void FixedUpdate() {
+
+        switch (staminaState) {
+            case StaminaState.Full:
+                // Do nothing until used
+
+            break;
+            case StaminaState.Depleted:
+                if (regenDelayTimer > 0) {
+                    regenDelayTimer -= Time.deltaTime;
+                }
+                else {
+                    // Begin to refill
+                    staminaState = StaminaState.Regenerating;
+                }
+            break;
+            case StaminaState.Regenerating:
+                // Refill Stamina
+                currentStamina += (maxStamina / regenDuration) * Time.deltaTime;
+
+                 if (currentStamina >= maxStamina) {
+                    // Stamina is reset
+                    currentStamina = maxStamina;
+                    
+                    // Change to Full state
+                    staminaState = StaminaState.Full;
+                }   
+
+                // Trigger event
+                GameEvents.instance.triggerStaminaChange(this);
+                
+                
+            break;
         }
-        return false;
     }
 
-    public bool drainStaminaTilEmpty(int value)
-    {
-        if (currentStamina >= value)
-        {
-            regenTimer = 2f; // Reset timer
-            currentStamina -= value; // Drain stamina
-            return true; // Ability can be used
+    private void altRegenMethod() {
+        /// Regen based off "regenRate" which is how much stam gained per sec
+
+        // if (regenTickTimer >= 0) {
+        //     regenTickTimer -= Time.deltaTime;
+
+        // }
+        // else {
+        //     print(Time.time);
+        //     // Refill slowly
+        //     currentStamina += regenRate * regenTick;
+            
+        //     // Check if full
+        //     if (currentStamina >= maxStamina) {
+        //         // Stamina is filled
+        //         currentStamina = maxStamina;
+
+        //         // Change to Full state
+        //         staminaState = StaminaState.Full;
+        //     }   
+        //     else {
+        //         // Restart timer
+        //         regenTickTimer = regenTick;
+        //     }
+            
+        //     // Trigger event
+        //     GameEvents.instance.triggerStaminaChange(this);
+        // }
+    }
+
+    public bool useStamina(int amount) {
+        // If stamina is depleted, then dont use stamina
+        if (currentStamina <= 0) {
+            // Visual feedback
+            PopUpTextManager.instance.createVerticalPopup("Not Enough Stamina", Color.gray, transform.position);
+            return false;
         }
-        currentStamina = 0;
-        return false;
-    }
 
-    // Returns true if player would normal use their stamina, but returns false if the player has gone over, and should be punished
-    public bool forceddrainStamina(int value)
-    {
-        // Normal drain
-        if (currentStamina >= value)
-        {
-            regenTimer = 5f; // Reset timer
-            currentStamina -= value; // Drain stamina
+        // If you use 0, then do nothing
+        if (amount == 0) {
             return true;
         }
-        currentStamina = 0;
-        return false;
-    }
 
-    public void regenerateStamina()
-    {
-        if (currentStamina + regenerationValue >= maxStamina)
-        {
-            currentStamina = maxStamina;
+        if (amount < 0) {
+            throw new System.Exception("NEGATIVE STAMINA USED!");
         }
-        else
-        {
-            currentStamina += regenerationValue;
+
+        // Subtract amount (we can go negative)
+        currentStamina -= amount;
+
+        // Calculate amount of time to generate 1 stamina
+        regenDelayTimer = regenDelay;
+
+        // Change state
+        staminaState = StaminaState.Depleted;
+
+        // Trigger event
+        GameEvents.instance.triggerStaminaChange(this);
+
+        // Return result
+        return true;
+    }
+
+    public void restoreStamina(int amount) {
+        // Restore stamina up to Max
+        currentStamina = Mathf.Min(maxStamina, currentStamina + amount);
+        
+        // Change state if stamina is refilled
+        if (currentStamina >= maxStamina) {
+            // Change states
+            staminaState = StaminaState.Full;
         }
+
+        // Trigger event
+        GameEvents.instance.triggerStaminaChange(this);
     }
 
-    public bool isFull()
-    {
-        return currentStamina >= maxStamina;
+    public int getCurrent() {
+        return (int) currentStamina;
     }
 
-    public bool isEmpty()
-    {
-        return currentStamina <= 0;
+    public int getMax() {
+        return maxStamina;
     }
 
     public string getStatus()
     {
-        return currentStamina.ToString() + " / " + maxStamina.ToString();
+        return ((int) currentStamina).ToString() + " / " + maxStamina.ToString();
     }
 }

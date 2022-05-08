@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c41d01c84d159943b5b268c7443dd85, type: 3}
   m_Name: Axe
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3184617754924566443, guid: dfe98ed88ec4b914ca4eb8a055d2e007, type: 3}
+  prefab: {fileID: 3516315473626761425, guid: 1bce2d164f142f0479f471216f14285a, type: 3}
   type: 0
-  sprite: {fileID: 21300000, guid: 5c447b257a3142f45bcf9c2a28ef4783, type: 3}
+  sprite: {fileID: 21300000, guid: d8bec479874cc3d4a8f39e526d8d9623, type: 3}
   isStackable: 0
   count: 1
-  description: A two-handed great axe
-  name: Great Axe
-  damage: 2
-  critChance: 0
+  description: testing
+  name: Axe
+  damage: 1
   critDamage: 1
   weaponType: 1
   twoHanded: 0
   enchantments: []
-  enchantmentSlots: 0
+  enchantmentSlots: 4

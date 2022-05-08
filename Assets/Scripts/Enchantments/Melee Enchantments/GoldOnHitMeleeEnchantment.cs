@@ -35,7 +35,7 @@ public class GoldOnHitMeleeEnchantment : MeleeEchantment
             GameManager.instance.addGold(goldGenerated);
 
             // Create popup
-            PopUpTextManager.instance.createWeakVertPopup("+" + goldGenerated + " G", Color.yellow, attackingEnitiy.transform.position, 0.5f);
+            PopUpTextManager.instance.createWeakVertPopup("+ " + goldGenerated, Color.yellow, attackingEnitiy.transform.position, 0.5f);
         }
     }
 }

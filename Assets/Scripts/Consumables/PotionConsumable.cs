@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/Consumable/Potion")]
 public class PotionConsumable : ConsumableItem
 {
     public BaseEffect baseEffect;

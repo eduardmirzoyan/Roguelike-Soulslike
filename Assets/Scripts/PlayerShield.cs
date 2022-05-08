@@ -57,12 +57,12 @@ public class PlayerShield : Shield
             damage = 1;
 
         var stamina = GetComponentInParent<Stamina>();
-        if (stamina != null && !stamina.forceddrainStamina(baseBlockDrain + damage))
-        {
-            GameManager.instance.CreatePopup("Your posture has broken!", transform.position);
+        // if (stamina != null && !stamina.forceddrainStamina(baseBlockDrain + damage))
+        // {
+        //     GameManager.instance.CreatePopup("Your posture has broken!", transform.position);
 
-            // Do stun here
-        }
+        //     // Do stun here
+        // }
     }
 
     public override void raiseShield()

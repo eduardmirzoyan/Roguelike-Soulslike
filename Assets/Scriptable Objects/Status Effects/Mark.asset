@@ -18,4 +18,5 @@ MonoBehaviour:
   maxStacks: 1
   tickRate: 1
   icon: {fileID: 21300000, guid: 48e6c1d0e0d72184db4affa834a18059, type: 3}
-  flavorText: 
+  flavorText: You take 15% more damage from ALL sources.
+  extraDamageTakenPercent: 0.15

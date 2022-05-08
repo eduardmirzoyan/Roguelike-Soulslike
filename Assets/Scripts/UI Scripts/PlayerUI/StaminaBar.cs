@@ -4,19 +4,14 @@ using UnityEngine.UI;
 public class StaminaBar : MonoBehaviour
 {
     [SerializeField] public Slider slider;
-    [SerializeField] private Stamina stamina;
     [SerializeField] private Text staminaText;
 
-    private void Start()
-    {
+    private void Awake() {
         staminaText = GetComponentInChildren<Text>();
     }
 
-    private void FixedUpdate()
-    {
-        slider.maxValue = stamina.maxStamina;
-        slider.value = stamina.currentStamina;
-        staminaText.text = slider.value.ToString() + " / " + slider.maxValue.ToString();
+    private void Start() {
+        GameEvents.instance.onStaminaChange += updateStaminaUI;
     }
 
     public void setMaxStamina(int stamina)
@@ -28,5 +23,11 @@ public class StaminaBar : MonoBehaviour
     public void setStamina(int stamina)
     {
         slider.value = stamina;
+    }
+
+    private void updateStaminaUI(Stamina stamina) {
+        slider.maxValue = stamina.getMax();
+        slider.value = stamina.getCurrent();
+        staminaText.text = stamina.getStatus();
     }
 }

@@ -40,7 +40,7 @@
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\Graph\Simple\ReadonlyEdge.cs" />
      <Compile Include="Assets\Scripts\Build Up Effects\EffectZone.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\ShortestPath\NodeComparer.cs" />
-     <Compile Include="Assets\Scripts\Weapons\Melee Weapons\Axe.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Melee Weapons\GreatAxe.cs" />
      <Compile Include="Assets\Scripts\Other\CutoutMaskUI.cs" />
      <Compile Include="Assets\Scripts\Weapons\Melee Weapons\SmallShield.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\SpeedOnHitEnchantment.cs" />
@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\WoundOnHealthyEnchantment.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\MeleeEchantment.cs" />
      <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\SlashUpgradeOne.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\WoundOnCritEnchantment.cs" />
      <Compile Include="Assets\Scripts\Enemies\Thief\ThiefAI.cs" />
      <Compile Include="Assets\Scripts\Enemies\PathfindingAI.cs" />
      <Compile Include="Assets\Scripts\Player\EquipmentHandler.cs" />
@@ -215,7 +216,7 @@
      <Compile Include="Assets\Scripts\UI Scripts\PauseScreen.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\Graph\Edge.cs" />
      <Compile Include="Assets\OLD ASSETS\FieldOfView.cs" />
-     <Compile Include="Assets\Scripts\Laserbeam.cs" />
+     <Compile Include="Assets\Scripts\Familiars\Laserbeam.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\EquipmentSlotUI.cs" />
      <Compile Include="Assets\Scripts\Projectiles\BigFireball.cs" />
      <Compile Include="Assets\Scripts\Player\WeaponSwingTrail.cs" />
@@ -227,6 +228,7 @@
      <Compile Include="Assets\Scripts\Player\Keybindings.cs" />
      <Compile Include="Assets\Scripts\Player\Flask.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\Main Menu\MainMenuUI.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Melee Weapons\Axe.cs" />
      <Compile Include="Assets\Scripts\General Use\Projectile.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Base Effects\CurseEffect.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Timed Effects\TimedBleedEffect.cs" />
@@ -282,6 +284,8 @@
      <Compile Include="Assets\Scripts\UI Scripts\ExperienceBar.cs" />
      <Compile Include="Assets\Scripts\Enemies\Imp\ImpAI.cs" />
      <Compile Include="Assets\Scripts\Familiars\FamiliarHandler.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\FreezeOnCritEnchantment.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\RampingDamageEnchantment.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

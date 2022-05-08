@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Status Effects/Mark")]
 public class MarkEffect : BaseEffect
 {
-    // Fields?
+    public float extraDamageTakenPercent = 0.15f;
     
     public override TimedEffect InitializeEffect(GameObject parent)
     {

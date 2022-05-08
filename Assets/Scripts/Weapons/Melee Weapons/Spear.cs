@@ -45,6 +45,8 @@ public class Spear : MeleeWeapon
                 
                 break;
             case WeaponState.WindingUp:
+                // Allow slow horizontal movement
+                wielderMovement.WalkNoTurn(InputBuffer.instance.moveDirection * windUpSpeedMultiplier);
 
                 // If you held (not released) the key for more than the windup time of the normal attack then switch into throwing stance
                 if (chargeTime > 0 || Time.time - heldTime > windupDuration) {
@@ -57,9 +59,6 @@ public class Spear : MeleeWeapon
                     else if (Input.GetKey(KeyCode.DownArrow) && rotation.z > minAimDegree) {
                         transform.Rotate(-Vector3.forward * aimRotationSpeed * Time.deltaTime);
                     }
-                    
-                    // Allow slow horizontal movement
-                    wielderMovement.WalkNoTurn(InputBuffer.instance.moveDirection * windUpSpeedMultiplier);
 
                     // Want to throw
                     animationHandler.changeAnimationState(chargeThrowAnimation);
@@ -120,7 +119,7 @@ public class Spear : MeleeWeapon
                         // Push backwards
                         tempDashspeed = -dashspeed / 3;
                         
-
+                        // Change states
                         state = WeaponState.Active; 
                     }
 
@@ -130,7 +129,6 @@ public class Spear : MeleeWeapon
                     // Weapon is winding up the attack
                     if (windupTimer > 0)
                     {
-                        wielderMovement.Walk(0);
                         windupTimer -= Time.deltaTime;
                     }
                     else {
@@ -153,10 +151,12 @@ public class Spear : MeleeWeapon
                 else 
                 {
                     wielderMovement.Walk(0);
-                    if (transform.parent.TryGetComponent(out InputBuffer inputBuffer)) {
-                        inputBuffer.resetAttackRequests();
-                    }
+                    // Reset requests
+                    InputBuffer.instance.resetAttackRequests();
+
+                    // Reset combo
                     currentCombo = 2;
+                    
                     state = WeaponState.Recovering; 
                 }
                 break;

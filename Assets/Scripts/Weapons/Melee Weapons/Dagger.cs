@@ -20,10 +20,8 @@ public class Dagger : MeleeWeapon
                     windupTimer -= Time.deltaTime;
                 }
                 else {
-                    // Reset attack requests
-                    if (transform.parent.TryGetComponent(out InputBuffer inputBuffer)) {
-                        inputBuffer.resetAttackRequests();
-                    }
+                    // Reset requests
+                    InputBuffer.instance.resetAttackRequests();
                     
                     tempDashspeed = dashspeed;
 
@@ -84,6 +82,8 @@ public class Dagger : MeleeWeapon
                 if (mv.getFacingDirection() == wielderMovement.getFacingDirection()) {
                     damage = (int) (damage * (1 + owner.critDamage));
                     damageColor = Color.yellow;
+                    // Trigger event
+                    GameEvents.instance.triggerOnCrit(this, damageable.transform);
                 }
             }
 

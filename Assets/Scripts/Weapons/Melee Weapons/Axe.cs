@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Axe : MeleeWeapon
 {
-    [SerializeField] private float aoeRadius = 1f;
-    protected void FixedUpdate()
-    {
+    [SerializeField] private int consecutiveHitThreshold = 3;
+    [SerializeField] private int consecutiveHitCounter = 0;
+    [SerializeField] private float hitBufferTime = 0.5f;
+
+    [SerializeField] private bool hasHitEntity = false;
+
+    private void FixedUpdate() {
         switch (state)
         {
             case WeaponState.Ready:
@@ -21,6 +25,8 @@ public class Axe : MeleeWeapon
                     windupTimer -= Time.deltaTime;
                 }
                 else {
+                    // Reset
+                    hasHitEntity = false;
 
                     tempDashspeed = dashspeed;
                     state = WeaponState.Active; 
@@ -39,17 +45,8 @@ public class Axe : MeleeWeapon
                 else 
                 {
                     // Reset requests
-                    if (transform.parent.TryGetComponent(out InputBuffer inputBuffer)) {
-                        inputBuffer.resetAttackRequests();
-                    }
+                    InputBuffer.instance.resetAttackRequests();
 
-                    // Screenshake for visual effect
-                    if (currentCombo == 0) {
-                        GameManager.instance.shakeCamera(0.15f, 0.15f);
-                    }
-
-                    // Increase combo
-                    currentCombo += 1;
                     state = WeaponState.Recovering; 
                 }
                 break;
@@ -58,6 +55,9 @@ public class Axe : MeleeWeapon
                 if (recoveryTimer > 0)
                     recoveryTimer -= Time.deltaTime;
                 else {
+                    // Reset counter
+                    consecutiveHitCounter = 0;
+
                     // Reset Combo if you finish recovering
                     currentCombo = 0;
                     animationHandler.changeAnimationState(weaponIdleAnimation);
@@ -82,14 +82,12 @@ public class Axe : MeleeWeapon
             int damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
             var damageColor = Color.white;
 
-            // Check if any other enemies are in radius
-            var hits = Physics2D.OverlapCircleAll(collider.transform.position, aoeRadius, 1 << LayerMask.NameToLayer("Enemies"));
-            foreach (var hit in hits) {
-                // If there is another enemy in radius, then crit
-                if (hit != collider && hit.TryGetComponent(out Damageable damageable1)) {
-                    damage = (int) (damage * (1 + owner.critDamage));
-                    damageColor = Color.yellow;
-                }
+            // Check that counter is above threshold, then make attacks crit
+            if (consecutiveHitCounter > consecutiveHitThreshold) {
+                damage = (int) (damage * (1 + owner.critDamage));
+                damageColor = Color.yellow;
+                // Trigger event
+                GameEvents.instance.triggerOnCrit(this, damageable.transform);
             }
 
             Damage dmg = new Damage
@@ -101,16 +99,12 @@ public class Axe : MeleeWeapon
                 color = damageColor
             };
             damageable.takeDamage(dmg);
+
+            // Incrmenet
+            if (!hasHitEntity) {
+                consecutiveHitCounter++;
+                hasHitEntity = true;
+            }
         }
     }
-
-    public override bool canInitiate()
-    {
-        if (currentCombo > maxCombo) {
-            return false;
-        }
-
-        return state == WeaponState.Ready || recoveryTimer <= recoveryDuration / 2;
-    }
-
 }

@@ -56,7 +56,7 @@ public class ItemSpawnManager : MonoBehaviour
                         weaponItem.damage = 4;
                         break;
 
-                    case WeaponType.Axe:
+                    case WeaponType.GreatAxe:
                         weaponItem.prefab = axePrefab;
                         weaponItem.sprite = axeSprites[Random.Range(0, axeSprites.Length)];
                         weaponItem.name = "Randomized Axe";

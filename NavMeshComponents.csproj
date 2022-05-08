@@ -36,13 +36,13 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\NavMeshPlus-master\NavMeshComponents\Scripts\NavMeshBuilder2d.cs" />
-     <Compile Include="Assets\NavMeshPlus-master\NavMeshComponents\Scripts\NavMeshLink.cs" />
-     <Compile Include="Assets\NavMeshPlus-master\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
-     <Compile Include="Assets\NavMeshPlus-master\NavMeshComponents\Scripts\NavMeshSurface.cs" />
-     <Compile Include="Assets\NavMeshPlus-master\NavMeshComponents\Scripts\NavMeshSurface2d.cs" />
-     <Compile Include="Assets\NavMeshPlus-master\NavMeshComponents\Scripts\NavMeshModifier.cs" />
-     <None Include="Assets\NavMeshPlus-master\NavMeshComponents\Scripts\NavMeshComponents.asmdef" />
+     <Compile Include="Assets\Nav Mesh Plus\NavMeshComponents\Scripts\NavMeshBuilder2d.cs" />
+     <Compile Include="Assets\Nav Mesh Plus\NavMeshComponents\Scripts\NavMeshLink.cs" />
+     <Compile Include="Assets\Nav Mesh Plus\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
+     <Compile Include="Assets\Nav Mesh Plus\NavMeshComponents\Scripts\NavMeshSurface.cs" />
+     <Compile Include="Assets\Nav Mesh Plus\NavMeshComponents\Scripts\NavMeshSurface2d.cs" />
+     <Compile Include="Assets\Nav Mesh Plus\NavMeshComponents\Scripts\NavMeshModifier.cs" />
+     <None Include="Assets\Nav Mesh Plus\NavMeshComponents\Scripts\NavMeshComponents.asmdef" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

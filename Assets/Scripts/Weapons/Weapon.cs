@@ -74,17 +74,6 @@ public abstract class Weapon : MonoBehaviour
             var damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
             var damageColor = Color.white;
 
-            // Roll for crit
-            rand = Random.Range(0, 100);
-            if(rand <= (wielderStats.percentCritChance + owner.critChance) * 100 )
-            {
-                // Change damage amount and color
-                damage = (int) (damage * (1 + owner.critDamage));
-                damageColor = Color.yellow;
-                // Trigger event
-                GameEvents.instance.triggerOnCrit(this, damageable.transform);
-            }
-
             Damage dmg = new Damage
             {
                 damageAmount = damage,

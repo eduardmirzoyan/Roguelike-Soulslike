@@ -13,15 +13,12 @@ public class CritChanceEnchantment : MeleeEchantment
     {
         base.intialize(weaponGameObject);
 
-        // Get the weapon
-        meleeWeapon = weaponGameObject.GetComponentInChildren<MeleeWeapon>();
-        meleeWeapon.getOwner().critChance += bonusAmount;
+        Debug.Log("DOES NOTHING");
     }
 
     public override void unintialize()
     {
-        meleeWeapon.getOwner().critChance -= bonusAmount;
-        meleeWeapon = null;
+        Debug.Log("STILL DOES NOTHING");
         base.unintialize();
     }
 }

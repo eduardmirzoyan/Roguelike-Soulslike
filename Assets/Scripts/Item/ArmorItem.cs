@@ -7,7 +7,7 @@ public enum EquipmentSlot { Helmet, Chestpiece, Cape, Gloves, Boots }
 
 public enum ArmorType { Light, Medium, Heavy }
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/Armor")]
 public class ArmorItem : Item
 {
     public EquipmentSlot equipSlot;

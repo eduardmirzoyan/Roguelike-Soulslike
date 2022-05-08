@@ -19,10 +19,10 @@ MonoBehaviour:
   count: 1
   description: Dag em
   name: Test Dagger
-  damage: 2
-  critChance: 0.15
+  damage: 10
   critDamage: 1
   weaponType: 5
   twoHanded: 0
-  enchantments: []
+  enchantments:
+  - {fileID: 11400000, guid: 6fc3bea286a637e49b509d7378b2d32a, type: 2}
   enchantmentSlots: 3

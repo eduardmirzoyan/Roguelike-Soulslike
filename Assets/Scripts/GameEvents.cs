@@ -27,6 +27,7 @@ public class GameEvents : MonoBehaviour
     public event Action<TimedEffect, EffectableEntity> onRemoveStatusEffect;
     public event Action<Weapon, Transform> onCrit;
     public event Action onRoll;
+    public event Action<Stamina> onStaminaChange;
 
     public void triggerOnHit(GameObject attackingEnitiy, GameObject hitEntity, int damageTaken)
     {
@@ -91,6 +92,13 @@ public class GameEvents : MonoBehaviour
         if (onRoll != null) 
         {
             onRoll();
+        }
+    }
+
+    public void triggerStaminaChange(Stamina stamina) {
+        if (onStaminaChange != null) 
+        {
+            onStaminaChange(stamina);
         }
     }
 }

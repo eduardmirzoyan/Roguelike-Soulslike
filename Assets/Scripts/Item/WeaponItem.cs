@@ -5,18 +5,19 @@ using UnityEngine;
 public enum WeaponType
 {
     Sword,
-    Axe,
+    GreatAxe,
     SmallShield,
     LongBow,
     Spear,
-    Dagger
+    Dagger,
+    Rapier,
+    Axe
 }
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/Weapon")]
 public class WeaponItem : Item
 {
     public int damage;
-    public float critChance = 0f;
     public float critDamage = 1f;
     public WeaponType weaponType;
     public bool twoHanded;

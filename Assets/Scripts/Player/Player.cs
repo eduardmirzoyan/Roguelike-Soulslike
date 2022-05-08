@@ -429,7 +429,6 @@ public class Player : MonoBehaviour
                 if (inputBuffer.jumpRequest && stamina.currentStamina >= mv.getWallSlideStaminaDrain())
                 {
                     mv.wallJump();
-                    stamina.drainStamina(mv.getWallSlideStaminaDrain());
                     StartCoroutine(wallJumpTimer());
                     state = PlayerState.walljumping;
                 }
@@ -593,7 +592,8 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))  // used for testing
         {
             // Nothin
-            displace.triggerKnockback(knocbackStrength, knocbackTime, transform.position + Vector3.right);
+            // displace.triggerKnockback(knocbackStrength, knocbackTime, transform.position + Vector3.right);
+            stamina.useStamina(10);
         }
         if (Input.GetKeyDown(KeyCode.H))  // used for testing
         {

@@ -13,10 +13,12 @@ public class LootManager : MonoBehaviour
     [Header("Melee Weapons")]
     [SerializeField] private List<string> prefixes;
     [SerializeField] private List<Sprite> swordSprites;
-    [SerializeField] private List<Sprite> axeSprites;
+    [SerializeField] private List<Sprite> greatAxeSprites;
     [SerializeField] private List<Sprite> shieldSprites;
     [SerializeField] private List<Sprite> spearSprites;
     [SerializeField] private List<Sprite> daggerSprites;
+    [SerializeField] private List<Sprite> axeSprites;
+    [SerializeField] private List<Sprite> rapierSprites;
     [SerializeField] private List<MeleeEchantment> meleeEchantments;
 
     [Header("Ranged Weapons")]
@@ -25,11 +27,13 @@ public class LootManager : MonoBehaviour
 
     [Header("Weapon Prefabs")]
     [SerializeField] private GameObject swordPrefab;
-    [SerializeField] private GameObject axePrefab;
+    [SerializeField] private GameObject greatAxePrefab;
     [SerializeField] private GameObject smallShieldPrefab;
     [SerializeField] private GameObject longBowPrefab;
     [SerializeField] private GameObject spearPrefab;
     [SerializeField] private GameObject daggerPrefab;
+    [SerializeField] private GameObject axePrefab;
+    [SerializeField] private GameObject rapierPrefab;
 
     [Header("Armor")]
     [SerializeField] private List<Sprite> helmetSprites;
@@ -43,21 +47,29 @@ public class LootManager : MonoBehaviour
     [SerializeField] private LootTable consumableLootTable;
 
     [Header("Weapon Descriptions")]
-    [TextArea(10, 15)]
+    [TextArea(5, 10)]
     public string swordDescription;
 
-    [TextArea(10, 15)]
-    public string axeDescription;
+    [TextArea(5, 10)]
+    public string greatAxeDescription;
 
-    [TextArea(10, 15)]
+    [TextArea(5, 10)]
     public string smallShieldDescription;
 
-    [TextArea(10, 15)]
+    [TextArea(5, 10)]
     public string longBowDescription;
-    [TextArea(10, 15)]
+
+    [TextArea(5, 10)]
     public string spearDescription;
-    [TextArea(10, 15)]
+
+    [TextArea(5, 10)]
     public string daggerDescription;
+
+    [TextArea(5, 10)]
+    public string axeDescription;
+
+    [TextArea(5, 10)]
+    public string rapierDescription;
 
 
     [Header("Debugging")]
@@ -88,20 +100,22 @@ public class LootManager : MonoBehaviour
     }
 
     private WeaponItem generateRandomWeapon() {
-        var roll = Random.Range(0, 5); // 0 - 4
+        var roll = Random.Range(0, 7); // 0 - 6
         switch(roll) {
             case 0:
                 return generateRandomSword();
             case 1:
-                return generateRandomAxe();
+                return generateRandomGreatAxe();
             case 2:
                 return generateRandomLongBow();
             case 3:
                 return generateRandomSpear();
             case 4:
                 return generateRandomDagger();
-            // case 2:
-            //     return generateRandomSmallShield();
+            case 5:
+                return generateRandomAxe();
+            case 6:
+                return generateRandomRapier();
         }
         print("Error while generating loot");
         return null;
@@ -116,10 +130,7 @@ public class LootManager : MonoBehaviour
         newSword.prefab = swordPrefab;
 
         // Randomize damage stats
-        newSword.damage = Random.Range(1, 8); // 1-7
-
-        // Set crit chance
-        newSword.critChance = 0.1f; // 1-7
+        newSword.damage = Random.Range(3, 8); // 3-7
 
         // Randomly choose up to maxSltos
         int roll = Random.Range(minSlots, maxSlots + 1);
@@ -143,12 +154,12 @@ public class LootManager : MonoBehaviour
         return newSword;
     }
 
-    private WeaponItem generateRandomAxe() {
+    private WeaponItem generateRandomGreatAxe() {
         // Create the scriptable object
         WeaponItem newAxe = ScriptableObject.CreateInstance<WeaponItem>();
-        newAxe.weaponType = WeaponType.Axe;
+        newAxe.weaponType = WeaponType.GreatAxe;
         newAxe.twoHanded = false;
-        newAxe.prefab = axePrefab;
+        newAxe.prefab = greatAxePrefab;
 
         // Randomize damage stats
         newAxe.damage = Random.Range(5, 13); // 5-12
@@ -164,13 +175,13 @@ public class LootManager : MonoBehaviour
         newAxe.enchantments = getRandomMeleeEnchantments(roll);
 
         // Randomize sprite
-        newAxe.sprite = axeSprites[Random.Range(0, axeSprites.Count)];
+        newAxe.sprite = greatAxeSprites[Random.Range(0, greatAxeSprites.Count)];
 
         // Randomize name
-        newAxe.name = prefixes[Random.Range(0, prefixes.Count)] + " Axe";
+        newAxe.name = prefixes[Random.Range(0, prefixes.Count)] + " Great Axe";
 
         // Set description
-        newAxe.description = axeDescription;
+        newAxe.description = greatAxeDescription;
 
         return newAxe;
     }
@@ -185,9 +196,6 @@ public class LootManager : MonoBehaviour
 
         // Randomize damage stats
         newSmallShield.damage = Random.Range(1, 2); // 1
-
-        // Set crit chance
-        newSmallShield.critChance = 0.1f; // 1-7
 
         // Randomly choose up to maxSltos
         int roll = Random.Range(minSlots, maxSlots + 1);
@@ -222,9 +230,6 @@ public class LootManager : MonoBehaviour
         // Randomize damage stats
         newSpear.damage = Random.Range(4, 5);
 
-        // Set crit chance
-        newSpear.critChance = 0.1f;
-
         // Randomly choose up to maxSltos
         int roll = Random.Range(minSlots, maxSlots + 1);
         newSpear.enchantmentSlots = roll;
@@ -258,9 +263,6 @@ public class LootManager : MonoBehaviour
         // Randomize damage stats
         newDagger.damage = Random.Range(1, 4);
 
-        // Set crit chance
-        newDagger.critChance = 0.15f;
-
         // Randomly choose up to maxSltos
         int roll = Random.Range(minSlots, maxSlots + 1);
         newDagger.enchantmentSlots = roll;
@@ -281,6 +283,72 @@ public class LootManager : MonoBehaviour
         newDagger.description = daggerDescription;
 
         return newDagger;
+    }
+
+    private WeaponItem generateRandomAxe() {
+
+        // Create the scriptable object
+        WeaponItem newAxe = ScriptableObject.CreateInstance<WeaponItem>();
+        newAxe.weaponType = WeaponType.Axe;
+        newAxe.twoHanded = false;
+        newAxe.prefab = axePrefab;
+
+        // Randomize damage stats
+        newAxe.damage = Random.Range(1, 4);
+
+        // Randomly choose up to maxSlots
+        int roll = Random.Range(minSlots, maxSlots + 1);
+        newAxe.enchantmentSlots = roll;
+
+        // Randomly choose between 0 and amount of slots
+        roll = Random.Range(0, minSlots + 1); 
+        if (roll == 0 && alwaysEnchant)
+            roll = 1;
+        newAxe.enchantments = getRandomMeleeEnchantments(roll);
+        
+        // Randomize sprite
+        newAxe.sprite = axeSprites[Random.Range(0, axeSprites.Count)];
+
+        // Randomize name
+        newAxe.name = prefixes[Random.Range(0, prefixes.Count)] + " Axe";
+
+        // Set description
+        newAxe.description = axeDescription;
+
+        return newAxe;
+    }
+
+    private WeaponItem generateRandomRapier() {
+
+        // Create the scriptable object
+        WeaponItem newRapier = ScriptableObject.CreateInstance<WeaponItem>();
+        newRapier.weaponType = WeaponType.Rapier;
+        newRapier.twoHanded = false;
+        newRapier.prefab = rapierPrefab;
+
+        // Randomize damage stats
+        newRapier.damage = Random.Range(3, 7);
+
+        // Randomly choose up to maxSlots
+        int roll = Random.Range(minSlots, maxSlots + 1);
+        newRapier.enchantmentSlots = roll;
+
+        // Randomly choose between 0 and amount of slots
+        roll = Random.Range(0, minSlots + 1); 
+        if (roll == 0 && alwaysEnchant)
+            roll = 1;
+        newRapier.enchantments = getRandomMeleeEnchantments(roll);
+        
+        // Randomize sprite
+        newRapier.sprite = rapierSprites[Random.Range(0, rapierSprites.Count)];
+
+        // Randomize name
+        newRapier.name = prefixes[Random.Range(0, prefixes.Count)] + " Rapier";
+
+        // Set description
+        newRapier.description = rapierDescription;
+
+        return newRapier;
     }
 
     private WeaponItem generateRandomLongBow() {

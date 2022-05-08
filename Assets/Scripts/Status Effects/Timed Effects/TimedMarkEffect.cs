@@ -5,19 +5,28 @@ using UnityEngine;
 public class TimedMarkEffect : TimedEffect
 {
 
+    private Stats stats;
+
     public TimedMarkEffect(BaseEffect effect, GameObject parent) : base(effect, parent)
     {
-        // Does nothing
+        stats = parent.GetComponent<Stats>();
     }
 
     public override void End()
     {
-        // Does nothing on end
+        if (stats != null) {
+            var effect = (MarkEffect)Effect;
+            stats.damageTakenMultiplier += effect.extraDamageTakenPercent;
+        }
+            
     }
 
     protected override void ApplyEffect()
     {
-        // Does nothing on apply
+        if (stats != null) {
+            var effect = (MarkEffect)Effect;
+            stats.damageTakenMultiplier -= effect.extraDamageTakenPercent;
+        }
     }
 
     protected override void onTick()

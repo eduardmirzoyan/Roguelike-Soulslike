@@ -196,6 +196,8 @@ public class Rapier : MeleeWeapon
             if (shouldCritDash) {
                 damage = (int) (damage * (1 + owner.critDamage));
                 damageColor = Color.yellow;
+                // Trigger event
+                GameEvents.instance.triggerOnCrit(this, damageable.transform);
             }
 
             Damage dmg = new Damage

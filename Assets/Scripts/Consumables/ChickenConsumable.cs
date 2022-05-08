@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items/Consumable/Chicken")]
 public class ChickenConsumable : ConsumableItem
 {
     public float healPercentage;

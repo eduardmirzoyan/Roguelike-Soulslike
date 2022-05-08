@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 391000bab4dafc94c99823f826d291f3, type: 3}
   m_Name: Freeze
   m_EditorClassIdentifier: 
-  Duration: 2
-  IsDurationStacked: 0
-  IsEffectStacked: 0
+  Duration: 5
+  isDurationReset: 1
+  isDurationStacked: 0
+  maxStacks: 3
   tickRate: 1
   icon: {fileID: -3108140654771344064, guid: 7cabf2d15a1c4e342ba0b77966b5de03, type: 3}
   flavorText: Frozen
+  triggerAmount: 3
+  freezeDuration: 1

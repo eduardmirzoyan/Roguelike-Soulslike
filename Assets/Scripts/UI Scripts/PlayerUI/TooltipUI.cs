@@ -61,7 +61,8 @@ public class TooltipUI : MonoBehaviour
                             }
 
                             // Set description
-                            itemDescription.text = "AMR: " + armorItem.defenseValue;
+                            itemDescription.text = "AMR: " + armorItem.defenseValue + "\n"
+                                                 + "Bonus STM: " + armorItem.bonusStamina;
                             
                             itemFlavor.text = armorItem.description;
                             break;
@@ -99,8 +100,7 @@ public class TooltipUI : MonoBehaviour
 
                             // Set description
                             itemDescription.text
-                                = "DMG: " + weaponItem.damage + "\n"
-                                + "CRIT: " + weaponItem.critChance * 100 + "%\n";
+                                = "DMG: " + weaponItem.damage;
                             
                             // Set flavor text
                             itemFlavor.text = weaponItem.description;

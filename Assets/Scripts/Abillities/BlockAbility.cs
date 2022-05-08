@@ -41,14 +41,6 @@ public class BlockAbility : Ability
             parent.GetComponent<CombatHandler>().getUtilityAbilityHolder().finishActiveTime();
         }
 
-        if (staminaDrainTimer > 0)
-            staminaDrainTimer -= Time.deltaTime;
-        else
-        {
-            stamina.drainStamina(drainAmount);
-            staminaDrainTimer = 1f;
-        }
-
         base.performDuringActive(parent);
     }
 

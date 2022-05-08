@@ -20,7 +20,6 @@ public class TimedCurseEffect : TimedEffect
     {
         
         if (stacks + 1 >= ((CurseEffect)Effect).triggerAmount) {
-            stacks = 0;
             // Instantly set health to 0
             if (health != null) {
                 health.reduceHealth(health.getMaxHP());

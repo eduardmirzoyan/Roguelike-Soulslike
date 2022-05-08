@@ -8,23 +8,23 @@ public class RollingHandler : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Movement mv;
-    [SerializeField] private Collider2D hitbox;
+    [SerializeField] private Stamina stamina;
 
     [Header("Settings")]
+    [SerializeField] private int staminaCost = 20;
     [SerializeField] private float rollCooldown = 1f;
     [SerializeField] private float rollDuration = 0.5f;
     [SerializeField] private float rollSpeed = 350f;
+
+    // Private Fields
     private float rollCooldownTimer;
     private float rollTimer;
     private float rollDirection;
-
-    [SerializeField] private float lerpFactor;
-
     private float workingRollSpeed;
 
-    private void Start() {
+    private void Awake() {
         mv = GetComponent<Movement>();
-        hitbox = GetComponent<Collider2D>();
+        stamina = GetComponent<Stamina>();
     }
 
     private void FixedUpdate() {
@@ -62,7 +62,7 @@ public class RollingHandler : MonoBehaviour
     }
 
     public bool canRoll() {
-        return rollCooldownTimer <= 0f;
+        return rollCooldownTimer <= 0f && stamina.useStamina(staminaCost);
     }
 
     public void roll() {

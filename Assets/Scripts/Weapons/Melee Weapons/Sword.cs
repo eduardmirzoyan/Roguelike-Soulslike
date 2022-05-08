@@ -126,6 +126,8 @@ public class Sword : MeleeWeapon
             if (currentCombo == 2) {
                 damage = (int) (damage * (1 + owner.critDamage));
                 damageColor = Color.yellow;
+                // Trigger event
+                GameEvents.instance.triggerOnCrit(this, damageable.transform);
             }
 
             Damage dmg = new Damage

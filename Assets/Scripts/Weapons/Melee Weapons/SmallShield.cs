@@ -77,19 +77,19 @@ public class SmallShield : MeleeWeapon
             var adjustedPush = pushForce;
             var damageColor = Color.white;
 
-            // Roll for crit
-            roll = Random.Range(0, 100);
-            if(roll <= (wielderStats.percentCritChance + owner.critChance) * 100 )
-            {
-                // Increase damage
-                damage = (int) (damage * (1 + owner.critDamage));
+            // // Roll for crit
+            // roll = Random.Range(0, 100);
+            // if(roll <= (wielderStats.percentCritChance + owner.critChance) * 100 )
+            // {
+            //     // Increase damage
+            //     damage = (int) (damage * (1 + owner.critDamage));
 
-                // Increase pushforce
-                adjustedPush = (adjustedPush * (1 + owner.critDamage));
+            //     // Increase pushforce
+            //     adjustedPush = (adjustedPush * (1 + owner.critDamage));
 
-                // Change color
-                damageColor = Color.yellow;
-            }
+            //     // Change color
+            //     damageColor = Color.yellow;
+            // }
 
             Damage dmg = new Damage
             {

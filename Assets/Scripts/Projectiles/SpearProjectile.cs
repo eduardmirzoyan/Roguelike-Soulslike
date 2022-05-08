@@ -45,6 +45,11 @@ public class SpearProjectile : MonoBehaviour
         // If arrow hits something dmaageableo other than the creator
         if (!isDead && collision.TryGetComponent(out Damageable damageable) && collision.gameObject != projectile.creator) {
            
+           if (isCrit) {
+               // Trigger event
+                GameEvents.instance.triggerOnCrit(projectile.creator.GetComponent<Weapon>(), damageable.transform);
+           }
+
             // Deal half-damage
             Damage dmg = new Damage {
                 damageAmount = damage,
@@ -75,19 +80,6 @@ public class SpearProjectile : MonoBehaviour
 
             // Destroy gameobject
             Destroy(gameObject);
-
-            // Removed concept
-            // if (transform.parent != null && transform.parent.TryGetComponent(out Damageable damageable1)) {
-            //     // Deal half-damage
-            //     Damage dmg = new Damage {
-            //         damageAmount = damage,
-            //         source = DamageSource.fromPlayer,
-            //         origin = projectile.creator.transform,
-            //         effects = spearEffects,
-            //         color = Color.white
-            //     };
-            //     damageable1.takeDamage(dmg);
-            // }
 
             // Reduce the cooldown, if spear is equipped
             var spear = projectile.creator.GetComponentInChildren<Spear>();
