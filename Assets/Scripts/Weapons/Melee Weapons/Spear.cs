@@ -90,9 +90,16 @@ public class Spear : MeleeWeapon
                         // If you have stats, then increase damge
                         damage = (int) (damage * (1 + wielderStats.damageDealtMultiplier));
 
+                        bool isCrit = false;
+                        // If max charged, then give crit
+                        if (chargeTime >= maxCharge) {
+                            isCrit = true;
+                            damage = (int) (damage * (1 + owner.critDamage));
+                        }
+
                         // Initalize the arrow's values
                         if (spear != null) {
-                            spear.initializeSpear(damage, weaponEffects, scaledSpeed, spriteRenderer.sprite, transform.parent.gameObject);
+                            spear.initializeSpear(damage, isCrit, weaponEffects, scaledSpeed, spriteRenderer.sprite, transform.parent.gameObject);
                         }
                         
                         // Start cooldown

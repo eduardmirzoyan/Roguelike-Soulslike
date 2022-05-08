@@ -156,6 +156,7 @@ MonoBehaviour:
   recoveryDuration: 0.3
   maxCombo: 1
   cooldown: 0
+  windUpSpeedMultiplier: 0.1
   weaponIdleAnimation: Axe Idle
   weaponAttackAnimation: Axe Attack
   animationHandler: {fileID: 0}
@@ -164,6 +165,7 @@ MonoBehaviour:
   wielderStats: {fileID: 0}
   wielderMovement: {fileID: 0}
   dashspeed: 200
+  aoeRadius: 0.5
 --- !u!114 &57796194466093632
 MonoBehaviour:
   m_ObjectHideFlags: 0

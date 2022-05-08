@@ -26,6 +26,7 @@ public class GameEvents : MonoBehaviour
     public event Action<TimedEffect, EffectableEntity> onAddStatusEffect;
     public event Action<TimedEffect, EffectableEntity> onRemoveStatusEffect;
     public event Action<Weapon, Transform> onCrit;
+    public event Action onRoll;
 
     public void triggerOnHit(GameObject attackingEnitiy, GameObject hitEntity, int damageTaken)
     {
@@ -83,6 +84,13 @@ public class GameEvents : MonoBehaviour
         if (onItemPickup != null) 
         {
             onItemPickup(item);
+        }
+    }
+
+    public void triggerOnRoll() {
+        if (onRoll != null) 
+        {
+            onRoll();
         }
     }
 }

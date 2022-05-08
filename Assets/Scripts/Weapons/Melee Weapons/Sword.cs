@@ -106,4 +106,37 @@ public class Sword : MeleeWeapon
 
         state = WeaponState.WindingUp; // Begin attack process
     }
+
+    protected override void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.TryGetComponent(out Damageable damageable) && collider.gameObject != this.gameObject)
+        {
+            // Roll for miss
+            int roll = Random.Range(0, 100);
+            if(roll < (wielderStats.percentMissChance) * 100 )
+            {
+                PopUpTextManager.instance.createPopup("Miss", Color.gray, collider.transform.position);
+                return;
+            }
+
+            int damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
+            var damageColor = Color.white;
+
+            // Check for 3rd hit
+            if (currentCombo == 2) {
+                damage = (int) (damage * (1 + owner.critDamage));
+                damageColor = Color.yellow;
+            }
+
+            Damage dmg = new Damage
+            {
+                damageAmount = damage,
+                source = DamageSource.fromPlayer,
+                origin = transform,
+                effects = weaponEffects,
+                color = damageColor
+            };
+            damageable.takeDamage(dmg);
+        }
+    }
 }

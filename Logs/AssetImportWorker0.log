@@ -15,11 +15,11 @@ C:/Users/eduar/Desktop/Unity Projects/Roguelike-Soulslike
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-52140
+61296
 Successfully changed project path to: C:/Users/eduar/Desktop/Unity Projects/Roguelike-Soulslike
 C:/Users/eduar/Desktop/Unity Projects/Roguelike-Soulslike
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 125.56 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 111.00 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.1.7f1 (d91830b65d9b)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Resources/UnitySubsystems
@@ -35,284 +35,123 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56336
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56572
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001656 seconds.
+Registered in 0.001726 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 96.75 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 99.03 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.358 seconds
+- Completed reload, in  1.186 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.003116 seconds.
+Registered in 0.003047 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Native extension for WindowsStandalone target not found
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 109.79 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 106.28 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.242 seconds
+- Completed reload, in  1.087 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 0.77 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 0.75 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 3815 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 219.9 MB.
 System memory in use after: 220.1 MB.
 
 Unloading 23 unused Assets to reduce memory usage. Loaded Objects now: 4296.
-Total: 2.431300 ms (FindLiveObjects: 0.272400 ms CreateObjectMapping: 0.173100 ms MarkObjects: 1.959500 ms  DeleteObjects: 0.025200 ms)
+Total: 2.210200 ms (FindLiveObjects: 0.273600 ms CreateObjectMapping: 0.177300 ms MarkObjects: 1.736800 ms  DeleteObjects: 0.021300 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Tilemap/Rule Tiles
-  artifactKey: Guid(2df42be00230c65489089d7e3d9fe38c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Rule Tiles using Guid(2df42be00230c65489089d7e3d9fe38c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de90bbae285b10341cdbf940415bb5ed') in 0.010243 seconds 
+  path: Assets/Tilemap/tileset32PIPO (1).png
+  artifactKey: Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/tileset32PIPO (1).png using Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e1923237fc115d5bbbfd0a1560f711b0') in 0.125040 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 442.809401 seconds.
-  path: Assets/Tilemap/cavesofgallet.png
-  artifactKey: Guid(2d30385c443b28d4688e69010eec4241) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/cavesofgallet.png using Guid(2d30385c443b28d4688e69010eec4241) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b3ca036b845f0b4c91b83f3ec30b92ac') in 0.173664 seconds 
+  Time since last request: 10.030870 seconds.
+  path: Assets/Tilemap/tileset32PIPO (1).png
+  artifactKey: Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/tileset32PIPO (1).png using Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a6a6d28a41d85de190e1c72d8f41b463') in 0.014707 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000314 seconds.
-  path: Assets/Tilemap/cavesofgallet_tiles.png
-  artifactKey: Guid(d652f471222eae84fa0362f0d060531a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/cavesofgallet_tiles.png using Guid(d652f471222eae84fa0362f0d060531a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd95443c402d6c052449e5b148db69a68') in 0.013607 seconds 
+  Time since last request: 62.333980 seconds.
+  path: Assets/Tilemap/tileset32PIPO (1).png
+  artifactKey: Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/tileset32PIPO (1).png using Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6fd2b74098892ef63aae438a07961847') in 0.210794 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 113.056054 seconds.
-  path: Assets/Tilemap/cavesofgallet.png
-  artifactKey: Guid(2d30385c443b28d4688e69010eec4241) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/cavesofgallet.png using Guid(2d30385c443b28d4688e69010eec4241) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'da54bfae81b4a3a24bf98da14c744582') in 0.008416 seconds 
+  Time since last request: 24.884591 seconds.
+  path: Assets/Tilemap/Rule Tiles/Dark Dungeon Tile.asset
+  artifactKey: Guid(fef4919b218d4824c8a538c60a3e7119) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/Rule Tiles/Dark Dungeon Tile.asset using Guid(fef4919b218d4824c8a538c60a3e7119) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '220d606e0aa69a6e68181d5fb8ad4a7c') in 0.019836 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 70.284591 seconds.
-  path: Assets/Tilemap/cavesofgallet.png
-  artifactKey: Guid(2d30385c443b28d4688e69010eec4241) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/cavesofgallet.png using Guid(2d30385c443b28d4688e69010eec4241) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f48594db057d82e8921d52c1b8f4f69b') in 0.526754 seconds 
+  Time since last request: 19.902445 seconds.
+  path: Assets/Tilemap/New Dungeon Tileset.png
+  artifactKey: Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/New Dungeon Tileset.png using Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e32a7dc67b362b2d36eafb23c08de8ff') in 0.201486 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 862.588718 seconds.
-  path: Assets/Tilemap/Tileset.aseprite
-  artifactKey: Guid(cba23cb1002b73f44a0a058e8bda9b27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Tileset.aseprite using Guid(cba23cb1002b73f44a0a058e8bda9b27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bc0d995232575c81b9d6044482f901c3') in 0.012209 seconds 
+  Time since last request: 20.227906 seconds.
+  path: Assets/Tilemap/New Dungeon Tileset.png
+  artifactKey: Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/New Dungeon Tileset.png using Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34dc39f5d1f7ff4f4b2e068233120224') in 0.175745 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 343.678574 seconds.
-  path: Assets/Tilemap/Rule Tiles/Dungeon Rule Tile.asset
-  artifactKey: Guid(1ee685b3c02b28948b4e365fd2f1cedc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Rule Tiles/Dungeon Rule Tile.asset using Guid(1ee685b3c02b28948b4e365fd2f1cedc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eda169feb37ebd237b6bca935dd7bef5') in 0.013694 seconds 
+  Time since last request: 15.619548 seconds.
+  path: Assets/Tilemap/New Dungeon Tileset.png
+  artifactKey: Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/New Dungeon Tileset.png using Guid(7bff3bcfe679cb74cbc770521c82c0b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb6198a4953e3e7411bf471ff958ad65') in 0.206872 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 750.808665 seconds.
-  path: Assets/Tilemap/cavesofgallet_tiles.png
-  artifactKey: Guid(d652f471222eae84fa0362f0d060531a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/cavesofgallet_tiles.png using Guid(d652f471222eae84fa0362f0d060531a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '07e726efc333d3360daaab8b7d1e06d8') in 0.010222 seconds 
+  Time since last request: 160.509699 seconds.
+  path: Assets/Tilemap/Rule Tiles/Dark Dungeon Tile.asset
+  artifactKey: Guid(fef4919b218d4824c8a538c60a3e7119) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/Rule Tiles/Dark Dungeon Tile.asset using Guid(fef4919b218d4824c8a538c60a3e7119) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ab5e8d88f0a038b5dd2f27e38ff3ff92') in 0.020417 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 83.755443 seconds.
-  path: Assets/Tilemap/cavesofgallet_tiles.png
-  artifactKey: Guid(d652f471222eae84fa0362f0d060531a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/cavesofgallet_tiles.png using Guid(d652f471222eae84fa0362f0d060531a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd10597905263dda899a625267ad32230') in 0.145408 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 19.248812 seconds.
-  path: Assets/Tilemap/cavesofgallet_tiles.png
-  artifactKey: Guid(d652f471222eae84fa0362f0d060531a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/cavesofgallet_tiles.png using Guid(d652f471222eae84fa0362f0d060531a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8388b0495d15b26721975828f18699c') in 0.088363 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 3.164535 seconds.
-  path: Assets/Tilemap/cavesofgallet_tiles.png
-  artifactKey: Guid(d652f471222eae84fa0362f0d060531a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/cavesofgallet_tiles.png using Guid(d652f471222eae84fa0362f0d060531a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e3ba44e43981250138295cf4f48c1e1') in 0.097775 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 67.293711 seconds.
-  path: Assets/Tilemap/tileset.png
-  artifactKey: Guid(8ea353bee45cdcc4eb237247d7bd69d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/tileset.png using Guid(8ea353bee45cdcc4eb237247d7bd69d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f5c346e8c95b71fde96df9a9a8be0eae') in 0.014232 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 8.340145 seconds.
-  path: Assets/Tilemap/tileset.png
-  artifactKey: Guid(8ea353bee45cdcc4eb237247d7bd69d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/tileset.png using Guid(8ea353bee45cdcc4eb237247d7bd69d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f2adf6834dd5de5590b5e44cead79792') in 0.010809 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 189.522646 seconds.
-  path: Assets/Tilemap/tileset.png
-  artifactKey: Guid(8ea353bee45cdcc4eb237247d7bd69d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/tileset.png using Guid(8ea353bee45cdcc4eb237247d7bd69d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f9e995ffe895c59dbaff0ee1b87329cb') in 0.101190 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 625.836859 seconds.
-  path: Assets/Tilemap/main_lev_build.png
-  artifactKey: Guid(a4315f63ba7ccf04997ef5ddfb54a9d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/main_lev_build.png using Guid(a4315f63ba7ccf04997ef5ddfb54a9d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd9fa8aa0321a6c26580b670388857c01') in 0.027364 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 16.468706 seconds.
-  path: Assets/Tilemap/main_lev_build.png
-  artifactKey: Guid(a4315f63ba7ccf04997ef5ddfb54a9d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/main_lev_build.png using Guid(a4315f63ba7ccf04997ef5ddfb54a9d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0aeb9ba225094def291f825f3307a450') in 0.009962 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 403.362903 seconds.
-  path: Assets/Tilemap/tileset32PIPO.png
-  artifactKey: Guid(972490bc39d2e9b4ebd3ef9d50f04864) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/tileset32PIPO.png using Guid(972490bc39d2e9b4ebd3ef9d50f04864) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '190a0437aae853653bfbd8b0564555eb') in 0.027412 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 9.413495 seconds.
-  path: Assets/Tilemap/tileset32PIPO.png
-  artifactKey: Guid(972490bc39d2e9b4ebd3ef9d50f04864) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/tileset32PIPO.png using Guid(972490bc39d2e9b4ebd3ef9d50f04864) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1db5833f651ef7f36ce10a5b2d519523') in 0.009681 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 197.492188 seconds.
-  path: Assets/Tilemap/tileset-cave.png
-  artifactKey: Guid(b913321984d4b2f41897d1e55fad64d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/tileset-cave.png using Guid(b913321984d4b2f41897d1e55fad64d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd83254d45794e696179bb8517e5cf085') in 0.016072 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 10.235782 seconds.
-  path: Assets/Tilemap/tileset-cave.png
-  artifactKey: Guid(b913321984d4b2f41897d1e55fad64d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/tileset-cave.png using Guid(b913321984d4b2f41897d1e55fad64d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '62660f183af9d2187c3724b300a30d83') in 0.012710 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 111.950841 seconds.
-  path: Assets/Tilemap/tileset-cave.png
-  artifactKey: Guid(b913321984d4b2f41897d1e55fad64d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/tileset-cave.png using Guid(b913321984d4b2f41897d1e55fad64d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '61f8d5bf4ae0c951fc40a33eac221732') in 0.296976 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 228.357181 seconds.
-  path: Assets/Tilemap/Rule Tiles/Dungeon Rule Tile.asset
-  artifactKey: Guid(1ee685b3c02b28948b4e365fd2f1cedc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Rule Tiles/Dungeon Rule Tile.asset using Guid(1ee685b3c02b28948b4e365fd2f1cedc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c049a751ca15e955830d3aef89da72c9') in 0.039921 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 120.625203 seconds.
-  path: Assets/Tilemap/Rule Tiles/Dungeon Rule Tile.asset
-  artifactKey: Guid(1ee685b3c02b28948b4e365fd2f1cedc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Rule Tiles/Dungeon Rule Tile.asset using Guid(1ee685b3c02b28948b4e365fd2f1cedc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '36af9b0bf44d4e444f600b1bac651f93') in 0.009028 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 55.137024 seconds.
-  path: Assets/Tilemap/Rule Tiles/Dungeon Rule Tile.asset
-  artifactKey: Guid(1ee685b3c02b28948b4e365fd2f1cedc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Rule Tiles/Dungeon Rule Tile.asset using Guid(1ee685b3c02b28948b4e365fd2f1cedc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '579c6f353bd4c71469e4777960cf8828') in 0.007772 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 155.614946 seconds.
-  path: Assets/Tilemap/Rule Tiles/Dungeon Rule Tile.asset
-  artifactKey: Guid(1ee685b3c02b28948b4e365fd2f1cedc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Rule Tiles/Dungeon Rule Tile.asset using Guid(1ee685b3c02b28948b4e365fd2f1cedc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c6e830f3dcbf14859c2ca2c528e4c29d') in 0.008620 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003616 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 0.78 ms, found 2 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.182 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.75 ms, found 2 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3788 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 229.4 MB.
-System memory in use after: 229.6 MB.
-
-Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4573.
-Total: 2.634400 ms (FindLiveObjects: 0.322500 ms CreateObjectMapping: 0.163800 ms MarkObjects: 2.127700 ms  DeleteObjects: 0.019500 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 222.321551 seconds.
+  Time since last request: 57.475285 seconds.
   path: Assets/Tilemap/Dungeon.prefab
   artifactKey: Guid(cc91504460ae01c43af044def84a88c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Dungeon.prefab using Guid(cc91504460ae01c43af044def84a88c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '57213437f2208469eec2312cee9abdb8') in 0.054722 seconds 
+Start importing Assets/Tilemap/Dungeon.prefab using Guid(cc91504460ae01c43af044def84a88c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '36203dad619571222f158835cf05aacf') in 0.020563 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 7.609038 seconds.
-  path: Assets/Tilemap/fantasy_4colors_tileset_frame_0.png
-  artifactKey: Guid(5585d5d5a2daca44a97f98f953a4efe7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/fantasy_4colors_tileset_frame_0.png using Guid(5585d5d5a2daca44a97f98f953a4efe7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8b5869d6788d1500f645ac1837391196') in 0.034972 seconds 
+  Time since last request: 44.880898 seconds.
+  path: Assets/Tilemap/Rule Tiles/Reg Dungeon Tile.asset
+  artifactKey: Guid(4b705bbce6744b847a7d9231fcc21375) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/Rule Tiles/Reg Dungeon Tile.asset using Guid(4b705bbce6744b847a7d9231fcc21375) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dc4509e3f121d171c8d2de51184009ab') in 0.007872 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 15.552727 seconds.
-  path: Assets/Tilemap/fantasy_4colors_tileset_frame_0.png
-  artifactKey: Guid(5585d5d5a2daca44a97f98f953a4efe7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/fantasy_4colors_tileset_frame_0.png using Guid(5585d5d5a2daca44a97f98f953a4efe7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f58536b2667ce8a72275b7b1cc4549c') in 0.010634 seconds 
+  Time since last request: 67.657279 seconds.
+  path: Assets/Tilemap/Rule Tiles/Reg Dungeon Tile.asset
+  artifactKey: Guid(4b705bbce6744b847a7d9231fcc21375) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/Rule Tiles/Reg Dungeon Tile.asset using Guid(4b705bbce6744b847a7d9231fcc21375) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fd46de20845ad5f2f62e79dfbe741e49') in 0.012116 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 27.860207 seconds.
-  path: Assets/Tilemap/fantasy_4colors_tileset_frame_1.png
-  artifactKey: Guid(5cb5c51a7aef51647b2139440e0ed49c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/fantasy_4colors_tileset_frame_1.png using Guid(5cb5c51a7aef51647b2139440e0ed49c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd40c609902b62a0e2c1c72b3d288cd18') in 0.012705 seconds 
+  Time since last request: 12.704411 seconds.
+  path: Assets/Tilemap/Rule Tiles/Dark Dungeon Tile.asset
+  artifactKey: Guid(fef4919b218d4824c8a538c60a3e7119) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/Rule Tiles/Dark Dungeon Tile.asset using Guid(fef4919b218d4824c8a538c60a3e7119) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a915bb5b7002fa33c9461169ced36b36') in 0.013898 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 92.362413 seconds.
-  path: Assets/Tilemap/fantasy_4colors_tileset_frame_0.png
-  artifactKey: Guid(5585d5d5a2daca44a97f98f953a4efe7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/fantasy_4colors_tileset_frame_0.png using Guid(5585d5d5a2daca44a97f98f953a4efe7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '220f3a369f5b0876edec818589166285') in 0.219782 seconds 
+  Time since last request: 96.301245 seconds.
+  path: Assets/Prefabs/Weapons/Dagger.prefab
+  artifactKey: Guid(8e54f0e827f845b4eb057fbf1f3b1de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Weapons/Dagger.prefab using Guid(8e54f0e827f845b4eb057fbf1f3b1de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b880f085fb6e0d3d6da5e31b7789f6b9') in 0.036561 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 22.105893 seconds.
-  path: Assets/Tilemap/fantasy_4colors_tileset_frame_0.png
-  artifactKey: Guid(5585d5d5a2daca44a97f98f953a4efe7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/fantasy_4colors_tileset_frame_0.png using Guid(5585d5d5a2daca44a97f98f953a4efe7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b3d6180bdd13397115a003c10ef69a8') in 0.312096 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 18.039355 seconds.
-  path: Assets/Tilemap/Rule Tiles/Blue Dungeon TIle.asset
-  artifactKey: Guid(d9899decdcbdbd543a2e63a3d2b00239) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Rule Tiles/Blue Dungeon TIle.asset using Guid(d9899decdcbdbd543a2e63a3d2b00239) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e812f06f5ff8bd5133f53d740ac30579') in 0.010687 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 134.958549 seconds.
-  path: Assets/Tilemap/Rule Tiles/Blue Dungeon TIle.asset
-  artifactKey: Guid(d9899decdcbdbd543a2e63a3d2b00239) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Rule Tiles/Blue Dungeon TIle.asset using Guid(d9899decdcbdbd543a2e63a3d2b00239) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '494f7fec59c5a4859b1f43fd3af1d556') in 0.015005 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 65.741137 seconds.
-  path: Assets/Tilemap/Dungeon.prefab
-  artifactKey: Guid(cc91504460ae01c43af044def84a88c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Dungeon.prefab using Guid(cc91504460ae01c43af044def84a88c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5db2edfc03971d0ca5b5aa1aa93f3311') in 0.004325 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 573.129233 seconds.
-  path: Assets/Tilemap/main_lev_build.png
-  artifactKey: Guid(a4315f63ba7ccf04997ef5ddfb54a9d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/main_lev_build.png using Guid(a4315f63ba7ccf04997ef5ddfb54a9d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd971160f61f941ef7415877f21903ac1') in 0.961030 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 22.430297 seconds.
-  path: Assets/Tilemap/Rule Tiles/Red Dungeon Tile.asset
-  artifactKey: Guid(8400fc08d4b84ba488c14e49f66bb540) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Rule Tiles/Red Dungeon Tile.asset using Guid(8400fc08d4b84ba488c14e49f66bb540) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a6bd0b17ed350b3c04be4c839cb44728') in 0.007306 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 115.558715 seconds.
-  path: Assets/Tilemap/Rule Tiles/Red Dungeon Tile.asset
-  artifactKey: Guid(8400fc08d4b84ba488c14e49f66bb540) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Tilemap/Rule Tiles/Red Dungeon Tile.asset using Guid(8400fc08d4b84ba488c14e49f66bb540) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21537181667f365603a098b002134d93') in 0.008989 seconds 
+  Time since last request: 1.580347 seconds.
+  path: Assets/Scripts/Weapons/Melee Weapons/Dagger.cs
+  artifactKey: Guid(269b398ecc7b10e4a931e8663035fc64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Weapons/Melee Weapons/Dagger.cs using Guid(269b398ecc7b10e4a931e8663035fc64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f5c297b5cb471ad7543130fc80e7f1fd') in 0.015451 seconds 

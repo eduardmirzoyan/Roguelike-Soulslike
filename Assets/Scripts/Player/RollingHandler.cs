@@ -50,6 +50,9 @@ public class RollingHandler : MonoBehaviour
 
         // Start timer
         rollTimer = rollDuration;
+
+        // Trigger event
+        GameEvents.instance.triggerOnRoll();
     }
 
     public void endRoll() {

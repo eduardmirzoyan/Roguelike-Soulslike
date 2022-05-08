@@ -49,10 +49,11 @@ public class CombatHandler : MonoBehaviour
     // Returns if the attack can happen
     public bool mainHandAttack() {
         if ((mainHandWeapon != null && mainHandWeapon.canInitiate()) && (offHandWeapon == null || offHandWeapon.isReady())) {
+            // Start weapon attack
+            mainHandWeapon.initiateAttack();
+
             // Animation is based on the current combo you are on
             animationHandler.changeAnimationState(mainHandWeapon.getAnimationName());
-
-            mainHandWeapon.initiateAttack();
 
             return true;
         }

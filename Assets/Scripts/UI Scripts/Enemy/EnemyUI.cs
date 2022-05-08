@@ -23,13 +23,12 @@ public class EnemyUI : MonoBehaviour
         if (healthBarHolder == null) {
             print("ERROR SETTING HEALTHBAR: " + gameObject.name);
         }
-
-        healthBarHolder.SetActive(false);
     }
 
     private void Start()
     {
         GameEvents.instance.onHit += enableCanvasOnHit;
+        healthBarHolder.SetActive(false);
     }
 
     // Update is called once per frame

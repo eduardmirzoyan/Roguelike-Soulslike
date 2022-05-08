@@ -24,7 +24,5 @@ MonoBehaviour:
   critDamage: 1
   weaponType: 4
   twoHanded: 0
-  enchantments:
-  - {fileID: 11400000, guid: 9c13df7cae5e96d47970875a58c3eb0b, type: 2}
-  - {fileID: 11400000, guid: f86e3375c925bd8439e95fc299ee9da1, type: 2}
+  enchantments: []
   enchantmentSlots: 3

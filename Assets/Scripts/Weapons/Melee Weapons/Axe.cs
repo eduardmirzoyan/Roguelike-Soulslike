@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Axe : MeleeWeapon
 {
+    [SerializeField] private float aoeRadius = 1f;
     protected void FixedUpdate()
     {
         switch (state)
@@ -80,24 +81,15 @@ public class Axe : MeleeWeapon
 
             int damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
             var damageColor = Color.white;
-            
-            // Roll for crit
-            roll = Random.Range(0, 100);
 
-            // If the hit target is effectable
-            if (collider.TryGetComponent(out EffectableEntity effectableEntity)) {
-
-                // If "mark" effect was found and sucessfully removed
-                if (effectableEntity.removeEffect(ScriptableObject.CreateInstance<MarkEffect>()) != null) {
-                    // Guarantee a crit
-                    roll = -1;
+            // Check if any other enemies are in radius
+            var hits = Physics2D.OverlapCircleAll(collider.transform.position, aoeRadius, 1 << LayerMask.NameToLayer("Enemies"));
+            foreach (var hit in hits) {
+                // If there is another enemy in radius, then crit
+                if (hit != collider && hit.TryGetComponent(out Damageable damageable1)) {
+                    damage = (int) (damage * (1 + owner.critDamage));
+                    damageColor = Color.yellow;
                 }
-            }
-            
-            if (roll < (wielderStats.percentCritChance + owner.critChance) * 100)
-            {
-                damage = (int) (damage * (1 + owner.critDamage));
-                damageColor = Color.yellow;
             }
 
             Damage dmg = new Damage

@@ -63,6 +63,42 @@ public class Dagger : MeleeWeapon
         }
     }
 
+    protected override void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.TryGetComponent(out Damageable damageable) && collider.gameObject != this.gameObject)
+        {
+            // Roll for miss
+            int roll = Random.Range(0, 100);
+            if(roll < (wielderStats.percentMissChance) * 100 )
+            {
+                PopUpTextManager.instance.createPopup("Miss", Color.gray, collider.transform.position);
+                return;
+            }
+
+            int damage = (int) (owner.damage * (1 + wielderStats.damageDealtMultiplier));
+            var damageColor = Color.white;
+
+            // Check for backstab
+            if (collider.TryGetComponent(out Movement mv)) {
+                // Check to see if both the wielder and target are facing the same direction, if so, then crit
+                if (mv.getFacingDirection() == wielderMovement.getFacingDirection()) {
+                    damage = (int) (damage * (1 + owner.critDamage));
+                    damageColor = Color.yellow;
+                }
+            }
+
+            Damage dmg = new Damage
+            {
+                damageAmount = damage,
+                source = DamageSource.fromPlayer,
+                origin = transform,
+                effects = weaponEffects,
+                color = damageColor
+            };
+            damageable.takeDamage(dmg);
+        }
+    }
+
     public override bool canInitiate()
     {
         return state == WeaponState.Ready || state == WeaponState.Recovering;

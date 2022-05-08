@@ -14,6 +14,8 @@ public class SpearProjectile : MonoBehaviour
     [SerializeField] private int damage;
     [SerializeField] private bool isDead;
     [SerializeField] private List<BaseEffect> spearEffects;
+
+    private bool isCrit;
     
     private void Awake() {
         projectile = GetComponent<Projectile>();
@@ -21,9 +23,12 @@ public class SpearProjectile : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
-    public void initializeSpear(int damage, List<BaseEffect> ownerEffects, float speed, Sprite sprite, GameObject owner) {
+    public void initializeSpear(int damage, bool isCrit, List<BaseEffect> ownerEffects, float speed, Sprite sprite, GameObject owner) {
         // Set damage
         this.damage = damage;
+
+        // Toggle crit
+        this.isCrit = isCrit;
 
         // Set sprite
         spriteRenderer.sprite = sprite;
@@ -40,13 +45,13 @@ public class SpearProjectile : MonoBehaviour
         // If arrow hits something dmaageableo other than the creator
         if (!isDead && collision.TryGetComponent(out Damageable damageable) && collision.gameObject != projectile.creator) {
            
-            // Deal damage
+            // Deal half-damage
             Damage dmg = new Damage {
                 damageAmount = damage,
                 source = DamageSource.fromPlayer,
                 origin = projectile.creator.transform,
                 effects = spearEffects,
-                color = Color.white
+                color = isCrit ? Color.yellow : Color.white
             };
             damageable.takeDamage(dmg);
 
@@ -71,18 +76,18 @@ public class SpearProjectile : MonoBehaviour
             // Destroy gameobject
             Destroy(gameObject);
 
-            // Damage the enemy inside the spear if possible
-            if (transform.parent != null && transform.parent.TryGetComponent(out Damageable damageable1)) {
-                // Deal half-damage
-                Damage dmg = new Damage {
-                    damageAmount = damage,
-                    source = DamageSource.fromPlayer,
-                    origin = projectile.creator.transform,
-                    effects = spearEffects,
-                    color = Color.white
-                };
-                damageable1.takeDamage(dmg);
-            }
+            // Removed concept
+            // if (transform.parent != null && transform.parent.TryGetComponent(out Damageable damageable1)) {
+            //     // Deal half-damage
+            //     Damage dmg = new Damage {
+            //         damageAmount = damage,
+            //         source = DamageSource.fromPlayer,
+            //         origin = projectile.creator.transform,
+            //         effects = spearEffects,
+            //         color = Color.white
+            //     };
+            //     damageable1.takeDamage(dmg);
+            // }
 
             // Reduce the cooldown, if spear is equipped
             var spear = projectile.creator.GetComponentInChildren<Spear>();
