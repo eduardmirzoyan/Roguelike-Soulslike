@@ -119,6 +119,9 @@ public class Player : MonoBehaviour
         {
             case PlayerState.idle:
                 // Do nothing lol
+                if (Input.GetKey(KeyCode.UpArrow)) {
+                    Camera.instance.checkPanUp();
+                }
 
                 // Handle jump request
                 if (inputBuffer.jumpRequest && mv.isGrounded()) {
@@ -127,12 +130,14 @@ public class Player : MonoBehaviour
 
                 // Handle airborne
                 if (!mv.isGrounded()) {
+                    Camera.instance.resetPan();
                     state = PlayerState.airborne;
                     break;
                 }
 
                 // Handle displacement
                 if (displace.isDisplaced()) {
+                    Camera.instance.resetPan();
                     // Change animation
                     animationHandler.changeAnimationState(staggerAnimation);
                     state = PlayerState.knockedback;
@@ -142,6 +147,7 @@ public class Player : MonoBehaviour
                 // Handle main-hand attack request
                 if (inputBuffer.mainHandAttackRequest && combatHandler.mainHandAttack())
                 {
+                    Camera.instance.resetPan();
                     // Animation handled in combat handler
                     state = PlayerState.attacking;
                     break;
@@ -150,6 +156,7 @@ public class Player : MonoBehaviour
                 // Handle off-hand attack request
                 if (inputBuffer.offHandAttackRequest && combatHandler.offhandAttack())
                 {
+                    Camera.instance.resetPan();
                     // Animation handled in combat handler
                     state = PlayerState.attacking;
                     break;
@@ -157,6 +164,7 @@ public class Player : MonoBehaviour
 
                 // Handle move request
                 if (inputBuffer.moveDirection != 0) {
+                    Camera.instance.resetPan();
                     animationHandler.changeAnimationState(walkAnimation);
                     state = PlayerState.walking;
                     break;
@@ -164,6 +172,7 @@ public class Player : MonoBehaviour
 
                 // Handle crouch request
                 if (inputBuffer.crouchRequest) {
+                    Camera.instance.resetPan();
                     animationHandler.changeAnimationState(crouchAnimation);
                     state = PlayerState.crouching;
                     break;
@@ -171,6 +180,7 @@ public class Player : MonoBehaviour
                 
                 // Handle roll request
                 if (inputBuffer.rollRequest && rollingHandler.canRoll()) {
+                    Camera.instance.resetPan();
                     // Roll in your moving direction
                     rollingHandler.startRoll(inputBuffer.moveDirection);
 
@@ -616,6 +626,7 @@ public class Player : MonoBehaviour
 
         if (playerIsFree())
         {
+
             // Handle opening the menu
             if (inputBuffer.menuToggleRequest)
             {

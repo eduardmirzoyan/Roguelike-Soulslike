@@ -18,4 +18,4 @@ MonoBehaviour:
 
     (At 3 stacks of FREEZING, enemy is stunned
     for 1s)'
-  freezeEffect: {fileID: 0}
+  freezeEffect: {fileID: 11400000, guid: bc219ba5331433d4a9700a7fecbdc348, type: 2}

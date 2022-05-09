@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player player;
 
     [SerializeField] private GameObject corpsePrefab;
+    public GameObject stunParticles;
     public Sprite aggroIndicatorSprite;
     public Sprite deaggroIndicatorSprite;
     

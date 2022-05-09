@@ -38,6 +38,15 @@ public class Camera : MonoBehaviour
         transform.position = smoothedPosition;
     }
 
+    public void checkPanUp() {
+        if (upTimer > 0) {
+            upTimer -= Time.deltaTime;
+        }
+        else {
+            currentOffset = pandUpOffset;
+        }
+    }
+
     public void checkPanDown() {
         if (downTimer > 0) {
             downTimer -= Time.deltaTime;

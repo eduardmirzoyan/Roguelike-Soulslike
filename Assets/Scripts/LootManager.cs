@@ -132,6 +132,9 @@ public class LootManager : MonoBehaviour
         // Randomize damage stats
         newSword.damage = Random.Range(3, 8); // 3-7
 
+        // Set weapon size
+        newSword.weaponSize = WeaponSize.Medium;
+
         // Randomly choose up to maxSltos
         int roll = Random.Range(minSlots, maxSlots + 1);
         newSword.enchantmentSlots = roll;
@@ -163,6 +166,9 @@ public class LootManager : MonoBehaviour
 
         // Randomize damage stats
         newAxe.damage = Random.Range(5, 13); // 5-12
+
+        // Set weapon size
+        newAxe.weaponSize = WeaponSize.Large;
 
         // Randomly choose up to maxSltos
         int roll = Random.Range(minSlots, maxSlots + 1);
@@ -230,6 +236,9 @@ public class LootManager : MonoBehaviour
         // Randomize damage stats
         newSpear.damage = Random.Range(4, 5);
 
+        // Set weapon size
+        newSpear.weaponSize = WeaponSize.Medium;
+
         // Randomly choose up to maxSltos
         int roll = Random.Range(minSlots, maxSlots + 1);
         newSpear.enchantmentSlots = roll;
@@ -262,6 +271,9 @@ public class LootManager : MonoBehaviour
 
         // Randomize damage stats
         newDagger.damage = Random.Range(1, 4);
+
+        // Set weapon size
+        newDagger.weaponSize = WeaponSize.Small;
 
         // Randomly choose up to maxSltos
         int roll = Random.Range(minSlots, maxSlots + 1);
@@ -296,6 +308,9 @@ public class LootManager : MonoBehaviour
         // Randomize damage stats
         newAxe.damage = Random.Range(1, 4);
 
+        // Set weapon size
+        newAxe.weaponSize = WeaponSize.Small;
+
         // Randomly choose up to maxSlots
         int roll = Random.Range(minSlots, maxSlots + 1);
         newAxe.enchantmentSlots = roll;
@@ -329,6 +344,9 @@ public class LootManager : MonoBehaviour
         // Randomize damage stats
         newRapier.damage = Random.Range(3, 7);
 
+        // Set weapon size
+        newRapier.weaponSize = WeaponSize.Medium;
+
         // Randomly choose up to maxSlots
         int roll = Random.Range(minSlots, maxSlots + 1);
         newRapier.enchantmentSlots = roll;
@@ -361,6 +379,9 @@ public class LootManager : MonoBehaviour
 
         // Randomize damage stats
         newLongBow.damage = Random.Range(6, 8);
+
+        // Set weapon size
+        newLongBow.weaponSize = WeaponSize.Medium;
 
         // Randomize enchantment
         if (Random.Range(0, 2) == 0 || alwaysEnchant) {

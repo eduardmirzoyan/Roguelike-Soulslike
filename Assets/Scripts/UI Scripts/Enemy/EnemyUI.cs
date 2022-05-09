@@ -5,50 +5,61 @@ using UnityEngine.UI;
 
 public class EnemyUI : MonoBehaviour
 {
-    [SerializeField] private GameObject healthBarHolder;
-    [SerializeField] private RectTransform rectTransform;
-    [SerializeField] private Image indicatorImage;
+    [Header("Components")]
+    [SerializeField] private EnemyAI enemyAI;
     [SerializeField] private Movement mv;
     [SerializeField] private Health health;
+    [SerializeField] private StatusEffectsUI statusEffectsUI;
+    [SerializeField] private Healthbar healthbar;
+
+    [SerializeField] private Image indicatorImage;
     [SerializeField] private float indicatorDuration = 1f;
+
+    
 
     private Coroutine indicatorRoutine;
 
     // Start is called before the first frame update
     private void Awake() {
-        rectTransform = GetComponent<RectTransform>();
+        enemyAI = GetComponentInParent<EnemyAI>();
         mv = GetComponentInParent<Movement>();
         health = GetComponentInParent<Health>();
-        
-        if (healthBarHolder == null) {
-            print("ERROR SETTING HEALTHBAR: " + gameObject.name);
-        }
+        statusEffectsUI = GetComponentInChildren<StatusEffectsUI>();
+        healthbar = GetComponentInChildren<Healthbar>();
+        indicatorImage = GetComponentInChildren<Image>();
     }
 
     private void Start()
     {
+        // Subscribe
         GameEvents.instance.onHit += enableCanvasOnHit;
-        healthBarHolder.SetActive(false);
+        // healthBarHolder.SetActive(false);
+        indicatorImage.enabled = false;
+
+        // Set up internal UI
+        statusEffectsUI.setEntity(enemyAI.GetComponent<EffectableEntity>());
+        healthbar.setEntity(health);
+
+        // Disable UI
+        healthbar.enabled = false;
+        statusEffectsUI.enabled = false;
     }
 
     // Update is called once per frame
     private void Update()
     {
         // If canvas is disabled, then don't do anything
-        if (!healthBarHolder.activeInHierarchy)
+        if (!healthbar.enabled)
             return;
 
-        // If enemy is dead, then disable healthbar
-        if (health.isEmpty()) {
-            healthBarHolder.SetActive(false);
-            return;
-        }
-
+        // Flip healthbar and Status effects
         if (mv.getFacingDirection() == -1) {
-            rectTransform.localRotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+            healthbar.transform.localRotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+            statusEffectsUI.transform.localRotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
         }
         else {
-            rectTransform.localRotation = Quaternion.identity;
+            healthbar.transform.localRotation = Quaternion.identity;
+            statusEffectsUI.transform.localRotation = Quaternion.identity;
         }
     }
 
@@ -56,7 +67,9 @@ public class EnemyUI : MonoBehaviour
         if (hit == null || attacker == null || mv == null)
             return;
         if (hit.gameObject == mv.gameObject && damage > 0) {
-            healthBarHolder.SetActive(true);
+            // Enable UI
+            healthbar.enabled = true;
+            statusEffectsUI.enabled = true;
         }
     }
 

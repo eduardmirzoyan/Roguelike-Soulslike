@@ -44,13 +44,16 @@ public class ThiefAI : EnemyAI
 
     [SerializeField] private ThiefState thiefState;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         inventory = GetComponent<Inventory>();
         inventory.setMax(maxInventorySize);
         pathfindUser = GetComponent<PathfindUser>();
+    }
 
+    private void Start()
+    {
         // Reset looting
         lootingCircle.fillAmount = 0;
         wanderTimer = wanderRate;
@@ -108,6 +111,7 @@ public class ThiefAI : EnemyAI
 
                 // If a target is found, then go after it
                 if (target != null) {
+                        enemyUI.enableIndicator(GameManager.instance.aggroIndicatorSprite);
                         // Set target
                         pathfindUser.setPathTo(target.position);
                         // Set state
@@ -209,7 +213,8 @@ public class ThiefAI : EnemyAI
                     }
 
                     // If you get farther than aggro range, remove target
-                    if (Vector2.Distance(transform.position, target.position) > aggroRange) {
+                    if (Vector2.Distance(transform.position, target.position) > deAggroRange) {
+                        enemyUI.enableIndicator(GameManager.instance.deaggroIndicatorSprite);
                         target = null;
                         thiefState = ThiefState.Idle;
                         return;
@@ -225,7 +230,6 @@ public class ThiefAI : EnemyAI
 
                     // If you are in range
                     if (Vector3.Distance(transform.position, target.position) < attackRange) {
-                        //print("dile");
                         // Attack!
                         mv.Walk(0);
 

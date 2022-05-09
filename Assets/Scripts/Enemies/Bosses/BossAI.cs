@@ -16,8 +16,7 @@ public class BossAI : EnemyAI
     [SerializeField] protected string fallingAnimation = "Fall";
     [SerializeField] protected string deadAnimation = "Die";
 
-    protected override void Start() {
-        base.Start();
+    private void Start() {
 
         // Set bossUI
         bossHealthBarUI = GameObject.Find("Boss Health Bar").GetComponent<BossHealthBarUI>();

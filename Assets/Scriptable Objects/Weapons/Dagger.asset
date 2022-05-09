@@ -19,12 +19,12 @@ MonoBehaviour:
   count: 1
   description: Dag em
   name: Test Dagger
-  damage: 10
+  damage: 1
   critDamage: 1
   staminaCostMultiplier: 1
   weaponType: 5
   weaponSize: 0
   twoHanded: 0
   enchantments:
-  - {fileID: 11400000, guid: a92dbe48c51f053498524c2a873d3206, type: 2}
+  - {fileID: 11400000, guid: 885790f48d842604b88f0a6a8cf523e7, type: 2}
   enchantmentSlots: 3

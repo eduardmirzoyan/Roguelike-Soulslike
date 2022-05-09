@@ -30,9 +30,8 @@ public class SlimeAI : EnemyAI
     [SerializeField] private SlimeState slimeState;
 
     // Start is called before the first frame update
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         wanderTimer = wanderRate;
         slimeState = SlimeState.Idle;
     }

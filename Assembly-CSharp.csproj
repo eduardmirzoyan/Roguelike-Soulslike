@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\FortifyOnHitEnchantment.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Timed Effects\TimedBurnEffect.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\ShortestPath\DijkstraExtensions.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\ReducedStaminaCostEnchantment.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\BossHealthBarUI.cs" />
      <Compile Include="Assets\Scripts\Consumables\PotionConsumable.cs" />
      <Compile Include="Assets\Scripts\Item\AmmoItem.cs" />
@@ -120,6 +121,7 @@
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\Graph\Node.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\InteractionUI.cs" />
      <Compile Include="Assets\Scripts\Player\InputBuffer.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\ReduceStaminaDelayEnchantment.cs" />
      <Compile Include="Assets\Scripts\Player\Upgrade.cs" />
      <Compile Include="Assets\Scripts\LootManager.cs" />
      <Compile Include="Assets\Scripts\Item\DefaultItem.cs" />
@@ -212,6 +214,7 @@
      <Compile Include="Assets\Pathfinding\PathfindUser.cs" />
      <Compile Include="Assets\Pathfinding\PathfindingMap.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Timed Effects\TimedEffect.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\ReduceStaminaDurationEnchantment.cs" />
      <Compile Include="Assets\Scripts\Weapons\Melee Weapons\Sword.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\HUD.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Base Effects\FortifiedEffect.cs" />
@@ -237,6 +240,7 @@
      <Compile Include="Assets\Scripts\Player\Skills\Skill Upgrades\BashUpgradeTwo.cs" />
      <Compile Include="Assets\Scripts\Item\WeaponItem.cs" />
      <Compile Include="Assets\Pathfinding\Dijkstra.NET\ShortestPath\Edge.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\RestoreStaminaOnCritEnchantment.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\FasterRollingEnchantment.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Ranged Enchantments\FasterProjectileEnchantment.cs" />
      <Compile Include="Assets\Scripts\Projectiles\MagicBolt.cs" />
@@ -286,10 +290,6 @@
      <Compile Include="Assets\Scripts\UI Scripts\ExperienceBar.cs" />
      <Compile Include="Assets\Scripts\Enemies\Imp\ImpAI.cs" />
      <Compile Include="Assets\Scripts\Familiars\FamiliarHandler.cs" />
-     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\ReducedStaminaCostEnchantment.cs" />
-     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\RestoreStaminaOnCritEnchantment.cs" />
-     <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\ReduceStaminaDelayEnchantment.cs" />
-     <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\ReduceStaminaDurationEnchantment.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

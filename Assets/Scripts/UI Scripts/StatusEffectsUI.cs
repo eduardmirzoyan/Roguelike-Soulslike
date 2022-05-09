@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class StatusEffectsUI : MonoBehaviour
 {
+    [SerializeField] private bool isPlayer = false;
     [SerializeField] private Dictionary<TimedEffect, GameObject> effectHolderDict; // Holds any number of effects you may want
     [SerializeField] private HorizontalLayoutGroup horizontalLayoutGroup;
     [SerializeField] private EffectableEntity effectableEntity;
@@ -21,10 +22,13 @@ public class StatusEffectsUI : MonoBehaviour
     }
 
     private void Start() {
-        // Subscribe to events
-        if (effectableEntity != null) {
-            GameEvents.instance.onAddStatusEffect += addStatusEffect;
-            GameEvents.instance.onRemoveStatusEffect += removeStatusEffect;
+        if (isPlayer) {
+            effectableEntity = GameManager.instance.GetPlayer().GetComponent<EffectableEntity>();
+            // Subscribe to events
+            if (effectableEntity != null) {
+                GameEvents.instance.onAddStatusEffect += addStatusEffect;
+                GameEvents.instance.onRemoveStatusEffect += removeStatusEffect;
+            }
         }
     }
 

@@ -56,12 +56,11 @@ public class Displacable : MonoBehaviour
         }
 
         stunDuration += duration;
-        if (particles != null) {
-            var ps = Instantiate(particles, transform).GetComponent<ParticleSystem>();
-            var main = ps.main;
-            main.duration = duration;
-            ps.Play();
-        }
+        
+        var ps = Instantiate(GameManager.instance.stunParticles, transform).GetComponent<ParticleSystem>();
+        var main = ps.main;
+        main.duration = duration;
+        ps.Play();
     }
 
     public bool isDisplaced() {

@@ -20,9 +20,10 @@ MonoBehaviour:
   description: 
   name: Rapier
   damage: 1
-  critChance: 0
   critDamage: 1
+  staminaCostMultiplier: 1
   weaponType: 0
+  weaponSize: 0
   twoHanded: 0
   enchantments: []
   enchantmentSlots: 3

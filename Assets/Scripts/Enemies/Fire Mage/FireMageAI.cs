@@ -28,13 +28,11 @@ public class FireMageAI : EnemyAI
     [SerializeField] private string staggerAnimation = "Stagger";
 
     // Start is called before the first frame update
-    protected override void Start()
+    protected override void Awake()
     {
         // Get required components
         damageable = GetComponent<Damageable>();
         collidable = GetComponent<Collidable>();
-
-        base.Start();
     }
 
     protected void FixedUpdate()

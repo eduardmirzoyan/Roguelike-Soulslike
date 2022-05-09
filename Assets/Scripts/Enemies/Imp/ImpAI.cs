@@ -52,10 +52,9 @@ public class ImpAI : EnemyAI
     }
     [SerializeField] private ImpState impState;
 
-    // Start is called before the first frame update
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -67,7 +66,11 @@ public class ImpAI : EnemyAI
         // Don't interact with platforms
         platformCollider = GameObject.Find("Platform").GetComponent<CompositeCollider2D>();
         Physics2D.IgnoreCollision(platformCollider, collider2d);
-        
+    }
+
+    // Start is called before the first frame update
+    protected void Start()
+    {
         goldTimer = goldGenerationRate;
         interactingCircle.fillAmount = 0;
         heldGold = 0;
@@ -280,7 +283,8 @@ public class ImpAI : EnemyAI
                     }
 
                     // If you get farther than aggro range, remove target
-                    if (Vector2.Distance(transform.position, target.position) > aggroRange) {
+                    if (Vector2.Distance(transform.position, target.position) > deAggroRange) {
+                        enemyUI.enableIndicator(GameManager.instance.deaggroIndicatorSprite);
                         target = null;
                         impState = ImpState.Idle;
                         return;
@@ -418,6 +422,7 @@ public class ImpAI : EnemyAI
     }
 
     public void aggroOn(Transform entity) {
+        enemyUI.enableIndicator(GameManager.instance.aggroIndicatorSprite);
         interactingCircle.fillAmount = 0; // Reset circle
         target = entity;
         impState = ImpState.Attacking;

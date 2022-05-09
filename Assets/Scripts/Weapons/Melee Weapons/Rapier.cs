@@ -55,7 +55,20 @@ public class Rapier : MeleeWeapon
                     InputBuffer.instance.resetAttackRequests();
 
                     // If the weapon should crit dash, then do logic for crit dash
-                    if (shouldCritDash) {               
+                    if (shouldCritDash) {      
+                        // Damage the enemy
+                        if (enemyHit.transform.TryGetComponent(out Damageable damageable)) {
+                            Damage dmg = new Damage
+                            {
+                                damageAmount = (int) (owner.damage * (1 + owner.critDamage) * (1 + wielderStats.damageDealtMultiplier)),
+                                source = DamageSource.fromPlayer,
+                                origin = transform,
+                                effects = weaponEffects,
+                                color = Color.yellow
+                            };
+                            damageable.takeDamage(dmg);
+                        }    
+
                         // Calculate dashspeed here
                         currentPos = wielderMovement.transform.position;
 
@@ -179,7 +192,7 @@ public class Rapier : MeleeWeapon
 
     protected override void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collider.TryGetComponent(out Damageable damageable) && collider.gameObject != this.gameObject)
+        if(collider.TryGetComponent(out Damageable damageable) && collider.gameObject != this.gameObject && !shouldCritDash)
         {
             // Roll for miss
             int roll = Random.Range(0, 100);

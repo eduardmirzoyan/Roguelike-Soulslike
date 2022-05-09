@@ -26,16 +26,21 @@ public class GhostKnightAI : EnemyAI
     }
     [SerializeField] private KnightState knightState;
 
-    // Start is called before the first frame update
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         // Get required components
         pathfindUser = GetComponent<PathfindUser>();
         sleepingParticles = GetComponent<ParticleSystem>();
         pathfindUser = GetComponent<PathfindUser>();
+    }
 
+    // Start is called before the first frame update
+    private void Start()
+    {
+        
         sleep();
+        
         // Set starting state
         knightState = KnightState.Sleeping;
     }
@@ -74,6 +79,7 @@ public class GhostKnightAI : EnemyAI
 
                 // If an enemy has been found, change states
                 if (target != null) {
+                    enemyUI.enableIndicator(GameManager.instance.aggroIndicatorSprite);
                     pathfindUser.setPathTo(target.position);
                     awaken();
 
@@ -107,11 +113,10 @@ public class GhostKnightAI : EnemyAI
                 }
 
                 // If target goes too far
-                if (Vector2.Distance(target.position, transform.position) > aggroRange) {
+                if (Vector2.Distance(target.position, transform.position) > deAggroRange) {
+                    enemyUI.enableIndicator(GameManager.instance.deaggroIndicatorSprite);
                     target = null;
-                    
                     sleep();
-
                     // Go back sleep state
                     knightState = KnightState.Sleeping;
                     return;

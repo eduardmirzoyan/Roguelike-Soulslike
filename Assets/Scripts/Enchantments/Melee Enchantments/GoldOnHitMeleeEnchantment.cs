@@ -32,6 +32,7 @@ public class GoldOnHitMeleeEnchantment : MeleeEchantment
             // Min gold gain is 1
             goldGenerated = Mathf.Max(goldGenerated, 1);
 
+            // Add gold
             GameManager.instance.addGold(goldGenerated);
 
             // Create popup

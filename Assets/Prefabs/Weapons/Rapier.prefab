@@ -4903,6 +4903,7 @@ GameObject:
   - component: {fileID: 8893320882523020465}
   - component: {fileID: 8893320882523020464}
   - component: {fileID: 8893320882523020471}
+  - component: {fileID: 1449712432118528437}
   m_Layer: 6
   m_Name: Rapier
   m_TagString: Untagged
@@ -5075,3 +5076,16 @@ MonoBehaviour:
   indicatorRenderer: {fileID: 5644306623240210740}
   activeIndicatorSprite: {fileID: 21300000, guid: bfc5068a6f5b58f4cb969c1839818bb6, type: 3}
   dashIndicatorSprite: {fileID: 21300000, guid: 13ad892a9e4d75247998f04ebd93423b, type: 3}
+--- !u!114 &1449712432118528437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8893320882523020469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42096ea89a7ec6c4e90c10d2fec71744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enchantments: []

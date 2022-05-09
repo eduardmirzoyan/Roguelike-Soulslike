@@ -18,6 +18,7 @@ public abstract class EnemyAI : MonoBehaviour
     [SerializeField] protected LineOfSight lineOfSight;
     [SerializeField] protected Displacable displacable;
     [SerializeField] protected Stats stats;
+    [SerializeField] protected EnemyUI enemyUI;
 
     [Header("Wandering Settings")]
     [SerializeField] protected float wanderRadius;
@@ -25,6 +26,7 @@ public abstract class EnemyAI : MonoBehaviour
 
     [Header("Combat Settings")]
     [SerializeField] protected float aggroRange;
+    [SerializeField] protected float deAggroRange;
     [SerializeField] protected float attackRange;
     [SerializeField] protected float attackCooldown;
     [SerializeField] protected float attackDuration;
@@ -43,7 +45,7 @@ public abstract class EnemyAI : MonoBehaviour
     protected float attackCooldownTimer;
     protected float attackTimer;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         // Get components
         body = GetComponent<Rigidbody2D>();
@@ -54,6 +56,7 @@ public abstract class EnemyAI : MonoBehaviour
         mv = GetComponent<Movement>();
         displacable = GetComponent<Displacable>();
         stats = GetComponent<Stats>();
+        enemyUI = GetComponentInChildren<EnemyUI>();
 
         target = attacker = null;
     }
@@ -94,6 +97,9 @@ public abstract class EnemyAI : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, aggroRange);
+
+        Gizmos.color = Color.gray;
+        Gizmos.DrawWireSphere(transform.position, deAggroRange);
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);

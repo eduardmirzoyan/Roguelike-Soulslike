@@ -10,6 +10,9 @@ public class GoblinAI : EnemyAI
 {
     [Header("Goblin Components")]
     [SerializeField] private PathfindUser pathfindUser;
+    [SerializeField] private float reCalculateDelay = 0.5f;
+
+    private float calculateTimer;
 
     [Header("Goblin Settings")]
     [SerializeField] private Transform currentCamp;
@@ -35,14 +38,16 @@ public class GoblinAI : EnemyAI
     }
     [SerializeField] private GoblinState goblinState;
 
-    // Start is called before the first frame update
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
-
+        base.Awake();
         // Get required components
         pathfindUser = GetComponent<PathfindUser>();
+    }
 
+    // Start is called before the first frame update
+    protected void Start()
+    {
         // Go to nearest camp
         goToNearestCamp();
 
@@ -100,19 +105,25 @@ public class GoblinAI : EnemyAI
                 if (target != null) {
                     pathfindUser.setPathTo(target.position);
                     stats.movespeedMultiplier = 0;
-                    GetComponentInChildren<EnemyUI>().enableIndicator(GameManager.instance.aggroIndicatorSprite);
+                    enemyUI.enableIndicator(GameManager.instance.aggroIndicatorSprite);
                     goblinState = GoblinState.Chasing;
                     break;
                 }
 
-                // If no target, then go to camp
-                if (targetCamp == null) {
-                    goToNearestCamp();
-                    stats.movespeedMultiplier = 0;
-                    goblinState = GoblinState.Patroling;
-                    break;
+                if (wanderTimer > 0) {
+                    mv.Walk(0);
+                    wanderTimer -= Time.deltaTime;
                 }
-
+                else {
+                    // If no target, then go to camp
+                    if (targetCamp == null) {
+                        goToNearestCamp();
+                        stats.movespeedMultiplier = 0;
+                        goblinState = GoblinState.Patroling;
+                        break;
+                    }
+                }
+                
                 // Handle any displacement
                 if (displacable.isDisplaced()) {
                     if (displacable.isStunned()) {
@@ -189,7 +200,8 @@ public class GoblinAI : EnemyAI
 
                     pathfindUser.setPathTo(target.position);
                     stats.movespeedMultiplier = 0f;
-                    GetComponentInChildren<EnemyUI>().enableIndicator(GameManager.instance.aggroIndicatorSprite);
+                    enemyUI.enableIndicator(GameManager.instance.aggroIndicatorSprite);
+                    calculateTimer = reCalculateDelay;
                     goblinState = GoblinState.Chasing;
                     break;
                 }
@@ -230,8 +242,7 @@ public class GoblinAI : EnemyAI
                         break;
                     }
                 }
-                else { // If you are not at a current camp, then go back to idle
-                    
+                else { // If you are not at a current camp, then go back to idle 
                     goblinState = GoblinState.Idle;
                     break;
                 }
@@ -260,7 +271,8 @@ public class GoblinAI : EnemyAI
                     // Change states
                     goblinState = GoblinState.Chasing;
                     // Set visual indicator
-                    GetComponentInChildren<EnemyUI>().enableIndicator(GameManager.instance.aggroIndicatorSprite);
+                    enemyUI.enableIndicator(GameManager.instance.aggroIndicatorSprite);
+                    calculateTimer = reCalculateDelay;
                     break;
                 }
 
@@ -291,24 +303,52 @@ public class GoblinAI : EnemyAI
                 }
 
                 // If target is too far
-                if (Vector2.Distance(target.transform.position, transform.position) > aggroRange) {
+                if (Vector2.Distance(target.transform.position, transform.position) > deAggroRange) {
                     target = null;
-                    GetComponentInChildren<EnemyUI>().enableIndicator(GameManager.instance.deaggroIndicatorSprite);
+                    enemyUI.enableIndicator(GameManager.instance.deaggroIndicatorSprite);
+                    wanderTimer = wanderRate;
                     goblinState = GoblinState.Idle;
                     break;
                 }
 
-                // Move towards target
-                pathfindUser.moveToLocation(1 + stats.movespeedMultiplier);
+                
 
-                // If you go within attack range
+                // Reduce attack timer
+                if (attackCooldownTimer > 0) {
+                    attackCooldownTimer -= Time.deltaTime;
+                }
+
+                // If you go within attack range and can attack
                 if (Vector2.Distance(transform.position, target.position) < attackRange) {
+                    // Face target
+                    faceTarget();
+
                     // Stop moving
-                    pathfindUser.stopTraveling();
-                    
-                    // Change to Attack State!
-                    goblinState = GoblinState.Attacking;
-                    return;
+                    mv.Walk(0);
+
+                    // If time to attack, then attack
+                    if (attackCooldownTimer <= 0) {
+                        // Check if you are on the same y-level
+                        var hits = Physics2D.RaycastAll(transform.position, mv.getFacingDirection() * Vector2.right, attackRange);
+                        foreach (var hit in hits) {
+                            // If the target is on the same level, then attack
+                            if (hit.transform == target.transform) {
+                                // Stop moving
+                                pathfindUser.stopTraveling();
+
+                                // Begin attack
+                                attack();
+                                
+                                // Change to Attack State!
+                                goblinState = GoblinState.Attacking;
+                                return;
+                            }
+                        }
+                    }
+                }
+                else {
+                    // Move towards target
+                    pathfindUser.moveToLocation(1 + stats.movespeedMultiplier);
                 }
 
                 // Handle any displacement
@@ -323,8 +363,32 @@ public class GoblinAI : EnemyAI
                     break;
                 }
 
+                // Count down
+                if (calculateTimer > 0) {
+                    calculateTimer -= Time.deltaTime;
+                }
+                else {
+                    // Generate new path if grounded
+                    if (mv.isGrounded()) {
+                        // If target can move and is grounded, then you make recalculate
+                        if (target.TryGetComponent(out Movement movement)) {
+                            if (movement.isGrounded()) {
+                                pathfindUser.setPathTo(target.position);
+                                calculateTimer = reCalculateDelay;
+                            }
+                            // else dont
+                        }
+                        else {
+                            pathfindUser.setPathTo(target.position);
+                            calculateTimer = reCalculateDelay;
+                        }
+                        
+                    }   
+                }
+
             break;
             case GoblinState.Attacking:
+
                 // If you are in the middle of an attack, then let it play out
                 if (attackTimer > 0) {
                     animationHandler.changeAnimationState(attackAnimation);
@@ -334,62 +398,64 @@ public class GoblinAI : EnemyAI
                         mv.dash(attackDashSpeed, mv.getFacingDirection());
                     }
                 }
-                else { // Else chase target until it is in range or too far
-
-                    // If target is gone (IE dead)
-                    if (target == null) {
-                        mv.Walk(0);
-                        // Go back to search state
-                        goblinState = GoblinState.Idle;
-                        return;
-                    }
-
-                    // If you get farther than aggro range, remove target
-                    if (Vector2.Distance(transform.position, target.position) > aggroRange) {
-                        GetComponentInChildren<EnemyUI>().enableIndicator(GameManager.instance.deaggroIndicatorSprite);
-                        target = null;
-                        goblinState = GoblinState.Idle;
-                        return;
-                    }
-
-                    // Always face target
-                    faceTarget();
-
-                    // If you have an attack cooldown, then reduce it
-                    if (attackCooldownTimer > 0) {
-                        attackCooldownTimer -= Time.deltaTime;
-                    }
-
-
-                    // If you are in range
-                    if (Vector3.Distance(transform.position, target.position) < attackRange) {
-                        
-                        // Don't move
-                        mv.Walk(0);
-                        
-
-                        // Change animation
-                        animationHandler.changeAnimationState(idleAnimation);
-
-                        // Check if cooldown is over
-                        if (attackCooldownTimer <= 0) {
-                            // Raycast ahead
-                            var hits = Physics2D.RaycastAll(transform.position, mv.getFacingDirection() * Vector2.right, attackRange);
-                            foreach (var hit in hits) {
-                                // If the target is on the same level, then attack
-                                if (hit.transform == target.transform) {
-                                    // Start the attack
-                                    attack();
-                                    return;
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        animationHandler.changeAnimationState(walkAnimation);
-                        handleForwardMovement(mv.getFacingDirection());
-                    }
+                else {
+                    mv.Walk(0);
+                    goblinState = GoblinState.Chasing;
                 }
+                // else { // Else chase target until it is in range or too far
+
+                //     // If target is gone (IE dead)
+                //     if (target == null) {
+                //         mv.Walk(0);
+                //         // Go back to search state
+                //         goblinState = GoblinState.Idle;
+                //         return;
+                //     }
+
+                //     // If you get farther than aggro range, remove target
+                //     if (Vector2.Distance(transform.position, target.position) > aggroRange + 1) {
+                //         target = null;
+                //         wanderTimer = wanderRate;
+                //         enemyUI.enableIndicator(GameManager.instance.deaggroIndicatorSprite);
+                //         goblinState = GoblinState.Idle;
+                //         return;
+                //     }
+
+                //     // Always face target
+                //     faceTarget();
+
+                //     // If you have an attack cooldown, then reduce it
+                //     if (attackCooldownTimer > 0) {
+                //         attackCooldownTimer -= Time.deltaTime;
+                //     }
+
+                //     // If you are in range
+                //     if (Vector3.Distance(transform.position, target.position) < attackRange) {
+                //         // Don't move
+                //         mv.Walk(0);
+
+                //         // Change animation
+                //         animationHandler.changeAnimationState(idleAnimation);
+
+                //         // Check if cooldown is over
+                //         if (attackCooldownTimer <= 0) {
+                //             // Raycast ahead
+                //             var hits = Physics2D.RaycastAll(transform.position, mv.getFacingDirection() * Vector2.right, attackRange);
+                //             foreach (var hit in hits) {
+                //                 // If the target is on the same level, then attack
+                //                 if (hit.transform == target.transform) {
+                //                     // Start the attack
+                //                     attack();
+                //                     return;
+                //                 }
+                //             }
+                //         }
+                //     }
+                //     else {
+                //         animationHandler.changeAnimationState(walkAnimation);
+                //         handleForwardMovement(mv.getFacingDirection());
+                //     }
+                // }
                 
                 // Handle any displacement
                 if (displacable.isDisplaced()) {

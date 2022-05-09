@@ -9,15 +9,26 @@ public class Healthbar : MonoBehaviour
     [SerializeField] private Text healthText;
     [SerializeField] private Health health;
 
-    private void Start()
+    private void Awake()
     {
+        slider = GetComponent<Slider>();
         healthText = GetComponentInChildren<Text>();
+    }
+
+    public void setEntity(Health health) {
+        this.health = health;
+        slider.maxValue = health.getMaxHP();
+        slider.value = health.getHP();
+        healthText.text = slider.value.ToString() + " / " + slider.maxValue.ToString();
     }
 
     private void FixedUpdate()
     {
-        slider.maxValue = health.getMaxHP();
-        slider.value = health.getHP();
-        healthText.text = slider.value.ToString() + " / " + slider.maxValue.ToString();
+        if (health != null) {
+            slider.maxValue = health.getMaxHP();
+            slider.value = health.getHP();
+            healthText.text = slider.value.ToString() + " / " + slider.maxValue.ToString();
+        }
+        
     }
 }
