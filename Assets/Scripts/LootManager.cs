@@ -411,6 +411,9 @@ public class LootManager : MonoBehaviour
         // Randomize armor stats based on armor type
         newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
 
+        // Set stamina bonus
+        newArmor.bonusStamina = 10;
+
         // Randomize enchantment
         if (Random.Range(0, 2) == 0 || alwaysEnchant) {
             newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
@@ -436,6 +439,9 @@ public class LootManager : MonoBehaviour
 
         // Randomize armor stats based on armor type
         newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
+
+        // Set stamina bonus
+        newArmor.bonusStamina = 10;
 
         // Randomize enchantment
         if (Random.Range(0, 2) == 0 || alwaysEnchant) {
@@ -463,6 +469,9 @@ public class LootManager : MonoBehaviour
         // Randomize armor stats based on armor type
         newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
 
+        // Set stamina bonus
+        newArmor.bonusStamina = 10;
+
         // Randomize enchantment
         if (Random.Range(0, 2) == 0 || alwaysEnchant) {
             newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
@@ -489,6 +498,9 @@ public class LootManager : MonoBehaviour
         // Randomize armor stats based on armor type
         newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
 
+        // Set stamina bonus
+        newArmor.bonusStamina = 10;
+
         // Randomize enchantment
         if (Random.Range(0, 2) == 0 || alwaysEnchant) {
             newArmor.enchantment = armorEnchantments[Random.Range(0, armorEnchantments.Count)];
@@ -514,6 +526,9 @@ public class LootManager : MonoBehaviour
 
         // Randomize armor stats based on armor type
         newArmor.defenseValue = Random.Range(1, 5) * (1 + (int)newArmor.armorType);
+
+        // Set stamina bonus
+        newArmor.bonusStamina = 10;
 
         // Randomize enchantment
         if (Random.Range(0, 2) == 0 || alwaysEnchant) {

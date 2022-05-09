@@ -173,9 +173,11 @@ public class EquipmentHandler : MonoBehaviour
         // Add new armor's stats to player
         stats.defense += newArmor.defenseValue;
 
-        // Add stamina
+        // Add stamina to stats
         stats.bonusStamina += newArmor.bonusStamina;
-        stamina.maxStamina += newArmor.bonusStamina;
+
+        // Actually increase stamina
+        stamina.changeMaxStamina(newArmor.bonusStamina);
 
         // Add the armor's enchantment to the player
         if (newArmor.enchantment != null)
@@ -189,9 +191,9 @@ public class EquipmentHandler : MonoBehaviour
 
         // Remove max stamina effects
         stats.bonusStamina -= equippedArmor[slot].bonusStamina;
-        stamina.maxStamina -= equippedArmor[slot].bonusStamina;
-        if (stamina.currentStamina > stamina.maxStamina)
-            stamina.currentStamina = stamina.maxStamina;
+
+        // Actually decrease stamina
+        stamina.changeMaxStamina(-equippedArmor[slot].bonusStamina);
 
         // Remove the armor's enchantment
         if (equippedArmor[slot].enchantment != null)

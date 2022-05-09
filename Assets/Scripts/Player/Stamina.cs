@@ -17,6 +17,7 @@ public class Stamina : MonoBehaviour
 
     private void Start() {
         GameEvents.instance.triggerStaminaChange(this);
+        GameEvents.instance.onCrit += restoreStaminaOnCrit;
     }
 
     private void FixedUpdate() {
@@ -85,17 +86,18 @@ public class Stamina : MonoBehaviour
         // }
     }
 
+    private void restoreStaminaOnCrit(Weapon weapon, Transform target) {
+        // Restore stamina based on the size of the weapon, raw
+        int amountToRestore = weapon.getOwner().rawStaminaCost();
+        restoreStamina(amountToRestore);
+    }
+
     public bool useStamina(int amount) {
         // If stamina is depleted, then dont use stamina
         if (currentStamina <= 0) {
             // Visual feedback
             PopUpTextManager.instance.createVerticalPopup("Not Enough Stamina", Color.gray, transform.position);
             return false;
-        }
-
-        // If you use 0, then do nothing
-        if (amount == 0) {
-            return true;
         }
 
         if (amount < 0) {
@@ -130,6 +132,36 @@ public class Stamina : MonoBehaviour
 
         // Trigger event
         GameEvents.instance.triggerStaminaChange(this);
+    }
+
+    public void changeMaxStamina(int amount) {
+        maxStamina += amount;
+
+        if (amount > 0) {
+            // Change state to depleted
+            useStamina(0);
+        }
+        else if (amount < 0) {
+            if (currentStamina > maxStamina) {
+                // adjust current stamina
+                currentStamina = maxStamina;
+                // Trigger event
+                GameEvents.instance.triggerStaminaChange(this);
+                // Change state
+                staminaState = StaminaState.Full;
+            }
+        }
+        else {
+            print("increasing max stamina by 0");
+        }
+    }
+
+    public void changeDelay(float factor) {
+        regenDelay *= factor;
+    }
+
+    public void changeDuration(float factor) {
+        regenDuration *= factor;
     }
 
     public int getCurrent() {

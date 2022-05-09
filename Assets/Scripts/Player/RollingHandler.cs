@@ -12,6 +12,7 @@ public class RollingHandler : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private int staminaCost = 20;
+    [SerializeField] private float staminaCostMultiplier = 1f;
     [SerializeField] private float rollCooldown = 1f;
     [SerializeField] private float rollDuration = 0.5f;
     [SerializeField] private float rollSpeed = 350f;
@@ -62,7 +63,7 @@ public class RollingHandler : MonoBehaviour
     }
 
     public bool canRoll() {
-        return rollCooldownTimer <= 0f && stamina.useStamina(staminaCost);
+        return rollCooldownTimer <= 0f && stamina.useStamina((int) (staminaCost * staminaCostMultiplier));
     }
 
     public void roll() {

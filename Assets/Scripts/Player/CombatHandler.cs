@@ -49,6 +49,11 @@ public class CombatHandler : MonoBehaviour
     // Returns if the attack can happen
     public bool mainHandAttack() {
         if ((mainHandWeapon != null && mainHandWeapon.canInitiate()) && (offHandWeapon == null || offHandWeapon.isReady())) {
+            // Check if you have enough stamina
+            if (!stamina.useStamina(mainHandWeapon.getOwner().staminaCost())) {
+                return false;
+            }
+
             // Start weapon attack
             mainHandWeapon.initiateAttack();
 
@@ -63,6 +68,11 @@ public class CombatHandler : MonoBehaviour
     // Returns if the attack can happen
     public bool offhandAttack() {
         if ((offHandWeapon != null && offHandWeapon.canInitiate()) && (mainHandWeapon == null || mainHandWeapon.isReady())) {
+            // Check if you have enough stamina
+            if (!stamina.useStamina(offHandWeapon.getOwner().staminaCost())) {
+                return false;
+            }
+
             // Animation is based on the current combo you are on
             animationHandler.changeAnimationState(offHandWeapon.getAnimationName());
 

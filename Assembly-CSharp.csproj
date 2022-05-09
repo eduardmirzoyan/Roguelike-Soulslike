@@ -90,6 +90,7 @@
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\StaminaBar.cs" />
      <Compile Include="Assets\Scripts\General Use\AnimationHandler.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Mushroom Boss\Shockwave.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\FreezeOnCritEnchantment.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\LongFamiliarEnchantment.cs" />
      <Compile Include="Assets\Scripts\Corpse.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Timed Effects\TimedSpeedEffect.cs" />
@@ -183,6 +184,7 @@
      <Compile Include="Assets\Scripts\Weapons\Ranged Weapons\Ranged Weapon.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\CritDamageEnchantment.cs" />
      <Compile Include="Assets\Scripts\GoblinCamp.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\RampingDamageEnchantment.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\WeaponDisplayUI.cs" />
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\AmmoCountUI.cs" />
      <Compile Include="Assets\Scripts\Status Effects\Base Effects\KnockbackEffect.cs" />
@@ -284,8 +286,10 @@
      <Compile Include="Assets\Scripts\UI Scripts\ExperienceBar.cs" />
      <Compile Include="Assets\Scripts\Enemies\Imp\ImpAI.cs" />
      <Compile Include="Assets\Scripts\Familiars\FamiliarHandler.cs" />
-     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\FreezeOnCritEnchantment.cs" />
-     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\RampingDamageEnchantment.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\ReducedStaminaCostEnchantment.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\RestoreStaminaOnCritEnchantment.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\ReduceStaminaDelayEnchantment.cs" />
+     <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\ReduceStaminaDurationEnchantment.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

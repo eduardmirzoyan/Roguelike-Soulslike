@@ -71,7 +71,7 @@ public class TooltipUI : MonoBehaviour
                             var weaponItem = (WeaponItem)selectedItem;
 
                             // Set item type
-                            itemType.text = weaponItem.weaponType.ToString();
+                            itemType.text = weaponItem.weaponSize.ToString() + " " + weaponItem.weaponType.ToString();
 
                             // Set item modifier
                             if (weaponItem.enchantmentSlots > 0) {

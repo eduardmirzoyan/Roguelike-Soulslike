@@ -21,8 +21,10 @@ MonoBehaviour:
   name: Test Dagger
   damage: 10
   critDamage: 1
+  staminaCostMultiplier: 1
   weaponType: 5
+  weaponSize: 0
   twoHanded: 0
   enchantments:
-  - {fileID: 11400000, guid: 6fc3bea286a637e49b509d7378b2d32a, type: 2}
+  - {fileID: 11400000, guid: a92dbe48c51f053498524c2a873d3206, type: 2}
   enchantmentSlots: 3
