@@ -31,7 +31,7 @@ TagManager:
   - Platform
   - Projectile
   - Destructable
-  - 
+  - Minimap
   - 
   - 
   - 
@@ -49,6 +49,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Minimap
+    uniqueID: 1036078899
     locked: 0
   - name: Background
     uniqueID: 4109565415

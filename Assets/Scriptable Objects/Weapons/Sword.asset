@@ -17,12 +17,13 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: b4ff2424bf192dd45b4ef51bfab8c0d3, type: 3}
   isStackable: 0
   count: 1
-  description: Beginner's sword
+  description: CRIT every 3rd consecutive strike
   name: Rusty Sword
   damage: 4
-  critChance: 0
   critDamage: 1
+  staminaCostMultiplier: 1
   weaponType: 0
+  weaponSize: 0
   twoHanded: 0
   enchantments: []
   enchantmentSlots: 3

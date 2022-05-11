@@ -1,0 +1,1451 @@
+Using pre-set license
+Built from '2021.1/staging' branch; Version is '2021.1.7f1 (d91830b65d9b) revision 14227504'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 22616.1; Version 2009; 64bit' Language: 'en' Physical Memory: 16338 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2021.1.7f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+C:/Users/eduar/Desktop/Unity Projects/Roguelike-Soulslike
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+57420
+Successfully changed project path to: C:/Users/eduar/Desktop/Unity Projects/Roguelike-Soulslike
+C:/Users/eduar/Desktop/Unity Projects/Roguelike-Soulslike
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 109.42 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.1.7f1 (d91830b65d9b)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/eduar/Desktop/Unity Projects/Roguelike-Soulslike/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1060 6GB (ID=0x1c03)
+    Vendor:   NVIDIA
+    VRAM:     6052 MB
+    Driver:   30.0.14.9709
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56964
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.1.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001583 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 95.24 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.970 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.002985 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 98.17 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.102 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 0.72 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3826 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 220.4 MB.
+System memory in use after: 220.6 MB.
+
+Unloading 23 unused Assets to reduce memory usage. Loaded Objects now: 4307.
+Total: 2.210900 ms (FindLiveObjects: 0.276500 ms CreateObjectMapping: 0.167300 ms MarkObjects: 1.741400 ms  DeleteObjects: 0.024600 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/TextMesh Pro
+  artifactKey: Guid(f54d1bd14bd3ca042bd867b519fee8cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/TextMesh Pro using Guid(f54d1bd14bd3ca042bd867b519fee8cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16b4cbde9565bf190136f1148817e1ea') in 0.008443 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 95.136593 seconds.
+  path: Assets/Sprites/Tile Sprites/grayTile.png
+  artifactKey: Guid(8b328857fcf86ac4590a4b000a36a3e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/grayTile.png using Guid(8b328857fcf86ac4590a4b000a36a3e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd9127d3bb380e1725a0fb5b684fa4f8e') in 0.097789 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.645148 seconds.
+  path: Assets/Sprites/Tile Sprites/blackTile.png
+  artifactKey: Guid(269877a1ce94a934caae509292a9cd5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/blackTile.png using Guid(269877a1ce94a934caae509292a9cd5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e1100b55de61a33a5e3744f45ee0adc') in 0.013410 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000200 seconds.
+  path: Assets/Sprites/Tile Sprites/whiteTile.png
+  artifactKey: Guid(a5b060fed0f5ad4468a400654778da6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/whiteTile.png using Guid(a5b060fed0f5ad4468a400654778da6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8292acc65e6f1702257560e14ec225a0') in 0.014955 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003061 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.81 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.056 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.90 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3801 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 223.6 MB.
+System memory in use after: 223.8 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4362.
+Total: 2.778900 ms (FindLiveObjects: 0.300400 ms CreateObjectMapping: 0.198800 ms MarkObjects: 2.257400 ms  DeleteObjects: 0.021700 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 45.269470 seconds.
+  path: Assets/Sprites/Tile Sprites/whiteTile.png
+  artifactKey: Guid(a5b060fed0f5ad4468a400654778da6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/whiteTile.png using Guid(a5b060fed0f5ad4468a400654778da6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '26a681b2a451608d0d5e155c5953a96f') in 0.050269 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 132.370515 seconds.
+  path: Assets/Sprites/Tile Sprites/ezgif.com-gif-maker (1).png
+  artifactKey: Guid(8d8967426558aa34eae74ffe7bbc2d7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/ezgif.com-gif-maker (1).png using Guid(8d8967426558aa34eae74ffe7bbc2d7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '66d534fe1ab5346104e411c67afaae5c') in 0.011773 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 100.942422 seconds.
+  path: Assets/Sprites/Tile Sprites/ezgif.com-gif-maker.png
+  artifactKey: Guid(8fc01b5a9dfcda24f84f7aad58792673) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/ezgif.com-gif-maker.png using Guid(8fc01b5a9dfcda24f84f7aad58792673) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fdeaf811acce00440e9191283f3bdf1d') in 0.012627 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.011087 seconds.
+  path: Assets/Sprites/Tile Sprites/ezgif.com-gif-maker.png
+  artifactKey: Guid(8fc01b5a9dfcda24f84f7aad58792673) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/ezgif.com-gif-maker.png using Guid(8fc01b5a9dfcda24f84f7aad58792673) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0cae524a6db580647fb2a94c8d870141') in 0.007359 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.385125 seconds.
+  path: Assets/Sprites/Tile Sprites/lightGrayTile.png
+  artifactKey: Guid(8fc01b5a9dfcda24f84f7aad58792673) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/lightGrayTile.png using Guid(8fc01b5a9dfcda24f84f7aad58792673) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '662c65e079e1cf393c165c5c24fa720c') in 0.013479 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 15.517978 seconds.
+  path: Assets/Sprites/Tile Sprites/whiteTile.png
+  artifactKey: Guid(a5b060fed0f5ad4468a400654778da6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/whiteTile.png using Guid(a5b060fed0f5ad4468a400654778da6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90f64501b455076789841ce626299f05') in 0.007460 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002800 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.74 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.033 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.74 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3799 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 225.9 MB.
+System memory in use after: 226.2 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4452.
+Total: 2.299800 ms (FindLiveObjects: 0.278700 ms CreateObjectMapping: 0.149400 ms MarkObjects: 1.857300 ms  DeleteObjects: 0.013600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002973 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.88 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.034 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.77 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3799 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 226.0 MB.
+System memory in use after: 226.2 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4457.
+Total: 2.927900 ms (FindLiveObjects: 0.455800 ms CreateObjectMapping: 0.264500 ms MarkObjects: 2.192500 ms  DeleteObjects: 0.014200 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 70.659727 seconds.
+  path: Assets/Sprites/Tile Sprites/ezgif.com-gif-maker (1).png
+  artifactKey: Guid(8d8967426558aa34eae74ffe7bbc2d7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/ezgif.com-gif-maker (1).png using Guid(8d8967426558aa34eae74ffe7bbc2d7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3fc1fa40b256a5a9186b819eb1a4554c') in 0.057361 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.979225 seconds.
+  path: Assets/Sprites/Tile Sprites/darkGrayTile.png
+  artifactKey: Guid(8d8967426558aa34eae74ffe7bbc2d7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/darkGrayTile.png using Guid(8d8967426558aa34eae74ffe7bbc2d7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dc1b79192d46e9e99920aa647fd96d93') in 0.011419 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.655223 seconds.
+  path: Assets/Sprites/Tile Sprites/darkGrayTile.png
+  artifactKey: Guid(8d8967426558aa34eae74ffe7bbc2d7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/darkGrayTile.png using Guid(8d8967426558aa34eae74ffe7bbc2d7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d6d970c57287f2af355aac4b9b4448b') in 0.008336 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 33.559256 seconds.
+  path: Assets/Tilemap/Dungeon.prefab
+  artifactKey: Guid(cc91504460ae01c43af044def84a88c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/Dungeon.prefab using Guid(cc91504460ae01c43af044def84a88c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a1f1b6992c9713338ad665171b9a9767') in 0.020478 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.579441 seconds.
+  path: Assets/Tilemap/Tiles/Minimap/darkGrayTile.asset
+  artifactKey: Guid(e7bcdc4992e325b4da6ef3cf944586d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/Tiles/Minimap/darkGrayTile.asset using Guid(e7bcdc4992e325b4da6ef3cf944586d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f9be8b0bb3d028a9f26d85e8136b70ea') in 0.015584 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000295 seconds.
+  path: Assets/Tilemap/Tiles/Minimap/lightGrayTile.asset
+  artifactKey: Guid(b1122f8db207fb143bbe30c112fe023f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemap/Tiles/Minimap/lightGrayTile.asset using Guid(b1122f8db207fb143bbe30c112fe023f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1fd07c86a7440fa8542d73224ef089f4') in 0.007155 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002877 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.81 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.059 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.82 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.2 MB.
+System memory in use after: 227.4 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4506.
+Total: 3.462600 ms (FindLiveObjects: 0.387200 ms CreateObjectMapping: 0.312200 ms MarkObjects: 2.746300 ms  DeleteObjects: 0.015800 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002821 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.76 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.050 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.76 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.2 MB.
+System memory in use after: 227.4 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4510.
+Total: 2.637800 ms (FindLiveObjects: 0.297900 ms CreateObjectMapping: 0.204300 ms MarkObjects: 2.118100 ms  DeleteObjects: 0.016600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003256 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.89 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.056 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.77 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.2 MB.
+System memory in use after: 227.5 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4514.
+Total: 2.742500 ms (FindLiveObjects: 0.295900 ms CreateObjectMapping: 0.204700 ms MarkObjects: 2.225900 ms  DeleteObjects: 0.015100 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003343 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.85 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.007 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.85 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.2 MB.
+System memory in use after: 227.5 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4518.
+Total: 3.089500 ms (FindLiveObjects: 0.295400 ms CreateObjectMapping: 0.190000 ms MarkObjects: 2.586100 ms  DeleteObjects: 0.017000 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 624.563174 seconds.
+  path: Assets/NewSurfaceShader.shader
+  artifactKey: Guid(e19534d6281eeb544891cfed7cb52439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NewSurfaceShader.shader using Guid(e19534d6281eeb544891cfed7cb52439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '012aa7d9069b968666b6ed9fcd23fcb6') in 0.038837 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 10.246216 seconds.
+  path: Assets/NewSurfaceShader.shader
+  artifactKey: Guid(e19534d6281eeb544891cfed7cb52439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NewSurfaceShader.shader using Guid(e19534d6281eeb544891cfed7cb52439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2ceff13af6d9c92e4742c0d38458f249') in 0.003389 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 10.840177 seconds.
+  path: Assets/CanvasImageMask.shader
+  artifactKey: Guid(e19534d6281eeb544891cfed7cb52439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/CanvasImageMask.shader using Guid(e19534d6281eeb544891cfed7cb52439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '06a8a9e0ba32e3776c2bed19b93e9197') in 0.006878 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 23.805465 seconds.
+  path: Assets/NewSurfaceShader.shader
+  artifactKey: Guid(4883e85c70dd7be438919d78facbf9d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NewSurfaceShader.shader using Guid(4883e85c70dd7be438919d78facbf9d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21a38f9e937778d2de1dc075fe6c83fb') in 0.004645 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 469.592514 seconds.
+  path: Assets/CanvasImageMask.shader
+  artifactKey: Guid(e19534d6281eeb544891cfed7cb52439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/CanvasImageMask.shader using Guid(e19534d6281eeb544891cfed7cb52439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b898e47c1c82b049f83c12795c5aabfe') in 0.009016 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 12.623805 seconds.
+  path: Assets/CanvasImageMask.shader
+  artifactKey: Guid(e19534d6281eeb544891cfed7cb52439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/CanvasImageMask.shader using Guid(e19534d6281eeb544891cfed7cb52439) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9508d7c79195ce0f18617cbe9baab089') in 0.002842 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 81.302831 seconds.
+  path: Assets/DefaultWithStencil.mat
+  artifactKey: Guid(1468e4ea5b29de14797299c1536589ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DefaultWithStencil.mat using Guid(1468e4ea5b29de14797299c1536589ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4bcae4b40d73423da43292da993d03ea') in 0.060022 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 19.567946 seconds.
+  path: Assets/DefaultWithStencil.mat
+  artifactKey: Guid(1468e4ea5b29de14797299c1536589ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DefaultWithStencil.mat using Guid(1468e4ea5b29de14797299c1536589ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '358ef2903faf0572e17f017d733d10a2') in 0.010831 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002920 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.71 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.889 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.74 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3799 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.6 MB.
+System memory in use after: 227.8 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4561.
+Total: 2.526900 ms (FindLiveObjects: 0.291400 ms CreateObjectMapping: 0.146000 ms MarkObjects: 2.074400 ms  DeleteObjects: 0.014300 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002920 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.98 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.132 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.76 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.5 MB.
+System memory in use after: 227.8 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4565.
+Total: 3.653900 ms (FindLiveObjects: 0.422400 ms CreateObjectMapping: 0.211100 ms MarkObjects: 3.002900 ms  DeleteObjects: 0.016500 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002940 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.73 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.954 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 1.13 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.6 MB.
+System memory in use after: 227.8 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4569.
+Total: 2.494300 ms (FindLiveObjects: 0.280700 ms CreateObjectMapping: 0.178900 ms MarkObjects: 2.021100 ms  DeleteObjects: 0.012900 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 956.486144 seconds.
+  path: Assets/DefMat.mat
+  artifactKey: Guid(089db9efe34bda2449b8614be3fafd72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DefMat.mat using Guid(089db9efe34bda2449b8614be3fafd72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b6b1b3b61a159789bd278ba1fc48ee20') in 0.068792 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002979 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.75 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.017 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.74 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.6 MB.
+System memory in use after: 227.8 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4574.
+Total: 2.832900 ms (FindLiveObjects: 0.303400 ms CreateObjectMapping: 0.140000 ms MarkObjects: 2.371600 ms  DeleteObjects: 0.017100 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 111.853220 seconds.
+  path: Assets/DefMat.mat
+  artifactKey: Guid(089db9efe34bda2449b8614be3fafd72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DefMat.mat using Guid(089db9efe34bda2449b8614be3fafd72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '61f81866982fde772a5d0d07a12e98c2') in 0.053853 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002842 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.71 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.994 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.71 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.6 MB.
+System memory in use after: 227.8 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4579.
+Total: 2.660600 ms (FindLiveObjects: 0.310800 ms CreateObjectMapping: 0.167300 ms MarkObjects: 2.167700 ms  DeleteObjects: 0.014000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003902 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.74 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.174 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.74 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.6 MB.
+System memory in use after: 227.9 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4583.
+Total: 2.871800 ms (FindLiveObjects: 0.327300 ms CreateObjectMapping: 0.192200 ms MarkObjects: 2.210800 ms  DeleteObjects: 0.140700 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 329.698009 seconds.
+  path: Assets/PowerCircle.shader
+  artifactKey: Guid(e706235793100534e813175e9b20706d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PowerCircle.shader using Guid(e706235793100534e813175e9b20706d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '149dcafcece8d75015c420cb64ee29da') in 0.028554 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.169610 seconds.
+  path: Assets/PowerCircle.shader
+  artifactKey: Guid(e706235793100534e813175e9b20706d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PowerCircle.shader using Guid(e706235793100534e813175e9b20706d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '06e4ee5e505f7f710ce8aeae7b71c2e9') in 0.003633 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.776098 seconds.
+  path: Assets/New Mat.mat
+  artifactKey: Guid(b790fa0fe82ea224daa4cadac019139e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/New Mat.mat using Guid(b790fa0fe82ea224daa4cadac019139e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dac5d8beac59a9adaff4bf0952e1b7fb') in 0.044496 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 65.510129 seconds.
+  path: Assets/PowerCircle.shader
+  artifactKey: Guid(e706235793100534e813175e9b20706d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PowerCircle.shader using Guid(e706235793100534e813175e9b20706d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '676055e85efd2038be799a52700a809e') in 0.003599 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 24.001150 seconds.
+  path: Assets/PowerCircle.shader
+  artifactKey: Guid(e706235793100534e813175e9b20706d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PowerCircle.shader using Guid(e706235793100534e813175e9b20706d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd89ff0124589bb5439e3f472d9428230') in 0.002786 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 76.428912 seconds.
+  path: Assets/Multiply2D.shader
+  artifactKey: Guid(9589354feeb881448b121ae932c5e003) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Multiply2D.shader using Guid(9589354feeb881448b121ae932c5e003) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e79008678510ff023e96377dfc1012f9') in 0.009376 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.890641 seconds.
+  path: Assets/Multiply2D.shader
+  artifactKey: Guid(9589354feeb881448b121ae932c5e003) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Multiply2D.shader using Guid(9589354feeb881448b121ae932c5e003) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Property (_MainTex) already exists. Use SetTexture instead.
+
+ -> (artifact id: 'f0321a2ba91d420d2826b31318b1c943') in 0.003212 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 13.696382 seconds.
+  path: Assets/Multiply2D.shader
+  artifactKey: Guid(9589354feeb881448b121ae932c5e003) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Multiply2D.shader using Guid(9589354feeb881448b121ae932c5e003) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Property (_MainTex) already exists. Use SetTexture instead.
+
+ -> (artifact id: '57b7626ce058cb8977d4c3f8efd88fd9') in 0.004759 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 46.590140 seconds.
+  path: Assets/Multiply2D.shader
+  artifactKey: Guid(9589354feeb881448b121ae932c5e003) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Multiply2D.shader using Guid(9589354feeb881448b121ae932c5e003) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98f37a9a417d53bd7faec171bf18ce62') in 0.003759 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.843573 seconds.
+  path: Assets/Multiply2D.shader
+  artifactKey: Guid(9589354feeb881448b121ae932c5e003) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Multiply2D.shader using Guid(9589354feeb881448b121ae932c5e003) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4d22dd580f3382d5c6e985012c50d29') in 0.003381 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.610206 seconds.
+  path: Assets/New Mat.mat
+  artifactKey: Guid(b790fa0fe82ea224daa4cadac019139e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/New Mat.mat using Guid(b790fa0fe82ea224daa4cadac019139e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8e0ec05380a6b4a62809aab79fbfaccc') in 0.011688 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 68.977664 seconds.
+  path: Assets/Sad.shader
+  artifactKey: Guid(e0ffcc7f7400fa04dbe2d45c8c3b9144) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sad.shader using Guid(e0ffcc7f7400fa04dbe2d45c8c3b9144) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '57edaef6cce29ec3307185a1b507fee6') in 0.011809 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.771839 seconds.
+  path: Assets/Sad.shader
+  artifactKey: Guid(e0ffcc7f7400fa04dbe2d45c8c3b9144) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sad.shader using Guid(e0ffcc7f7400fa04dbe2d45c8c3b9144) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b922d1f7e81a2f6da81acd45280b5184') in 0.003079 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.226023 seconds.
+  path: Assets/Sprites/Tile Sprites/Materials/whiteTile.mat
+  artifactKey: Guid(00de96655b3ce954a91cd005f827dfc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/Materials/whiteTile.mat using Guid(00de96655b3ce954a91cd005f827dfc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80124871c17b6067d3a15cfe536211f3') in 0.011234 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000314 seconds.
+  path: Assets/Sprites/Tile Sprites/Materials/whiteTile 2.mat
+  artifactKey: Guid(20521606c99dc0d4eb751ada7d354afd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/Materials/whiteTile 2.mat using Guid(20521606c99dc0d4eb751ada7d354afd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fdd535c48f91b37a62a99f29eadd24db') in 0.010462 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000264 seconds.
+  path: Assets/Sprites/Tile Sprites/Materials/whiteTile 1.mat
+  artifactKey: Guid(deda21de09908c540bd5bbf04e8470a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Tile Sprites/Materials/whiteTile 1.mat using Guid(deda21de09908c540bd5bbf04e8470a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5e1f30ec6e3c00e16dce632cb3c1b08f') in 0.009749 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 13.137566 seconds.
+  path: Assets/Mat.mat
+  artifactKey: Guid(80510a313b25e5645ba7c856903d8184) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mat.mat using Guid(80510a313b25e5645ba7c856903d8184) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5c78dc1f6aafbf08c7881a19884cab87') in 0.013749 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 19.621064 seconds.
+  path: Assets/Mat.mat
+  artifactKey: Guid(80510a313b25e5645ba7c856903d8184) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mat.mat using Guid(80510a313b25e5645ba7c856903d8184) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '44412feca4fbc628ab77eaccf5f4e6f8') in 0.011766 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002852 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.86 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.982 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.85 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3799 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 228.1 MB.
+System memory in use after: 228.3 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4589.
+Total: 2.797600 ms (FindLiveObjects: 0.299300 ms CreateObjectMapping: 0.212400 ms MarkObjects: 2.269600 ms  DeleteObjects: 0.015100 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003724 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.80 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.018 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.77 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.8 MB.
+System memory in use after: 228.1 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4593.
+Total: 3.373800 ms (FindLiveObjects: 0.601600 ms CreateObjectMapping: 0.351800 ms MarkObjects: 2.401600 ms  DeleteObjects: 0.017700 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003290 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.74 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.913 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.83 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.7 MB.
+System memory in use after: 227.9 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4597.
+Total: 2.367100 ms (FindLiveObjects: 0.290700 ms CreateObjectMapping: 0.168800 ms MarkObjects: 1.892900 ms  DeleteObjects: 0.014000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.286989 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.71 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  6.681 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 1.15 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.9 MB.
+System memory in use after: 228.1 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4601.
+Total: 2.619800 ms (FindLiveObjects: 0.321800 ms CreateObjectMapping: 0.195400 ms MarkObjects: 2.087400 ms  DeleteObjects: 0.014200 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002833 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.80 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.975 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.73 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.9 MB.
+System memory in use after: 228.1 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4605.
+Total: 2.620100 ms (FindLiveObjects: 0.299100 ms CreateObjectMapping: 0.191200 ms MarkObjects: 2.115400 ms  DeleteObjects: 0.013600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002854 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.82 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.069 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.76 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 227.9 MB.
+System memory in use after: 228.1 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4609.
+Total: 4.519400 ms (FindLiveObjects: 0.390900 ms CreateObjectMapping: 0.334600 ms MarkObjects: 3.774700 ms  DeleteObjects: 0.017900 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 834.917390 seconds.
+  path: Assets/ezgif.com-gif-maker (2).png
+  artifactKey: Guid(07d22ef649dac1940bea53a80f3caf60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ezgif.com-gif-maker (2).png using Guid(07d22ef649dac1940bea53a80f3caf60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b98ce90de621dd81d28c2ebe9690b98f') in 0.056272 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 88.736603 seconds.
+  path: Assets/minimapBorder.png
+  artifactKey: Guid(07d22ef649dac1940bea53a80f3caf60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/minimapBorder.png using Guid(07d22ef649dac1940bea53a80f3caf60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b162c071872fba190c9909672e84908') in 0.019780 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002838 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 4.37 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.018 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.84 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3799 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 229.0 MB.
+System memory in use after: 229.2 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4645.
+Total: 2.817000 ms (FindLiveObjects: 0.312900 ms CreateObjectMapping: 0.201800 ms MarkObjects: 2.277200 ms  DeleteObjects: 0.024000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003699 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.79 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.021 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.84 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 228.9 MB.
+System memory in use after: 229.2 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4649.
+Total: 4.469100 ms (FindLiveObjects: 0.739500 ms CreateObjectMapping: 0.521800 ms MarkObjects: 3.175600 ms  DeleteObjects: 0.031200 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 829.724649 seconds.
+  path: Assets/teleportal.png
+  artifactKey: Guid(5757ff766cc0a5148b30a72df41d0266) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/teleportal.png using Guid(5757ff766cc0a5148b30a72df41d0266) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9a6ef2a284fa04a31f24f2072324f17e') in 0.105576 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.771296 seconds.
+  path: Assets/teleportal.png
+  artifactKey: Guid(5757ff766cc0a5148b30a72df41d0266) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/teleportal.png using Guid(5757ff766cc0a5148b30a72df41d0266) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '584b2a310ac837c5a46fa01967cb86b6') in 0.016364 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 18.707449 seconds.
+  path: Assets/teleportal.png
+  artifactKey: Guid(5757ff766cc0a5148b30a72df41d0266) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/teleportal.png using Guid(5757ff766cc0a5148b30a72df41d0266) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5a941a985ed88ef81731c6cb465e00c1') in 0.110994 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 382.199622 seconds.
+  path: Assets/Prefabs/Loot item.prefab
+  artifactKey: Guid(66f3cd2f0caf40b4abb72fdaaf077c54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Loot item.prefab using Guid(66f3cd2f0caf40b4abb72fdaaf077c54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2e7f0c939765e1d33485f450b75d370') in 0.063285 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.967675 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '436f1953de8f728c049a30fb35e33b7c') in 0.017016 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 25.947633 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a812dba09cb92695ff7e976c608683dd') in 0.030214 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.407756 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c0962ac5579d654865513f5ba44eea22') in 0.013372 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.198158 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eb1dacbe1121f79a9c4a7b163e4aef5b') in 0.008714 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.510861 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '625b86b72cdaeaaaebc63932d305877e') in 0.009230 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.893020 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '42b4e4f869052d384b36b842f7e1c163') in 0.010353 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.056056 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b4514bf81a3935c274a9b67920b4a970') in 0.010112 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002911 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.71 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.914 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.74 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3799 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 230.0 MB.
+System memory in use after: 230.2 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4700.
+Total: 3.244100 ms (FindLiveObjects: 0.327700 ms CreateObjectMapping: 0.202100 ms MarkObjects: 2.692100 ms  DeleteObjects: 0.021200 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003846 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.34 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.988 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.78 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 230.1 MB.
+System memory in use after: 230.4 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4704.
+Total: 2.880100 ms (FindLiveObjects: 0.323600 ms CreateObjectMapping: 0.347600 ms MarkObjects: 2.192200 ms  DeleteObjects: 0.015700 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 70.965096 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0c71034a5ae582b946b914df9f2770e7') in 0.058399 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002841 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.74 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.987 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.77 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 230.2 MB.
+System memory in use after: 230.5 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4709.
+Total: 3.211800 ms (FindLiveObjects: 0.331300 ms CreateObjectMapping: 0.221000 ms MarkObjects: 2.642900 ms  DeleteObjects: 0.015600 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 69.511068 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c7eeb1c84aa63a8e2d402e6f8a8862b7') in 0.051789 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.425050 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8655b808bc7c381fa74262bafed3dc62') in 0.010068 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.213813 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98da9d80d66225f2fd9a97488f089782') in 0.012641 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.191950 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e8b0cd3270360078ae1ab9e032e1c2b7') in 0.010940 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 17.421262 seconds.
+  path: Assets/Prefabs/Shrines/Gold Shrine.prefab
+  artifactKey: Guid(0bc47368cbcc0f344ae7f7cf47d0f7d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Gold Shrine.prefab using Guid(0bc47368cbcc0f344ae7f7cf47d0f7d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0806ad7422f20dbef6803191e50f9999') in 0.013919 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.219685 seconds.
+  path: Assets/Prefabs/Shrines/Gold Shrine.prefab
+  artifactKey: Guid(0bc47368cbcc0f344ae7f7cf47d0f7d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Gold Shrine.prefab using Guid(0bc47368cbcc0f344ae7f7cf47d0f7d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '12f94f3ad4579a1f59f88423b6d7fd31') in 0.012042 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.093320 seconds.
+  path: Assets/Prefabs/Shrines/Gold Shrine.prefab
+  artifactKey: Guid(0bc47368cbcc0f344ae7f7cf47d0f7d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Gold Shrine.prefab using Guid(0bc47368cbcc0f344ae7f7cf47d0f7d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ab8c5044af1196a509d07477ec49b51') in 0.010700 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.416737 seconds.
+  path: Assets/Prefabs/Shrines/Healing Shrine.prefab
+  artifactKey: Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Healing Shrine.prefab using Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8713c6658d9e36a7ffda082636262a95') in 0.012887 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.631075 seconds.
+  path: Assets/Prefabs/Shrines/Healing Shrine.prefab
+  artifactKey: Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Healing Shrine.prefab using Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5240bf29b947d48639b6b473f81f4610') in 0.009765 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.197004 seconds.
+  path: Assets/Prefabs/Shrines/Healing Shrine.prefab
+  artifactKey: Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Healing Shrine.prefab using Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0381bf7872a38cfc81a922272cbaa7ee') in 0.009861 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 74.476411 seconds.
+  path: Assets/Prefabs/Shrines/False  Shrine.prefab
+  artifactKey: Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/False  Shrine.prefab using Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '46ede78fa7f80dc34cc728946c21947f') in 0.010102 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.114928 seconds.
+  path: Assets/Prefabs/Shrines/False Shrine.prefab
+  artifactKey: Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/False Shrine.prefab using Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd68cb028527154c7e52a7abc3bc3f2b0') in 0.010077 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.640430 seconds.
+  path: Assets/Prefabs/Shrines/False Shrine.prefab
+  artifactKey: Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/False Shrine.prefab using Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd613854e4509a740b54c3d83c3af6364') in 0.008968 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.574701 seconds.
+  path: Assets/Prefabs/Shrines/False Shrine.prefab
+  artifactKey: Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/False Shrine.prefab using Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ce8c08374e81b864b00c276ee1d465b') in 0.007049 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.075535 seconds.
+  path: Assets/Prefabs/Shrines/False Shrine.prefab
+  artifactKey: Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/False Shrine.prefab using Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c5aaccc313cdeb4bf5b12222dea5c772') in 0.009664 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.867356 seconds.
+  path: Assets/Prefabs/Shrines/False Shrine.prefab
+  artifactKey: Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/False Shrine.prefab using Guid(7c9ac53b969858248b14deb8d71038d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bdf283307e30c288b531570bea27407f') in 0.009283 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.998932 seconds.
+  path: Assets/Prefabs/Shrines/Exchange Shrine.prefab
+  artifactKey: Guid(71c7798fc80388c4c8af335920930c49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Exchange Shrine.prefab using Guid(71c7798fc80388c4c8af335920930c49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b16ce4e59b8098ef7f9cfc7112d4da3d') in 0.048546 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.617747 seconds.
+  path: Assets/Prefabs/Shrines/Exchange Shrine.prefab
+  artifactKey: Guid(71c7798fc80388c4c8af335920930c49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Exchange Shrine.prefab using Guid(71c7798fc80388c4c8af335920930c49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0474832d0c61aa273b394762a771d3bb') in 0.018190 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.520633 seconds.
+  path: Assets/Prefabs/Shrines/Exchange Shrine.prefab
+  artifactKey: Guid(71c7798fc80388c4c8af335920930c49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Exchange Shrine.prefab using Guid(71c7798fc80388c4c8af335920930c49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd22076fce23d201da28439e8d7032a54') in 0.025995 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 39.239101 seconds.
+  path: Assets/Prefabs/Crate.prefab
+  artifactKey: Guid(4b334aada6710cf4498bbbace8a824f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Crate.prefab using Guid(4b334aada6710cf4498bbbace8a824f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7176b0bb281faed7e74cfc564b927f8e') in 0.019773 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.254168 seconds.
+  path: Assets/Prefabs/Crate.prefab
+  artifactKey: Guid(4b334aada6710cf4498bbbace8a824f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Crate.prefab using Guid(4b334aada6710cf4498bbbace8a824f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '225221255e7fa3d7ab5d7ebb289d0159') in 0.011683 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.071956 seconds.
+  path: Assets/Prefabs/Crate.prefab
+  artifactKey: Guid(4b334aada6710cf4498bbbace8a824f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Crate.prefab using Guid(4b334aada6710cf4498bbbace8a824f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '68394566c04114aa6e1dc17ace323e9c') in 0.011366 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.003756 seconds.
+  path: Assets/Prefabs/Goblin Campsite.prefab
+  artifactKey: Guid(19fc7294f673df742a883de70cd26de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Goblin Campsite.prefab using Guid(19fc7294f673df742a883de70cd26de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e758191bf24292bd344c6d5353d448a9') in 0.013964 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.077203 seconds.
+  path: Assets/Prefabs/Goblin Campsite.prefab
+  artifactKey: Guid(19fc7294f673df742a883de70cd26de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Goblin Campsite.prefab using Guid(19fc7294f673df742a883de70cd26de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '063cfa8a56c1bd3630190e059e986a4c') in 0.012538 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.001834 seconds.
+  path: Assets/Prefabs/Goblin Campsite.prefab
+  artifactKey: Guid(19fc7294f673df742a883de70cd26de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Goblin Campsite.prefab using Guid(19fc7294f673df742a883de70cd26de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd3d6a098e82d4ba630320e03479a9ba5') in 0.012474 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.097595 seconds.
+  path: Assets/Prefabs/Goblin Campsite.prefab
+  artifactKey: Guid(19fc7294f673df742a883de70cd26de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Goblin Campsite.prefab using Guid(19fc7294f673df742a883de70cd26de6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a50f15ca96d7abcf5aeb49981e0d8939') in 0.012608 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 14.028749 seconds.
+  path: Assets/Prefabs/Chest.prefab
+  artifactKey: Guid(49ff31511cf4ef9429323a59f0b1f53f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Chest.prefab using Guid(49ff31511cf4ef9429323a59f0b1f53f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd29447f75d43bc0bad2a5b58f3645c8e') in 0.011623 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.277783 seconds.
+  path: Assets/Prefabs/Chest.prefab
+  artifactKey: Guid(49ff31511cf4ef9429323a59f0b1f53f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Chest.prefab using Guid(49ff31511cf4ef9429323a59f0b1f53f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '49837d8655098cde85fd8178356feeb8') in 0.011069 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.022143 seconds.
+  path: Assets/Prefabs/Chest.prefab
+  artifactKey: Guid(49ff31511cf4ef9429323a59f0b1f53f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Chest.prefab using Guid(49ff31511cf4ef9429323a59f0b1f53f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '937d0c0727a0708ba64627d06cb9bb02') in 0.012785 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.021208 seconds.
+  path: Assets/Prefabs/Chest.prefab
+  artifactKey: Guid(49ff31511cf4ef9429323a59f0b1f53f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Chest.prefab using Guid(49ff31511cf4ef9429323a59f0b1f53f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5882fee3dd6c03f5ae1ba1015d133bef') in 0.010629 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.383683 seconds.
+  path: Assets/Prefabs/Chest.prefab
+  artifactKey: Guid(49ff31511cf4ef9429323a59f0b1f53f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Chest.prefab using Guid(49ff31511cf4ef9429323a59f0b1f53f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de9a5e226f529f46226f5a7bad291f00') in 0.011946 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.580345 seconds.
+  path: Assets/Prefabs/Crate.prefab
+  artifactKey: Guid(4b334aada6710cf4498bbbace8a824f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Crate.prefab using Guid(4b334aada6710cf4498bbbace8a824f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c93a4b575dca5e96015f1392fdb42d73') in 0.009943 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.148056 seconds.
+  path: Assets/Prefabs/Demon Familiar.prefab
+  artifactKey: Guid(360b2def44671b9448002e2e7e9f8460) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Demon Familiar.prefab using Guid(360b2def44671b9448002e2e7e9f8460) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c374bddcd4d2488b33423a59c4b0de0') in 0.021787 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.200025 seconds.
+  path: Assets/Prefabs/Laser Familiar.prefab
+  artifactKey: Guid(e160503da3c5ee64ebb619d833a23e4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Laser Familiar.prefab using Guid(e160503da3c5ee64ebb619d833a23e4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '87e6f621e6ed6e13ae7f6d0418fdd4ff') in 0.023634 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.177119 seconds.
+  path: Assets/Prefabs/Laser Familiar.prefab
+  artifactKey: Guid(e160503da3c5ee64ebb619d833a23e4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Laser Familiar.prefab using Guid(e160503da3c5ee64ebb619d833a23e4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dfb28c8da1d48d958494fd98c9e75365') in 0.010024 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.350029 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '39002f4361dc4bb3d267e9843afc32e8') in 0.008621 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.961640 seconds.
+  path: Assets/Prefabs/Boss Door.prefab
+  artifactKey: Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Boss Door.prefab using Guid(12e91a626d3ce8044b298fc1e7a35bec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27be799118fec4226e2c58d451eba7b7') in 0.010051 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.530982 seconds.
+  path: Assets/Prefabs/Loot item.prefab
+  artifactKey: Guid(66f3cd2f0caf40b4abb72fdaaf077c54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Loot item.prefab using Guid(66f3cd2f0caf40b4abb72fdaaf077c54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '512015e3bc53b456fb537edcda4207de') in 0.009071 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002857 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.83 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.058 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.82 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 230.9 MB.
+System memory in use after: 231.1 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4715.
+Total: 3.145500 ms (FindLiveObjects: 0.380600 ms CreateObjectMapping: 0.338400 ms MarkObjects: 2.407100 ms  DeleteObjects: 0.018400 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 667.199153 seconds.
+  path: Assets/Prefabs/Shrines/Healing Shrine.prefab
+  artifactKey: Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Healing Shrine.prefab using Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '95f937981447a9138fb9d088516375b8') in 0.069221 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.761544 seconds.
+  path: Assets/Prefabs/Shrines/Healing Shrine.prefab
+  artifactKey: Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Healing Shrine.prefab using Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1b4d1bfc80de8d155628a47d5267243') in 0.008483 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.440051 seconds.
+  path: Assets/Prefabs/Shrines/Healing Shrine.prefab
+  artifactKey: Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Healing Shrine.prefab using Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fefd70f7ada952519cdc6cfeb046b962') in 0.010282 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.212584 seconds.
+  path: Assets/Prefabs/Shrines/Healing Shrine.prefab
+  artifactKey: Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Healing Shrine.prefab using Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27d60ed1fc27b09cad0f09fe174f0285') in 0.011839 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.385431 seconds.
+  path: Assets/Prefabs/Shrines/Healing Shrine.prefab
+  artifactKey: Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Shrines/Healing Shrine.prefab using Guid(1c109270d643a1043b092c15270cab01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd42eb4e8a6a28c78381f98b32d2d9930') in 0.009982 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 145.508330 seconds.
+  path: Assets/Prefabs/Enemies/Bat.prefab
+  artifactKey: Guid(ee12cdec3f7cc4f40b438a4375632836) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Enemies/Bat.prefab using Guid(ee12cdec3f7cc4f40b438a4375632836) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd1933a6dddf9a12449ad3169cd7bc09d') in 0.030375 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000272 seconds.
+  path: Assets/Prefabs/Enemies/Slime.prefab
+  artifactKey: Guid(f4f21c972f439f345ade09abeebfa979) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Enemies/Slime.prefab using Guid(f4f21c972f439f345ade09abeebfa979) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b9471cea7c732c672c3030fe53b16fc9') in 0.101244 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000246 seconds.
+  path: Assets/Prefabs/Enemies/Ghost Knight.prefab
+  artifactKey: Guid(471678fb17ef33543942e1617c2f2052) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Enemies/Ghost Knight.prefab using Guid(471678fb17ef33543942e1617c2f2052) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'df8c48b61b0279ffe0e331f30fc255e7') in 0.055164 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000291 seconds.
+  path: Assets/Prefabs/Enemies/Goblin.prefab
+  artifactKey: Guid(55e1024ec49f8714480df13781bdea09) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Enemies/Goblin.prefab using Guid(55e1024ec49f8714480df13781bdea09) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b70f8f0481125cd38159fe4b32b1f01') in 0.055717 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000343 seconds.
+  path: Assets/Prefabs/Enemies/Fire Mage.prefab
+  artifactKey: Guid(c298f0a5fbc9a20469ccec7bb9518097) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Enemies/Fire Mage.prefab using Guid(c298f0a5fbc9a20469ccec7bb9518097) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a20d937f5ccc36b393a7322df8275e7') in 0.090007 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000304 seconds.
+  path: Assets/Prefabs/Enemies/Shadow Knight Boss.prefab
+  artifactKey: Guid(183f70922dcb68e40b480e0fdfcde4cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Enemies/Shadow Knight Boss.prefab using Guid(183f70922dcb68e40b480e0fdfcde4cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '370f175b5e617e19d0390fbdf2ae46e2') in 0.101653 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000311 seconds.
+  path: Assets/Prefabs/Enemies/Imp.prefab
+  artifactKey: Guid(58d330c099660c14985c0d79b0163d60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Enemies/Imp.prefab using Guid(58d330c099660c14985c0d79b0163d60) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f301cc9484cfe6b732cd10ab6a16eda9') in 0.053658 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000253 seconds.
+  path: Assets/Prefabs/Enemies/Thief.prefab
+  artifactKey: Guid(5657ccbdfe494be4295c152d769ca21b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Enemies/Thief.prefab using Guid(5657ccbdfe494be4295c152d769ca21b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ebd344061aeba5a27f9265c35e4e510') in 0.062760 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000265 seconds.
+  path: Assets/Prefabs/Enemies/Mushroom Golem.prefab
+  artifactKey: Guid(e94ee309ac99ecd41afeed6b109ef7b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Enemies/Mushroom Golem.prefab using Guid(e94ee309ac99ecd41afeed6b109ef7b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '579d4221d7a1bcb013ad76f7273a2477') in 0.095000 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 186.502959 seconds.
+  path: Assets/Scriptable Objects/Weapons/Dagger.asset
+  artifactKey: Guid(a663c8fb84f435d428ffcdea8e80c4b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scriptable Objects/Weapons/Dagger.asset using Guid(a663c8fb84f435d428ffcdea8e80c4b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6102c5ceedde877ea69360201c46da9d') in 0.006743 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000322 seconds.
+  path: Assets/Scriptable Objects/Weapons/Rapier.asset
+  artifactKey: Guid(9841a19b5575acf46b535513ee2b576d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scriptable Objects/Weapons/Rapier.asset using Guid(9841a19b5575acf46b535513ee2b576d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '327e24a1c9a4e069c801153ef0567d3b') in 0.025054 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 19.985138 seconds.
+  path: Assets/Scriptable Objects/Weapons/Sword.asset
+  artifactKey: Guid(5afe78351655d4049935cc9901e18a9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scriptable Objects/Weapons/Sword.asset using Guid(5afe78351655d4049935cc9901e18a9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6006665a6bc00f4e739b18476c30b519') in 0.016115 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 20.140415 seconds.
+  path: Assets/Scriptable Objects/Weapons/Sword.asset
+  artifactKey: Guid(5afe78351655d4049935cc9901e18a9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scriptable Objects/Weapons/Sword.asset using Guid(5afe78351655d4049935cc9901e18a9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'baedfe5bad2e64eaf5d3c1807cecb557') in 0.023968 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003228 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.74 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.918 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.71 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.4 MB.
+System memory in use after: 231.6 MB.
+
+Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 4722.
+Total: 2.276800 ms (FindLiveObjects: 0.290900 ms CreateObjectMapping: 0.177100 ms MarkObjects: 1.789100 ms  DeleteObjects: 0.019000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002852 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.74 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.010 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.77 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.1 MB.
+System memory in use after: 231.4 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4726.
+Total: 2.656100 ms (FindLiveObjects: 0.336600 ms CreateObjectMapping: 0.200300 ms MarkObjects: 2.103000 ms  DeleteObjects: 0.015200 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002985 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.75 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.906 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.72 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 230.9 MB.
+System memory in use after: 231.2 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4730.
+Total: 2.399400 ms (FindLiveObjects: 0.297000 ms CreateObjectMapping: 0.167200 ms MarkObjects: 1.917000 ms  DeleteObjects: 0.017400 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003253 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.70 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.902 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.70 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.1 MB.
+System memory in use after: 231.4 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4734.
+Total: 4.507100 ms (FindLiveObjects: 0.371200 ms CreateObjectMapping: 0.190100 ms MarkObjects: 3.904500 ms  DeleteObjects: 0.040000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002930 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\eduar\Desktop\Unity Projects\Roguelike-Soulslike\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.75 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.934 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.70 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3798 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 231.1 MB.
+System memory in use after: 231.4 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4738.
+Total: 3.321000 ms (FindLiveObjects: 0.305100 ms CreateObjectMapping: 0.161900 ms MarkObjects: 2.836700 ms  DeleteObjects: 0.016100 ms)
+

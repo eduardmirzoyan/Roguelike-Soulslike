@@ -200,7 +200,7 @@
      <Compile Include="Assets\Scripts\Weapons\Melee Weapons\Dagger.cs" />
      <Compile Include="Assets\Scripts\Player\Health.cs" />
      <Compile Include="Assets\Scripts\PerserveBetweenLevels.cs" />
-     <Compile Include="Assets\Scripts\Other\Camera.cs" />
+     <Compile Include="Assets\Scripts\Other\PlayerCamera.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Armor Enchantments\FeatherFallEnchantment.cs" />
      <Compile Include="Assets\Scripts\Environment\InteractableTooltip.cs" />
      <Compile Include="Assets\Scripts\Familiars\LaserAttackFamiliar.cs" />
@@ -290,6 +290,9 @@
      <Compile Include="Assets\Scripts\UI Scripts\ExperienceBar.cs" />
      <Compile Include="Assets\Scripts\Enemies\Imp\ImpAI.cs" />
      <Compile Include="Assets\Scripts\Familiars\FamiliarHandler.cs" />
+     <Compile Include="Assets\Scripts\Generation\Minimap.cs" />
+     <Compile Include="Assets\Scripts\Generation\FogOfWar.cs" />
+     <Compile Include="Assets\Scripts\Generation\DungeonGenerator.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
