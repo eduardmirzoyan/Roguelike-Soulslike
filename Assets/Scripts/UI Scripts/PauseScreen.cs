@@ -36,6 +36,7 @@ public class PauseScreen : MonoBehaviour
     public void restart() {
         Time.timeScale = 1f;
         LevelManager.instance.reloadLevel();
+        Destroy(GameManager.instance.GetPlayer().gameObject);
     }
 
     public void loadMainMenu() {

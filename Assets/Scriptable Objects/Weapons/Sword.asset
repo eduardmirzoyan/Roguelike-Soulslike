@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 9157344496376886352, guid: 2fd69f148956b2348af3f15916138323, type: 3}
   type: 0
-  sprite: {fileID: 21300000, guid: b4ff2424bf192dd45b4ef51bfab8c0d3, type: 3}
+  sprite: {fileID: 21300000, guid: 2513ea7ed89ffc044a7d04b449c2d75c, type: 3}
   isStackable: 0
   count: 1
   description: CRIT every 3rd consecutive strike

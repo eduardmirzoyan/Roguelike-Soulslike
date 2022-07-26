@@ -98,7 +98,7 @@ public class Spear : MeleeWeapon
 
                         // Initalize the arrow's values
                         if (spear != null) {
-                            spear.initializeSpear(damage, isCrit, weaponEffects, scaledSpeed, spriteRenderer.sprite, transform.parent.gameObject);
+                            spear.initializeSpear(damage, isCrit, weaponEffects, scaledSpeed, spriteRenderer.sprite, gameObject);
                         }
                         
                         // Start cooldown

@@ -15,28 +15,14 @@ public class ComplexMovement : Movement
 
     [Header("Jump Multiplier")]
     [SerializeField] public float fallMultiplier = 2f;
-    [SerializeField] public float lowJumpMultiplier = 2.5f;
+    [SerializeField] public float riseMultiplier = 2.5f;
 
     public void improvedJumpHandling(KeyCode jumpKey) {
         if (body.velocity.y < -0.1f) {
             body.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
         else if (body.velocity.y > 0.1f && !Input.GetKey(jumpKey)) {
-            body.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
-        }
-    }
-
-    public void sprint(float direction)
-    {
-        if (isImmobile)
-            return;
-
-        body.velocity = new Vector2(direction * movespeed * Time.deltaTime * sprintingMultiplier, body.velocity.y); // Actually moves the character
-
-        if (direction > 0.1f && !isFacingRight || direction < -0.1f && isFacingRight)
-        {
-            isFacingRight = !isFacingRight;
-            transform.Rotate(0f, 180f, 0f);
+            body.velocity += Vector2.up * Physics2D.gravity.y * (riseMultiplier - 1) * Time.deltaTime;
         }
     }
 

@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    [SerializeField] private bool isLocked = false;
+
     public void enter()
     {
-        LevelManager.instance.loadNextLevel();
+        if (!isLocked)
+            LevelManager.instance.loadNextLevel(new Vector3(7, 6, 0));
+        else {
+            PopUpTextManager.instance.createVerticalPopup("Door is locked.", Color.gray, transform.position);
+        }
     }
 }

@@ -64,8 +64,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2481585268360592173}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.75, y: 29.02, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2481585268777376209}
@@ -113,7 +113,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2079674183
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 7811007744847504800, guid: d1efed889542bb74aad867f2dd8479b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -246,10 +246,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 0}
+  stats: {fileID: 0}
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &2481585268360592151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,13 +263,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mv: {fileID: 0}
+  collider2d: {fileID: 0}
+  particles: {fileID: 0}
   stunImmune: 0
   knockbackImmune: 0
-  knockbackSpeed: 0
-  knockbackDuration: 0
-  stunDuration: 0
-  savedState: 
-  knockbackState: 
+  twoDimensionalKnockback: 0
+  wallCheckDistance: 0.1
 --- !u!114 &2481585268360592150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,9 +305,13 @@ MonoBehaviour:
   boxCollider2D: {fileID: 0}
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
+  displacable: {fileID: 0}
+  stats: {fileID: 0}
+  enemyUI: {fileID: 0}
   wanderRadius: 0
   wanderRate: 0
   aggroRange: 8
+  deAggroRange: 0
   attackRange: 0
   attackCooldown: 0
   attackDuration: 0
@@ -319,9 +322,6 @@ MonoBehaviour:
   attacker: {fileID: 0}
   collidable: {fileID: 0}
   damageable: {fileID: 0}
-  castFireball: {fileID: 11400000, guid: 642a2d63d69baa4498a6f913a4a25bfc, type: 2}
-  castBigFireball: {fileID: 11400000, guid: 9d712109baf1aca4da877fab722b3652, type: 2}
-  castTeleport: {fileID: 11400000, guid: 9ff1adc1355de22449897f8c14104113, type: 2}
   firePoint: {fileID: 2481585268985561898}
   bigFireBallPrefab: {fileID: 3590523118361213747, guid: 8c5a9b19c7434cf48a8eb56676b855b4, type: 3}
   fireBallPrefab: {fileID: 8938152532573267883, guid: d0d7038961e991e44a9b3029014bc78d, type: 3}
@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  currentState: 
 --- !u!1 &2481585268777376208
 GameObject:
   m_ObjectHideFlags: 0

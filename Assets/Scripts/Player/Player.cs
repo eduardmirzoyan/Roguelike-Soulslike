@@ -603,7 +603,8 @@ public class Player : MonoBehaviour
         {
             // Nothin
             // displace.triggerKnockback(knocbackStrength, knocbackTime, transform.position + Vector3.right);
-            stamina.useStamina(10);
+            //stamina.useStamina(10);
+            FeedbackUI.instance.setMessage("Test", Color.gray, transform.position);
         }
         if (Input.GetKeyDown(KeyCode.H))  // used for testing
         {

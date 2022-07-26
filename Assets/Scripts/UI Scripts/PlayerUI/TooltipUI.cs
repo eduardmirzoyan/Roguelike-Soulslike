@@ -8,7 +8,8 @@ public class TooltipUI : MonoBehaviour
     [Header("Components")]
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private StatusUI statusUI;
-    [SerializeField] private SkillTreeUI skillTreeUI;
+    [SerializeField] private RectTransform pointer;
+    [SerializeField] private GameObject tooltipWindow;
 
     [Header("Fields")]
     [SerializeField] private Text itemName;
@@ -19,17 +20,12 @@ public class TooltipUI : MonoBehaviour
     [SerializeField] private Item selectedItem;
     [SerializeField] private Menu menu;
 
-    [SerializeField] private Skill selectedSkill;
-
-    // Start is called before the first frame update
     private void Awake()
     {
-        inventoryUI = GameObject.Find("Slot Holder").GetComponent<InventoryUI>();
-        statusUI = GameObject.Find("Status UI").GetComponent<StatusUI>();
-        skillTreeUI = GameObject.Find("Skill Tree UI").GetComponent<SkillTreeUI>();
+        inventoryUI = transform.parent.GetComponentInChildren<InventoryUI>();
+        statusUI = transform.parent.GetComponentInChildren<StatusUI>();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         switch (menu.window)
@@ -37,11 +33,13 @@ public class TooltipUI : MonoBehaviour
             case MenuWindow.Inventory:
                 // First check if player is hovering over an actual item (and not empty slot)
                 selectedItem = inventoryUI.getSelectedItem();
+                transform.position = inventoryUI.getSelectedSlotPosition().position; // Find the slot that the player is hovering
                 // If so...
                 if (selectedItem != null) 
                 {
-                    transform.position = inventoryUI.getSelectedSlotPosition().position; // Find the slot that the player is hovering
+                    tooltipWindow.SetActive(true);
                     itemName.text = selectedItem.name; // Set tooltip values to the items values
+                    
                     switch (selectedItem.type)
                     {
                         case ItemType.Armor:
@@ -118,7 +116,8 @@ public class TooltipUI : MonoBehaviour
                 }
                 else // If not, send the tooltip to Narnia
                 {
-                    transform.position = new Vector3(1000, 1000, 1000);
+                    // transform.position = new Vector3(1000, 1000, 1000);
+                    tooltipWindow.SetActive(false);
                 }
                 break;
             case MenuWindow.Status:
@@ -143,20 +142,6 @@ public class TooltipUI : MonoBehaviour
                     transform.position = new Vector3(1000, 1000, 1000);
                 }
                 
-                break;
-            case MenuWindow.SkillTree:
-                selectedSkill = skillTreeUI.getSelectedSkill();
-                if (selectedSkill != null) // If so...
-                {
-                    transform.position = skillTreeUI.getSelectedSlotPosition().position; // Find the slot that the player is hovering
-                    itemName.text = selectedSkill.name; // Set tooltip values to the items values
-                    itemType.text = selectedSkill is ActiveSkill ? "Active Skill" : "Passive Skill";
-                    itemDescription.text = selectedSkill.description;
-                }
-                else // If not, send the tooltip to Narnia
-                {
-                    transform.position = new Vector3(1000, 1000, 1000);
-                }
                 break;
         }
         

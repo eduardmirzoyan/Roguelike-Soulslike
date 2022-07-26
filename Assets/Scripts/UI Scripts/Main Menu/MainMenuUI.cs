@@ -7,7 +7,7 @@ public class MainMenuUI : MonoBehaviour
 {
     public void PlayGame() {
         // Load level 1
-        LevelManager.instance.loadNextLevel();
+        LevelManager.instance.loadNextLevel(new Vector3(7, 6, 0));
     }
 
     public void QuitGame() {

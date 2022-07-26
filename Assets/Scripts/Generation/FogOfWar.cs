@@ -13,6 +13,10 @@ public class FogOfWar : MonoBehaviour
     [SerializeField] private Transform discoverer;
     [SerializeField] private int discoveryRadius = 11;
 
+    private void Start() {
+        discoverer = GameManager.instance.GetPlayer().transform;
+    }
+
     // Update discovered tiles
     private void LateUpdate() {
         // Get location in map

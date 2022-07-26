@@ -15,6 +15,8 @@ public class SpearProjectile : MonoBehaviour
     [SerializeField] private bool isDead;
     [SerializeField] private List<BaseEffect> spearEffects;
 
+    private GameObject wielder;
+
     private bool isCrit;
     
     private void Awake() {
@@ -38,12 +40,15 @@ public class SpearProjectile : MonoBehaviour
 
         // Set projectile
         projectile.initializeProjectile(1, speed, 0, 0, owner);
+
+        // Get the spear's wielder
+        wielder = owner.transform.parent.gameObject;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // If arrow hits something dmaageableo other than the creator
-        if (!isDead && collision.TryGetComponent(out Damageable damageable) && collision.gameObject != projectile.creator) {
+        if (!isDead && collision.TryGetComponent(out Damageable damageable) && collision.gameObject != wielder) {
            
            if (isCrit) {
                // Trigger event
@@ -74,7 +79,7 @@ public class SpearProjectile : MonoBehaviour
         }
 
         // If the creator picked up this spear while it is on the ground, then reduce spear cooldown
-        if (collision.gameObject == projectile.creator && isDead) {
+        if (collision.gameObject == wielder && isDead) {
             // Remove parent
             trail.transform.parent = null;
 

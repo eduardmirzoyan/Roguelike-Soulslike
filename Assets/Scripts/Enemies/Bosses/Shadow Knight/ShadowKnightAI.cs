@@ -148,8 +148,8 @@ public class ShadowKnightAI : BossAI
                     mv.Walk(0);
 
                     // Do ranged attack
-                    // Randomly choose between bow or cast
-                    int choice = Random.Range(0, 3); // 0 - 2
+                    // ONLY SHOOT BOW RN
+                    int choice = Random.Range(1, 3); // 1 - 2
 
                     switch(choice) {
                         case 0:

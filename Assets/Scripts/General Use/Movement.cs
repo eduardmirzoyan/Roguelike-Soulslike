@@ -30,10 +30,11 @@ public class Movement : MonoBehaviour
     // Helper variables
     protected bool isFacingRight = true;
 
-    protected void Start()
+    private void Awake() 
     {
         body = GetComponent<Rigidbody2D>(); // Gets body physics handler
     }
+
 
     public void Walk(float direction) // From 0 to 1
     {

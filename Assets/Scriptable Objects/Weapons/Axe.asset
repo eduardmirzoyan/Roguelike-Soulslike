@@ -21,7 +21,10 @@ MonoBehaviour:
   name: Axe
   damage: 1
   critDamage: 1
+  staminaCostMultiplier: 1
   weaponType: 1
+  weaponSize: 0
   twoHanded: 0
-  enchantments: []
+  enchantments:
+  - {fileID: 11400000, guid: a92dbe48c51f053498524c2a873d3206, type: 2}
   enchantmentSlots: 4

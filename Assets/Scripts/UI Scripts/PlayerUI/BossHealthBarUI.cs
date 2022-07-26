@@ -27,9 +27,13 @@ public class BossHealthBarUI : MonoBehaviour
 
     public void setBoss(BossAI boss)
     {
+        var src = GameObject.Find("Audio Manager").GetComponent<AudioSource>();
+
         // If boss is null, the disable
         if (boss == null) {
             enableImages(false);
+            if (src != null)
+                src.Stop();
             return;
         }
         
@@ -45,7 +49,10 @@ public class BossHealthBarUI : MonoBehaviour
             // Enable visuals
             enableImages(true);
         }
-        
+
+        // Start boss music if possible
+        if (src != null)
+            src.Play();
     }
 
     private void enableImages(bool enable) {

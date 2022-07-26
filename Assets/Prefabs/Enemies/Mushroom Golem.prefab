@@ -130,7 +130,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2079674183
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 1290111092050715115, guid: a2148cb95fda2a246b72a3834f9dc4a3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -301,7 +301,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6065330019824376804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -80.2, y: 3.3383589, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6065330018715413168}
@@ -352,7 +352,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2079674183
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 4723107735738678597, guid: a8705aef76f5e964bb5a0da7c6d65dbc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -450,9 +450,12 @@ MonoBehaviour:
   health: {fileID: 0}
   lineOfSight: {fileID: 0}
   displacable: {fileID: 0}
+  stats: {fileID: 0}
+  enemyUI: {fileID: 0}
   wanderRadius: 0
   wanderRate: 0
   aggroRange: 30
+  deAggroRange: 0
   attackRange: 7
   attackCooldown: 2
   attackDuration: 0
@@ -478,7 +481,6 @@ MonoBehaviour:
   boulderTossAnimation: Throw Boulder
   farAttackRange: 17
   followRange: 5.5
-  sleepAnimation: Sleep
   awakenAnimation: Awaken
   mushroomGolemState: 0
 --- !u!114 &6065330019824376831
@@ -535,11 +537,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 0}
+  stats: {fileID: 0}
   immunityDuration: 0.25
   isInvincible: 0
   immunityTimer: 0
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  tempDamageEffect: {fileID: 0}
 --- !u!114 &8706467391598591755
 MonoBehaviour:
   m_ObjectHideFlags: 0

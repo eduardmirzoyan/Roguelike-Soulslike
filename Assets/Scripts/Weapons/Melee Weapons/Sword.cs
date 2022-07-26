@@ -56,7 +56,7 @@ public class Sword : MeleeWeapon
                 else 
                 {
                     // Increase combo
-                    currentCombo += 1;
+                    // currentCombo += 1;
                     // Stop moving
                     wielderMovement.Walk(0);
                     // Change state
@@ -76,6 +76,10 @@ public class Sword : MeleeWeapon
                 }
                 break;
         }
+    }
+
+    public override bool canInitiate() {
+        return state == WeaponState.Ready || state == WeaponState.Recovering;
     }
 
     public override void initiateAttack()

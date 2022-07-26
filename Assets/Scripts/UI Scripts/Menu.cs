@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public enum MenuWindow
 {
     Inventory,
-    Status,
-    SkillTree
+    Status
 }
 public class Menu : MonoBehaviour
 {
@@ -17,19 +16,26 @@ public class Menu : MonoBehaviour
     [SerializeField] private EquipmentHandler playerEquipment;
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private StatusUI statusUI;
-    [SerializeField] private SkillTreeUI skillTreeUI;
     [SerializeField] private MenuUI menuUI;
     [SerializeField] private HUD hud;
-    [SerializeField] protected WorldItem dropLoot; // REPLACE THIS WITH 'RESOURCE LOADING'
+    [SerializeField] private WorldItem dropLoot; // REPLACE THIS WITH 'RESOURCE LOADING'
+    [SerializeField] private RectTransform minimapTransform;
 
     [Header("Menu Windows")]
     [SerializeField] private GameObject inventoryScreen;
     [SerializeField] private GameObject statusScreen;
-    [SerializeField] private GameObject skillTreeScreen;
     [SerializeField] private GameObject tooltip;
 
     [Header("Menu Status")]
     [SerializeField] public bool menuEnabled;
+
+    private void Awake() {
+        menuUI = GetComponent<MenuUI>();
+        inventoryUI = GetComponentInChildren<InventoryUI>();
+        statusUI = GetComponentInChildren<StatusUI>();
+        hud = transform.parent.GetComponentInChildren<HUD>();
+        tooltip = GameObject.Find("Tooltip Holder");
+    }
 
     // Start is called before the first frame update
     private void Start()
@@ -37,16 +43,9 @@ public class Menu : MonoBehaviour
         // Get components
         player = GameManager.instance.GetPlayer();
         playerEquipment = player.GetComponent<EquipmentHandler>();
-        skillTreeUI = GameObject.Find("Skill Tree UI").GetComponent<SkillTreeUI>();
-        menuUI = GetComponent<MenuUI>();
-        inventoryUI = GameObject.Find("Slot Holder").GetComponent<InventoryUI>();
-        statusUI = GameObject.Find("Status UI").GetComponent<StatusUI>();
-        hud = GameObject.Find("HUD").GetComponent<HUD>();
-        tooltip = GameObject.Find("Tooltip Holder");
 
         // Intialize
         inventoryScreen.SetActive(true);
-        skillTreeScreen.SetActive(false);
         statusScreen.SetActive(false);
         tooltip.SetActive(true);
     }
@@ -58,6 +57,9 @@ public class Menu : MonoBehaviour
         {
             menuUI.show();
             hud.show();
+
+            // Make minimap larger
+            enlargeMinimap();
 
             // Changing menu screens logic
             if (Input.GetKeyDown(KeyCode.A))
@@ -77,17 +79,28 @@ public class Menu : MonoBehaviour
                 case MenuWindow.Status:
                     statusScreenLogic();
                     break;
-                case MenuWindow.SkillTree:
-                    skillTreeScreenLogic();
-                    break;
-
             }
         }
         else
         {
             menuUI.hide();
             hud.hide();
+
+            // Make minimap smaller
+            shrinkMinimap();
         }
+    }
+
+    private void enlargeMinimap() {
+        minimapTransform.anchoredPosition = new Vector3(-300, -300, 0);
+        minimapTransform.localScale = new Vector3(2, 2, 1);
+        minimapTransform.GetComponent<CanvasGroup>().alpha = 1f;
+    }
+
+    private void shrinkMinimap() {
+        minimapTransform.anchoredPosition = new Vector3(-180, -180, 0);
+        minimapTransform.localScale = new Vector3(1, 1, 1);
+        minimapTransform.GetComponent<CanvasGroup>().alpha = 0.5f;
     }
 
     private void inventoryScreenLogic()
@@ -151,7 +164,6 @@ public class Menu : MonoBehaviour
 
     private void statusScreenLogic()
     {
-        
         // Status selector maneuvering
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -163,34 +175,34 @@ public class Menu : MonoBehaviour
         }
     }
 
-    private void skillTreeScreenLogic()
-    {
-        skillTreeUI.updateSkillVisuals();
+    // private void skillTreeScreenLogic()
+    // {
+    //     skillTreeUI.updateSkillVisuals();
 
-        // Skill Tree maneuvering
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            skillTreeUI.moveSelectedItem("left");
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            skillTreeUI.moveSelectedItem("right");
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            skillTreeUI.moveSelectedItem("up");
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            skillTreeUI.moveSelectedItem("down");
-        }
+    //     // Skill Tree maneuvering
+    //     if (Input.GetKeyDown(KeyCode.LeftArrow))
+    //     {
+    //         skillTreeUI.moveSelectedItem("left");
+    //     }
+    //     else if (Input.GetKeyDown(KeyCode.RightArrow))
+    //     {
+    //         skillTreeUI.moveSelectedItem("right");
+    //     }
+    //     else if (Input.GetKeyDown(KeyCode.UpArrow))
+    //     {
+    //         skillTreeUI.moveSelectedItem("up");
+    //     }
+    //     else if (Input.GetKeyDown(KeyCode.DownArrow))
+    //     {
+    //         skillTreeUI.moveSelectedItem("down");
+    //     }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            skillTreeUI.attemptToUnlockSkillAtSelectedSlot();
-        }
+    //     if (Input.GetKeyDown(KeyCode.E))
+    //     {
+    //         skillTreeUI.attemptToUnlockSkillAtSelectedSlot();
+    //     }
 
-    }
+    // }
 
     private void changeWindowScreen(int direction)
     {
@@ -216,20 +228,11 @@ public class Menu : MonoBehaviour
                     statusUI.clearUI();
                 inventoryScreen.SetActive(true);
                 statusScreen.SetActive(false);
-                skillTreeScreen.SetActive(false);
                 break;
             case MenuWindow.Status:
                 inventoryScreen.SetActive(false);
                 statusScreen.SetActive(true);
-                skillTreeScreen.SetActive(false);
                 statusUI.updateUI();
-                break;
-            case MenuWindow.SkillTree:
-                if (statusUI.enabled)
-                        statusUI.clearUI();
-                inventoryScreen.SetActive(false);
-                statusScreen.SetActive(false);
-                skillTreeScreen.SetActive(true);
                 break;
         }
     }

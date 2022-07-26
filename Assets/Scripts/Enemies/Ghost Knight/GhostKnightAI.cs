@@ -32,13 +32,11 @@ public class GhostKnightAI : EnemyAI
         // Get required components
         pathfindUser = GetComponent<PathfindUser>();
         sleepingParticles = GetComponent<ParticleSystem>();
-        pathfindUser = GetComponent<PathfindUser>();
     }
 
     // Start is called before the first frame update
     private void Start()
     {
-        
         sleep();
         
         // Set starting state
@@ -159,7 +157,7 @@ public class GhostKnightAI : EnemyAI
                     }
                     
                     // If target goes too far
-                    if (Vector2.Distance(target.position, transform.position) > aggroRange) {
+                    if (Vector2.Distance(target.position, transform.position) > deAggroRange) {
                         target = null;
 
                         sleep();

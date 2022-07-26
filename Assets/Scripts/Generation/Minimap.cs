@@ -14,12 +14,11 @@ public class Minimap : MonoBehaviour
     [Header("Tiles")]
     [SerializeField] private Tile groundTile;
     [SerializeField] private Tile emptyTile;
-    
-    private void Awake() {
-        minimapCamera = GetComponentInChildren<Camera>();
-    }
 
     public void generateMinimap(int sizeX, int sizeY) {
+        // Get camera
+        minimapCamera = GetComponentInChildren<Camera>();
+
         // Generate minimap tiles based on ground tilemap
         for (int i = 0; i < sizeX; i++)
         {

@@ -10,6 +10,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Animator animator;
     public static LevelManager instance; // Accessible by every class at any point
 
+    private Player player;
+    private Vector3 spawnPosition;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -20,15 +23,16 @@ public class LevelManager : MonoBehaviour
         }
         instance = this; // Singleton
 
-        // animator = GameObject.Find("Transition Canvas").GetComponentInChildren<Animator>();
-
         DontDestroyOnLoad(gameObject); 
     }
 
     // Loads next level
-    public void loadNextLevel()
+    public void loadNextLevel(Vector3 position)
     {
         StartCoroutine(delayedLoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+        spawnPosition = position;
+        if (GameManager.instance != null)
+            player = GameManager.instance.GetPlayer();
     }
 
     public void loadMainMenu()
@@ -51,6 +55,10 @@ public class LevelManager : MonoBehaviour
 
         // Load next scene
         SceneManager.LoadScene(levelIndex);
+
+        if (player != null)
+            // Move player
+            player.transform.position = spawnPosition;
         
     }
 }

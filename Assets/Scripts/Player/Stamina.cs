@@ -96,7 +96,8 @@ public class Stamina : MonoBehaviour
         // If stamina is depleted, then dont use stamina
         if (currentStamina <= 0) {
             // Visual feedback
-            PopUpTextManager.instance.createVerticalPopup("Not Enough Stamina", Color.gray, transform.position);
+            //PopUpTextManager.instance.createVerticalPopup("Not Enough Stamina", Color.gray, transform.position);
+            FeedbackUI.instance.setMessage("Not Enough Stamina", Color.gray, transform.position);
             return false;
         }
 
