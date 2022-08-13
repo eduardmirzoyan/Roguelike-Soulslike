@@ -157,6 +157,7 @@
      <Compile Include="Assets\Scripts\UI Scripts\PlayerUI\MenuUI.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\BurningMeleeEnchantment.cs" />
      <Compile Include="Assets\Scripts\Enchantments\Melee Enchantments\BleedingWeaponEnchantment.cs" />
+     <Compile Include="Assets\Pathfinding\Dijkstra.NET\obj\Debug\netstandard1.3\Dijkstra.NET.AssemblyInfo.cs" />
      <Compile Include="Assets\Scripts\Environment\GoldShrine.cs" />
      <Compile Include="Assets\Scripts\Weapons\Ranged Weapons\LongBow.cs" />
      <Compile Include="Assets\Scripts\Generation\DungeonGenerator.cs" />
